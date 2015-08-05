@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="com.idetronic.subur">
+	<author>Mazlan Mat</author>
+	<namespace>Subur</namespace>
+
+	<entity name="SuburItem" local-service="true" remote-service="false" table="Subur_Item">
+
+		<!-- PK fields -->
+
+		<column name="itemId" type="long" primary="true"  />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<column name="publishedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="title" type="String" />
+		<column name="itemAbstract" type="String" />
+		
+		<column name="language" type="String" />
+		<column name="status" type="int" />
+		<column name="Uuid" type="String" />
+		<column name="metadataValue" type="String"/>
+		
+		
+		
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+		 <finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId"></finder-column>
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status"></finder-column>
+		</finder>
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
+	</entity>
+    <entity name="ItemFileEntry" local-service="true">
+        <column name="itemId" type="long" primary="true"></column>
+        <column name="fileEntryId" type="long" primary="true"></column>
+        <column name="entryType" type="long"></column>
+         <finder name="byItemId" return-type="Collection">
+			<finder-column name="itemId"></finder-column>
+		</finder>
+    </entity>
+    
+    <entity name="MetadataSchema" local-service="true" remote-service="false">
+        <column name="metadataSchemaId" type="long" primary="true"></column>
+        <column name="metadataName" type="String"></column>
+        <column name="nameSpace" type="String"></column>
+    </entity>
+    <entity name="MetadataProperty" local-service="true" remote-service="false">
+        <column name="metadataPropertyId" type="long" primary="true"></column>
+        <column name="metadataSchemaId" type="long"></column>
+        <column name="element" type="String"></column>
+        <column name="scope" type="String"></column>
+        <column name="note" type="String"></column>
+    </entity>
+    <entity name="MetadataPropertyValue" local-service="true" remote-service="false">
+    	<column name="metadataPropertyValueId" type="long" primary="true"> </column>
+        <column name="itemId" type="long"> </column>
+        <column name="propertyId" type="long"></column>
+        <column name="textValue" type="String"></column>
+        <column name="itemCount" type="int"></column>
+        <!-- Finder methods -->
+        <finder name="byItemId" return-type="Collection">
+			<finder-column name="itemId"></finder-column>
+		</finder>
+    </entity>
+   
+    <entity name="ItemType" local-service="true" remote-service="false">
+        <column name="ItemTypeId" type="long" primary="true"></column>
+        <column name="ItemTypeName" type="String"></column>
+        <column name="itemCount" type="int"></column>
+    </entity>
+    <entity name="ItemTypeTemplate" local-service="true" remote-service="false">
+        <column name="itemTypeId" type="long" primary="true"></column>
+        <column name="metadataPropertyId" type="long" primary="true"></column>
+        <column name="required" type="boolean"></column>
+    </entity>
+    <entity name="ItemItemType" local-service="true" remote-service="false">
+        <column name="itemId" type="long" primary="true"></column>
+        <column name="itemTypeId" type="long" primary="true"></column>
+         <finder name="ItemId" return-type="Collection">
+			<finder-column name="itemId"></finder-column>
+		</finder>
+		<finder name="ItemType" return-type="Collection">
+			<finder-column name="itemTypeId"></finder-column>
+		</finder>
+    </entity>
+   
+    <entity name="Author" local-service="true" remote-service="false">
+    	<column name="authorId" type="long" primary="true" id-type="increment"></column>
+    	<column name="groupId" type="long" />
+    	<column name="companyId" type="long" />
+    	<column name="title" type="String" />
+    	<column name="idType" type="int"></column>
+    	<column name="remoteId" type="String"></column>
+    	<column name="firstName" type="String"></column>
+    	<column name="lastName" type="String"></column>
+    	<column name="middleName" type="String"></column>
+    	<column name="userId" type="int"></column>
+    	<column name="metadata" type="String"></column>
+    	<column name="lastPublishedDate" type="Date"></column>
+    	<column name="itemCount" type="int"></column>
+    	
+    	<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<column name="Uuid" type="String" />
+		<column name="createdBy" type="long" />
+    	<finder name="Group" return-type="Collection">
+    		<finder-column name="groupId"></finder-column>
+    	</finder>
+    	<finder name="CompanyGroup" return-type="Collection">
+    		<finder-column name="companyId"></finder-column>
+    		<finder-column name="groupId"></finder-column>
+    		
+    	</finder>
+    	<finder name="idType" return-type="Collection">
+    		<finder-column name="idType"></finder-column>
+    	</finder>
+    	<finder name="firstName" return-type="Collection">
+    		<finder-column name="firstName" comparator="LIKE"></finder-column>
+    	</finder>
+    	<finder name="lastName" return-type="Collection">
+    		<finder-column name="lastName" comparator="LIKE"></finder-column>
+    	
+    	</finder>
+    	<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
+    </entity>
+    <entity name="AuthorSite" local-service="true" remote-service="false">
+    	<column name="authorSiteId" type="long" primary="true" id-type="increment"></column>
+    	<column name="authorId" type="long"/>
+    	<column name="siteName" type="String"/>
+    	<column name="siteURL" type="String"/>
+    	<finder name="Author" return-type="Collection">
+    		<finder-column name="authorId"></finder-column>
+    	</finder>	
+    	<finder name="AuthorSite" return-type="AuthorSite" unique="true">
+    		<finder-column name="authorId"></finder-column>
+    		<finder-column name="siteName"></finder-column>
+    	</finder>
+    </entity>
+    <entity name="ItemAuthor" local-service="true" remote-service="false">
+    	<column name="itemId" type="long" primary="true"></column>
+    	<column name="authorId" type="long" primary="true"></column>
+    	<finder name="itemId" return-type="Collection">
+    		<finder-column name="itemId"></finder-column>
+    	</finder>
+    	<finder name="authorId" return-type="Collection">
+    		<finder-column name="authorId"></finder-column>
+    	</finder>
+    </entity>
+    <entity name="Expertise" local-service="true" remote-service="true">
+    	<column name="expertiseId" type="long" primary="true"></column>
+    	<column name="groupId" type="long"></column>
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="expertiseName" type="String"></column>
+    	<column name="indexedName" type="String"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    	<column name="authorCount" type="int"></column>
+    	<finder name="Group" return-type="Collection">
+    		<finder-column name="groupId"></finder-column>
+    	</finder>
+    	<finder name="GroupName" return-type="Expertise" unique="true">
+    		<finder-column name="groupId"></finder-column>
+    		<finder-column name="indexedName"></finder-column>
+    	</finder>
+    	
+    </entity>
+    <entity name="AuthorExpertise" local-service="true" remote-service="false">
+    	<column name="authorId" type="long" primary="true"></column>
+        <column name="expertiseId" type="long" primary="true"></column>
+         <finder name="Author" return-type="Collection">
+			<finder-column name="authorId"></finder-column>
+		</finder>
+		<finder name="Expertise" return-type="Collection">
+			<finder-column name="expertiseId"></finder-column>
+		</finder>
+    </entity>
+    <entity name="DownloadSummary" local-service="true" remote-service="false">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+    	<column name="itemId" type="long"></column>
+    	<column name="perMonth" type="int"></column>
+    	<column name="perYear" type="int"></column>
+    	
+ 		<column name="status" type="int"></column>
+ 		<finder name="Status" return-type="Collection">
+			<finder-column name="status"></finder-column>
+		</finder>
+		<finder name="ItemId" return-type="Collection">
+			<finder-column name="itemId"></finder-column>
+		</finder>
+		
+ 		<finder name="Period" return-type="Collection">
+			<finder-column name="perMonth"></finder-column>
+			<finder-column name="perYear"></finder-column>
+		</finder>
+		<finder name="Year" return-type="Collection">
+			
+			<finder-column name="perYear"></finder-column>
+		</finder>
+ 		
+    </entity>
+     <entity name="StatDownloadPeriod" local-service="true" remote-service="false">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+    	<column name="itemId" type="long"></column>
+    	<column name="perMonth" type="int"></column>
+    	<column name="perYear" type="int"></column>
+    	<finder name="Period" return-type="Collection">
+			<finder-column name="perMonth"></finder-column>
+			<finder-column name="perYear"></finder-column>
+		</finder>
+ 		
+    </entity>
+    <entity name="StatDownloadItemType" local-service="true" remote-service="false">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+ 
+    	<column name="perMonth" type="int"></column>
+    	<column name="perYear" type="int"></column>
+    	<column name="itemTypeId" type="long"></column>
+    	<finder name="ItemType" return-type="Collection">
+			<finder-column name="itemTypeId"></finder-column>
+		</finder>
+ 		
+    </entity>
+    <entity name="StatDownloadCategory" local-service="true" remote-service="false">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+ 
+    	<column name="perMonth" type="int"></column>
+    	<column name="perYear" type="int"></column>
+    	<column name="categoryId" type="long"></column>
+    	<finder name="Category" return-type="Collection">
+			<finder-column name="categoryId"></finder-column>
+		</finder>
+ 		
+    </entity>
+     <entity name="StatDownloadTag" local-service="true" remote-service="false">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+    
+    	<column name="perMonth" type="int"></column>
+    	<column name="perYear" type="int"></column>
+    	<column name="tagId" type="long"></column>
+    	<finder name="Tag" return-type="Collection">
+			<finder-column name="tagId"></finder-column>
+		</finder>
+ 		
+    </entity>
+    <entity name="ViewSummary" local-service="true" remote-service="true">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+    	<column name="itemId" type="long"></column>
+    	<column name="perMonth" type="int"></column>
+    	<column name="perYear" type="int"></column>
+ 
+ 		<column name="status" type="int"></column>
+ 		<finder name="Status" return-type="Collection">
+			<finder-column name="status"></finder-column>
+		</finder>
+		
+ 		<finder name="Period" return-type="Collection">
+			<finder-column name="perMonth"></finder-column>
+			<finder-column name="perYear"></finder-column>
+		</finder>
+		<finder name="Year" return-type="Collection">
+			
+			<finder-column name="perYear"></finder-column>
+		</finder>
+    </entity>
+   
+     <entity name="StatViewItemType" local-service="true" remote-service="false">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+    	<column name="perMonth" type="int"></column>
+    	<column name="perYear" type="int"></column>
+    	<column name="itemTypeId" type="long"></column>
+    	<finder name="ItemType" return-type="Collection">
+			<finder-column name="itemTypeId"></finder-column>
+		</finder>
+ 		
+    </entity>
+    <entity name="StatViewCategory" local-service="true" remote-service="false">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+    	<column name="perMonth" type="int"></column>
+    	<column name="perYear" type="int"></column>
+    	<column name="categoryId" type="long"></column>
+    	<finder name="Category" return-type="Collection">
+			<finder-column name="categoryId"></finder-column>
+		</finder>
+ 		
+    </entity>
+     <entity name="StatViewTag" local-service="true" remote-service="false">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+    	<column name="perMonth" type="int"></column>
+    	<column name="perYear" type="int"></column>
+    	<column name="tagId" type="long"></column>
+ 		<finder name="Tag" return-type="Collection">
+			<finder-column name="tagId"></finder-column>
+		</finder>
+    </entity>
+</service-builder>

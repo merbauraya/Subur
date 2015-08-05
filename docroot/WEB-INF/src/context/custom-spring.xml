@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+ 
+<beans>
+    <bean id="ItemAuthorLocalService" class="com.idetronic.subur.service.impl.ItemAuthorLocalServiceImpl" />
+	<bean id="Author" class="com.idetronic.subur.model.impl.AuthorImpl" />
+	<bean id="ItemItemTypeLocalService" class="com.idetronic.subur.service.impl.ItemItemTypeLocalServiceImpl" />
+	<bean id="ItemTypeLocalService" class="com.idetronic.subur.service.impl.ItemTypeLocalServiceImpl" />
+	
+	<bean id="ItemType" class="com.idetronic.subur.model.impl.ItemTypeImpl" />
+	
+</beans>
