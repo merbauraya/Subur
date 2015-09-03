@@ -27,6 +27,7 @@ import com.idetronic.subur.service.AuthorLocalServiceUtil;
 import com.idetronic.subur.service.DownloadSummaryLocalServiceUtil;
 import com.idetronic.subur.service.ItemAuthorLocalServiceUtil;
 import com.idetronic.subur.service.ItemItemTypeLocalServiceUtil;
+import com.idetronic.subur.service.ItemTypeLocalServiceUtil;
 import com.idetronic.subur.service.ViewSummaryLocalServiceUtil;
 import com.idetronic.subur.service.base.SuburItemLocalServiceBaseImpl;
 import com.idetronic.subur.service.persistence.SuburItemFinderUtil;
@@ -108,10 +109,12 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		String summary = null;
 		String url = null;
 		String layoutUuid = null;
-			
+		
+		/*
 		resourceLocalService.addResources(suburItem.getCompanyId(), suburItem.getGroupId(), 
 				suburItem.getUserId(), SuburItem.class.getName(), suburItem.getItemId(), 
 				false, true, true);
+		
 		
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
                 groupId, suburItem.getCreateDate(),
@@ -122,10 +125,8 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
                 ContentTypes.TEXT_HTML, suburItem.getTitle(), itemDescription, summary, url,
                 layoutUuid, 0, 0, null, false);
                    
-		Map<String, Object> attributes = new HashMap<String, Object>();
-		attributes.put("itemType", 1);
-		assetEntry.setModelAttributes(attributes);
-		assetEntryLocalService.updateAssetEntry(assetEntry);
+		*/
+		
 		
 		return suburItem;
 	}
@@ -174,10 +175,6 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		AuthorLocalServiceUtil.updateAuthorPosting(suburItem);
 		
 		
-		
-		
-		
-		
 		ItemItemTypeLocalServiceUtil.updateItemItemType(suburItem.getItemId(),itemTypeIds);
 		return suburItemPersistence.update(suburItem);
 		
@@ -209,8 +206,12 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		
 		List<ItemItemType> itemTypes = ItemItemTypeLocalServiceUtil.getByItemId(suburItem.getItemId());
 		for (ItemItemType iType : itemTypes)
+		{
 			itemItemTypePersistence.remove(iType);
-		
+			ItemTypeLocalServiceUtil.decrementCounter(iType.getItemTypeId());
+			
+		}
+		AuthorLocalServiceUtil.deleteItem(suburItem.getItemId());
 		// Asset
 
 		assetEntryLocalService.deleteEntry(

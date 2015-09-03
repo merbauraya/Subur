@@ -25,5 +25,5 @@
 	<aui:input type="text" cssClass="fullwidth" name="title"></aui:input>
 	
 	
-	<aui:button name="submitBtn" type="submit" value="save" last="true" />
+	<aui:button name="submitBtn" type="submit" value="next" last="true" />
 </aui:form>

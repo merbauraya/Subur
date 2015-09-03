@@ -13,6 +13,8 @@
 <%@ page import="com.liferay.portal.kernel.search.Summary" %>
 <%@ page import="com.liferay.util.MathUtil" %>
 
+<%@ page import="com.idetronic.subur.search.SuburField" %>
+
 
 
 <%
@@ -26,6 +28,44 @@
 	boolean matchAll = Validator.equals(andOperator, "1");
 	String authorFirstName = ParamUtil.getString(request,"authorFirstName");
 	String authorLastName = ParamUtil.getString(request,"authorLastName");
+	//String assetCategoryIds = ParamUtil.getString(request, "assetCategoryIds");
+	
+	
+	String assetTagNames = ParamUtil.getString(request, "assetTagNames");
+	out.print(assetTagNames);
+	
+	SearchContext searchContext = SearchContextFactory.getInstance(request);
+	Map<String, String[]> parameterMap = request.getParameterMap();
+
+	List<Long> assetCategoryIdsList = new ArrayList<Long>();
+
+	boolean updateAssetCategoryIds = false;
+
+	for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+		String name = entry.getKey();
+
+		if (name.startsWith("assetCategoryIds")) {
+			updateAssetCategoryIds = true;
+
+			long[] assetVocabularyAssetCategoryIds = StringUtil.split(
+				ParamUtil.getString(request, name), 0L);
+
+			for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
+				assetCategoryIdsList.add(assetCategoryId);
+			}
+		}
+	}
+	
+	long[] assetCategoryIds = ArrayUtil.toArray(
+			assetCategoryIdsList.toArray(
+				new Long[assetCategoryIdsList.size()]));
+	
+	
+	searchContext.setAssetCategoryIds(assetCategoryIds);
+	//String[] assetTagNamesArr = StringUtil.split(assetTagNames);	
+	//searchContext.setAssetTagNames(assetTagNamesArr);
+	
+	
 %>
 
 
@@ -63,18 +103,30 @@
 	>
 
 <%
-        SearchContext searchContext = SearchContextFactory.getInstance(request);
+        
 		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
 		
 		
 	    BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(searchContext);
-	   
+	    searchQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, SuburItem.class.getName()); 
+	    
 	    
 	    Query stringQuery = null;
 	    
 	    
 	    if (advanceSearch){
+	    	/*
 	    	
+	    	if (matchAll)
+	    	{
+	            
+	            for (int i = 0; i < assetCategoryIds.length; i++ )
+	            	searchQuery.addRequiredTerm(Field.ASSET_CATEGORY_IDS, assetCategoryIds[i]);
+	    	}else
+	    		
+	    	{
+	    		
+	    	}
 	    	
 	    	stringQuery = SuburSearchUtil.buildSearchQuery(request, searchContext);
 	    	BooleanClause clause = BooleanClauseFactoryUtil.create(searchContext, stringQuery, BooleanClauseOccur.MUST.getName());
@@ -92,21 +144,41 @@
     		
     		
     		searchContext.setKeywords(sb.toString());
-	    
+	    	*/
+	    	fullQuery = SuburSearchUtil.getSearchQuery(request, searchContext);
 	    }else
 	    {
-	    	/*
-	    	searchQuery.addTerm(SuburConstant.FIELD_YEAR, keywords);
-	    	searchQuery.addTerm(Field.TITLE, keywords);
-	    	searchQuery.addTerm(SuburConstant.FIELD_AUTHOR, keywords);
-	    	BooleanClause clause = BooleanClauseFactoryUtil.create(searchContext, searchQuery, BooleanClauseOccur.MUST.getName());
-	    	*/
-	    	searchContext.setKeywords(keywords);
+	    	
+		    BooleanQuery descQuery = BooleanQueryFactoryUtil.create(searchContext);
+		    
+		    descQuery.addTerm(SuburField.TITLE, keywords);
+		    descQuery.addTerm(SuburField.DESCRIPTION, keywords);
+		    descQuery.addTerm(SuburField.AUTHOR, keywords);
+		    
+
+	    	TermQuery titleQuery = TermQueryFactoryUtil.create(searchContext, SuburField.TITLE, keywords);
+	    	TermQuery abstractQuery = TermQueryFactoryUtil.create(searchContext, SuburField.DESCRIPTION, keywords);
+	    	TermQuery authorQuery = TermQueryFactoryUtil.create(searchContext, SuburField.AUTHOR, keywords);
+	    	
+	    	
+	    	
+	    	
+	    	//searchQuery.addTerm(SuburConstant.FIELD_YEAR, keywords);
+	    	
+	    	//BooleanClause clause = BooleanClauseFactoryUtil.create(searchContext, searchQuery, BooleanClauseOccur.MUST.getName());
+	    	
+	    	//fullQuery.add(titleQuery, BooleanClauseOccur.SHOULD);
+	    	//fullQuery.add(abstractQuery, BooleanClauseOccur.SHOULD);
+	    	//fullQuery.add(authorQuery, BooleanClauseOccur.SHOULD);
+	    	fullQuery.add(descQuery, BooleanClauseOccur.MUST);
+	    	fullQuery.add(searchQuery,BooleanClauseOccur.SHOULD);
+	    	//searchContext.setKeywords(keywords);
 	    	
 	    	//searchContext.setBooleanClauses(new BooleanClause[] {clause});
+	    	
 	    }
     
-	    
+	    _log.info(fullQuery.toString());
 	    
 	    QueryConfig queryConfig = new QueryConfig();
 
@@ -121,7 +193,9 @@
         //_log.info(fullQuery.toString());
         Indexer indexer = IndexerRegistryUtil.getIndexer(SuburItem.class);
 
-        Hits hits = indexer.search(searchContext);
+        //Hits hits = indexer.search(searchContext);
+        Hits hits =  SearchEngineUtil.search(searchContext, fullQuery); 
+
         searchContainer.setTotal(hits.getLength());
         
         PortletURL hitURL = renderResponse.createRenderURL();
@@ -139,27 +213,45 @@
 			modelVar="searchResult"
 		>
         	<%
-			SuburItem entry = SuburItemLocalServiceUtil.getSuburItem(searchResult.getClassPK());
-
-			entry = entry.toEscapedModel();
-
-			Summary summary = searchResult.getSummary();
-			String searchDescription = entry.getSearchDescription(); 
+        	
+        	SuburItem entry = null;
+        	long itemId = 0L;
+        	String itemTitle = StringPool.BLANK;
+        	String searchDescription = StringPool.BLANK;
+        	Summary summary = null;
+        	String itemAbstract = StringPool.BLANK;
+        	try {
+        		
+        	
+				entry = SuburItemLocalServiceUtil.getSuburItem(searchResult.getClassPK());
+				itemId = entry.getItemId();
+				entry = entry.toEscapedModel();
+				itemTitle = entry.getTitle();
+				summary = searchResult.getSummary();
+				searchDescription = entry.getSearchDescription(); 
+				itemAbstract = entry.getItemAbstract();
+        	} catch (NoSuchItemException e)
+        	{}
 			%>
-        	<portlet:renderURL var="rowURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
-				<portlet:param name="jspPage" value="/html/renderer/item_full.jsp" />
-				<portlet:param name="itemId" value="<%= String.valueOf(entry.getItemId())%>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="urlTitle" value="<%= StringPool.BLANK %>" />
-			</portlet:renderURL>
-        <liferay-ui:app-view-search-entry
-				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-				description="<%= (searchDescription  != StringPool.BLANK) ? searchDescription : entry.getItemAbstract() %>"
-				queryTerms="<%= hits.getQueryTerms() %>"
-				thumbnailSrc="<%= StringPool.BLANK %>"
-				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : entry.getTitle() %>"
-				url="<%= rowURL %>"
-			/>
+			<c:if test="<%= Validator.isNotNull(entry)%>">
+	        	<portlet:renderURL var="rowURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
+					<portlet:param name="jspPage" value="/html/renderer/item_full.jsp" />
+					<portlet:param name="itemId" value="<%= String.valueOf(itemId)%>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="urlTitle" value="<%= StringPool.BLANK %>" />
+				</portlet:renderURL>
+				 
+				
+		        <liferay-ui:app-view-search-entry
+						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
+						description="<%= (searchDescription  != StringPool.BLANK) ? searchDescription : itemAbstract %>"
+						queryTerms="<%= hits.getQueryTerms() %>"
+						thumbnailSrc="<%= StringPool.BLANK %>"
+						title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : itemTitle %>"
+						url="<%= rowURL %>"
+					/>
+			</c:if>
+			
 		</liferay-ui:search-container-row> 
 
 		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="more" />

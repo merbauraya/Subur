@@ -272,16 +272,20 @@ public class AuthorLocalServiceUtil {
 	}
 
 	public static long addAuthor(java.lang.String firstName,
-		java.lang.String lastName, java.lang.String title,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String title, java.lang.String email,
+		java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
 		java.lang.String remoteId, int idType, long userId, long groupId,
 		long createdByUserId, java.lang.String[] expertiseNames,
+		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addAuthor(firstName, lastName, title, authorSite, remoteId,
-			idType, userId, groupId, createdByUserId, expertiseNames,
+				   .addAuthor(firstName, middleName, lastName, title, email,
+			officeNo, authorSite, remoteId, idType, userId, groupId,
+			createdByUserId, expertiseNames, researchInterestNames,
 			serviceContext);
 	}
 
@@ -289,6 +293,12 @@ public class AuthorLocalServiceUtil {
 		java.util.List<com.idetronic.subur.model.Expertise> expertises)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().setExpertises(authorId, expertises);
+	}
+
+	public static void setResearchInterests(long authorId,
+		java.util.List<com.idetronic.subur.model.ResearchInterest> researchInterests)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setResearchInterests(authorId, researchInterests);
 	}
 
 	/**
@@ -307,17 +317,20 @@ public class AuthorLocalServiceUtil {
 	*/
 	public static com.idetronic.subur.model.Author updateAuthor(long authorId,
 		java.lang.String title, java.lang.String firstName,
-		java.lang.String lastName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String email, java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
 		java.lang.String remoteId, int idType, long userId, long groupId,
 		long createdByUserId, java.lang.String[] expertiseNames,
+		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateAuthor(authorId, title, firstName, lastName,
-			authorSite, remoteId, idType, userId, groupId, createdByUserId,
-			expertiseNames, serviceContext);
+				   .updateAuthor(authorId, title, firstName, middleName,
+			lastName, email, officeNo, authorSite, remoteId, idType, userId,
+			groupId, createdByUserId, expertiseNames, researchInterestNames,
+			serviceContext);
 	}
 
 	/**
@@ -352,6 +365,12 @@ public class AuthorLocalServiceUtil {
 		long authorId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getExpertises(authorId);
+	}
+
+	public static java.util.List<com.idetronic.subur.model.ResearchInterest> getResearchInterests(
+		long authorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getResearchInterests(authorId);
 	}
 
 	/**
@@ -454,6 +473,11 @@ public class AuthorLocalServiceUtil {
 	public static java.util.List<com.idetronic.subur.model.Author> findByGroupCompany(
 		long companyId, long groupId, int start, int end) {
 		return getService().findByGroupCompany(companyId, groupId, start, end);
+	}
+
+	public static void deleteItem(long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteItem(itemId);
 	}
 
 	public static void clearService() {

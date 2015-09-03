@@ -16,20 +16,17 @@ package com.idetronic.subur.service.messaging;
 
 import com.idetronic.subur.service.AuthorExpertiseLocalServiceUtil;
 import com.idetronic.subur.service.AuthorLocalServiceUtil;
+import com.idetronic.subur.service.AuthorResearchInterestLocalServiceUtil;
 import com.idetronic.subur.service.AuthorSiteLocalServiceUtil;
 import com.idetronic.subur.service.ClpSerializer;
 import com.idetronic.subur.service.DownloadSummaryLocalServiceUtil;
 import com.idetronic.subur.service.ExpertiseLocalServiceUtil;
 import com.idetronic.subur.service.ExpertiseServiceUtil;
 import com.idetronic.subur.service.ItemAuthorLocalServiceUtil;
-import com.idetronic.subur.service.ItemFileEntryLocalServiceUtil;
-import com.idetronic.subur.service.ItemFileEntryServiceUtil;
 import com.idetronic.subur.service.ItemItemTypeLocalServiceUtil;
 import com.idetronic.subur.service.ItemTypeLocalServiceUtil;
-import com.idetronic.subur.service.ItemTypeTemplateLocalServiceUtil;
-import com.idetronic.subur.service.MetadataPropertyLocalServiceUtil;
-import com.idetronic.subur.service.MetadataPropertyValueLocalServiceUtil;
-import com.idetronic.subur.service.MetadataSchemaLocalServiceUtil;
+import com.idetronic.subur.service.ResearchInterestLocalServiceUtil;
+import com.idetronic.subur.service.ResearchInterestServiceUtil;
 import com.idetronic.subur.service.StatDownloadCategoryLocalServiceUtil;
 import com.idetronic.subur.service.StatDownloadItemTypeLocalServiceUtil;
 import com.idetronic.subur.service.StatDownloadPeriodLocalServiceUtil;
@@ -37,6 +34,7 @@ import com.idetronic.subur.service.StatDownloadTagLocalServiceUtil;
 import com.idetronic.subur.service.StatViewCategoryLocalServiceUtil;
 import com.idetronic.subur.service.StatViewItemTypeLocalServiceUtil;
 import com.idetronic.subur.service.StatViewTagLocalServiceUtil;
+import com.idetronic.subur.service.SuburConfigLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
 import com.idetronic.subur.service.ViewSummaryLocalServiceUtil;
 import com.idetronic.subur.service.ViewSummaryServiceUtil;
@@ -63,6 +61,8 @@ public class ClpMessageListener extends BaseMessageListener {
 
 			AuthorExpertiseLocalServiceUtil.clearService();
 
+			AuthorResearchInterestLocalServiceUtil.clearService();
+
 			AuthorSiteLocalServiceUtil.clearService();
 
 			DownloadSummaryLocalServiceUtil.clearService();
@@ -72,21 +72,13 @@ public class ClpMessageListener extends BaseMessageListener {
 			ExpertiseServiceUtil.clearService();
 			ItemAuthorLocalServiceUtil.clearService();
 
-			ItemFileEntryLocalServiceUtil.clearService();
-
-			ItemFileEntryServiceUtil.clearService();
 			ItemItemTypeLocalServiceUtil.clearService();
 
 			ItemTypeLocalServiceUtil.clearService();
 
-			ItemTypeTemplateLocalServiceUtil.clearService();
+			ResearchInterestLocalServiceUtil.clearService();
 
-			MetadataPropertyLocalServiceUtil.clearService();
-
-			MetadataPropertyValueLocalServiceUtil.clearService();
-
-			MetadataSchemaLocalServiceUtil.clearService();
-
+			ResearchInterestServiceUtil.clearService();
 			StatDownloadCategoryLocalServiceUtil.clearService();
 
 			StatDownloadItemTypeLocalServiceUtil.clearService();
@@ -100,6 +92,8 @@ public class ClpMessageListener extends BaseMessageListener {
 			StatViewItemTypeLocalServiceUtil.clearService();
 
 			StatViewTagLocalServiceUtil.clearService();
+
+			SuburConfigLocalServiceUtil.clearService();
 
 			SuburItemLocalServiceUtil.clearService();
 

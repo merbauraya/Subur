@@ -44,7 +44,35 @@
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
-	
+	<model-resource>
+		<model-name>com.idetronic.subur.model</model-name>
+		<portlet-ref>
+			<portlet-name>Subur</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<permissions>
+			<supports>
+				<action-key>ADD_ENTRY</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>SUBSCRIBE</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+				<action-key>MANAGE_AUTHOR</action-key>
+			</supports>
+			<site-member-defaults/>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+				
+			<guest-unsupported>
+				<action-key>ADD_ENTRY</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>SUBSCRIBE</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>MANAGE_AUTHOR</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
 	<model-resource>
 		<model-name>com.idetronic.subur.Author</model-name>
 		<portlet-ref>

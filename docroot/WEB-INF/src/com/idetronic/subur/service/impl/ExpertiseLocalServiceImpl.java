@@ -25,9 +25,13 @@ import com.idetronic.subur.model.AuthorExpertise;
 import com.idetronic.subur.model.Expertise;
 import com.idetronic.subur.service.base.ExpertiseLocalServiceBaseImpl;
 import com.idetronic.subur.util.SuburAssetUtil;
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
@@ -63,6 +67,8 @@ public class ExpertiseLocalServiceImpl extends ExpertiseLocalServiceBaseImpl {
 		for (String name: names)
 		{
 			Expertise expertise = null;
+			
+			_log.info("exp="+name);
 			try
 			{
 				expertise = getExpertise(group.getGroupId(),StringUtil.lowerCase(name));
@@ -92,7 +98,7 @@ public class ExpertiseLocalServiceImpl extends ExpertiseLocalServiceBaseImpl {
 		
 		Date now = new Date();
 
-		long expertiseId = counterLocalService.increment();
+		long expertiseId = CounterLocalServiceUtil.increment(Expertise.class.getName());
 		Expertise expertise = expertisePersistence.create(expertiseId);
 		
 		expertise.setGroupId(groupId);
@@ -171,4 +177,11 @@ public class ExpertiseLocalServiceImpl extends ExpertiseLocalServiceBaseImpl {
 		}
 		
 	}
+	public List<Expertise> getTop10(long groupId) throws SystemException
+	{
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("Subur_Expertise", "authorCount", false) ;
+		return expertisePersistence.findByGroup(groupId, 0, 9, obc);
+	}
+	private static Log _log = LogFactoryUtil.getLog(ExpertiseLocalServiceImpl.class);
+
 }

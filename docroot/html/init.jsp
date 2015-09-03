@@ -145,6 +145,7 @@ page import="com.liferay.portal.theme.ThemeDisplay" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRenderer" %>
 <%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %> 
 <%@ page import="com.liferay.portal.service.ClassNameLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.ServiceContextFactory" %>
 <%@ page import="java.text.Format" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.io.PrintWriter" %>
@@ -161,13 +162,13 @@ page import="java.util.Map" %>
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
+<%@ page import="com.idetronic.subur.util.SuburConfiguration" %>
 <%@page import="com.idetronic.subur.model.ItemType" %>
 <%@ page import="com.idetronic.subur.model.Expertise" %>
 <%@
 page import="com.idetronic.subur.model.ItemItemType" %><%@
 page import="com.idetronic.subur.model.SuburItem" %><%@
 page import="com.idetronic.subur.model.MetadataPropertyValue" %><%@
-page import="com.idetronic.subur.model.impl.MetadataPropertyValueImpl" %><%@
 page import="com.idetronic.subur.service.ItemTypeLocalServiceUtil" %><%@
 page import="com.idetronic.subur.service.SuburItemLocalServiceUtil" %><%@
 page import="com.idetronic.subur.service.MetadataPropertyValueLocalServiceUtil" %>
@@ -228,6 +229,7 @@ page import="com.idetronic.subur.service.MetadataPropertyValueLocalServiceUtil" 
 <%@ page import="com.liferay.portal.security.permission.ResourceActionsUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.JavaConstants" %>
 <%@ page import="com.idetronic.subur.service.persistence.SuburItemQuery" %>
+<%@ page import="com.idetronic.subur.NoSuchItemException" %>
 
 <portlet:defineObjects />
 

@@ -87,6 +87,9 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+		 <supported-publishing-event xmlns:x='http://liferay.com'>
+			<qname>x:authorNav</qname>
+		</supported-publishing-event>
 		<supported-public-render-parameter>authorId</supported-public-render-parameter>
 		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 	</portlet>
@@ -150,7 +153,6 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
-		<resource-bundle>content.categories.Language</resource-bundle>
 		<portlet-info>
 			<title>Multi Categories Navigation</title>
 			<short-title>1</short-title>
@@ -214,7 +216,7 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>author</portlet-name>
+		<portlet-name>Author</portlet-name>
 		<display-name>Author</display-name>
 		<portlet-class>com.idetronic.subur.AuthorPortlet</portlet-class>
 		<init-param>
@@ -248,6 +250,46 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+		<supported-processing-event xmlns:x='http://liferay.com'>
+        	<qname>x:categoryNav</qname>
+        </supported-processing-event>
+        <supported-processing-event xmlns:x='http://liferay.com'>
+        	<qname>x:authorNav</qname>
+        </supported-processing-event>
+		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+	</portlet>
+	<portlet>
+		<portlet-name>subur-admin</portlet-name>
+		<display-name>Subur Admin</display-name>
+		<portlet-class>
+			com.idetronic.subur.portlet.SuburAdmin
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/suburadmin/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>Subur Admin</title>
+			<short-title>Subur Admin</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
 	</portlet>
 	<event-definition xmlns:x='http://liferay.com'>
 		<qname>x:categoryNav</qname>
@@ -255,6 +297,10 @@
 	</event-definition>
 	<event-definition xmlns:x='http://liferay.com'>
 		<qname>x:itemTypeNav</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+	<event-definition xmlns:x='http://liferay.com'>
+		<qname>x:authorNav</qname>
 		<value-type>java.lang.String</value-type>
 	</event-definition>
 	<public-render-parameter>
@@ -283,6 +329,7 @@
 	</public-render-parameter>
 
 	
+
 
 
 </portlet-app>

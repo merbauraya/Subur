@@ -7,6 +7,7 @@
 	
 	SearchContainer suburSearchContainer = new SuburSearch(renderRequest, currentURLObj);
 	SuburDisplayTerms suburDisplayTerms = (SuburDisplayTerms)suburSearchContainer.getDisplayTerms();
+	boolean showSearch = true;
 %>
 
 <c:if test="<%= showAddEntry || showAdminItem || showPermission ||  showSubscribe || showSearch || showManageAuthor%>">
@@ -14,7 +15,7 @@
 		<c:if test="<%= showAddEntry || showAdminItem || showPermission %>">
 			<aui:nav>
 				<c:if test="<%= showAddEntry %>">
-					<portlet:renderURL var="addItemURL" windowState="<%=LiferayWindowState.MAXIMIZED.toString() %>">
+					<portlet:renderURL var="addItemURL">
 						<portlet:param name="jspPage" value="<%= SuburConstant.PAGE_NEW_ITEM %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -23,7 +24,7 @@
 					<aui:nav-item href="<%= addItemURL %>" label="add-subur-item" name="addItemButton" />
 				</c:if>
 				<c:if test="<%= showAdminItem %>">
-					<portlet:renderURL var="adminItemURL" windowState="<%=LiferayWindowState.MAXIMIZED.toString() %>">
+					<portlet:renderURL var="adminItemURL">
 						<portlet:param name="jspPage" value="<%= SuburConstant.PAGE_ADMIN_ITEM %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -32,16 +33,7 @@
 					<aui:nav-item href="<%= adminItemURL %>" label="manage-item" name="manageItemButton" />
 					
 				</c:if>
-				<c:if test="<%= showManageAuthor %>">
-					<portlet:renderURL var="manageAuthorURL" windowState="<%=LiferayWindowState.MAXIMIZED.toString() %>">
-						<portlet:param name="jspPage" value="<%= SuburConstant.PAGE_ADMIN_AUTHOR %>" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
-						
-					</portlet:renderURL>
-					<aui:nav-item href="<%= manageAuthorURL %>" label="manage-author" name="manageAuthorButton" />
-					
-				</c:if>
+				
 				<c:if test="<%= showPermission %>">
 					<liferay-security:permissionsURL
 						modelResource="com.idetronic.subur"
@@ -53,7 +45,16 @@
 					<aui:nav-item href="<%= permissionsURL %>" label="permissions" title="edit-permissions" useDialog="<%= true %>" />
 					
 				</c:if>
+				<portlet:renderURL var="testURL">
+						<portlet:param name="jspPage" value="/html/test/view.jsp"/>
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="backURL" value="<%= currentURL %>" />
+						
+					</portlet:renderURL>
+				<aui:nav-item href="<%= testURL %>" label="test" title="test" useDialog="<%= false %>" />
+				
 			</aui:nav>
+			
 		</c:if>
 		
 			
@@ -63,6 +64,7 @@
 				<liferay-ui:search-form
 					page="/html/search/item_form.jsp"
 					 searchContainer="<%= suburSearchContainer %>"
+					 showAddButton="<%=true %>"
 					 servletContext="<%= this.getServletConfig().getServletContext() %>"
 						/>
 			</aui:nav-bar-search>

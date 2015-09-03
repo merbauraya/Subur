@@ -10,21 +10,17 @@
 	if (displayType.equals(SuburStatUtil.VIEW_MONTHLY_SUMMARY))
 		statDisplay="renderMonthlySummary('2015')";
 	if (displayType.equals(SuburStatUtil.VIEW_MONTHLY_SUMMARY_CATEGORY))
-		statDisplay="renderMonthlyCategory('2015','25303')";
+		statDisplay="renderMonthlyCategory('2015','20817')";
 	
 		
 %>
 <%=displayType %>
-<portlet:actionURL var="updateStatURL" name="updateStats">
-    <portlet:param name="jspPage" value="/edit.jsp" />
-</portlet:actionURL>
 
-
-	<a href="<%= updateStatURL.toString() %>">Update Stat</a>
 	
 	<div id="<portlet:namespace />myDataTable">
 		
 	</div>
+	
 	<div id="<portlet:namespace />chartArea" style="width:100%; height:400px;">>
 	
 	</div>
@@ -66,7 +62,11 @@
 		var columns = [{key:'categoryname',label:'Category'},{key:'M1',label:'Jan'},
 		               {key:'M2',label:'Feb'},{key:'M3',label:'Mac'},
 		               {key:'M4',label:'Apr'},{key:'M5',label:'May'},
-		               {key:'M6',label:'Jun'},{key:'M7',label:'July'}];
+		               {key:'M6',label:'Jun'},{key:'M7',label:'July'},
+		               {key:'M8',label:'Aug'},{key:'M9',label:'Sept'},
+		               {key:'M10',label:'Oct'},{key:'M11',label:'Nov'},
+		               {key:'M12',label:'Dec'}
+		               ];
 		Liferay.Service(
 				'/Subur-portlet.viewsummary/get-monthly-category',
 			  {
@@ -83,10 +83,14 @@
 	{
 		//var columns = 
 		
-		var columns = [{key:'itemtypename',label:'Item Type'},{key:'M1',label:'Jan'},
+		var columns = [{key:'categoryname',label:'Category'},{key:'M1',label:'Jan'},
 		               {key:'M2',label:'Feb'},{key:'M3',label:'Mac'},
 		               {key:'M4',label:'Apr'},{key:'M5',label:'May'},
-		               {key:'M6',label:'Jun'},{key:'M7',label:'July'}];
+		               {key:'M6',label:'Jun'},{key:'M7',label:'July'},
+		               {key:'M8',label:'Aug'},{key:'M9',label:'Sept'},
+		               {key:'M10',label:'Oct'},{key:'M11',label:'Nov'},
+		               {key:'M12',label:'Dec'}
+		               ];
 		Liferay.Service(
 				'/Subur-portlet.viewsummary/get-monthly-item-type',
 				  {

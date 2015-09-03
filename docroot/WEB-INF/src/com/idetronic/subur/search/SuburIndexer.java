@@ -139,9 +139,16 @@ public class SuburIndexer extends BaseIndexer {
          
          
          
-         Field authorField = new Field(SuburConstant.FIELD_AUTHOR, authorString );
-         Field authorFirstNameField = new Field(SuburConstant.FIELD_AUTHOR_FIRST_NAME,authorFirstName);
-         Field authorLastNameField = new Field(SuburConstant.FIELD_AUTHOR_LAST_NAME,authorLastName);
+         Field authorField = new Field(SuburField.AUTHOR, authorString );
+         authorField.setTokenized(true);
+         Field authorFirstNameField = new Field(SuburField.AUTHOR_FIRST_NAME,authorFirstName);
+         authorFirstNameField.setTokenized(true);
+         
+         
+         Field authorLastNameField = new Field(SuburField.AUTHOR_LAST_NAME,authorLastName);
+         authorLastNameField.setTokenized(true);
+         
+         
          
          //authorField.setTokenized(true);
          document.add(authorField);

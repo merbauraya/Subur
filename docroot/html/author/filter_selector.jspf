@@ -1,0 +1,52 @@
+
+<%
+	int vocabCount = 0;
+	long[] groupIds = new long[] {themeDisplay.getScopeGroupId()};
+	List<AssetVocabulary> authorVocabularies = AuthorUtil.getAuthorVocabulary(groupIds);
+	for (AssetVocabulary vocab: authorVocabularies)
+	{
+		String vocabName = StringUtil.replace(vocab.getName(),StringPool.SPACE,StringPool.UNDERLINE);
+	%>
+	<c:if test="<%=vocabCount%3==0%>">
+		<div class="row-fluid">
+	</c:if>	
+	
+	
+		<div class="span4">
+			<aui:select name="<%=vocabName %>" multiple="<%=true %>" size="4" label="<%=vocab.getName() %>">
+				
+				<%
+	
+				Map<String,AssetCategory> top10Categories = AuthorUtil.getTop10CategoryByVocabulary(vocab.getVocabularyId());
+				int i = 0;
+				for (Map.Entry<String, AssetCategory> categories : top10Categories.entrySet())
+				{
+					AssetCategory category = categories.getValue();
+					String key = categories.getKey();
+					int count = Integer.parseInt(StringUtil.split(key,"-")[0]);
+					i++;
+				%>
+				<aui:option value="<%=key %>">
+					<%=category.getName() %> [<%=count %>]
+				</aui:option>
+					
+				
+				<%
+				}
+				%>
+				
+				
+		
+			</aui:select>
+		</div>
+	<%
+		vocabCount++;
+	%>
+		<c:if test="<%=vocabCount%3==0 %>">
+			</div>
+		</c:if>
+	<%
+	}
+	
+	
+	%>

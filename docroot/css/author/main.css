@@ -1,1 +1,15 @@
+.author-portlet {
+
 .fullwidth {width:90%;}
+
+.taglib-asset-categories-summary:after
+{white-space:pre;
+content:'\A';}
+
+.author-summary h2
+{display:inline;}
+.author-categorization
+{
+	line-height:25px;
+}
+}

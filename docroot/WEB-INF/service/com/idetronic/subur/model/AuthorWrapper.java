@@ -62,6 +62,8 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 		attributes.put("metadata", getMetadata());
 		attributes.put("lastPublishedDate", getLastPublishedDate());
 		attributes.put("itemCount", getItemCount());
+		attributes.put("email", getEmail());
+		attributes.put("officeNo", getOfficeNo());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("Uuid", getUuid());
@@ -148,6 +150,18 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 
 		if (itemCount != null) {
 			setItemCount(itemCount);
+		}
+
+		String email = (String)attributes.get("email");
+
+		if (email != null) {
+			setEmail(email);
+		}
+
+		String officeNo = (String)attributes.get("officeNo");
+
+		if (officeNo != null) {
+			setOfficeNo(officeNo);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -453,6 +467,46 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 	@Override
 	public void setItemCount(int itemCount) {
 		_author.setItemCount(itemCount);
+	}
+
+	/**
+	* Returns the email of this author.
+	*
+	* @return the email of this author
+	*/
+	@Override
+	public java.lang.String getEmail() {
+		return _author.getEmail();
+	}
+
+	/**
+	* Sets the email of this author.
+	*
+	* @param email the email of this author
+	*/
+	@Override
+	public void setEmail(java.lang.String email) {
+		_author.setEmail(email);
+	}
+
+	/**
+	* Returns the office no of this author.
+	*
+	* @return the office no of this author
+	*/
+	@Override
+	public java.lang.String getOfficeNo() {
+		return _author.getOfficeNo();
+	}
+
+	/**
+	* Sets the office no of this author.
+	*
+	* @param officeNo the office no of this author
+	*/
+	@Override
+	public void setOfficeNo(java.lang.String officeNo) {
+		_author.setOfficeNo(officeNo);
 	}
 
 	/**

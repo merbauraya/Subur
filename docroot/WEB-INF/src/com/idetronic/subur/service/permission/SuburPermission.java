@@ -8,7 +8,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 
 public class SuburPermission {
-	private static String CLASS_NAME="com.idetronic.subur";
+	private static String CLASS_NAME="com.idetronic.subur.model";
 	
 	
 	public static void check(

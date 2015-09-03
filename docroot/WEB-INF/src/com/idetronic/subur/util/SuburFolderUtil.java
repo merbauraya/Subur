@@ -25,14 +25,14 @@ public class SuburFolderUtil {
 	public static long getFolderId(PortletRequest request,ThemeDisplay themeDisplay)
 	{
 		_themeDisplay = themeDisplay;
-		logger.info(_themeDisplay);
+		
 		Calendar now = Calendar.getInstance();
 		String year = String.valueOf(now.get(Calendar.YEAR));
 		String[] months = CalendarUtil.getMonths(_themeDisplay.getLocale());
 		String month = months[now.get(Calendar.MONTH)];
 		
 		//check if 
-		logger.info("getting foler");
+		//logger.info("getting foler");
 		DLFolder dir = getRootFolder(request);
 		DLFolder folderYear = getFolder(dir.getFolderId(),year,request);
 		DLFolder folderMonth = getFolder(folderYear.getFolderId(),month,request);
@@ -42,14 +42,14 @@ public class SuburFolderUtil {
 	public static long getFolderId(HttpServletRequest request,ThemeDisplay themeDisplay)
 	{
 		_themeDisplay = themeDisplay;
-		logger.info(_themeDisplay);
+		
 		Calendar now = Calendar.getInstance();
 		String year = String.valueOf(now.get(Calendar.YEAR));
 		String[] months = CalendarUtil.getMonths(_themeDisplay.getLocale());
 		String month = months[now.get(Calendar.MONTH)];
 		
 		//check if 
-		logger.info("getting foler");
+		
 		DLFolder dir = getRootFolder(request);
 		DLFolder folderYear = getFolder(dir.getFolderId(),year,request);
 		DLFolder folderMonth = getFolder(folderYear.getFolderId(),month,request);
@@ -58,7 +58,7 @@ public class SuburFolderUtil {
 	}
 	private static DLFolder getFolder(long parentFolderId,String folderName,PortletRequest request)
 	{
-		logger.info("getfolder "+ folderName + parentFolderId);
+		//logger.info("getfolder "+ folderName + parentFolderId);
 		try {
 			DLFolder dir = DLFolderLocalServiceUtil.getFolder(_themeDisplay.getScopeGroupId(), parentFolderId, folderName);
 			return dir;
@@ -140,6 +140,7 @@ public class SuburFolderUtil {
 		DLFolder folder = null;
 		try {
 			ServiceContext folderServiceContext = ServiceContextFactory.getInstance(DLFolder.class.getName(), request);
+			folderServiceContext.setAddGuestPermissions(true);
 			
 			folder = DLFolderLocalServiceUtil.addFolder(
 					_themeDisplay.getUserId(), _themeDisplay.getScopeGroupId(),
@@ -164,7 +165,8 @@ public class SuburFolderUtil {
 		try {
 			//ServiceContext folderServiceContext = ServiceContextFactory.getInstance(DLFolder.class.getName(), request);
 			ServiceContext folderServiceContext = ServiceContextFactory.getInstance(request);
-			
+			folderServiceContext.setAddGuestPermissions(true);
+
 			folder = DLFolderLocalServiceUtil.addFolder(
 					_themeDisplay.getUserId(), _themeDisplay.getScopeGroupId(),
 					_themeDisplay.getScopeGroupId(), false,

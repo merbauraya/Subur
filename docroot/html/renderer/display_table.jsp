@@ -63,7 +63,7 @@
 	<td class="table-cell">
 		<%
 			PortletURL viewAuthorURL = renderResponse.createRenderURL();
-			viewAuthorURL.setParameter("jspPage", "/html/authornavigator/view_author.jsp");
+			viewAuthorURL.setParameter("jspPage", "/html/author/view_author.jsp");
 		%>	
 	
 		<subur:item-author-display 

@@ -9,6 +9,7 @@
 	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(SuburItem.class.getName(), itemId);
 	suburItem = suburItem.toEscapedModel();
 	Map<String,String> serieReportNoMap = suburItem.getSeriesReportNo();
+	Map<String,String> identifiers = suburItem.getIdentifiers();
 	/*
 	List<ItemFileEntry> itemFileEntries = ItemFileEntryLocalServiceUtil.getByItemId(suburItem.getItemId());
 	
@@ -125,7 +126,7 @@
 	<div class="item-author">
 		<%
 			PortletURL viewAuthorURL = renderResponse.createRenderURL();
-			viewAuthorURL.setParameter("jspPage", "/html/authornavigator/view_author.jsp");
+			viewAuthorURL.setParameter("jspPage", "/html/author/view_author.jsp");
 		%>	
 		<subur:item-author-display 
 			itemId="<%=itemId %>" 
@@ -170,7 +171,7 @@
 		<h4>Categories</h4>
 		<liferay-ui:asset-categories-summary
 		    className="<%= SuburItem.class.getName() %>"
-		    classPK="<%= suburItem.getPrimaryKey() %>"
+		    classPK="<%= suburItem.getItemId() %>"
 		    portletURL="<%= renderResponse.createRenderURL() %>"
 		/>
 	</div>
@@ -189,6 +190,26 @@
 			{
 			%>
 					<li><%=serieEntry.getKey() %>;<%=serieEntry.getValue() %></li>
+			<%} %>
+			
+				
+				</ul>
+		<%
+		}
+		%>
+	
+	</div>
+	<div>
+		<%if (identifiers != null && identifiers.size() > 0) 
+		{
+		%>
+			<h4><liferay-ui:message key="item-identifier"/></h4>
+				<ul>
+			<%
+			for (Map.Entry<String, String> identEntry : identifiers.entrySet())
+			{
+			%>
+					<li><%=identEntry.getKey() %>; <%=identEntry.getValue() %></li>
 			<%} %>
 			
 				

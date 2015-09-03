@@ -9,10 +9,11 @@
 	String orderByType2 = GetterUtil.getString(portletPreferences.getValue("orderByType2", "ASC"));
 	int delta = GetterUtil.getInteger(portletPreferences.getValue("delta", null), SearchContainer.DEFAULT_DELTA);
 	String paginationType = GetterUtil.getString(portletPreferences.getValue("paginationType", "none"));
-	String itemIdentifier = GetterUtil.getString(portletPreferences.getValue("itemIdentifier", StringPool.BLANK));
+	//String itemIdentifier = GetterUtil.getString(portletPreferences.getValue("itemIdentifier", StringPool.BLANK));
+	String itemIdentifier = SuburConfiguration.getConfigString(SuburConfiguration.ITEM_IDENTIFIERS);
 	//default
 	boolean showEditEntryPermissions = true;
-	boolean showSearch = true; 
+	
 	
 	boolean useOrOperatorCategorySearch = GetterUtil.getBoolean(portletPreferences.getValue("useOrOperatorCategorySearch", Boolean.FALSE.toString()));
 	boolean useOrOperatorTagSearch = GetterUtil.getBoolean(portletPreferences.getValue("useOrOperatorTagSearch", Boolean.FALSE.toString()));

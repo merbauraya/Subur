@@ -48,8 +48,8 @@ public class ItemTypeWrapper implements ItemType, ModelWrapper<ItemType> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("ItemTypeId", getItemTypeId());
-		attributes.put("ItemTypeName", getItemTypeName());
+		attributes.put("itemTypeId", getItemTypeId());
+		attributes.put("itemTypeName", getItemTypeName());
 		attributes.put("itemCount", getItemCount());
 
 		return attributes;
@@ -57,16 +57,16 @@ public class ItemTypeWrapper implements ItemType, ModelWrapper<ItemType> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long ItemTypeId = (Long)attributes.get("ItemTypeId");
+		Long itemTypeId = (Long)attributes.get("itemTypeId");
 
-		if (ItemTypeId != null) {
-			setItemTypeId(ItemTypeId);
+		if (itemTypeId != null) {
+			setItemTypeId(itemTypeId);
 		}
 
-		String ItemTypeName = (String)attributes.get("ItemTypeName");
+		String itemTypeName = (String)attributes.get("itemTypeName");
 
-		if (ItemTypeName != null) {
-			setItemTypeName(ItemTypeName);
+		if (itemTypeName != null) {
+			setItemTypeName(itemTypeName);
 		}
 
 		Integer itemCount = (Integer)attributes.get("itemCount");
@@ -109,11 +109,11 @@ public class ItemTypeWrapper implements ItemType, ModelWrapper<ItemType> {
 	/**
 	* Sets the item type ID of this item type.
 	*
-	* @param ItemTypeId the item type ID of this item type
+	* @param itemTypeId the item type ID of this item type
 	*/
 	@Override
-	public void setItemTypeId(long ItemTypeId) {
-		_itemType.setItemTypeId(ItemTypeId);
+	public void setItemTypeId(long itemTypeId) {
+		_itemType.setItemTypeId(itemTypeId);
 	}
 
 	/**
@@ -129,11 +129,11 @@ public class ItemTypeWrapper implements ItemType, ModelWrapper<ItemType> {
 	/**
 	* Sets the item type name of this item type.
 	*
-	* @param ItemTypeName the item type name of this item type
+	* @param itemTypeName the item type name of this item type
 	*/
 	@Override
-	public void setItemTypeName(java.lang.String ItemTypeName) {
-		_itemType.setItemTypeName(ItemTypeName);
+	public void setItemTypeName(java.lang.String itemTypeName) {
+		_itemType.setItemTypeName(itemTypeName);
 	}
 
 	/**

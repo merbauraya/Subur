@@ -33,6 +33,7 @@ if (!allAssetVocabularies && (portletPreferences.getValues("assetVocabularyIds",
 }
 
 String displayType = portletPreferences.getValue("viewType", "monthlySummary");
+       
 PortletPreferences preferences = renderRequest.getPreferences();
 String portletResource = ParamUtil.getString(request, "portletResource");
 if (Validator.isNotNull(portletResource)) 

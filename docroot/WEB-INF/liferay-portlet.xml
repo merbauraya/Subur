@@ -23,10 +23,6 @@
 
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		
-	
-
-
-		
 		<css-class-wrapper>Subur-portlet</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
@@ -81,17 +77,36 @@
 		<css-class-wrapper>subur-statistic-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>author</portlet-name>
+		<portlet-name>Author</portlet-name>
 		<icon>/icon.png</icon>
 		<configuration-action-class>com.idetronic.subur.AuthorConfigImpl</configuration-action-class>
+		<indexer-class>com.idetronic.subur.search.AuthorIndexer</indexer-class>
+		
 		<asset-renderer-factory>com.idetronic.subur.asset.AuthorRendererFactory</asset-renderer-factory>
 		
 		<header-portlet-css>/css/author/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/author/main.js
 		</footer-portlet-javascript>
+		<footer-portlet-javascript>
+			/js/author/author_research_interest.js
+		</footer-portlet-javascript>
+		
 		<css-class-wrapper>author-portlet</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
+	</portlet>
+	<portlet>
+		<portlet-name>subur-admin</portlet-name>
+		<icon>/icon.png</icon>
+		<control-panel-entry-category>
+			site_administration.content
+		</control-panel-entry-category>
+		<control-panel-entry-weight>1.5</control-panel-entry-weight>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>subur-admin-portlet</css-class-wrapper>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

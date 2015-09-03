@@ -7,10 +7,10 @@
 	<aui:input type="hidden" name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 	<aui:fieldset>
 		<aui:select label="view-type" name="preferences--viewType--">
-			<aui:option selected="<%=displayStyle.equalsIgnoreCase(SuburStatUtil.VIEW_MONTHLY_SUMMARY) %>" label="View Monthly Summary" value="<%= SuburStatUtil.VIEW_MONTHLY_SUMMARY %>" />
-			<aui:option selected="<%=displayStyle.equalsIgnoreCase(SuburStatUtil.VIEW_MONTHLY_SUMMARY_ITEMTYPE) %>" label="View Monthly Summary -Item Type" value="<%=SuburStatUtil.VIEW_MONTHLY_SUMMARY_ITEMTYPE %>" />
-			<aui:option selected="<%=displayStyle.equalsIgnoreCase(SuburStatUtil.VIEW_MONTHLY_SUMMARY_CATEGORY) %>" label="View Monthly Summary -Category" value="<%=SuburStatUtil.VIEW_MONTHLY_SUMMARY_CATEGORY %>" />
-			<aui:option selected="<%=displayStyle.equalsIgnoreCase(SuburStatUtil.VIEW_MONTHLY_SUMMARY_TAG) %>" label="View Monthly Summary -Tag" value="<%=SuburStatUtil.VIEW_MONTHLY_SUMMARY_TAG %>" />
+			<aui:option selected="<%=displayType.equalsIgnoreCase(SuburStatUtil.VIEW_MONTHLY_SUMMARY) %>" label="View Monthly Summary" value="<%= SuburStatUtil.VIEW_MONTHLY_SUMMARY %>" />
+			<aui:option selected="<%=displayType.equalsIgnoreCase(SuburStatUtil.VIEW_MONTHLY_SUMMARY_ITEMTYPE) %>" label="View Monthly Summary -Item Type" value="<%=SuburStatUtil.VIEW_MONTHLY_SUMMARY_ITEMTYPE %>" />
+			<aui:option selected="<%=displayType.equalsIgnoreCase(SuburStatUtil.VIEW_MONTHLY_SUMMARY_CATEGORY) %>" label="View Monthly Summary -Category" value="<%=SuburStatUtil.VIEW_MONTHLY_SUMMARY_CATEGORY %>" />
+			<aui:option selected="<%=displayType.equalsIgnoreCase(SuburStatUtil.VIEW_MONTHLY_SUMMARY_TAG) %>" label="View Monthly Summary -Tag" value="<%=SuburStatUtil.VIEW_MONTHLY_SUMMARY_TAG %>" />
 		</aui:select>
 		<aui:input name="preferences--assetVocabularyIds--" type="hidden" />
 		

@@ -84,7 +84,10 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+		<attribute>
+			<name>actionURL</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		
 		
 	</tag>

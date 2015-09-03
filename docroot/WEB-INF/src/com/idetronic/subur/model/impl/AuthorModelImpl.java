@@ -72,12 +72,14 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 			{ "metadata", Types.VARCHAR },
 			{ "lastPublishedDate", Types.TIMESTAMP },
 			{ "itemCount", Types.INTEGER },
+			{ "email", Types.VARCHAR },
+			{ "officeNo", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "Uuid", Types.VARCHAR },
 			{ "createdBy", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subur_Author (authorId LONG not null primary key,groupId LONG,companyId LONG,title VARCHAR(75) null,idType INTEGER,remoteId VARCHAR(75) null,firstName VARCHAR(75) null,lastName VARCHAR(75) null,middleName VARCHAR(75) null,userId INTEGER,metadata VARCHAR(75) null,lastPublishedDate DATE null,itemCount INTEGER,createDate DATE null,modifiedDate DATE null,Uuid VARCHAR(75) null,createdBy LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Subur_Author (authorId LONG not null primary key,groupId LONG,companyId LONG,title VARCHAR(75) null,idType INTEGER,remoteId VARCHAR(75) null,firstName VARCHAR(75) null,lastName VARCHAR(75) null,middleName VARCHAR(75) null,userId INTEGER,metadata VARCHAR(75) null,lastPublishedDate DATE null,itemCount INTEGER,email VARCHAR(75) null,officeNo VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,Uuid VARCHAR(75) null,createdBy LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Subur_Author";
 	public static final String ORDER_BY_JPQL = " ORDER BY author.authorId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subur_Author.authorId ASC";
@@ -152,6 +154,8 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		attributes.put("metadata", getMetadata());
 		attributes.put("lastPublishedDate", getLastPublishedDate());
 		attributes.put("itemCount", getItemCount());
+		attributes.put("email", getEmail());
+		attributes.put("officeNo", getOfficeNo());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("Uuid", getUuid());
@@ -238,6 +242,18 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 
 		if (itemCount != null) {
 			setItemCount(itemCount);
+		}
+
+		String email = (String)attributes.get("email");
+
+		if (email != null) {
+			setEmail(email);
+		}
+
+		String officeNo = (String)attributes.get("officeNo");
+
+		if (officeNo != null) {
+			setOfficeNo(officeNo);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -482,6 +498,36 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 	}
 
 	@Override
+	public String getEmail() {
+		if (_email == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _email;
+		}
+	}
+
+	@Override
+	public void setEmail(String email) {
+		_email = email;
+	}
+
+	@Override
+	public String getOfficeNo() {
+		if (_officeNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _officeNo;
+		}
+	}
+
+	@Override
+	public void setOfficeNo(String officeNo) {
+		_officeNo = officeNo;
+	}
+
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -570,6 +616,8 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		authorImpl.setMetadata(getMetadata());
 		authorImpl.setLastPublishedDate(getLastPublishedDate());
 		authorImpl.setItemCount(getItemCount());
+		authorImpl.setEmail(getEmail());
+		authorImpl.setOfficeNo(getOfficeNo());
 		authorImpl.setCreateDate(getCreateDate());
 		authorImpl.setModifiedDate(getModifiedDate());
 		authorImpl.setUuid(getUuid());
@@ -718,6 +766,22 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 
 		authorCacheModel.itemCount = getItemCount();
 
+		authorCacheModel.email = getEmail();
+
+		String email = authorCacheModel.email;
+
+		if ((email != null) && (email.length() == 0)) {
+			authorCacheModel.email = null;
+		}
+
+		authorCacheModel.officeNo = getOfficeNo();
+
+		String officeNo = authorCacheModel.officeNo;
+
+		if ((officeNo != null) && (officeNo.length() == 0)) {
+			authorCacheModel.officeNo = null;
+		}
+
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -751,7 +815,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{authorId=");
 		sb.append(getAuthorId());
@@ -779,6 +843,10 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		sb.append(getLastPublishedDate());
 		sb.append(", itemCount=");
 		sb.append(getItemCount());
+		sb.append(", email=");
+		sb.append(getEmail());
+		sb.append(", officeNo=");
+		sb.append(getOfficeNo());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -794,7 +862,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.Author");
@@ -853,6 +921,14 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		sb.append(getItemCount());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>email</column-name><column-value><![CDATA[");
+		sb.append(getEmail());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>officeNo</column-name><column-value><![CDATA[");
+		sb.append(getOfficeNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
@@ -897,6 +973,8 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 	private String _metadata;
 	private Date _lastPublishedDate;
 	private int _itemCount;
+	private String _email;
+	private String _officeNo;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _Uuid;

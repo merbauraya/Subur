@@ -24,6 +24,8 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="itemCount" />
+			<basic name="email" />
+			<basic name="officeNo" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -42,6 +44,16 @@
 		<attributes>
 			<id name="authorId" />
 			<id name="expertiseId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.idetronic.subur.model.impl.AuthorResearchInterestModelImpl">
+		<id-class class="com.idetronic.subur.service.persistence.AuthorResearchInterestPK" />
+		<attributes>
+			<id name="authorId" />
+			<id name="researchInterestId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -103,17 +115,6 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.idetronic.subur.model.impl.ItemFileEntryModelImpl">
-		<id-class class="com.idetronic.subur.service.persistence.ItemFileEntryPK" />
-		<attributes>
-			<id name="itemId" />
-			<id name="fileEntryId" />
-			<basic name="entryType" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="com.idetronic.subur.model.impl.ItemItemTypeModelImpl">
 		<id-class class="com.idetronic.subur.service.persistence.ItemItemTypePK" />
 		<attributes>
@@ -126,57 +127,33 @@
 	</mapped-superclass>
 	<mapped-superclass class="com.idetronic.subur.model.impl.ItemTypeModelImpl">
 		<attributes>
-			<id name="ItemTypeId" />
-			<basic name="ItemTypeName" />
-			<basic name="itemCount" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.idetronic.subur.model.impl.ItemTypeTemplateModelImpl">
-		<id-class class="com.idetronic.subur.service.persistence.ItemTypeTemplatePK" />
-		<attributes>
 			<id name="itemTypeId" />
-			<id name="metadataPropertyId" />
-			<basic name="required" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.idetronic.subur.model.impl.MetadataPropertyModelImpl">
-		<attributes>
-			<id name="metadataPropertyId" />
-			<basic name="metadataSchemaId" />
-			<basic name="element" />
-			<basic name="scope" />
-			<basic name="note" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.idetronic.subur.model.impl.MetadataPropertyValueModelImpl">
-		<attributes>
-			<id name="metadataPropertyValueId" />
-			<basic name="itemId" />
-			<basic name="propertyId" />
-			<basic name="textValue" />
+			<basic name="itemTypeName" />
 			<basic name="itemCount" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.idetronic.subur.model.impl.MetadataSchemaModelImpl">
+	<mapped-superclass class="com.idetronic.subur.model.impl.ResearchInterestModelImpl">
 		<attributes>
-			<id name="metadataSchemaId" />
-			<basic name="metadataName" />
-			<basic name="nameSpace" />
+			<id name="researchInterestId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="researchInterestName" />
+			<basic name="indexedName" />
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="authorCount" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.idetronic.subur.model.impl.StatDownloadCategoryModelImpl">
@@ -270,6 +247,21 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.idetronic.subur.model.impl.SuburConfigModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="key">
+				<column name="KEY_" />
+			</basic>
+			<basic name="description" />
+			<basic name="config" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.idetronic.subur.model.impl.SuburItemModelImpl">
 		<attributes>
 			<id name="itemId" />
@@ -320,6 +312,10 @@
 		<table name="Subur_AuthorExpertise" />
 		<attributes />
 	</entity>
+	<entity class="com.idetronic.subur.model.impl.AuthorResearchInterestImpl" name="AuthorResearchInterest">
+		<table name="Subur_AuthorResearchInterest" />
+		<attributes />
+	</entity>
 	<entity class="com.idetronic.subur.model.impl.AuthorSiteImpl" name="AuthorSite">
 		<table name="Subur_AuthorSite" />
 		<attributes />
@@ -336,10 +332,6 @@
 		<table name="Subur_ItemAuthor" />
 		<attributes />
 	</entity>
-	<entity class="com.idetronic.subur.model.impl.ItemFileEntryImpl" name="ItemFileEntry">
-		<table name="Subur_ItemFileEntry" />
-		<attributes />
-	</entity>
 	<entity class="com.idetronic.subur.model.impl.ItemItemTypeImpl" name="ItemItemType">
 		<table name="Subur_ItemItemType" />
 		<attributes />
@@ -348,20 +340,8 @@
 		<table name="Subur_ItemType" />
 		<attributes />
 	</entity>
-	<entity class="com.idetronic.subur.model.impl.ItemTypeTemplateImpl" name="ItemTypeTemplate">
-		<table name="Subur_ItemTypeTemplate" />
-		<attributes />
-	</entity>
-	<entity class="com.idetronic.subur.model.impl.MetadataPropertyImpl" name="MetadataProperty">
-		<table name="Subur_MetadataProperty" />
-		<attributes />
-	</entity>
-	<entity class="com.idetronic.subur.model.impl.MetadataPropertyValueImpl" name="MetadataPropertyValue">
-		<table name="Subur_MetadataPropertyValue" />
-		<attributes />
-	</entity>
-	<entity class="com.idetronic.subur.model.impl.MetadataSchemaImpl" name="MetadataSchema">
-		<table name="Subur_MetadataSchema" />
+	<entity class="com.idetronic.subur.model.impl.ResearchInterestImpl" name="ResearchInterest">
+		<table name="Subur_ResearchInterest" />
 		<attributes />
 	</entity>
 	<entity class="com.idetronic.subur.model.impl.StatDownloadCategoryImpl" name="StatDownloadCategory">
@@ -390,6 +370,10 @@
 	</entity>
 	<entity class="com.idetronic.subur.model.impl.StatViewTagImpl" name="StatViewTag">
 		<table name="Subur_StatViewTag" />
+		<attributes />
+	</entity>
+	<entity class="com.idetronic.subur.model.impl.SuburConfigImpl" name="SuburConfig">
+		<table name="Subur_Config" />
 		<attributes />
 	</entity>
 	<entity class="com.idetronic.subur.model.impl.SuburItemImpl" name="SuburItem">

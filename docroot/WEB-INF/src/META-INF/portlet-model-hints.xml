@@ -28,6 +28,8 @@
 		<field name="metadata" type="String" />
 		<field name="lastPublishedDate" type="Date" />
 		<field name="itemCount" type="int" />
+		<field name="email" type="String" />
+		<field name="officeNo" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="Uuid" type="String" />
@@ -36,6 +38,10 @@
 	<model name="com.idetronic.subur.model.AuthorExpertise">
 		<field name="authorId" type="long" />
 		<field name="expertiseId" type="long" />
+	</model>
+	<model name="com.idetronic.subur.model.AuthorResearchInterest">
+		<field name="authorId" type="long" />
+		<field name="researchInterestId" type="long" />
 	</model>
 	<model name="com.idetronic.subur.model.AuthorSite">
 		<field name="authorSiteId" type="long" />
@@ -67,53 +73,25 @@
 		<field name="itemId" type="long" />
 		<field name="authorId" type="long" />
 	</model>
-	<model name="com.idetronic.subur.model.ItemFileEntry">
-		<field name="itemId" type="long" />
-		<field name="fileEntryId" type="long" />
-		<field name="entryType" type="long" />
-	</model>
 	<model name="com.idetronic.subur.model.ItemItemType">
 		<field name="itemId" type="long" />
 		<field name="itemTypeId" type="long" />
 	</model>
 	<model name="com.idetronic.subur.model.ItemType">
-		<field name="ItemTypeId" type="long" />
-		<field name="ItemTypeName" type="String" />
-		<field name="itemCount" type="int" />
-	</model>
-	<model name="com.idetronic.subur.model.ItemTypeTemplate">
 		<field name="itemTypeId" type="long" />
-		<field name="metadataPropertyId" type="long" />
-		<field name="required" type="boolean" />
-	</model>
-	<model name="com.idetronic.subur.model.MetadataProperty">
-		<field name="metadataPropertyId" type="long" />
-		<field name="metadataSchemaId" type="long" />
-		<field name="element" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="scope" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="note" type="String">
-			<hint name="max-length">1024</hint>
-		</field>
-	</model>
-	<model name="com.idetronic.subur.model.MetadataPropertyValue">
-		<field name="metadataPropertyValueId" type="long" />
-		<field name="itemId" type="long" />
-		<field name="propertyId" type="long" />
-		<field name="textValue" type="String">
-			<hint-collection name="CLOB" />
-		</field>
+		<field name="itemTypeName" type="String" />
 		<field name="itemCount" type="int" />
 	</model>
-	<model name="com.idetronic.subur.model.MetadataSchema">
-		<field name="metadataSchemaId" type="long" />
-		<field name="metadataName" type="String">
-			<hint name="max-length">1024</hint>
-		</field>
-		<field name="nameSpace" type="String" />
+	<model name="com.idetronic.subur.model.ResearchInterest">
+		<field name="researchInterestId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="researchInterestName" type="String" />
+		<field name="indexedName" type="String" />
+		<field name="modifiedDate" type="Date" />
+		<field name="authorCount" type="int" />
 	</model>
 	<model name="com.idetronic.subur.model.StatDownloadCategory">
 		<field name="id" type="long" />
@@ -156,6 +134,14 @@
 		<field name="perMonth" type="int" />
 		<field name="perYear" type="int" />
 		<field name="tagId" type="long" />
+	</model>
+	<model name="com.idetronic.subur.model.SuburConfig">
+		<field name="id" type="long" />
+		<field name="key" type="String" />
+		<field name="description" type="String" />
+		<field name="config" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.idetronic.subur.model.SuburItem">
 		<field name="itemId" type="long" />

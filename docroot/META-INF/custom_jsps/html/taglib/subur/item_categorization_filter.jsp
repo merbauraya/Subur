@@ -4,7 +4,10 @@
 <%
 String assetType = GetterUtil.getString((String)request.getAttribute("subur:item-categorization-filter:assetType"), "item");
 PortletURL portletURL = (PortletURL)request.getAttribute("subur:item-categorization-filter:portletURL");
+PortletURL actionURL = (PortletURL)request.getAttribute("subur:item-categorization-filter:actionURL");
 
+if (Validator.isNotNull(actionURL))
+	portletURL = actionURL;
 if (Validator.isNull(portletURL)) {
 	portletURL = renderResponse.createRenderURL();
 }
@@ -14,12 +17,35 @@ Map<Long, List<AssetCategory>> vocabularyCategories = new HashMap<Long, List<Ass
 
 String categoryId = ParamUtil.getString(request, "categoryId");
 String itemTypeId = ParamUtil.getString(request, "itemTypeId");
+String expertiseId = ParamUtil.getString(request,"expertiseId");
+String researchInterestId = ParamUtil.getString(request,"researchInterestId");
+String filterBy = ParamUtil.getString(request,"filterBy");
+String filterKey = ParamUtil.getString(request,"filterKey");
+
+if (filterBy.equalsIgnoreCase("category"))
+{
+	categoryId = filterKey;
+}
+if (filterBy.equalsIgnoreCase("expertise"))
+{
+	expertiseId = filterKey;
+	
+}
+if (filterBy.equalsIgnoreCase("ri")) 
+{
+	researchInterestId = filterKey;
+}
 
 long[] assetCategoryIds = new long[0];
 long[] itemTypeIds = new long[0];
+long[] researchInterestIds = new long[0];
+long[] expertiseIds = new long[0];
+
 
 String[] categoryIdsString = new String[0];
 String[] itemTypeIdsString = new String[0];
+String[] expertiseIdsString = new String[0];
+String[] researchInterestIdsString = new String[0];
 
 if (Validator.isNotNull(categoryId)) {
   categoryIdsString = StringUtil.split(categoryId);
@@ -46,6 +72,54 @@ if (itemTypeIdsString.length == 1)
 	}
 	itemTypeIds =  ArrayUtil.toLongArray(itemTypeIdsList);
 }
+//process expertise
+if (Validator.isNotNull(expertiseId))
+{
+	expertiseIdsString = StringUtil.split(expertiseId);
+}
+if (expertiseIdsString.length == 1)
+{
+	long id = Long.parseLong(expertiseIdsString[0]);
+	if (id != 0L)
+		expertiseIds = new long[]{id};
+}else if (expertiseIdsString.length > 1)
+{
+	List<Long> expertiseIdsList = new ArrayList<Long>();
+	for (String expIdString: expertiseIdsString )
+	{
+		long id = Long.parseLong(expIdString);
+		if (id != 0L)
+			expertiseIdsList.add(id);
+		
+	}
+	expertiseIds =  ArrayUtil.toLongArray(expertiseIdsList);
+}
+
+//process research Interest
+if (Validator.isNotNull(researchInterestId))
+{
+	researchInterestIdsString = StringUtil.split(researchInterestId);
+}
+if (researchInterestIdsString.length == 1)
+{
+	long id = Long.parseLong(researchInterestIdsString[0]);
+	if (id != 0L)
+		researchInterestIds = new long[]{id};
+}else if (researchInterestIdsString.length > 1)
+{
+	List<Long> riIdsList = new ArrayList<Long>();
+	for (String riIdString: researchInterestIdsString )
+	{
+		long id = Long.parseLong(riIdString);
+		if (id != 0L)
+			riIdsList.add(id);
+		
+	}
+	researchInterestIds =  ArrayUtil.toLongArray(riIdsList);
+}
+
+
+
 //process category
 if(categoryIdsString.length == 1) {
   
@@ -128,14 +202,18 @@ String[] assetTagNames = StringUtil.split(assetTagName);
 	%>
 		<span class="asset-entry">
 			<%= assetCategoryTitle.toString() %>
+			
+			<%
+				PortletURL filterCategoryURL = portletURL;
+				filterCategoryURL.setParameter("categoryId",StringUtil.merge(ArrayUtil.remove(
+					    assetCategoryIds, assetCategory.getCategoryId())));
+			%>
+			
 
-			<portlet:renderURL var="viewURLWithoutCategory">
-				<portlet:param name="categoryId" value="<%=StringUtil.merge(ArrayUtil.remove(
-				    assetCategoryIds, assetCategory.getCategoryId()))  %>" />
-			</portlet:renderURL>
-
-			<a href="<%= viewURLWithoutCategory %>" title="<liferay-ui:message key="remove" />">
-				<span class="icon icon-close textboxlistentry-close"></span>
+			<a href="<%= filterCategoryURL %>" title="<liferay-ui:message key="remove" />">
+				<span class="icon icon-close textboxlistentry-close">
+					<i class="icon icon-remove"></i>
+				</span>
 			</a>
 		</span>
 	<%
@@ -170,17 +248,24 @@ String[] assetTagNames = StringUtil.split(assetTagName);
 		<%
 		for (String tagName : assetTagNames) {
 		  assetTagsTitle.append(tagName).append(StringPool.SPACE);
+		  PortletURL filterTagURL = portletURL;
+		  filterTagURL.setParameter("tag",StringUtil.merge(ArrayUtil.remove(
+				    assetTagNames, tagName)));
 		%>
 			<span class="asset-entry">
-				<%= HtmlUtil.escape(tagName) %>
+				<%= HtmlUtil.escape(tagName) 
+					
+				%>
 	
 				<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="viewURLWithoutTag">
 					<liferay-portlet:param name="tag" value="<%=StringUtil.merge(ArrayUtil.remove(
 					    assetTagNames, tagName))  %>" />
 				</liferay-portlet:renderURL>
 	
-				<a href="<%= viewURLWithoutTag %>" title="<liferay-ui:message key="remove" />">
-					<span class="icon icon-close textboxlistentry-close"></span>
+				<a href="<%= filterTagURL %>" title="<liferay-ui:message key="remove" />">
+					<span class="icon icon-close textboxlistentry-close">
+						<i class="icon icon-remove"></i>
+					</span>
 				</a>
 			</span>
 		<%
@@ -229,7 +314,9 @@ String[] assetTagNames = StringUtil.split(assetTagName);
 				</liferay-portlet:renderURL>
 	
 				<a href="<%= viewURLWithoutType %>" title="<liferay-ui:message key="remove" />">
-					<span class="icon icon-close textboxlistentry-close"></span>
+					<span class="icon icon-close textboxlistentry-close">
+						<i class="icon icon-remove"></i>
+					</span>
 				</a>
 			</span>
 
@@ -243,3 +330,52 @@ String[] assetTagNames = StringUtil.split(assetTagName);
 	
 	</h2>
 </c:if>
+
+<c:if test="<%= expertiseIds.length > 0 %>">
+<%
+	StringBuilder expertiseTitle = new StringBuilder();
+	
+%>
+	<liferay-util:buffer var="removeExpertise">
+<%
+	Object expertiseService  = (Object)PortletBeanLocatorUtil.locate("Subur-portlet","ExpertiseLocalService");
+
+	Method getExpertiseMethod = expertiseService.getClass().getMethod("fetchExpertise",new Class[]{long.class});
+	
+	for (long expertise_Id : expertiseIds)
+	{
+		
+		
+		Object expertise =  getExpertiseMethod.invoke(expertiseService,expertise_Id);
+		String expertiseName = (String)expertise.getClass().getMethod("getExpertiseName", null).invoke(expertise);
+		expertiseTitle.append(expertiseName).append(StringPool.SPACE);
+		PortletURL filterExpertiseURL = portletURL;
+		filterExpertiseURL.setParameter("expertiseId",StringUtil.merge(ArrayUtil.remove(
+				expertiseIds, expertise_Id)));
+		
+		filterExpertiseURL.setParameter("filterBy","expertise");
+%>
+		<span class="asset-entry">
+				<%= HtmlUtil.escape(expertiseName) %>
+	
+				
+	
+				<a href="<%= filterExpertiseURL %>" title="<liferay-ui:message key="remove" />">
+					<span class="icon icon-close textboxlistentry-close">
+						<i class="icon icon-remove"></i>
+					</span>
+				</a>
+			</span>
+
+
+<%
+	}
+%>
+	
+	</liferay-util:buffer>
+	<h2 class="taglib-categorization-filter entry-title">
+			<liferay-ui:message arguments="<%= removeExpertise %>" key='<%= assetType.concat("-with-expertise-x") %>' />
+	
+	</h2>
+</c:if>
+

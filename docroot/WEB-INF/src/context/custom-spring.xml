@@ -6,7 +6,10 @@
 	<bean id="Author" class="com.idetronic.subur.model.impl.AuthorImpl" />
 	<bean id="ItemItemTypeLocalService" class="com.idetronic.subur.service.impl.ItemItemTypeLocalServiceImpl" />
 	<bean id="ItemTypeLocalService" class="com.idetronic.subur.service.impl.ItemTypeLocalServiceImpl" />
-	
+	<bean id="ExpertiseLocalService" class="com.idetronic.subur.service.impl.ExpertiseLocalServiceImpl"/>
+	<bean id="ResearchInterestLocalService" class="com.idetronic.subur.service.impl.ResearchInterestLocalServiceImpl"/>
+	<bean id="Expertise" class="com.idetronic.subur.model.impl.ExpertiseImpl"/>
+	<bean id="ResearchInterest" class="com.idetronic.subur.model.impl.ResearchInterestImpl"/>
 	<bean id="ItemType" class="com.idetronic.subur.model.impl.ItemTypeImpl" />
 	
 </beans>

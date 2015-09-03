@@ -61,21 +61,21 @@ public interface ItemTypeLocalService extends BaseLocalService,
 	/**
 	* Creates a new item type with the primary key. Does not add the item type to the database.
 	*
-	* @param ItemTypeId the primary key for the new item type
+	* @param itemTypeId the primary key for the new item type
 	* @return the new item type
 	*/
-	public com.idetronic.subur.model.ItemType createItemType(long ItemTypeId);
+	public com.idetronic.subur.model.ItemType createItemType(long itemTypeId);
 
 	/**
 	* Deletes the item type with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ItemTypeId the primary key of the item type
+	* @param itemTypeId the primary key of the item type
 	* @return the item type that was removed
 	* @throws PortalException if a item type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.idetronic.subur.model.ItemType deleteItemType(long ItemTypeId)
+	public com.idetronic.subur.model.ItemType deleteItemType(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -169,19 +169,19 @@ public interface ItemTypeLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.idetronic.subur.model.ItemType fetchItemType(long ItemTypeId)
+	public com.idetronic.subur.model.ItemType fetchItemType(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the item type with the primary key.
 	*
-	* @param ItemTypeId the primary key of the item type
+	* @param itemTypeId the primary key of the item type
 	* @return the item type
 	* @throws PortalException if a item type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.idetronic.subur.model.ItemType getItemType(long ItemTypeId)
+	public com.idetronic.subur.model.ItemType getItemType(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -249,6 +249,9 @@ public interface ItemTypeLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.idetronic.subur.model.ItemType add(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void decrementCounter(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException;

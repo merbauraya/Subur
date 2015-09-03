@@ -55,27 +55,27 @@ public class ItemTypeLocalServiceUtil {
 	/**
 	* Creates a new item type with the primary key. Does not add the item type to the database.
 	*
-	* @param ItemTypeId the primary key for the new item type
+	* @param itemTypeId the primary key for the new item type
 	* @return the new item type
 	*/
 	public static com.idetronic.subur.model.ItemType createItemType(
-		long ItemTypeId) {
-		return getService().createItemType(ItemTypeId);
+		long itemTypeId) {
+		return getService().createItemType(itemTypeId);
 	}
 
 	/**
 	* Deletes the item type with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ItemTypeId the primary key of the item type
+	* @param itemTypeId the primary key of the item type
 	* @return the item type that was removed
 	* @throws PortalException if a item type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.idetronic.subur.model.ItemType deleteItemType(
-		long ItemTypeId)
+		long itemTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteItemType(ItemTypeId);
+		return getService().deleteItemType(itemTypeId);
 	}
 
 	/**
@@ -182,24 +182,24 @@ public class ItemTypeLocalServiceUtil {
 	}
 
 	public static com.idetronic.subur.model.ItemType fetchItemType(
-		long ItemTypeId)
+		long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchItemType(ItemTypeId);
+		return getService().fetchItemType(itemTypeId);
 	}
 
 	/**
 	* Returns the item type with the primary key.
 	*
-	* @param ItemTypeId the primary key of the item type
+	* @param itemTypeId the primary key of the item type
 	* @return the item type
 	* @throws PortalException if a item type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.idetronic.subur.model.ItemType getItemType(
-		long ItemTypeId)
+		long itemTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getItemType(ItemTypeId);
+		return getService().getItemType(itemTypeId);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -273,6 +273,11 @@ public class ItemTypeLocalServiceUtil {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return getService().invokeMethod(name, parameterTypes, arguments);
+	}
+
+	public static com.idetronic.subur.model.ItemType add(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().add(name);
 	}
 
 	public static void decrementCounter(long itemTypeId)

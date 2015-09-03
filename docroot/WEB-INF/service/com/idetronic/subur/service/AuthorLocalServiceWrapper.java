@@ -282,16 +282,20 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 
 	@Override
 	public long addAuthor(java.lang.String firstName,
-		java.lang.String lastName, java.lang.String title,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String title, java.lang.String email,
+		java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
 		java.lang.String remoteId, int idType, long userId, long groupId,
 		long createdByUserId, java.lang.String[] expertiseNames,
+		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _authorLocalService.addAuthor(firstName, lastName, title,
-			authorSite, remoteId, idType, userId, groupId, createdByUserId,
-			expertiseNames, serviceContext);
+		return _authorLocalService.addAuthor(firstName, middleName, lastName,
+			title, email, officeNo, authorSite, remoteId, idType, userId,
+			groupId, createdByUserId, expertiseNames, researchInterestNames,
+			serviceContext);
 	}
 
 	@Override
@@ -299,6 +303,13 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 		java.util.List<com.idetronic.subur.model.Expertise> expertises)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_authorLocalService.setExpertises(authorId, expertises);
+	}
+
+	@Override
+	public void setResearchInterests(long authorId,
+		java.util.List<com.idetronic.subur.model.ResearchInterest> researchInterests)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_authorLocalService.setResearchInterests(authorId, researchInterests);
 	}
 
 	/**
@@ -318,16 +329,19 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 	@Override
 	public com.idetronic.subur.model.Author updateAuthor(long authorId,
 		java.lang.String title, java.lang.String firstName,
-		java.lang.String lastName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String email, java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
 		java.lang.String remoteId, int idType, long userId, long groupId,
 		long createdByUserId, java.lang.String[] expertiseNames,
+		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _authorLocalService.updateAuthor(authorId, title, firstName,
-			lastName, authorSite, remoteId, idType, userId, groupId,
-			createdByUserId, expertiseNames, serviceContext);
+			middleName, lastName, email, officeNo, authorSite, remoteId,
+			idType, userId, groupId, createdByUserId, expertiseNames,
+			researchInterestNames, serviceContext);
 	}
 
 	/**
@@ -363,6 +377,13 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 		long authorId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _authorLocalService.getExpertises(authorId);
+	}
+
+	@Override
+	public java.util.List<com.idetronic.subur.model.ResearchInterest> getResearchInterests(
+		long authorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _authorLocalService.getResearchInterests(authorId);
 	}
 
 	/**
@@ -478,6 +499,12 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 		long companyId, long groupId, int start, int end) {
 		return _authorLocalService.findByGroupCompany(companyId, groupId,
 			start, end);
+	}
+
+	@Override
+	public void deleteItem(long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_authorLocalService.deleteItem(itemId);
 	}
 
 	/**

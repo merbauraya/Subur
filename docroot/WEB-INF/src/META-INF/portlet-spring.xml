@@ -6,6 +6,8 @@
 	<bean id="com.idetronic.subur.service.persistence.AuthorFinder" class="com.idetronic.subur.service.persistence.AuthorFinderImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.AuthorExpertiseLocalService" class="com.idetronic.subur.service.impl.AuthorExpertiseLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.AuthorExpertisePersistence" class="com.idetronic.subur.service.persistence.AuthorExpertisePersistenceImpl" parent="basePersistence" />
+	<bean id="com.idetronic.subur.service.AuthorResearchInterestLocalService" class="com.idetronic.subur.service.impl.AuthorResearchInterestLocalServiceImpl" />
+	<bean id="com.idetronic.subur.service.persistence.AuthorResearchInterestPersistence" class="com.idetronic.subur.service.persistence.AuthorResearchInterestPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.AuthorSiteLocalService" class="com.idetronic.subur.service.impl.AuthorSiteLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.AuthorSitePersistence" class="com.idetronic.subur.service.persistence.AuthorSitePersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.DownloadSummaryLocalService" class="com.idetronic.subur.service.impl.DownloadSummaryLocalServiceImpl" />
@@ -16,23 +18,15 @@
 	<bean id="com.idetronic.subur.service.persistence.ExpertiseFinder" class="com.idetronic.subur.service.persistence.ExpertiseFinderImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.ItemAuthorLocalService" class="com.idetronic.subur.service.impl.ItemAuthorLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.ItemAuthorPersistence" class="com.idetronic.subur.service.persistence.ItemAuthorPersistenceImpl" parent="basePersistence" />
-	<bean id="com.idetronic.subur.service.ItemFileEntryLocalService" class="com.idetronic.subur.service.impl.ItemFileEntryLocalServiceImpl" />
-	<bean id="com.idetronic.subur.service.ItemFileEntryService" class="com.idetronic.subur.service.impl.ItemFileEntryServiceImpl" />
-	<bean id="com.idetronic.subur.service.persistence.ItemFileEntryPersistence" class="com.idetronic.subur.service.persistence.ItemFileEntryPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.ItemItemTypeLocalService" class="com.idetronic.subur.service.impl.ItemItemTypeLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.ItemItemTypePersistence" class="com.idetronic.subur.service.persistence.ItemItemTypePersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.persistence.ItemItemTypeFinder" class="com.idetronic.subur.service.persistence.ItemItemTypeFinderImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.ItemTypeLocalService" class="com.idetronic.subur.service.impl.ItemTypeLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.ItemTypePersistence" class="com.idetronic.subur.service.persistence.ItemTypePersistenceImpl" parent="basePersistence" />
-	<bean id="com.idetronic.subur.service.ItemTypeTemplateLocalService" class="com.idetronic.subur.service.impl.ItemTypeTemplateLocalServiceImpl" />
-	<bean id="com.idetronic.subur.service.persistence.ItemTypeTemplatePersistence" class="com.idetronic.subur.service.persistence.ItemTypeTemplatePersistenceImpl" parent="basePersistence" />
-	<bean id="com.idetronic.subur.service.MetadataPropertyLocalService" class="com.idetronic.subur.service.impl.MetadataPropertyLocalServiceImpl" />
-	<bean id="com.idetronic.subur.service.persistence.MetadataPropertyPersistence" class="com.idetronic.subur.service.persistence.MetadataPropertyPersistenceImpl" parent="basePersistence" />
-	<bean id="com.idetronic.subur.service.MetadataPropertyValueLocalService" class="com.idetronic.subur.service.impl.MetadataPropertyValueLocalServiceImpl" />
-	<bean id="com.idetronic.subur.service.persistence.MetadataPropertyValuePersistence" class="com.idetronic.subur.service.persistence.MetadataPropertyValuePersistenceImpl" parent="basePersistence" />
-	<bean id="com.idetronic.subur.service.persistence.MetadataPropertyValueFinder" class="com.idetronic.subur.service.persistence.MetadataPropertyValueFinderImpl" parent="basePersistence" />
-	<bean id="com.idetronic.subur.service.MetadataSchemaLocalService" class="com.idetronic.subur.service.impl.MetadataSchemaLocalServiceImpl" />
-	<bean id="com.idetronic.subur.service.persistence.MetadataSchemaPersistence" class="com.idetronic.subur.service.persistence.MetadataSchemaPersistenceImpl" parent="basePersistence" />
+	<bean id="com.idetronic.subur.service.ResearchInterestLocalService" class="com.idetronic.subur.service.impl.ResearchInterestLocalServiceImpl" />
+	<bean id="com.idetronic.subur.service.ResearchInterestService" class="com.idetronic.subur.service.impl.ResearchInterestServiceImpl" />
+	<bean id="com.idetronic.subur.service.persistence.ResearchInterestPersistence" class="com.idetronic.subur.service.persistence.ResearchInterestPersistenceImpl" parent="basePersistence" />
+	<bean id="com.idetronic.subur.service.persistence.ResearchInterestFinder" class="com.idetronic.subur.service.persistence.ResearchInterestFinderImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.StatDownloadCategoryLocalService" class="com.idetronic.subur.service.impl.StatDownloadCategoryLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.StatDownloadCategoryPersistence" class="com.idetronic.subur.service.persistence.StatDownloadCategoryPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.StatDownloadItemTypeLocalService" class="com.idetronic.subur.service.impl.StatDownloadItemTypeLocalServiceImpl" />
@@ -47,6 +41,8 @@
 	<bean id="com.idetronic.subur.service.persistence.StatViewItemTypePersistence" class="com.idetronic.subur.service.persistence.StatViewItemTypePersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.StatViewTagLocalService" class="com.idetronic.subur.service.impl.StatViewTagLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.StatViewTagPersistence" class="com.idetronic.subur.service.persistence.StatViewTagPersistenceImpl" parent="basePersistence" />
+	<bean id="com.idetronic.subur.service.SuburConfigLocalService" class="com.idetronic.subur.service.impl.SuburConfigLocalServiceImpl" />
+	<bean id="com.idetronic.subur.service.persistence.SuburConfigPersistence" class="com.idetronic.subur.service.persistence.SuburConfigPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.SuburItemLocalService" class="com.idetronic.subur.service.impl.SuburItemLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.SuburItemPersistence" class="com.idetronic.subur.service.persistence.SuburItemPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.persistence.SuburItemFinder" class="com.idetronic.subur.service.persistence.SuburItemFinderImpl" parent="basePersistence" />

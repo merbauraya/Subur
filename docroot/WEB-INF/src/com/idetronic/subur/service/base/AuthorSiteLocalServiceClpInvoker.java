@@ -106,17 +106,17 @@ public class AuthorSiteLocalServiceClpInvoker {
 				"com.idetronic.subur.model.AuthorSite"
 			};
 
-		_methodName134 = "getBeanIdentifier";
+		_methodName126 = "getBeanIdentifier";
 
-		_methodParameterTypes134 = new String[] {  };
+		_methodParameterTypes126 = new String[] {  };
 
-		_methodName135 = "setBeanIdentifier";
+		_methodName127 = "setBeanIdentifier";
 
-		_methodParameterTypes135 = new String[] { "java.lang.String" };
+		_methodParameterTypes127 = new String[] { "java.lang.String" };
 
-		_methodName140 = "findByAuthorId";
+		_methodName132 = "findByAuthorId";
 
-		_methodParameterTypes140 = new String[] { "long" };
+		_methodParameterTypes132 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -208,20 +208,20 @@ public class AuthorSiteLocalServiceClpInvoker {
 			return AuthorSiteLocalServiceUtil.updateAuthorSite((com.idetronic.subur.model.AuthorSite)arguments[0]);
 		}
 
-		if (_methodName134.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return AuthorSiteLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName135.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			AuthorSiteLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
 			return AuthorSiteLocalServiceUtil.findByAuthorId(((Long)arguments[0]).longValue());
 		}
 
@@ -260,10 +260,10 @@ public class AuthorSiteLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName134;
-	private String[] _methodParameterTypes134;
-	private String _methodName135;
-	private String[] _methodParameterTypes135;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
+	private String _methodName126;
+	private String[] _methodParameterTypes126;
+	private String _methodName127;
+	private String[] _methodParameterTypes127;
+	private String _methodName132;
+	private String[] _methodParameterTypes132;
 }

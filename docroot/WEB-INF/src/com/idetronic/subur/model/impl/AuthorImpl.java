@@ -37,4 +37,5 @@ public class AuthorImpl extends AuthorBaseImpl {
 	{
 		return SuburUtil.getAuhorDisplayName(getFirstName(), getLastName());
 	}
+	
 }

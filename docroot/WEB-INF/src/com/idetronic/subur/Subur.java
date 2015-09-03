@@ -5,13 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -20,7 +16,6 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -29,16 +24,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.idetronic.subur.model.Author;
 import com.idetronic.subur.model.SuburItem;
-import com.idetronic.subur.service.AuthorLocalServiceUtil;
-import com.idetronic.subur.service.ItemAuthorLocalServiceUtil;
-import com.idetronic.subur.service.ItemDivisionLocalServiceUtil;
-import com.idetronic.subur.service.ItemFileEntryLocalServiceUtil;
-import com.idetronic.subur.service.ItemItemTypeLocalServiceUtil;
-import com.idetronic.subur.service.ItemSubjectLocalServiceUtil;
-import com.idetronic.subur.service.MetadataPropertyValueLocalServiceUtil;
-import com.idetronic.subur.service.SubjectLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
 import com.idetronic.subur.util.SuburConstant;
 import com.idetronic.subur.util.SuburFileUtil;
@@ -46,24 +32,19 @@ import com.idetronic.subur.util.SuburFolderUtil;
 import com.idetronic.subur.util.SuburUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -81,12 +62,10 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.StringUtil;
 
 public class Subur extends MVCPortlet {
 	private static Log logger = LogFactoryUtil.getLog(Subur.class);
@@ -104,7 +83,7 @@ public class Subur extends MVCPortlet {
 		
        // if (event.getName().equalsIgnoreCase("categoryNav"))
         //{
-        	response.setRenderParameter("jspPage", "/html/view.jsp");
+        response.setRenderParameter("jspPage", "/html/view.jsp");
        // }
 	}
 	
@@ -128,7 +107,6 @@ public class Subur extends MVCPortlet {
 		long[] itemTypeIds = new long[itemTypeString.length];
 		for (int i = 0; i < itemTypeString.length; i++)
 		{
-			logger.info("it="+itemTypeString[i]);
 			itemTypeIds[i] = Long.valueOf(itemTypeString[i]);
 			
 		}
@@ -302,11 +280,13 @@ public class Subur extends MVCPortlet {
 			catIds= new long[catIdsArr.length];
 			for (int i = 0;i < catIdsArr.length; i++)
 			{
-				
-				catIds[i] = Long.parseLong(catIdsArr[i]);
+				if (catIdsArr[i].length()>0)
+					catIds[i] = Long.parseLong(catIdsArr[i]);
 				
 			}
 		}
+		//fail safe remove 0 from array if any
+		catIds = ArrayUtil.remove(catIds, 0L);		
 		
 		String tags = ParamUtil.getString(uploadRequest, "assetTagNames");
 		
@@ -335,7 +315,6 @@ public class Subur extends MVCPortlet {
 		
 		//identifier
 		String identifierIndexesString = ParamUtil.getString(uploadRequest, "itemIdentifierIndexes");
-		logger.info("ident="+identifierIndexesString);
 		int[] identifierIndexes = StringUtil.split(identifierIndexesString, 0);
 		
 		Map<String,String> itemIdentifierMap = new HashMap<String,String>();
@@ -343,8 +322,10 @@ public class Subur extends MVCPortlet {
 		{
 			String identName = ParamUtil.getString(uploadRequest, "identName"+itemIdentifierIndex);
 			String identValue = ParamUtil.getString(uploadRequest, "identValue"+itemIdentifierIndex); 
-			itemIdentifierMap.put(identName, identValue);
-			logger.info(identValue);
+			if (Validator.isNotNull(identValue) && identValue.length() > 0)
+			{
+				itemIdentifierMap.put(identName, identValue);
+			}
 		}
 		
 		
@@ -357,7 +338,6 @@ public class Subur extends MVCPortlet {
 		
 		
 		int[] otherTitleIndexes = StringUtil.split(otherTitleIndexesString, 0);
-		logger.info("otitle="+otherTitleIndexesString);
 		String[] otherTitles = new String[otherTitleIndexes.length];
 		int i = 0;
 		for (int otherTitleIndex : otherTitleIndexes) {
@@ -404,95 +384,7 @@ public class Subur extends MVCPortlet {
 		
 		
 	}
-/**
- * editAuthor - Add/Edit author action request during item author 	
- * @param request
- * @param response
- * @throws PortalException
- * @throws SystemException
- */
-	public void editAuthor(ActionRequest request,ActionResponse response)throws PortalException, SystemException
-	{
-		
-		String cmd = ParamUtil.getString(request, "cmd");
-		themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-		long authorId = ParamUtil.getLong(request, "authorId");
-		Author author = null;
-		if (cmd.equalsIgnoreCase(Constants.UPDATE))
-			author = AuthorLocalServiceUtil.getAuthor(authorId);
-		
-		String firstName = ParamUtil.getString(request, "firstName");
-		String lastName = ParamUtil.getString(request, "lastName");
-		String remoteId = ParamUtil.getString(request, "remoteId");
-		String title = ParamUtil.getString(request, "title");
-		
-		String expertises = ParamUtil.getString(request, "expertiseNames");
-		
-		String[] expertiseNamesArr = null;
-		if (!expertises.isEmpty())
-		{
-			expertiseNamesArr = expertises.split(",");
-		}
-		
-		
-		int idType = ParamUtil.getInteger(request, "idType");
-		
-		//handle Author Site
-		String authorSiteIndexesString = request.getParameter(
-				"authorSiteIndexes");
-		
-		
-		HashMap<String, String> authorSite = new HashMap<>();
-		int[] authorSiteIndexes = StringUtil.split(authorSiteIndexesString, 0);
-		for (int authorSiteIndex : authorSiteIndexes) {
-			
-			long authorSiteId = ParamUtil.getLong(
-					request, "authorSiteId" + authorSiteIndex);
-			
-			String authorSiteName = ParamUtil.getString(
-					request, "siteName" + authorSiteIndex);
-			
-			String authorSiteURL = ParamUtil.getString(
-					request, "siteURL" + authorSiteIndex);
-			
-			if (Validator.isNull(authorSiteURL))  {
-				continue;
-			}		
-			logger.info(authorSiteName+"="+authorSiteURL);
-			
-			authorSite.put(authorSiteName, authorSiteURL);
-			
-			
-			
-		}
-		
-		
-			
-		if (cmd.equalsIgnoreCase(Constants.ADD))
-		{
-			
-			authorId = AuthorLocalServiceUtil.addAuthor(firstName, lastName,title, authorSite,
-					remoteId, 
-					idType, themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), expertiseNamesArr);
-			
-			
-		}else
-		{
-			 AuthorLocalServiceUtil.updateAuthor(authorId, title, 
-					firstName, lastName, authorSite,
-					remoteId, idType, 
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), 
-					expertiseNamesArr);
-			
-			
-		}
-		
-		long itemId = ParamUtil.getLong(request, "itemId");
-		
-		
-		
-		
-	}
+
 	/**
 	 * Serve DLFileEntry for download rather than opening in DL Portlet
 	 * Param given is Asset Entry id
@@ -604,7 +496,7 @@ public class Subur extends MVCPortlet {
 		PrintWriter out=resourceResponse.getWriter();
 		//logger.info(resource);
 		String resourceId = resourceRequest.getResourceID();
-		logger.info(resourceId);
+		
 		
 		/*
 		if (Validator.equals(resourceId, SuburConstant.RESOURCE_ITEM_AUTHOR_LIST))
@@ -679,6 +571,13 @@ public class Subur extends MVCPortlet {
 	            }
 	        }
 	        fileEntries = new long[tempFileEntrys.size()];
+	        ServiceContext serviceContext = new ServiceContext();
+        	
+        	serviceContext.setAddGuestPermissions(true);
+        	serviceContext.setAddGroupPermissions(true);
+        	
+        	
+        	//serviceContext.setGuestPermissions(guestPermissions);
 	        for (int i = 0; i < tempFileEntrys.size(); i++)  //(FileEntry tmpFileEntry : tempFileEntrys)
 	        {
 	        	FileEntry tmpFileEntry = tempFileEntrys.get(i);
@@ -690,11 +589,18 @@ public class Subur extends MVCPortlet {
 	        	String sourceFileName = file.getName();
 	        	String title = tmpFileEntry.getTitle();
 	        	String mimeType = tmpFileEntry.getMimeType();
+	        	long repositoryId = themeDisplay.getScopeGroupId();
+	        	
 	        	
 	        	//InputStream is = DLFileEntryLocalServiceUtil.getFileAsStream(themeDisplay.getUserId(),fileEntry.getFileEntryId(), fileEntry.getVersion());
 	        	//DLFileEntryLocalServiceUtil.addFileEntry(userId, groupId, repositoryId, folderId, sourceFileName, mimeType, title, description, changeLog, fileEntryTypeId, fieldsMap, file, is, size, new ServiceContext());
-		        FileEntry fileEntry = DLAppServiceUtil.addFileEntry(themeDisplay.getScopeGroupId(), folderId, sourceFileName, mimeType, title, description, changeLog, file,  new ServiceContext());
-		        logger.info(fileEntry.getFileEntryId()+ fileEntry.getTitle());
+		       // FileEntry fileEntry = DLAppServiceUtil.addFileEntry(themeDisplay.getScopeGroupId(), folderId, sourceFileName, mimeType, title, description, changeLog, file,  serviceContext);
+		        
+		        FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType, title,
+						description, changeLog, file,serviceContext);
+		        
+		        
+		        
 		        fileEntries[i] = fileEntry.getFileEntryId();
 	        }
 	        
@@ -726,7 +632,7 @@ public class Subur extends MVCPortlet {
         UploadRequest uploadRequest = PortalUtil.getUploadPortletRequest(resourceRequest);
         File file = uploadRequest.getFile("myFile");
         String fileName = uploadRequest.getFileName("myFile");
-        logger.info("filename="+file.getName()+ ":"+fileName);
+        
         themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
         long folderId = SuburFolderUtil.getFolderId(resourceRequest, themeDisplay);
 		long fileEntryId = SuburFileUtil.addFile(resourceRequest, folderId, file,fileName);
@@ -734,73 +640,9 @@ public class Subur extends MVCPortlet {
 		
 		return fileEntryId;
 		
-		//ItemFileEntryLocalServiceUtil.add(item.getItemId(), fileEntryId, entryType);
-        
-		/*
-        
-        String objFileName = uploadRequest.getFileName("myFile");
-        _log.info("objFile: [" + objFile + "], objFileName: [" + objFileName + "]");        
-        String uploadDirectory = "L:/myfiles/";
-
-        File currentFile = new File(uploadDirectory);
-        if (currentFile.exists()) {
-            _log.info("Going to write the file contents");
-            File newFile = new File(uploadDirectory + "/" + objFileName);
-            OutputStream os = new FileOutputStream(newFile);
-            InputStream is = new FileInputStream(objFile);
-            
-            byte[] buff = new byte[is.available()];
-            is.read(buff);
-            os.write(buff);
-            is.close();
-            os.close();
-            
-        }*/
+		
     }
-	public void METHODJAVANAMEManageForm(ActionRequest actionRequest,ActionResponse actionResponse) throws IOException, PortletException 
-	{
-	    List<FileEntry> tempFileEntrys = new ArrayList<FileEntry>();
-	    try
-	    {
-	        ThemeDisplay themeDisplay  =(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	        UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
-	        //get selected checkbox of file to upload
-	        String [] selectedFile = uploadRequest.getParameterValues("selectUploadedFileCheckbox");
-	        if(selectedFile != null)
-	        {
-	            for(int i = 0; i < selectedFile.length; ++i)
-	            {
-	                FileEntry tmpfile = TempFileUtil.getTempFile(themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), selectedFile[i], _TEMP_FOLDER_NAME_ATTACHMENT);
-	                if(tmpfile!=null && tmpfile.getTitle()!=null && (!tmpfile.getTitle().equals("")))
-	                {
-	                    tempFileEntrys.add(tmpfile);
-	                    System.out.println("file: " + tmpfile.getTitle());
-	                }
-	            }
-	        }
-
-	        /////upload tempFileEntrys where you needed
-	        
-	    }
-	    catch (Exception e) 
-	    {
-	        e.printStackTrace();
-	    }
-	    finally
-	    {
-	        //delete all tmp files uploaded in liferay tmp folder
-	        for (FileEntry tmp : tempFileEntrys) 
-	        {
-	            try 
-	            {
-	                TempFileUtil.deleteTempFile(tmp.getFileEntryId());
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	            }
-	        }
-	    }
-	    actionResponse.setRenderParameter("mvcPath","/jsp/viewList.jsp");
-	}
+	
 	public void manageTempFileUpload(ActionRequest request,ActionResponse response) throws Exception
 	{
 		

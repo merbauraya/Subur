@@ -3678,6 +3678,8 @@ public class AuthorPersistenceImpl extends BasePersistenceImpl<Author>
 		authorImpl.setMetadata(author.getMetadata());
 		authorImpl.setLastPublishedDate(author.getLastPublishedDate());
 		authorImpl.setItemCount(author.getItemCount());
+		authorImpl.setEmail(author.getEmail());
+		authorImpl.setOfficeNo(author.getOfficeNo());
 		authorImpl.setCreateDate(author.getCreateDate());
 		authorImpl.setModifiedDate(author.getModifiedDate());
 		authorImpl.setUuid(author.getUuid());

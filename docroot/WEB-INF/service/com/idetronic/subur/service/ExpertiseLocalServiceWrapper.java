@@ -331,6 +331,13 @@ public class ExpertiseLocalServiceWrapper implements ExpertiseLocalService,
 		return _expertiseLocalService.decrementAuthorCount(expertiseId);
 	}
 
+	@Override
+	public java.util.List<com.idetronic.subur.model.Expertise> getTop10(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _expertiseLocalService.getTop10(groupId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -10,6 +10,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 public class AuthorPermission {
+	private static String CLASS_NAME="com.idetronic.subur.Author";
+	
 	public static void check(PermissionChecker permissionChecker,
 			long authorId, String actionId) throws PortalException,
 			SystemException {
@@ -19,13 +21,12 @@ public class AuthorPermission {
 	}
 
 	public static boolean contains(PermissionChecker permissionChecker,
-			long authorId, String actionId) throws PortalException,
+			long groupId, String actionId) throws PortalException,
 			SystemException {
-		Author author = AuthorLocalServiceUtil.getAuthor(authorId);
-		return permissionChecker
-				.hasPermission(author.getGroupId(),
-						Author.class.getName(), author.getAuthorId(),
-						actionId);
+		
+		return permissionChecker.hasPermission(
+				groupId, CLASS_NAME, groupId, actionId);
+		
 	}
 
 }

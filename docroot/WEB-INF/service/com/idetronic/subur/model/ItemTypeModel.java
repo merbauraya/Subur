@@ -67,9 +67,9 @@ public interface ItemTypeModel extends BaseModel<ItemType> {
 	/**
 	 * Sets the item type ID of this item type.
 	 *
-	 * @param ItemTypeId the item type ID of this item type
+	 * @param itemTypeId the item type ID of this item type
 	 */
-	public void setItemTypeId(long ItemTypeId);
+	public void setItemTypeId(long itemTypeId);
 
 	/**
 	 * Returns the item type name of this item type.
@@ -82,9 +82,9 @@ public interface ItemTypeModel extends BaseModel<ItemType> {
 	/**
 	 * Sets the item type name of this item type.
 	 *
-	 * @param ItemTypeName the item type name of this item type
+	 * @param itemTypeName the item type name of this item type
 	 */
-	public void setItemTypeName(String ItemTypeName);
+	public void setItemTypeName(String itemTypeName);
 
 	/**
 	 * Returns the item count of this item type.

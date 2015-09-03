@@ -5,10 +5,11 @@
 	portletURL.setParameter("jspPage", "/html/admin/subur/view.jsp");
 	portletURL.setWindowState(WindowState.NORMAL);
 
-
+/*
 	PortletURL addItemURL = renderResponse.createRenderURL();
 	addItemURL.setParameter("jspPage", "/html/deposit/new.jsp");
 	addItemURL.setParameter(Constants.CMD, Constants.ADD);
+*/
 	String catMsg="";
 
 	
@@ -23,8 +24,16 @@
 
 %>
 
+<liferay-portlet:renderURL varImpl="searchURL">
+        <portlet:param name="mvcPath" value="/html/search/subur_search.jsp" />
+</liferay-portlet:renderURL>
 
-<a class="btn btn-primary" href="<%= addItemURL %>">New Entry</a>&nbsp; 
+<aui:form action="<%=searchURL%>" name="fm" inlineLabel="<%= true %>">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<%@ include file="/html/admin/subur/top_nav.jsp" %>
+</aui:form>
+
+
 <liferay-ui:search-container
 	emptyResultsMessage="no-item-were-found"
 	iteratorURL="<%=portletURL %>"

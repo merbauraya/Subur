@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 public class ItemCategorizationFilterTag extends IncludeTag {
@@ -14,6 +15,7 @@ public class ItemCategorizationFilterTag extends IncludeTag {
 	
 	private String assetType;
 	private PortletURL portletURL; 
+	private PortletURL actionURL = null;
 	
 	public void setAssetType(String assetType)
 	{
@@ -22,6 +24,17 @@ public class ItemCategorizationFilterTag extends IncludeTag {
 	public void setPortletURL(PortletURL portletURL)
 	{
 		this.portletURL = portletURL;
+	}
+	public void setActionURL(PortletURL actionURL)
+	{
+		this.actionURL = actionURL;
+	}
+	public PortletURL getActionURL()
+	{
+		if (Validator.isNull(actionURL))
+		return portletURL;
+			else
+		return actionURL;
 	}
 	public String getAssetType()
 	{
@@ -35,7 +48,7 @@ public class ItemCategorizationFilterTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("subur:item-categorization-filter:portletURL", getPortletURL());
 		request.setAttribute("subur:item-categorization-filter:assetType", getAssetType());
-		
+		request.setAttribute("subur:item-categorization-filter:actionURL", getActionURL());
 	}
 	
 	@Override

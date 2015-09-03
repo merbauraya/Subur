@@ -13,6 +13,11 @@ public class AuthorDisplayTerms  extends DisplayTerms{
 	public static final String FIRSTNAME = "firstName";
 	public static final String LASTNAME = "lastName";
 	public static final String LAST_PUBLISHED_DATE = "lastPublishedDate";
+	public static final String EXPERTISE_ID = "expertiseId";
+	public static final String EXPERTISE_NAME ="expertiseName";
+	public static final String RESEARCH_INTEREST_ID = "researchInterestId";
+	public static final String RESEARCH_INTEREST_NAME = "researchInterestName";
+			
 	
 	protected String description;
 	protected String firstName;

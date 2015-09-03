@@ -47,27 +47,27 @@ public class ItemTypeLocalServiceWrapper implements ItemTypeLocalService,
 	/**
 	* Creates a new item type with the primary key. Does not add the item type to the database.
 	*
-	* @param ItemTypeId the primary key for the new item type
+	* @param itemTypeId the primary key for the new item type
 	* @return the new item type
 	*/
 	@Override
-	public com.idetronic.subur.model.ItemType createItemType(long ItemTypeId) {
-		return _itemTypeLocalService.createItemType(ItemTypeId);
+	public com.idetronic.subur.model.ItemType createItemType(long itemTypeId) {
+		return _itemTypeLocalService.createItemType(itemTypeId);
 	}
 
 	/**
 	* Deletes the item type with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ItemTypeId the primary key of the item type
+	* @param itemTypeId the primary key of the item type
 	* @return the item type that was removed
 	* @throws PortalException if a item type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public com.idetronic.subur.model.ItemType deleteItemType(long ItemTypeId)
+	public com.idetronic.subur.model.ItemType deleteItemType(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _itemTypeLocalService.deleteItemType(ItemTypeId);
+		return _itemTypeLocalService.deleteItemType(itemTypeId);
 	}
 
 	/**
@@ -181,24 +181,24 @@ public class ItemTypeLocalServiceWrapper implements ItemTypeLocalService,
 	}
 
 	@Override
-	public com.idetronic.subur.model.ItemType fetchItemType(long ItemTypeId)
+	public com.idetronic.subur.model.ItemType fetchItemType(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _itemTypeLocalService.fetchItemType(ItemTypeId);
+		return _itemTypeLocalService.fetchItemType(itemTypeId);
 	}
 
 	/**
 	* Returns the item type with the primary key.
 	*
-	* @param ItemTypeId the primary key of the item type
+	* @param itemTypeId the primary key of the item type
 	* @return the item type
 	* @throws PortalException if a item type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public com.idetronic.subur.model.ItemType getItemType(long ItemTypeId)
+	public com.idetronic.subur.model.ItemType getItemType(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _itemTypeLocalService.getItemType(ItemTypeId);
+		return _itemTypeLocalService.getItemType(itemTypeId);
 	}
 
 	@Override
@@ -280,6 +280,12 @@ public class ItemTypeLocalServiceWrapper implements ItemTypeLocalService,
 		throws java.lang.Throwable {
 		return _itemTypeLocalService.invokeMethod(name, parameterTypes,
 			arguments);
+	}
+
+	@Override
+	public com.idetronic.subur.model.ItemType add(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _itemTypeLocalService.add(name);
 	}
 
 	@Override

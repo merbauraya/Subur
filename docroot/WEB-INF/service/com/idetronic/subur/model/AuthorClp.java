@@ -86,6 +86,8 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		attributes.put("metadata", getMetadata());
 		attributes.put("lastPublishedDate", getLastPublishedDate());
 		attributes.put("itemCount", getItemCount());
+		attributes.put("email", getEmail());
+		attributes.put("officeNo", getOfficeNo());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("Uuid", getUuid());
@@ -172,6 +174,18 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 
 		if (itemCount != null) {
 			setItemCount(itemCount);
+		}
+
+		String email = (String)attributes.get("email");
+
+		if (email != null) {
+			setEmail(email);
+		}
+
+		String officeNo = (String)attributes.get("officeNo");
+
+		if (officeNo != null) {
+			setOfficeNo(officeNo);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -500,6 +514,52 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 	}
 
 	@Override
+	public String getEmail() {
+		return _email;
+	}
+
+	@Override
+	public void setEmail(String email) {
+		_email = email;
+
+		if (_authorRemoteModel != null) {
+			try {
+				Class<?> clazz = _authorRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setEmail", String.class);
+
+				method.invoke(_authorRemoteModel, email);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getOfficeNo() {
+		return _officeNo;
+	}
+
+	@Override
+	public void setOfficeNo(String officeNo) {
+		_officeNo = officeNo;
+
+		if (_authorRemoteModel != null) {
+			try {
+				Class<?> clazz = _authorRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setOfficeNo", String.class);
+
+				method.invoke(_authorRemoteModel, officeNo);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -692,6 +752,8 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		clone.setMetadata(getMetadata());
 		clone.setLastPublishedDate(getLastPublishedDate());
 		clone.setItemCount(getItemCount());
+		clone.setEmail(getEmail());
+		clone.setOfficeNo(getOfficeNo());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
 		clone.setUuid(getUuid());
@@ -748,7 +810,7 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{authorId=");
 		sb.append(getAuthorId());
@@ -776,6 +838,10 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		sb.append(getLastPublishedDate());
 		sb.append(", itemCount=");
 		sb.append(getItemCount());
+		sb.append(", email=");
+		sb.append(getEmail());
+		sb.append(", officeNo=");
+		sb.append(getOfficeNo());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -791,7 +857,7 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.Author");
@@ -850,6 +916,14 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		sb.append(getItemCount());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>email</column-name><column-value><![CDATA[");
+		sb.append(getEmail());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>officeNo</column-name><column-value><![CDATA[");
+		sb.append(getOfficeNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
@@ -884,6 +958,8 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 	private String _metadata;
 	private Date _lastPublishedDate;
 	private int _itemCount;
+	private String _email;
+	private String _officeNo;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _Uuid;

@@ -4,11 +4,15 @@
 
 	String redirect = ParamUtil.getString(request, "redirect");
 	String backURL = ParamUtil.getString(request, "backURL", redirect);
-	String[] siteNameList = StringUtil.split(authorSiteNameString,",");
 	
 	
-	String[] titles = StringUtil.split(authorSalutationString, ",");
+	String authorSalutationConfigString = SuburConfiguration.getConfigString(SuburConfiguration.AUTHOR_SALUTATION);
+	String authorSiteConfigString = SuburConfiguration.getConfigString(SuburConfiguration.AUTHOR_SITES);
+	
+	String[] siteNameList = StringUtil.split(authorSiteConfigString,",");
+	String[] titles = StringUtil.split(authorSalutationConfigString, ",");
 	long authorId = ParamUtil.getLong(request,"authorId");
+	
 	Author author = null;
 	List<AuthorSite> authorSites = Collections.emptyList();
 	int[] authorSiteIndexes = null;
@@ -43,7 +47,7 @@
 	}
 	
 %>
-isEmpty = <%=authorSiteIndexes.length%>
+
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	localizeTitle="<%= (author == null) %>"
@@ -59,7 +63,7 @@ isEmpty = <%=authorSiteIndexes.length%>
 	<aui:input name="authorId" type="hidden" value="<%= authorId %>" />
 	
 	<aui:model-context bean="<%= author %>" model="<%= Author.class %>" />
-	<aui:fieldset>
+	
 		<aui:select name="title">
 		<%	for (String authorTitle : titles) {
 			boolean selected = false;
@@ -71,9 +75,19 @@ isEmpty = <%=authorSiteIndexes.length%>
 		}
 		%>
 		</aui:select>
-		<aui:input name="firstName" cssClass="fullwidth" />
-		<aui:input name="middleName" cssClass="fullwidth"/>
-		<aui:input name="lastName" cssClass="fullwidth"/>
+		<aui:input type="text" name="firstName" cssClass="fullwidth">
+			<aui:validator name="required" />	
+			
+		
+		</aui:input>
+		<aui:input type="text" name="middleName" cssClass="fullwidth"/>
+		<aui:input type="text" name="lastName" cssClass="fullwidth">
+			<aui:validator name="required" />	
+		</aui:input>
+		<aui:input type="text" name="email" cssClass="fullwidth">
+			<aui:validator name="email" />
+		</aui:input>
+		<aui:input name="officeNo" cssClass="fullwidth"/>
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="categorization">
 			<%
 				PortletURL portletURL = renderResponse.createRenderURL();
@@ -96,6 +110,7 @@ isEmpty = <%=authorSiteIndexes.length%>
 					
 				}
 				*/
+				
 			%>
 			<aui:input 
 				classPK="<%= (author != null ? author.getAuthorId(): 0L) %>" 
@@ -112,10 +127,9 @@ isEmpty = <%=authorSiteIndexes.length%>
 		</liferay-ui:panel>
 		
 		
+<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="author-site">
 		
-		<h5>
-<liferay-ui:message key="author-site"/>
-</h5>
+		
 		<div id="authorSite">
 		<%
 			for (int i = 0; i < authorSiteIndexes.length; i++) {
@@ -141,13 +155,16 @@ isEmpty = <%=authorSiteIndexes.length%>
 					%>
 					</aui:select>
 					
-					<aui:input label="site-url" fieldParam='<%= "siteURL" + authorSiteIndex %>' 
+					<aui:input type="text" label="site-url" fieldParam='<%= "siteURL" + authorSiteIndex %>' 
 						id='<%= "siteURL" + authorSiteIndex %>'
 						inlineField="<%= true %>" 
 						name='siteURL' 
 						cssClass="fullwidth"
 						
-						/>
+					>
+						<aui:validator name="uri" />	
+						
+					</aui:input>
 					
 				</div>
 			
@@ -167,9 +184,9 @@ isEmpty = <%=authorSiteIndexes.length%>
     ).render();
   </aui:script>
 	
+</liferay-ui:panel>		
 		
-		
-	</aui:fieldset>
+	
 
 
 
@@ -177,35 +194,50 @@ isEmpty = <%=authorSiteIndexes.length%>
 	boolean autoFocus = true;
 	PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
 	String contentCallback = portletResponse.getNamespace() + "getSuggestionsContent";
-	
+	String riContentCallback = contentCallback + "_ri";
 	String curTags = StringPool.BLANK;
+	String curResearchInterest = StringPool.BLANK;
 	if (author!= null)
 	{
 		List<Expertise> curExpertises = AuthorLocalServiceUtil.getExpertises(authorId);
 		curTags = ListUtil.toString(curExpertises,"expertiseName");
+		List<ResearchInterest> authorResearchInterests = AuthorLocalServiceUtil.getResearchInterests(authorId)	;
+		curResearchInterest = ListUtil.toString(authorResearchInterests,"researchInterestName");
+		
 	}
 	
 	long[] groupIds = new long[] {themeDisplay.getScopeGroupId() } ;
 	String className = SuburItem.class.getName();
 	String namespace = portletResponse.getNamespace();
 	String hiddenInput = "expertiseNames";
+	String hiddenInput2 = "researchInterestNames";
 	String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:id"));
-	
+	String id2 = id+"researchInterest";
 %>
+<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="expertise-and-research-interest">
+
 <h5>
-<liferay-ui:message key="research-interest"/>
+<liferay-ui:message key="expertise"/>
 </h5>
-<div class="lfr-tags-selector-content" id="<%= namespace + id %>assetTagsSelector">
+<div class="lfr-tags-selector-content" id="<%= namespace + id %>expertiseTagsSelector">
 	<aui:input name="<%= hiddenInput %>" type="hidden" />
 
 	<input class="lfr-tag-selector-input" id="<%= id %>assetTagNames" maxlength="75" size="35" title="<liferay-ui:message key="add-tags" />" type="text" />
 </div>
 
+<h5><liferay-ui:message key="research-interest"/></h5>
+<div class="lfr-tags-selector-content" id="<%= namespace + id %>researchInterestTagsSelector">
+	<aui:input name="<%= hiddenInput2 %>" type="hidden" />
+
+	<input class="lfr-tag-selector-input" id="<%= id %>researchInterestTagNames" maxlength="75" size="35" title="<liferay-ui:message key="add-tags" />" type="text" />
+</div>
+
+</liferay-ui:panel>
 <aui:script use="expertise-tags-selector">
 	new Liferay.ExpertiseTagsSelector(
 		{
 			allowSuggestions: <%= false %>,
-			contentBox: '#<%= namespace + id %>assetTagsSelector',
+			contentBox: '#<%= namespace + id %>expertiseTagsSelector',
 
 			<c:if test="<%= Validator.isNotNull(contentCallback) %>">
 				contentCallback: function() {
@@ -224,6 +256,7 @@ isEmpty = <%=authorSiteIndexes.length%>
 			hiddenInput: '#<%= namespace + hiddenInput %>',
 			input: '#<%= id %>assetTagNames',
 			instanceVar: '<%= namespace + id %>',
+			tagType :'expertise',
 			portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>
 		}
 	).render();
@@ -232,9 +265,38 @@ isEmpty = <%=authorSiteIndexes.length%>
 		Liferay.Util.focusFormField('#<%= id %>assetTagNames');
 	</c:if>
 	
-	
+	var expertiseSelector = new Liferay.ExpertiseTagsSelector(
+			{
+				allowSuggestions: <%= true %>,
+				contentBox: '#<%= namespace + id %>researchInterestTagsSelector',
+
+				<c:if test="<%= Validator.isNotNull(riContentCallback) %>">
+					contentCallback: function() {
+						if (window.<%= riContentCallback %>) {
+							return <%= riContentCallback %>();
+						}
+					},
+				</c:if>
+
+				curEntries: '<%= HtmlUtil.escapeJS(curResearchInterest) %>',
+
+				<c:if test="<%= groupIds != null %>">
+					groupIds: '<%= StringUtil.merge(groupIds) %>',
+				</c:if>
+
+				hiddenInput: '#<%= namespace + hiddenInput2 %>',
+				input: '#<%= id %>researchInterestTagNames',
+				instanceVar: '<%= namespace + id2 %>',
+				tagType :'researchInterest',
+				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>
+			}
+		);
+		
+		expertiseSelector.render();
 	
 </aui:script>
+
+
 	<aui:button-row>
 	<aui:button type="submit" />
 	
@@ -255,7 +317,6 @@ function <portlet:namespace />submitForm()
 		
 	});
 	A.one("#<portlet:namespace/>categoryIds").val(assetCategoryIdArr);
-	alert(assetCategoryIdArr);
 	submitForm(document.<portlet:namespace />fm);
 	
 }

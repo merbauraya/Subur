@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
-	<service name="Plugin_subur_ExpertiseService" provider="java:RPC" style="rpc" use="encoded">
+	<service name="Plugin_Subur_ExpertiseService" provider="java:RPC" style="rpc" use="encoded">
 		<arrayMapping xmlns:ns="urn:http.service.subur.idetronic.com" xmlns:cmp-ns="http://model.subur.idetronic.com" qname="ns:ArrayOf_tns2_ExpertiseSoap" type="java:com.idetronic.subur.model.ExpertiseSoap[]" innerType="cmp-ns:ExpertiseSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.subur.idetronic.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.subur.idetronic.com" qname="ns:ExpertiseSoap" type="java:com.idetronic.subur.model.ExpertiseSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
@@ -29,7 +29,7 @@
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="ExpertiseServiceSoap" />
 		<parameter name="wsdlServiceElement" value="ExpertiseServiceSoapService" />
-		<parameter name="wsdlServicePort" value="Plugin_subur_ExpertiseService" />
+		<parameter name="wsdlServicePort" value="Plugin_Subur_ExpertiseService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.subur.idetronic.com" />
 	</service>
 </deployment>

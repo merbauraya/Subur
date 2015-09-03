@@ -32,6 +32,6 @@ public abstract class ItemTypeActionableDynamicQuery
 
 		setClassLoader(com.idetronic.subur.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("ItemTypeId");
+		setPrimaryKeyPropertyName("itemTypeId");
 	}
 }

@@ -37,7 +37,7 @@ import java.util.Date;
 public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{authorId=");
 		sb.append(authorId);
@@ -65,6 +65,10 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		sb.append(lastPublishedDate);
 		sb.append(", itemCount=");
 		sb.append(itemCount);
+		sb.append(", email=");
+		sb.append(email);
+		sb.append(", officeNo=");
+		sb.append(officeNo);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -141,6 +145,20 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 
 		authorImpl.setItemCount(itemCount);
 
+		if (email == null) {
+			authorImpl.setEmail(StringPool.BLANK);
+		}
+		else {
+			authorImpl.setEmail(email);
+		}
+
+		if (officeNo == null) {
+			authorImpl.setOfficeNo(StringPool.BLANK);
+		}
+		else {
+			authorImpl.setOfficeNo(officeNo);
+		}
+
 		if (createDate == Long.MIN_VALUE) {
 			authorImpl.setCreateDate(null);
 		}
@@ -184,6 +202,8 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		metadata = objectInput.readUTF();
 		lastPublishedDate = objectInput.readLong();
 		itemCount = objectInput.readInt();
+		email = objectInput.readUTF();
+		officeNo = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		Uuid = objectInput.readUTF();
@@ -245,6 +265,21 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 
 		objectOutput.writeLong(lastPublishedDate);
 		objectOutput.writeInt(itemCount);
+
+		if (email == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(email);
+		}
+
+		if (officeNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(officeNo);
+		}
+
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -271,6 +306,8 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 	public String metadata;
 	public long lastPublishedDate;
 	public int itemCount;
+	public String email;
+	public String officeNo;
 	public long createDate;
 	public long modifiedDate;
 	public String Uuid;

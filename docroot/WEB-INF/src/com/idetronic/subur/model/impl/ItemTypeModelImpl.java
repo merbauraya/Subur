@@ -58,14 +58,14 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 	 */
 	public static final String TABLE_NAME = "Subur_ItemType";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "ItemTypeId", Types.BIGINT },
-			{ "ItemTypeName", Types.VARCHAR },
+			{ "itemTypeId", Types.BIGINT },
+			{ "itemTypeName", Types.VARCHAR },
 			{ "itemCount", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subur_ItemType (ItemTypeId LONG not null primary key,ItemTypeName VARCHAR(75) null,itemCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Subur_ItemType (itemTypeId LONG not null primary key,itemTypeName VARCHAR(75) null,itemCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Subur_ItemType";
-	public static final String ORDER_BY_JPQL = " ORDER BY itemType.ItemTypeId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY Subur_ItemType.ItemTypeId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY itemType.itemTypeId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY Subur_ItemType.itemTypeId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -84,7 +84,7 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 
 	@Override
 	public long getPrimaryKey() {
-		return _ItemTypeId;
+		return _itemTypeId;
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _ItemTypeId;
+		return _itemTypeId;
 	}
 
 	@Override
@@ -116,8 +116,8 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("ItemTypeId", getItemTypeId());
-		attributes.put("ItemTypeName", getItemTypeName());
+		attributes.put("itemTypeId", getItemTypeId());
+		attributes.put("itemTypeName", getItemTypeName());
 		attributes.put("itemCount", getItemCount());
 
 		return attributes;
@@ -125,16 +125,16 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long ItemTypeId = (Long)attributes.get("ItemTypeId");
+		Long itemTypeId = (Long)attributes.get("itemTypeId");
 
-		if (ItemTypeId != null) {
-			setItemTypeId(ItemTypeId);
+		if (itemTypeId != null) {
+			setItemTypeId(itemTypeId);
 		}
 
-		String ItemTypeName = (String)attributes.get("ItemTypeName");
+		String itemTypeName = (String)attributes.get("itemTypeName");
 
-		if (ItemTypeName != null) {
-			setItemTypeName(ItemTypeName);
+		if (itemTypeName != null) {
+			setItemTypeName(itemTypeName);
 		}
 
 		Integer itemCount = (Integer)attributes.get("itemCount");
@@ -146,27 +146,27 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 
 	@Override
 	public long getItemTypeId() {
-		return _ItemTypeId;
+		return _itemTypeId;
 	}
 
 	@Override
-	public void setItemTypeId(long ItemTypeId) {
-		_ItemTypeId = ItemTypeId;
+	public void setItemTypeId(long itemTypeId) {
+		_itemTypeId = itemTypeId;
 	}
 
 	@Override
 	public String getItemTypeName() {
-		if (_ItemTypeName == null) {
+		if (_itemTypeName == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _ItemTypeName;
+			return _itemTypeName;
 		}
 	}
 
 	@Override
-	public void setItemTypeName(String ItemTypeName) {
-		_ItemTypeName = ItemTypeName;
+	public void setItemTypeName(String itemTypeName) {
+		_itemTypeName = itemTypeName;
 	}
 
 	@Override
@@ -265,14 +265,14 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 	public CacheModel<ItemType> toCacheModel() {
 		ItemTypeCacheModel itemTypeCacheModel = new ItemTypeCacheModel();
 
-		itemTypeCacheModel.ItemTypeId = getItemTypeId();
+		itemTypeCacheModel.itemTypeId = getItemTypeId();
 
-		itemTypeCacheModel.ItemTypeName = getItemTypeName();
+		itemTypeCacheModel.itemTypeName = getItemTypeName();
 
-		String ItemTypeName = itemTypeCacheModel.ItemTypeName;
+		String itemTypeName = itemTypeCacheModel.itemTypeName;
 
-		if ((ItemTypeName != null) && (ItemTypeName.length() == 0)) {
-			itemTypeCacheModel.ItemTypeName = null;
+		if ((itemTypeName != null) && (itemTypeName.length() == 0)) {
+			itemTypeCacheModel.itemTypeName = null;
 		}
 
 		itemTypeCacheModel.itemCount = getItemCount();
@@ -284,9 +284,9 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{ItemTypeId=");
+		sb.append("{itemTypeId=");
 		sb.append(getItemTypeId());
-		sb.append(", ItemTypeName=");
+		sb.append(", itemTypeName=");
 		sb.append(getItemTypeName());
 		sb.append(", itemCount=");
 		sb.append(getItemCount());
@@ -304,11 +304,11 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>ItemTypeId</column-name><column-value><![CDATA[");
+			"<column><column-name>itemTypeId</column-name><column-value><![CDATA[");
 		sb.append(getItemTypeId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ItemTypeName</column-name><column-value><![CDATA[");
+			"<column><column-name>itemTypeName</column-name><column-value><![CDATA[");
 		sb.append(getItemTypeName());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -325,8 +325,8 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			ItemType.class
 		};
-	private long _ItemTypeId;
-	private String _ItemTypeName;
+	private long _itemTypeId;
+	private String _itemTypeName;
 	private int _itemCount;
 	private ItemType _escapedModel;
 }

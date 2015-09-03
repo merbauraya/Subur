@@ -167,15 +167,15 @@ public class ItemTypePersistenceImpl extends BasePersistenceImpl<ItemType>
 	/**
 	 * Creates a new item type with the primary key. Does not add the item type to the database.
 	 *
-	 * @param ItemTypeId the primary key for the new item type
+	 * @param itemTypeId the primary key for the new item type
 	 * @return the new item type
 	 */
 	@Override
-	public ItemType create(long ItemTypeId) {
+	public ItemType create(long itemTypeId) {
 		ItemType itemType = new ItemTypeImpl();
 
 		itemType.setNew(true);
-		itemType.setPrimaryKey(ItemTypeId);
+		itemType.setPrimaryKey(itemTypeId);
 
 		return itemType;
 	}
@@ -183,15 +183,15 @@ public class ItemTypePersistenceImpl extends BasePersistenceImpl<ItemType>
 	/**
 	 * Removes the item type with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ItemTypeId the primary key of the item type
+	 * @param itemTypeId the primary key of the item type
 	 * @return the item type that was removed
 	 * @throws com.idetronic.subur.NoSuchItemTypeException if a item type with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ItemType remove(long ItemTypeId)
+	public ItemType remove(long itemTypeId)
 		throws NoSuchItemTypeException, SystemException {
-		return remove((Serializable)ItemTypeId);
+		return remove((Serializable)itemTypeId);
 	}
 
 	/**
@@ -352,15 +352,15 @@ public class ItemTypePersistenceImpl extends BasePersistenceImpl<ItemType>
 	/**
 	 * Returns the item type with the primary key or throws a {@link com.idetronic.subur.NoSuchItemTypeException} if it could not be found.
 	 *
-	 * @param ItemTypeId the primary key of the item type
+	 * @param itemTypeId the primary key of the item type
 	 * @return the item type
 	 * @throws com.idetronic.subur.NoSuchItemTypeException if a item type with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ItemType findByPrimaryKey(long ItemTypeId)
+	public ItemType findByPrimaryKey(long itemTypeId)
 		throws NoSuchItemTypeException, SystemException {
-		return findByPrimaryKey((Serializable)ItemTypeId);
+		return findByPrimaryKey((Serializable)itemTypeId);
 	}
 
 	/**
@@ -413,14 +413,14 @@ public class ItemTypePersistenceImpl extends BasePersistenceImpl<ItemType>
 	/**
 	 * Returns the item type with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param ItemTypeId the primary key of the item type
+	 * @param itemTypeId the primary key of the item type
 	 * @return the item type, or <code>null</code> if a item type with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ItemType fetchByPrimaryKey(long ItemTypeId)
+	public ItemType fetchByPrimaryKey(long itemTypeId)
 		throws SystemException {
-		return fetchByPrimaryKey((Serializable)ItemTypeId);
+		return fetchByPrimaryKey((Serializable)itemTypeId);
 	}
 
 	/**

@@ -126,6 +126,10 @@ AUI.add(
 						setter: '_setGroupIds',
 						validator: Lang.isString
 					},
+					tagType :{
+						setter: '_setTagType',
+						validator: Lang.isString
+					},
 					guid: {
 						value: ''
 					},
@@ -154,7 +158,7 @@ AUI.add(
 
 				EXTENDS: A.TextboxList,
 
-				NAME: NAME,
+				NAME: NAME ,
 
 				prototype: {
 					renderUI: function() {
@@ -275,9 +279,13 @@ AUI.add(
 
 					_getEntries: function(callback) {
 						var instance = this;
-
+						var dataService;
+						if (instance.getType == 'expertise')
+							dataService = '/Subur-portlet.expertise/get-group-expertises';
+						else
+							dataService = '/Subur-portlet.researchinterest/get-group-research-interests';
 						Liferay.Service(
-							'/Subur-portlet.expertise/get-group-expertises',
+							dataService,/*Subur-portlet.expertise/get-group-expertises',*/
 							{
 								groupIds: instance.get('groupIds')
 							},
@@ -287,8 +295,10 @@ AUI.add(
 
 					_getTagsDataSource: function() {
 						var instance = this;
-
-						var AssetTagSearch = Liferay.Service.bind('/Subur-portlet.expertise/search');
+						if (instance.get('tagType') == 'expertise')
+							var AssetTagSearch = Liferay.Service.bind('/Subur-portlet.expertise/search');
+						else
+							var AssetTagSearch = Liferay.Service.bind('/Subur-portlet.researchinterest/search');
 
 						AssetTagSearch._serviceQueryCache = {};
 
@@ -373,8 +383,9 @@ AUI.add(
 
 					_namespace: function(name) {
 						var instance = this;
-
+						
 						return instance.get('instanceVar') + name + instance.get('guid');
+						
 					},
 
 					_onAddEntryClick: function(event) {
@@ -468,13 +479,18 @@ AUI.add(
 
 					_renderTemplate: function(data) {
 						var instance = this;
-
+						var noDataMessage;
+						if (instance.getType == 'expertise')
+							noDataMessage = Liferay.Language.get('no-expertise-found');
+						else
+							noDataMessage = Liferay.Language.get('no-research-interest-found');
 						var popup = instance._popup;
 
 						TPL_TAG.render(
 							{
 								checked: data.checked,
-								message: Liferay.Language.get('no-expertise-found'),
+								message: noDataMessage,
+									
 								name: data.name,
 								tags: data
 							},
@@ -491,7 +507,9 @@ AUI.add(
 					_setGroupIds: function(value) {
 						return value.split(',');
 					},
-
+					_setTagType: function(value){
+						return value;
+					},
 					_showPopup: function(event) {
 						var instance = this;
 

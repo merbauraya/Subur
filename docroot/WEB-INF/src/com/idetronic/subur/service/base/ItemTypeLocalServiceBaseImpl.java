@@ -19,20 +19,17 @@ import com.idetronic.subur.service.ItemTypeLocalService;
 import com.idetronic.subur.service.persistence.AuthorExpertisePersistence;
 import com.idetronic.subur.service.persistence.AuthorFinder;
 import com.idetronic.subur.service.persistence.AuthorPersistence;
+import com.idetronic.subur.service.persistence.AuthorResearchInterestPersistence;
 import com.idetronic.subur.service.persistence.AuthorSitePersistence;
 import com.idetronic.subur.service.persistence.DownloadSummaryPersistence;
 import com.idetronic.subur.service.persistence.ExpertiseFinder;
 import com.idetronic.subur.service.persistence.ExpertisePersistence;
 import com.idetronic.subur.service.persistence.ItemAuthorPersistence;
-import com.idetronic.subur.service.persistence.ItemFileEntryPersistence;
 import com.idetronic.subur.service.persistence.ItemItemTypeFinder;
 import com.idetronic.subur.service.persistence.ItemItemTypePersistence;
 import com.idetronic.subur.service.persistence.ItemTypePersistence;
-import com.idetronic.subur.service.persistence.ItemTypeTemplatePersistence;
-import com.idetronic.subur.service.persistence.MetadataPropertyPersistence;
-import com.idetronic.subur.service.persistence.MetadataPropertyValueFinder;
-import com.idetronic.subur.service.persistence.MetadataPropertyValuePersistence;
-import com.idetronic.subur.service.persistence.MetadataSchemaPersistence;
+import com.idetronic.subur.service.persistence.ResearchInterestFinder;
+import com.idetronic.subur.service.persistence.ResearchInterestPersistence;
 import com.idetronic.subur.service.persistence.StatDownloadCategoryPersistence;
 import com.idetronic.subur.service.persistence.StatDownloadItemTypePersistence;
 import com.idetronic.subur.service.persistence.StatDownloadPeriodPersistence;
@@ -40,6 +37,7 @@ import com.idetronic.subur.service.persistence.StatDownloadTagPersistence;
 import com.idetronic.subur.service.persistence.StatViewCategoryPersistence;
 import com.idetronic.subur.service.persistence.StatViewItemTypePersistence;
 import com.idetronic.subur.service.persistence.StatViewTagPersistence;
+import com.idetronic.subur.service.persistence.SuburConfigPersistence;
 import com.idetronic.subur.service.persistence.SuburItemFinder;
 import com.idetronic.subur.service.persistence.SuburItemPersistence;
 import com.idetronic.subur.service.persistence.ViewSummaryFinder;
@@ -106,27 +104,27 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/**
 	 * Creates a new item type with the primary key. Does not add the item type to the database.
 	 *
-	 * @param ItemTypeId the primary key for the new item type
+	 * @param itemTypeId the primary key for the new item type
 	 * @return the new item type
 	 */
 	@Override
-	public ItemType createItemType(long ItemTypeId) {
-		return itemTypePersistence.create(ItemTypeId);
+	public ItemType createItemType(long itemTypeId) {
+		return itemTypePersistence.create(itemTypeId);
 	}
 
 	/**
 	 * Deletes the item type with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ItemTypeId the primary key of the item type
+	 * @param itemTypeId the primary key of the item type
 	 * @return the item type that was removed
 	 * @throws PortalException if a item type with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ItemType deleteItemType(long ItemTypeId)
+	public ItemType deleteItemType(long itemTypeId)
 		throws PortalException, SystemException {
-		return itemTypePersistence.remove(ItemTypeId);
+		return itemTypePersistence.remove(itemTypeId);
 	}
 
 	/**
@@ -235,22 +233,22 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
-	public ItemType fetchItemType(long ItemTypeId) throws SystemException {
-		return itemTypePersistence.fetchByPrimaryKey(ItemTypeId);
+	public ItemType fetchItemType(long itemTypeId) throws SystemException {
+		return itemTypePersistence.fetchByPrimaryKey(itemTypeId);
 	}
 
 	/**
 	 * Returns the item type with the primary key.
 	 *
-	 * @param ItemTypeId the primary key of the item type
+	 * @param itemTypeId the primary key of the item type
 	 * @return the item type
 	 * @throws PortalException if a item type with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ItemType getItemType(long ItemTypeId)
+	public ItemType getItemType(long itemTypeId)
 		throws PortalException, SystemException {
-		return itemTypePersistence.findByPrimaryKey(ItemTypeId);
+		return itemTypePersistence.findByPrimaryKey(itemTypeId);
 	}
 
 	@Override
@@ -392,6 +390,44 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setAuthorExpertisePersistence(
 		AuthorExpertisePersistence authorExpertisePersistence) {
 		this.authorExpertisePersistence = authorExpertisePersistence;
+	}
+
+	/**
+	 * Returns the author research interest local service.
+	 *
+	 * @return the author research interest local service
+	 */
+	public com.idetronic.subur.service.AuthorResearchInterestLocalService getAuthorResearchInterestLocalService() {
+		return authorResearchInterestLocalService;
+	}
+
+	/**
+	 * Sets the author research interest local service.
+	 *
+	 * @param authorResearchInterestLocalService the author research interest local service
+	 */
+	public void setAuthorResearchInterestLocalService(
+		com.idetronic.subur.service.AuthorResearchInterestLocalService authorResearchInterestLocalService) {
+		this.authorResearchInterestLocalService = authorResearchInterestLocalService;
+	}
+
+	/**
+	 * Returns the author research interest persistence.
+	 *
+	 * @return the author research interest persistence
+	 */
+	public AuthorResearchInterestPersistence getAuthorResearchInterestPersistence() {
+		return authorResearchInterestPersistence;
+	}
+
+	/**
+	 * Sets the author research interest persistence.
+	 *
+	 * @param authorResearchInterestPersistence the author research interest persistence
+	 */
+	public void setAuthorResearchInterestPersistence(
+		AuthorResearchInterestPersistence authorResearchInterestPersistence) {
+		this.authorResearchInterestPersistence = authorResearchInterestPersistence;
 	}
 
 	/**
@@ -584,63 +620,6 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the item file entry local service.
-	 *
-	 * @return the item file entry local service
-	 */
-	public com.idetronic.subur.service.ItemFileEntryLocalService getItemFileEntryLocalService() {
-		return itemFileEntryLocalService;
-	}
-
-	/**
-	 * Sets the item file entry local service.
-	 *
-	 * @param itemFileEntryLocalService the item file entry local service
-	 */
-	public void setItemFileEntryLocalService(
-		com.idetronic.subur.service.ItemFileEntryLocalService itemFileEntryLocalService) {
-		this.itemFileEntryLocalService = itemFileEntryLocalService;
-	}
-
-	/**
-	 * Returns the item file entry remote service.
-	 *
-	 * @return the item file entry remote service
-	 */
-	public com.idetronic.subur.service.ItemFileEntryService getItemFileEntryService() {
-		return itemFileEntryService;
-	}
-
-	/**
-	 * Sets the item file entry remote service.
-	 *
-	 * @param itemFileEntryService the item file entry remote service
-	 */
-	public void setItemFileEntryService(
-		com.idetronic.subur.service.ItemFileEntryService itemFileEntryService) {
-		this.itemFileEntryService = itemFileEntryService;
-	}
-
-	/**
-	 * Returns the item file entry persistence.
-	 *
-	 * @return the item file entry persistence
-	 */
-	public ItemFileEntryPersistence getItemFileEntryPersistence() {
-		return itemFileEntryPersistence;
-	}
-
-	/**
-	 * Sets the item file entry persistence.
-	 *
-	 * @param itemFileEntryPersistence the item file entry persistence
-	 */
-	public void setItemFileEntryPersistence(
-		ItemFileEntryPersistence itemFileEntryPersistence) {
-		this.itemFileEntryPersistence = itemFileEntryPersistence;
-	}
-
-	/**
 	 * Returns the item item type local service.
 	 *
 	 * @return the item item type local service
@@ -734,174 +713,79 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the item type template local service.
+	 * Returns the research interest local service.
 	 *
-	 * @return the item type template local service
+	 * @return the research interest local service
 	 */
-	public com.idetronic.subur.service.ItemTypeTemplateLocalService getItemTypeTemplateLocalService() {
-		return itemTypeTemplateLocalService;
+	public com.idetronic.subur.service.ResearchInterestLocalService getResearchInterestLocalService() {
+		return researchInterestLocalService;
 	}
 
 	/**
-	 * Sets the item type template local service.
+	 * Sets the research interest local service.
 	 *
-	 * @param itemTypeTemplateLocalService the item type template local service
+	 * @param researchInterestLocalService the research interest local service
 	 */
-	public void setItemTypeTemplateLocalService(
-		com.idetronic.subur.service.ItemTypeTemplateLocalService itemTypeTemplateLocalService) {
-		this.itemTypeTemplateLocalService = itemTypeTemplateLocalService;
+	public void setResearchInterestLocalService(
+		com.idetronic.subur.service.ResearchInterestLocalService researchInterestLocalService) {
+		this.researchInterestLocalService = researchInterestLocalService;
 	}
 
 	/**
-	 * Returns the item type template persistence.
+	 * Returns the research interest remote service.
 	 *
-	 * @return the item type template persistence
+	 * @return the research interest remote service
 	 */
-	public ItemTypeTemplatePersistence getItemTypeTemplatePersistence() {
-		return itemTypeTemplatePersistence;
+	public com.idetronic.subur.service.ResearchInterestService getResearchInterestService() {
+		return researchInterestService;
 	}
 
 	/**
-	 * Sets the item type template persistence.
+	 * Sets the research interest remote service.
 	 *
-	 * @param itemTypeTemplatePersistence the item type template persistence
+	 * @param researchInterestService the research interest remote service
 	 */
-	public void setItemTypeTemplatePersistence(
-		ItemTypeTemplatePersistence itemTypeTemplatePersistence) {
-		this.itemTypeTemplatePersistence = itemTypeTemplatePersistence;
+	public void setResearchInterestService(
+		com.idetronic.subur.service.ResearchInterestService researchInterestService) {
+		this.researchInterestService = researchInterestService;
 	}
 
 	/**
-	 * Returns the metadata property local service.
+	 * Returns the research interest persistence.
 	 *
-	 * @return the metadata property local service
+	 * @return the research interest persistence
 	 */
-	public com.idetronic.subur.service.MetadataPropertyLocalService getMetadataPropertyLocalService() {
-		return metadataPropertyLocalService;
+	public ResearchInterestPersistence getResearchInterestPersistence() {
+		return researchInterestPersistence;
 	}
 
 	/**
-	 * Sets the metadata property local service.
+	 * Sets the research interest persistence.
 	 *
-	 * @param metadataPropertyLocalService the metadata property local service
+	 * @param researchInterestPersistence the research interest persistence
 	 */
-	public void setMetadataPropertyLocalService(
-		com.idetronic.subur.service.MetadataPropertyLocalService metadataPropertyLocalService) {
-		this.metadataPropertyLocalService = metadataPropertyLocalService;
+	public void setResearchInterestPersistence(
+		ResearchInterestPersistence researchInterestPersistence) {
+		this.researchInterestPersistence = researchInterestPersistence;
 	}
 
 	/**
-	 * Returns the metadata property persistence.
+	 * Returns the research interest finder.
 	 *
-	 * @return the metadata property persistence
+	 * @return the research interest finder
 	 */
-	public MetadataPropertyPersistence getMetadataPropertyPersistence() {
-		return metadataPropertyPersistence;
+	public ResearchInterestFinder getResearchInterestFinder() {
+		return researchInterestFinder;
 	}
 
 	/**
-	 * Sets the metadata property persistence.
+	 * Sets the research interest finder.
 	 *
-	 * @param metadataPropertyPersistence the metadata property persistence
+	 * @param researchInterestFinder the research interest finder
 	 */
-	public void setMetadataPropertyPersistence(
-		MetadataPropertyPersistence metadataPropertyPersistence) {
-		this.metadataPropertyPersistence = metadataPropertyPersistence;
-	}
-
-	/**
-	 * Returns the metadata property value local service.
-	 *
-	 * @return the metadata property value local service
-	 */
-	public com.idetronic.subur.service.MetadataPropertyValueLocalService getMetadataPropertyValueLocalService() {
-		return metadataPropertyValueLocalService;
-	}
-
-	/**
-	 * Sets the metadata property value local service.
-	 *
-	 * @param metadataPropertyValueLocalService the metadata property value local service
-	 */
-	public void setMetadataPropertyValueLocalService(
-		com.idetronic.subur.service.MetadataPropertyValueLocalService metadataPropertyValueLocalService) {
-		this.metadataPropertyValueLocalService = metadataPropertyValueLocalService;
-	}
-
-	/**
-	 * Returns the metadata property value persistence.
-	 *
-	 * @return the metadata property value persistence
-	 */
-	public MetadataPropertyValuePersistence getMetadataPropertyValuePersistence() {
-		return metadataPropertyValuePersistence;
-	}
-
-	/**
-	 * Sets the metadata property value persistence.
-	 *
-	 * @param metadataPropertyValuePersistence the metadata property value persistence
-	 */
-	public void setMetadataPropertyValuePersistence(
-		MetadataPropertyValuePersistence metadataPropertyValuePersistence) {
-		this.metadataPropertyValuePersistence = metadataPropertyValuePersistence;
-	}
-
-	/**
-	 * Returns the metadata property value finder.
-	 *
-	 * @return the metadata property value finder
-	 */
-	public MetadataPropertyValueFinder getMetadataPropertyValueFinder() {
-		return metadataPropertyValueFinder;
-	}
-
-	/**
-	 * Sets the metadata property value finder.
-	 *
-	 * @param metadataPropertyValueFinder the metadata property value finder
-	 */
-	public void setMetadataPropertyValueFinder(
-		MetadataPropertyValueFinder metadataPropertyValueFinder) {
-		this.metadataPropertyValueFinder = metadataPropertyValueFinder;
-	}
-
-	/**
-	 * Returns the metadata schema local service.
-	 *
-	 * @return the metadata schema local service
-	 */
-	public com.idetronic.subur.service.MetadataSchemaLocalService getMetadataSchemaLocalService() {
-		return metadataSchemaLocalService;
-	}
-
-	/**
-	 * Sets the metadata schema local service.
-	 *
-	 * @param metadataSchemaLocalService the metadata schema local service
-	 */
-	public void setMetadataSchemaLocalService(
-		com.idetronic.subur.service.MetadataSchemaLocalService metadataSchemaLocalService) {
-		this.metadataSchemaLocalService = metadataSchemaLocalService;
-	}
-
-	/**
-	 * Returns the metadata schema persistence.
-	 *
-	 * @return the metadata schema persistence
-	 */
-	public MetadataSchemaPersistence getMetadataSchemaPersistence() {
-		return metadataSchemaPersistence;
-	}
-
-	/**
-	 * Sets the metadata schema persistence.
-	 *
-	 * @param metadataSchemaPersistence the metadata schema persistence
-	 */
-	public void setMetadataSchemaPersistence(
-		MetadataSchemaPersistence metadataSchemaPersistence) {
-		this.metadataSchemaPersistence = metadataSchemaPersistence;
+	public void setResearchInterestFinder(
+		ResearchInterestFinder researchInterestFinder) {
+		this.researchInterestFinder = researchInterestFinder;
 	}
 
 	/**
@@ -1168,6 +1052,44 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setStatViewTagPersistence(
 		StatViewTagPersistence statViewTagPersistence) {
 		this.statViewTagPersistence = statViewTagPersistence;
+	}
+
+	/**
+	 * Returns the subur config local service.
+	 *
+	 * @return the subur config local service
+	 */
+	public com.idetronic.subur.service.SuburConfigLocalService getSuburConfigLocalService() {
+		return suburConfigLocalService;
+	}
+
+	/**
+	 * Sets the subur config local service.
+	 *
+	 * @param suburConfigLocalService the subur config local service
+	 */
+	public void setSuburConfigLocalService(
+		com.idetronic.subur.service.SuburConfigLocalService suburConfigLocalService) {
+		this.suburConfigLocalService = suburConfigLocalService;
+	}
+
+	/**
+	 * Returns the subur config persistence.
+	 *
+	 * @return the subur config persistence
+	 */
+	public SuburConfigPersistence getSuburConfigPersistence() {
+		return suburConfigPersistence;
+	}
+
+	/**
+	 * Sets the subur config persistence.
+	 *
+	 * @param suburConfigPersistence the subur config persistence
+	 */
+	public void setSuburConfigPersistence(
+		SuburConfigPersistence suburConfigPersistence) {
+		this.suburConfigPersistence = suburConfigPersistence;
 	}
 
 	/**
@@ -1487,6 +1409,10 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.idetronic.subur.service.AuthorExpertiseLocalService authorExpertiseLocalService;
 	@BeanReference(type = AuthorExpertisePersistence.class)
 	protected AuthorExpertisePersistence authorExpertisePersistence;
+	@BeanReference(type = com.idetronic.subur.service.AuthorResearchInterestLocalService.class)
+	protected com.idetronic.subur.service.AuthorResearchInterestLocalService authorResearchInterestLocalService;
+	@BeanReference(type = AuthorResearchInterestPersistence.class)
+	protected AuthorResearchInterestPersistence authorResearchInterestPersistence;
 	@BeanReference(type = com.idetronic.subur.service.AuthorSiteLocalService.class)
 	protected com.idetronic.subur.service.AuthorSiteLocalService authorSiteLocalService;
 	@BeanReference(type = AuthorSitePersistence.class)
@@ -1507,12 +1433,6 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.idetronic.subur.service.ItemAuthorLocalService itemAuthorLocalService;
 	@BeanReference(type = ItemAuthorPersistence.class)
 	protected ItemAuthorPersistence itemAuthorPersistence;
-	@BeanReference(type = com.idetronic.subur.service.ItemFileEntryLocalService.class)
-	protected com.idetronic.subur.service.ItemFileEntryLocalService itemFileEntryLocalService;
-	@BeanReference(type = com.idetronic.subur.service.ItemFileEntryService.class)
-	protected com.idetronic.subur.service.ItemFileEntryService itemFileEntryService;
-	@BeanReference(type = ItemFileEntryPersistence.class)
-	protected ItemFileEntryPersistence itemFileEntryPersistence;
 	@BeanReference(type = com.idetronic.subur.service.ItemItemTypeLocalService.class)
 	protected com.idetronic.subur.service.ItemItemTypeLocalService itemItemTypeLocalService;
 	@BeanReference(type = ItemItemTypePersistence.class)
@@ -1523,24 +1443,14 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.idetronic.subur.service.ItemTypeLocalService itemTypeLocalService;
 	@BeanReference(type = ItemTypePersistence.class)
 	protected ItemTypePersistence itemTypePersistence;
-	@BeanReference(type = com.idetronic.subur.service.ItemTypeTemplateLocalService.class)
-	protected com.idetronic.subur.service.ItemTypeTemplateLocalService itemTypeTemplateLocalService;
-	@BeanReference(type = ItemTypeTemplatePersistence.class)
-	protected ItemTypeTemplatePersistence itemTypeTemplatePersistence;
-	@BeanReference(type = com.idetronic.subur.service.MetadataPropertyLocalService.class)
-	protected com.idetronic.subur.service.MetadataPropertyLocalService metadataPropertyLocalService;
-	@BeanReference(type = MetadataPropertyPersistence.class)
-	protected MetadataPropertyPersistence metadataPropertyPersistence;
-	@BeanReference(type = com.idetronic.subur.service.MetadataPropertyValueLocalService.class)
-	protected com.idetronic.subur.service.MetadataPropertyValueLocalService metadataPropertyValueLocalService;
-	@BeanReference(type = MetadataPropertyValuePersistence.class)
-	protected MetadataPropertyValuePersistence metadataPropertyValuePersistence;
-	@BeanReference(type = MetadataPropertyValueFinder.class)
-	protected MetadataPropertyValueFinder metadataPropertyValueFinder;
-	@BeanReference(type = com.idetronic.subur.service.MetadataSchemaLocalService.class)
-	protected com.idetronic.subur.service.MetadataSchemaLocalService metadataSchemaLocalService;
-	@BeanReference(type = MetadataSchemaPersistence.class)
-	protected MetadataSchemaPersistence metadataSchemaPersistence;
+	@BeanReference(type = com.idetronic.subur.service.ResearchInterestLocalService.class)
+	protected com.idetronic.subur.service.ResearchInterestLocalService researchInterestLocalService;
+	@BeanReference(type = com.idetronic.subur.service.ResearchInterestService.class)
+	protected com.idetronic.subur.service.ResearchInterestService researchInterestService;
+	@BeanReference(type = ResearchInterestPersistence.class)
+	protected ResearchInterestPersistence researchInterestPersistence;
+	@BeanReference(type = ResearchInterestFinder.class)
+	protected ResearchInterestFinder researchInterestFinder;
 	@BeanReference(type = com.idetronic.subur.service.StatDownloadCategoryLocalService.class)
 	protected com.idetronic.subur.service.StatDownloadCategoryLocalService statDownloadCategoryLocalService;
 	@BeanReference(type = StatDownloadCategoryPersistence.class)
@@ -1569,6 +1479,10 @@ public abstract class ItemTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.idetronic.subur.service.StatViewTagLocalService statViewTagLocalService;
 	@BeanReference(type = StatViewTagPersistence.class)
 	protected StatViewTagPersistence statViewTagPersistence;
+	@BeanReference(type = com.idetronic.subur.service.SuburConfigLocalService.class)
+	protected com.idetronic.subur.service.SuburConfigLocalService suburConfigLocalService;
+	@BeanReference(type = SuburConfigPersistence.class)
+	protected SuburConfigPersistence suburConfigPersistence;
 	@BeanReference(type = com.idetronic.subur.service.SuburItemLocalService.class)
 	protected com.idetronic.subur.service.SuburItemLocalService suburItemLocalService;
 	@BeanReference(type = SuburItemPersistence.class)

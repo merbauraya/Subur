@@ -251,16 +251,23 @@ public interface AuthorLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	public long addAuthor(java.lang.String firstName,
-		java.lang.String lastName, java.lang.String title,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String title, java.lang.String email,
+		java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
 		java.lang.String remoteId, int idType, long userId, long groupId,
 		long createdByUserId, java.lang.String[] expertiseNames,
+		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void setExpertises(long authorId,
 		java.util.List<com.idetronic.subur.model.Expertise> expertises)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void setResearchInterests(long authorId,
+		java.util.List<com.idetronic.subur.model.ResearchInterest> researchInterests)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -279,10 +286,12 @@ public interface AuthorLocalService extends BaseLocalService,
 	*/
 	public com.idetronic.subur.model.Author updateAuthor(long authorId,
 		java.lang.String title, java.lang.String firstName,
-		java.lang.String lastName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String email, java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
 		java.lang.String remoteId, int idType, long userId, long groupId,
 		long createdByUserId, java.lang.String[] expertiseNames,
+		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -314,6 +323,11 @@ public interface AuthorLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.idetronic.subur.model.Expertise> getExpertises(
+		long authorId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.idetronic.subur.model.ResearchInterest> getResearchInterests(
 		long authorId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -398,4 +412,7 @@ public interface AuthorLocalService extends BaseLocalService,
 
 	public java.util.List<com.idetronic.subur.model.Author> findByGroupCompany(
 		long companyId, long groupId, int start, int end);
+
+	public void deleteItem(long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -2,8 +2,12 @@ package com.idetronic.subur.util;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -19,11 +23,28 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.idetronic.subur.model.Author;
 import com.idetronic.subur.model.impl.SuburItemImpl;
+import com.idetronic.subur.service.persistence.AuthorQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 
 public class AuthorUtil {
 	
@@ -131,5 +152,69 @@ public class AuthorUtil {
 		
 		return xml;
 	}
+	
+	public static List<AssetVocabulary> getAuthorVocabulary(long[] groupIds) throws PortalException, SystemException
+	{
+		List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
+		List<AssetVocabulary> authorVocabularies = new ArrayList<AssetVocabulary>();
+		
+		long classNameId = PortalUtil.getClassNameId(Author.class.getName());
+
+		
+		List<Long> authorVocab = new ArrayList<Long>();
+		for (int i = 0; i < groupIds.length; i++) 
+		{
+			vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupIds[i], false));
+		}
+		for (AssetVocabulary vocabulary: vocabularies)
+		{
+			UnicodeProperties settingsProperties = vocabulary.getSettingsProperties();
+			long[] selectedClassNameIds = StringUtil.split(settingsProperties.getProperty("selectedClassNameIds"), 0L);
+			if (ArrayUtil.contains(selectedClassNameIds, classNameId))
+			{
+				authorVocabularies.add(vocabulary);
+				authorVocab.add(vocabulary.getVocabularyId());
+			}
+		}
+		
+		return authorVocabularies;
+		
+	}
+	public static int countAuthorByCategory(long categoryId) throws SystemException
+	{
+		AssetEntryQuery assetQuery = new AssetEntryQuery();
+		assetQuery.setClassName(Author.class.getName());
+		assetQuery.setAllCategoryIds(new long[] {categoryId});
+		
+		return AssetEntryLocalServiceUtil.getEntriesCount(assetQuery);
+		
+		
+		
+	}
+	
+	public static Map<String,AssetCategory> getTop10CategoryByVocabulary(long vocabularyId) throws SystemException, PortalException
+	{
+		List<AssetCategory> categories = AssetCategoryServiceUtil.getVocabularyCategories(vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);// .findByVocabularyId(vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		
+		Map<String,AssetCategory> top10Vocabularies = new TreeMap<String,AssetCategory>(new Comparator<String>(){
+
+			@Override
+			public int compare(String o1, String o2) {
+			
+				return o2.compareTo(o1);
+			}
+			
+		});
+		for (AssetCategory category : categories)
+		{
+			int count = countAuthorByCategory(category.getCategoryId());
+			top10Vocabularies.put(count +"-"+ category.getCategoryId(), category);
+			
+		}
+		return top10Vocabularies;
+	}
+	
+	
+	
 
 }

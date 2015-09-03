@@ -7,8 +7,13 @@ create index IX_9DF5FD28 on Subur_Author (lastName);
 create index IX_CC54E0E4 on Subur_AuthorExpertise (authorId);
 create index IX_305DCC92 on Subur_AuthorExpertise (expertiseId);
 
+create index IX_3E313A32 on Subur_AuthorResearchInterest (authorId);
+create index IX_BB270D0C on Subur_AuthorResearchInterest (researchInterestId);
+
 create index IX_9690014 on Subur_AuthorSite (authorId);
 create unique index IX_278E0FFA on Subur_AuthorSite (authorId, siteName);
+
+create unique index IX_A8763E on Subur_Config (key_);
 
 create index IX_22012CA4 on Subur_DownloadSummary (itemId);
 create index IX_4559BD91 on Subur_DownloadSummary (perMonth, perYear);
@@ -30,6 +35,9 @@ create index IX_F6430C4A on Subur_ItemItemType (itemId);
 create index IX_131A3C24 on Subur_ItemItemType (itemTypeId);
 
 create index IX_BE8FEB13 on Subur_MetadataPropertyValue (itemId);
+
+create index IX_D9703FFD on Subur_ResearchInterest (groupId);
+create unique index IX_616C636F on Subur_ResearchInterest (groupId, indexedName);
 
 create index IX_1714372F on Subur_StatDownloadCategory (categoryId);
 

@@ -12,6 +12,8 @@ create table Subur_Author (
 	metadata VARCHAR(75) null,
 	lastPublishedDate DATE null,
 	itemCount INTEGER,
+	email VARCHAR(75) null,
+	officeNo VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	Uuid VARCHAR(75) null,
@@ -24,11 +26,24 @@ create table Subur_AuthorExpertise (
 	primary key (authorId, expertiseId)
 );
 
+create table Subur_AuthorResearchInterest (
+	authorId LONG not null,
+	researchInterestId LONG not null,
+	primary key (authorId, researchInterestId)
+);
+
 create table Subur_AuthorSite (
 	authorSiteId LONG not null primary key,
 	authorId LONG,
 	siteName VARCHAR(75) null,
 	siteURL VARCHAR(150) null
+);
+
+create table Subur_Config (
+	id_ LONG not null primary key,
+	key_ VARCHAR(75) null,
+	description VARCHAR(75) null,
+	config TEXT null
 );
 
 create table Subur_DownloadSummary (
@@ -88,8 +103,8 @@ create table Subur_ItemItemType (
 );
 
 create table Subur_ItemType (
-	ItemTypeId LONG not null primary key,
-	ItemTypeName VARCHAR(75) null,
+	itemTypeId LONG not null primary key,
+	itemTypeName VARCHAR(75) null,
 	itemCount INTEGER
 );
 
@@ -120,6 +135,18 @@ create table Subur_MetadataSchema (
 	metadataSchemaId LONG not null primary key,
 	metadataName VARCHAR(1024) null,
 	nameSpace VARCHAR(75) null
+);
+
+create table Subur_ResearchInterest (
+	researchInterestId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	researchInterestName VARCHAR(75) null,
+	indexedName VARCHAR(75) null,
+	modifiedDate DATE null,
+	authorCount INTEGER
 );
 
 create table Subur_StatDownloadCategory (

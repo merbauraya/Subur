@@ -9,7 +9,8 @@
 		<portlet id="item-type"></portlet>
 		<portlet id="1"></portlet>
 		<portlet id="subur-statistic"></portlet>
-		<portlet id="author"></portlet>
+		<portlet id="Author"></portlet>
 		<portlet id="author-navigator"></portlet>
+		<portlet id="subur-admin"></portlet>
 	</category>
 </display>

@@ -24,79 +24,79 @@ import java.util.Arrays;
  */
 public class ViewSummaryServiceClpInvoker {
 	public ViewSummaryServiceClpInvoker() {
-		_methodName118 = "getBeanIdentifier";
+		_methodName110 = "getBeanIdentifier";
 
-		_methodParameterTypes118 = new String[] {  };
+		_methodParameterTypes110 = new String[] {  };
 
-		_methodName119 = "setBeanIdentifier";
+		_methodName111 = "setBeanIdentifier";
 
-		_methodParameterTypes119 = new String[] { "java.lang.String" };
+		_methodParameterTypes111 = new String[] { "java.lang.String" };
 
-		_methodName124 = "getMonthlyCategory";
+		_methodName116 = "getMonthlyCategory";
 
-		_methodParameterTypes124 = new String[] { "int", "long" };
+		_methodParameterTypes116 = new String[] { "int", "long" };
 
-		_methodName125 = "getMonthlyItemType";
+		_methodName117 = "getMonthlyItemType";
 
-		_methodParameterTypes125 = new String[] { "int" };
+		_methodParameterTypes117 = new String[] { "int" };
 
-		_methodName126 = "getMonthlySummary";
+		_methodName118 = "getMonthlySummary";
 
-		_methodParameterTypes126 = new String[] { "int" };
+		_methodParameterTypes118 = new String[] { "int" };
 
-		_methodName127 = "getMonthlyTagSummary";
+		_methodName119 = "getMonthlyTagSummary";
 
-		_methodParameterTypes127 = new String[] { "int" };
+		_methodParameterTypes119 = new String[] { "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+		if (_methodName110.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
 			return ViewSummaryServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName119.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+		if (_methodName111.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
 			ViewSummaryServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlyCategory(((Integer)arguments[0]).intValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlyItemType(((Integer)arguments[0]).intValue());
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlySummary(((Integer)arguments[0]).intValue());
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlyTagSummary(((Integer)arguments[0]).intValue());
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
+	private String _methodName110;
+	private String[] _methodParameterTypes110;
+	private String _methodName111;
+	private String[] _methodParameterTypes111;
+	private String _methodName116;
+	private String[] _methodParameterTypes116;
+	private String _methodName117;
+	private String[] _methodParameterTypes117;
 	private String _methodName118;
 	private String[] _methodParameterTypes118;
 	private String _methodName119;
 	private String[] _methodParameterTypes119;
-	private String _methodName124;
-	private String[] _methodParameterTypes124;
-	private String _methodName125;
-	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
-	private String _methodName127;
-	private String[] _methodParameterTypes127;
 }

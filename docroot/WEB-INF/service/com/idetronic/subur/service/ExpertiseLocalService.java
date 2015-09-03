@@ -280,4 +280,9 @@ public interface ExpertiseLocalService extends BaseLocalService,
 	public com.idetronic.subur.model.Expertise decrementAuthorCount(
 		long expertiseId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.idetronic.subur.model.Expertise> getTop10(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

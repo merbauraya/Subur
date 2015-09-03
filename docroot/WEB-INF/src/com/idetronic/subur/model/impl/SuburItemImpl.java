@@ -171,7 +171,7 @@ public class SuburItemImpl extends SuburItemBaseImpl {
 			//identifier
 			//series report no
 			xmlStreamWriter.writeStartElement("identifiers");
-			if (_identifierMap != null)
+			if (_identifierMap != null )
 			{
 				
 				//access via new for-loop

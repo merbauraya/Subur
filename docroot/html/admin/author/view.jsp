@@ -142,7 +142,7 @@
 				
 		</liferay-portlet:renderURL>
 		<liferay-portlet:renderURL varImpl="viewAuthorURL">
-				<portlet:param name="jspPage" value="/html/authornavigator/view_author.jsp" />
+				<portlet:param name="jspPage" value="/html/author/view_author.jsp" />
 				<portlet:param name="redirect" value="<%= viewAuthorsURL %>" />
 				<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>" />
 				

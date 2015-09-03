@@ -131,25 +131,25 @@ public class ItemTypeUtil {
 	/**
 	* Creates a new item type with the primary key. Does not add the item type to the database.
 	*
-	* @param ItemTypeId the primary key for the new item type
+	* @param itemTypeId the primary key for the new item type
 	* @return the new item type
 	*/
-	public static com.idetronic.subur.model.ItemType create(long ItemTypeId) {
-		return getPersistence().create(ItemTypeId);
+	public static com.idetronic.subur.model.ItemType create(long itemTypeId) {
+		return getPersistence().create(itemTypeId);
 	}
 
 	/**
 	* Removes the item type with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ItemTypeId the primary key of the item type
+	* @param itemTypeId the primary key of the item type
 	* @return the item type that was removed
 	* @throws com.idetronic.subur.NoSuchItemTypeException if a item type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.idetronic.subur.model.ItemType remove(long ItemTypeId)
+	public static com.idetronic.subur.model.ItemType remove(long itemTypeId)
 		throws com.idetronic.subur.NoSuchItemTypeException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(ItemTypeId);
+		return getPersistence().remove(itemTypeId);
 	}
 
 	public static com.idetronic.subur.model.ItemType updateImpl(
@@ -161,29 +161,29 @@ public class ItemTypeUtil {
 	/**
 	* Returns the item type with the primary key or throws a {@link com.idetronic.subur.NoSuchItemTypeException} if it could not be found.
 	*
-	* @param ItemTypeId the primary key of the item type
+	* @param itemTypeId the primary key of the item type
 	* @return the item type
 	* @throws com.idetronic.subur.NoSuchItemTypeException if a item type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.idetronic.subur.model.ItemType findByPrimaryKey(
-		long ItemTypeId)
+		long itemTypeId)
 		throws com.idetronic.subur.NoSuchItemTypeException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(ItemTypeId);
+		return getPersistence().findByPrimaryKey(itemTypeId);
 	}
 
 	/**
 	* Returns the item type with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param ItemTypeId the primary key of the item type
+	* @param itemTypeId the primary key of the item type
 	* @return the item type, or <code>null</code> if a item type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.idetronic.subur.model.ItemType fetchByPrimaryKey(
-		long ItemTypeId)
+		long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(ItemTypeId);
+		return getPersistence().fetchByPrimaryKey(itemTypeId);
 	}
 
 	/**

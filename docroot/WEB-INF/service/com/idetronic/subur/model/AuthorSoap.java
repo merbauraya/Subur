@@ -43,6 +43,8 @@ public class AuthorSoap implements Serializable {
 		soapModel.setMetadata(model.getMetadata());
 		soapModel.setLastPublishedDate(model.getLastPublishedDate());
 		soapModel.setItemCount(model.getItemCount());
+		soapModel.setEmail(model.getEmail());
+		soapModel.setOfficeNo(model.getOfficeNo());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setUuid(model.getUuid());
@@ -203,6 +205,22 @@ public class AuthorSoap implements Serializable {
 		_itemCount = itemCount;
 	}
 
+	public String getEmail() {
+		return _email;
+	}
+
+	public void setEmail(String email) {
+		_email = email;
+	}
+
+	public String getOfficeNo() {
+		return _officeNo;
+	}
+
+	public void setOfficeNo(String officeNo) {
+		_officeNo = officeNo;
+	}
+
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -248,6 +266,8 @@ public class AuthorSoap implements Serializable {
 	private String _metadata;
 	private Date _lastPublishedDate;
 	private int _itemCount;
+	private String _email;
+	private String _officeNo;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _Uuid;

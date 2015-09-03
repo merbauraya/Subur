@@ -7,18 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 
 
-import com.idetronic.subur.model.Author;
-import com.idetronic.subur.model.FileEntryType;
-import com.idetronic.subur.model.ItemType;
 import com.idetronic.subur.model.SuburItem;
 import com.idetronic.subur.model.impl.AuthorImpl;
-import com.idetronic.subur.model.impl.FileEntryTypeImpl;
 import com.idetronic.subur.model.impl.ItemAuthorImpl;
-import com.idetronic.subur.model.impl.ItemFileEntryImpl;
 import com.idetronic.subur.model.impl.ItemItemTypeImpl;
 import com.idetronic.subur.model.impl.ItemTypeImpl;
-import com.idetronic.subur.model.impl.MetadataPropertyValueImpl;
-import com.idetronic.subur.model.impl.MetadataValueViewImpl;
+
 import com.idetronic.subur.model.impl.SuburItemImpl;
 import com.idetronic.subur.util.SuburConstant;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -31,8 +25,6 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;

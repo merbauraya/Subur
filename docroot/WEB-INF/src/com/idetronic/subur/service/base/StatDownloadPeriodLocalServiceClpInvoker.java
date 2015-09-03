@@ -106,13 +106,13 @@ public class StatDownloadPeriodLocalServiceClpInvoker {
 				"com.idetronic.subur.model.StatDownloadPeriod"
 			};
 
-		_methodName134 = "getBeanIdentifier";
+		_methodName126 = "getBeanIdentifier";
 
-		_methodParameterTypes134 = new String[] {  };
+		_methodParameterTypes126 = new String[] {  };
 
-		_methodName135 = "setBeanIdentifier";
+		_methodName127 = "setBeanIdentifier";
 
-		_methodParameterTypes135 = new String[] { "java.lang.String" };
+		_methodParameterTypes127 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -204,13 +204,13 @@ public class StatDownloadPeriodLocalServiceClpInvoker {
 			return StatDownloadPeriodLocalServiceUtil.updateStatDownloadPeriod((com.idetronic.subur.model.StatDownloadPeriod)arguments[0]);
 		}
 
-		if (_methodName134.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return StatDownloadPeriodLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName135.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			StatDownloadPeriodLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -251,8 +251,8 @@ public class StatDownloadPeriodLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName134;
-	private String[] _methodParameterTypes134;
-	private String _methodName135;
-	private String[] _methodParameterTypes135;
+	private String _methodName126;
+	private String[] _methodParameterTypes126;
+	private String _methodName127;
+	private String[] _methodParameterTypes127;
 }

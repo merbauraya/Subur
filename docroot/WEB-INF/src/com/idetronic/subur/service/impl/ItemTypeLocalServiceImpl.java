@@ -20,6 +20,7 @@ import com.idetronic.subur.model.ItemType;
 import com.idetronic.subur.service.ItemTypeLocalServiceUtil;
 import com.idetronic.subur.service.base.ItemTypeLocalServiceBaseImpl;
 import com.idetronic.subur.service.persistence.SuburItemFinderUtil;
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 
 /**
@@ -43,6 +44,15 @@ public class ItemTypeLocalServiceImpl extends ItemTypeLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link com.idetronic.subur.service.ItemTypeLocalServiceUtil} to access the item type local service.
 	 */
 	
+	public ItemType add(String name) throws SystemException
+	{
+		long itemTypeId = CounterLocalServiceUtil.increment(ItemType.class.getName());
+		ItemType itemType = itemTypePersistence.create(itemTypeId);
+		itemType.setItemTypeName(name);
+		itemTypePersistence.update(itemType);
+		return itemType;
+		
+	}
 	public void decrementCounter(long itemTypeId) throws SystemException
 	{
 		ItemType itemType = itemTypePersistence.fetchByPrimaryKey(itemTypeId);

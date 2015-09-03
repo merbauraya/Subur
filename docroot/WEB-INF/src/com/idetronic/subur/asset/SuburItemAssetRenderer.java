@@ -56,11 +56,12 @@ public class SuburItemAssetRenderer extends BaseAssetRenderer {
     public boolean hasViewPermission(PermissionChecker permissionChecker) {
 
             long itemId = _suburItem.getItemId();
-
+            _log.info("ipviewP"+permissionChecker);
             boolean contains = false;
-
-            try {
-                    contains = SuburItemPermission.contains(permissionChecker,
+            
+            try 
+            {
+            	contains = SuburItemPermission.contains(permissionChecker,
                     		itemId, ActionKeys.VIEW);
             } catch (PortalException pe) {
                     _log.error(pe.getLocalizedMessage());
@@ -137,10 +138,10 @@ public class SuburItemAssetRenderer extends BaseAssetRenderer {
 		PortletURL portletURL = PortletURLFactoryUtil.create(liferayPortletRequest, portletName, plid,PortletRequest.RENDER_PHASE);
 		portletURL.setParameter("jspPage", "/html/renderer/item_full.jsp");
 		portletURL.setParameter("itemId", String.valueOf(_suburItem.getItemId()));
-		//portletURL.setParameter("urlTitle", _ _eprint.getUrlTitle());
+		//
 
 		return portletURL.toString();
-		//return noSuchEntryRedirect;
+		//
 	}
     
     private static final Log _log = LogFactoryUtil.getLog(SuburItemAssetRenderer.class);

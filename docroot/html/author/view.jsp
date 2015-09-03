@@ -10,165 +10,103 @@
 	String redirect = ParamUtil.getString(request, "redirect");
 	String backURL = ParamUtil.getString(request, "backURL", redirect);
 	
+	boolean searched = ParamUtil.getBoolean(request, "search");
 	String keywords = ParamUtil.getString(request, "keywords");
 	String lastName = ParamUtil.getString(request, "lastName");
 	boolean advanceSearch = ParamUtil.getBoolean(request, "advancedSearch");
 	String andOperator = ParamUtil.getString(request,"andOperator");
 	boolean matchAll = Validator.equals(andOperator, "1");
 	
-	AuthorSearch authorSearch = new AuthorSearch(renderRequest,currentURLObj);
+	boolean showAdminAuthor = AuthorPermission.contains(permissionChecker, scopeGroupId, ActionKeys.UPDATE);
+	boolean showSearch = true;
+	
+	
+	/*
 	List<AssetVocabulary> authorVocabs = AssetVocabularyLocalServiceUtil.getGroupsVocabularies(new long[]{themeDisplay.getScopeGroupId()},
 			Author.class.getName());
+	
+	_log.info("xx");
+	*/
+	
 %>
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	localizeTitle="<%= true %>"
-	title='manage-author'
-/>
+
 <portlet:renderURL var="viewAuthorsURL">
 	<portlet:param name="jspPage" value="/html/admin/author/view.jsp" />
 </portlet:renderURL>
 
-size="<%=authorVocabs.size() %>"
 <%
+/*
+		List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
+		long[] groupIds = new long[] {themeDisplay.getScopeGroupId()};
+		List<AssetVocabulary> authorVocabularies = AuthorUtil.getAuthorVocabulary(groupIds);
+		int vocabCount = authorVocabularies.size();
+		int colWidth=33;
+		if (vocabCount > 1)
+			colWidth=50;
+	*/	
 
-for (AssetVocabulary authorVocab : authorVocabs)
-{
 %>
-	By : <%=authorVocab.getName() %>
-<%
-}
-%>
-
-<aui:form action="<%= portletURLString %>" method="post" name="fm">
-	
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
-	<%
-	
-
-
-	%>
+<c:if test="<%= showAdminAuthor%>">
 	<aui:nav-bar>
-		<aui:nav>
+		<c:if test="<%= showAdminAuthor %>">
+			<aui:nav>
+				
+				<portlet:renderURL var="addAuthorURL">
+					<portlet:param name="jspPage" value="/html/admin/author/edit_author.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
+					 
+				</portlet:renderURL>
+				<aui:nav-item href="<%= addAuthorURL %>" label="add-subur-author" name="addItemButton" />
+				
+				
+				
+			</aui:nav>
+		</c:if>
+		
 			
-
-			
-			<liferay-portlet:renderURL varImpl="addAuthorURL">
-				<portlet:param name="jspPage" value="/html/admin/author/edit_author.jsp" />
-				<portlet:param name="redirect" value="<%= viewAuthorsURL %>" />
-			</liferay-portlet:renderURL>
-
-			 <aui:nav-item href="<%=addAuthorURL.toString() %>" iconCssClass="icon-add"
-                     label="add" />
-			
-		</aui:nav>
-
-		<aui:nav-bar-search cssClass="pull-right">
-		<liferay-ui:search-form
-					page="/html/search/author_form.jsp"
-					 searchContainer="<%= authorSearch %>"
+		
+		<c:if test="<%= showSearch %>">
+	        <aui:nav-bar-search cssClass="pull-right">
+				<liferay-ui:search-form
+					page="/html/author/author_search.jsp"
+					 
 					 servletContext="<%= this.getServletConfig().getServletContext() %>"
-						/>
-		</aui:nav-bar-search>
+				/>
+			</aui:nav-bar-search>
+		</c:if>
+    
+		
 	</aui:nav-bar>
-	
-<liferay-ui:search-container
-		
-		searchContainer="<%= authorSearch %>"
-	>
-	<%
-		AuthorSearchTerms searchTerms = (AuthorSearchTerms)searchContainer.getSearchTerms();
-	
-	%>
-	<liferay-ui:search-container-results>
-		<%
-		
-		//total = AuthorLocalServiceUtil.getSearchCount(searchTerms.getKeywords(), 
-		//		themeDisplay.getCompanyId(),themeDisplay.getScopeGroupId());
-		
-		total = AuthorLocalServiceUtil.getSearchCount(searchTerms.getKeywords(), 
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				searchTerms.getFirstName(), searchTerms.getLastName(),
-				searchTerms.isAdvancedSearch(),searchTerms.isAndOperator(),
-				searchContainer.getStart(),searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-		
-		
-		List<Author> authors = AuthorLocalServiceUtil.search(searchTerms.getKeywords(), 
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				searchTerms.getFirstName(), searchTerms.getLastName(),
-				searchTerms.isAdvancedSearch(),searchTerms.isAndOperator(),
-				searchContainer.getStart(),searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-		
-		
-		//List<Author> authors = AuthorLocalServiceUtil.search(searchTerms.getKeywords(),
-		//		themeDisplay.getCompanyId(),themeDisplay.getScopeGroupId(),
-		//		searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		
-		
-		searchContainer.setTotal(total);
-		results = authors; //ListUtil.subList(authors, searchContainer.getStart(), searchContainer.getEnd());
-		//out.print(total + ":"+ searchContainer.getStart() + ":"+ authors.size()+ ":"+ results.size());
-		searchContainer.setResults(results);
-		%>
-	
-	
-	</liferay-ui:search-container-results>
-	<liferay-ui:search-container-row
-			className="com.idetronic.subur.model.Author"
-			keyProperty="authorId"
-			modelVar="author"
-		>
-		
-		<liferay-ui:search-container-column-text
-				name="firstName"
-				value="<%= HtmlUtil.escape(author.getFirstName()) %>"
-				orderable="<%= true %>"
-		/>
-		<liferay-ui:search-container-column-text
-				name="lastName"
-				value="<%= HtmlUtil.escape(author.getLastName()) %>"
-				orderable="<%= true %>"
-		/>
-		<liferay-ui:search-container-column-text
-				name="item-count"
-				value="<%= String.valueOf(author.getItemCount()) %>"
-				orderable="<%= true %>"
-				orderableProperty="itemCount"
-		/>
-		<liferay-ui:search-container-column-date
-				name="last-published-date"
-				value="<%= author.getLastPublishedDate() %>"
-				orderable="<%= false %>"
-				orderableProperty="lastPublishedDate"
-		/>
-		<liferay-portlet:renderURL varImpl="editAuthorURL">
-				<portlet:param name="jspPage" value="/html/admin/author/edit_author.jsp" />
-				<portlet:param name="redirect" value="<%= viewAuthorsURL %>" />
-				<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>" />
-				
-		</liferay-portlet:renderURL>
-		<liferay-portlet:renderURL varImpl="viewAuthorURL">
-				<portlet:param name="jspPage" value="/html/authornavigator/view_author.jsp" />
-				<portlet:param name="redirect" value="<%= viewAuthorsURL %>" />
-				<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>" />
-				
-		</liferay-portlet:renderURL>
-		<liferay-ui:search-container-column-text>
-			<liferay-ui:icon-menu>
-				<liferay-ui:icon image="edit" message="Edit" label="edit" url="<%= editAuthorURL.toString() %>" />
-				<liferay-ui:icon image="view" message="View" label="view" url="<%= viewAuthorURL.toString() %>" />
-			</liferay-ui:icon-menu>
-		</liferay-ui:search-container-column-text>
-		
-			
-		
-	</liferay-ui:search-container-row>
-	<liferay-ui:search-iterator />
-	
-</liferay-ui:search-container>
 
-	
-	
-</aui:form>
+
+</c:if>
+
+<c:choose>
+	<c:when test="<%=searched %>">
+		<jsp:include page="/html/author/filter_view.jsp"/>
+	</c:when>
+	<c:otherwise>
+		<jsp:include page="/html/author/default_view.jsp"/>
+	</c:otherwise>
+
+</c:choose>
+
+
+
+
+
+
+
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("autor.html.view.jsp");
+%>
+
+
+
+
+
+
+
+

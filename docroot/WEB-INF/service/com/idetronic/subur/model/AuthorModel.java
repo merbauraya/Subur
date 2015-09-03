@@ -248,6 +248,36 @@ public interface AuthorModel extends BaseModel<Author> {
 	public void setItemCount(int itemCount);
 
 	/**
+	 * Returns the email of this author.
+	 *
+	 * @return the email of this author
+	 */
+	@AutoEscape
+	public String getEmail();
+
+	/**
+	 * Sets the email of this author.
+	 *
+	 * @param email the email of this author
+	 */
+	public void setEmail(String email);
+
+	/**
+	 * Returns the office no of this author.
+	 *
+	 * @return the office no of this author
+	 */
+	@AutoEscape
+	public String getOfficeNo();
+
+	/**
+	 * Sets the office no of this author.
+	 *
+	 * @param officeNo the office no of this author
+	 */
+	public void setOfficeNo(String officeNo);
+
+	/**
 	 * Returns the create date of this author.
 	 *
 	 * @return the create date of this author

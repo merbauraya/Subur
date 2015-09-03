@@ -114,13 +114,17 @@ public class ItemTypeLocalServiceClp implements ItemTypeLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "decrementCounter";
+		_methodName19 = "add";
 
-		_methodParameterTypes19 = new String[] { "long" };
+		_methodParameterTypes19 = new String[] { "java.lang.String" };
 
-		_methodName20 = "incrementCounter";
+		_methodName20 = "decrementCounter";
 
 		_methodParameterTypes20 = new String[] { "long" };
+
+		_methodName21 = "incrementCounter";
+
+		_methodParameterTypes21 = new String[] { "long" };
 	}
 
 	@Override
@@ -154,12 +158,12 @@ public class ItemTypeLocalServiceClp implements ItemTypeLocalService {
 	}
 
 	@Override
-	public com.idetronic.subur.model.ItemType createItemType(long ItemTypeId) {
+	public com.idetronic.subur.model.ItemType createItemType(long itemTypeId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { ItemTypeId });
+					_methodParameterTypes1, new Object[] { itemTypeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -177,14 +181,14 @@ public class ItemTypeLocalServiceClp implements ItemTypeLocalService {
 	}
 
 	@Override
-	public com.idetronic.subur.model.ItemType deleteItemType(long ItemTypeId)
+	public com.idetronic.subur.model.ItemType deleteItemType(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { ItemTypeId });
+					_methodParameterTypes2, new Object[] { itemTypeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -437,13 +441,13 @@ public class ItemTypeLocalServiceClp implements ItemTypeLocalService {
 	}
 
 	@Override
-	public com.idetronic.subur.model.ItemType fetchItemType(long ItemTypeId)
+	public com.idetronic.subur.model.ItemType fetchItemType(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { ItemTypeId });
+					_methodParameterTypes10, new Object[] { itemTypeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -465,14 +469,14 @@ public class ItemTypeLocalServiceClp implements ItemTypeLocalService {
 	}
 
 	@Override
-	public com.idetronic.subur.model.ItemType getItemType(long ItemTypeId)
+	public com.idetronic.subur.model.ItemType getItemType(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11, new Object[] { ItemTypeId });
+					_methodParameterTypes11, new Object[] { itemTypeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -670,11 +674,40 @@ public class ItemTypeLocalServiceClp implements ItemTypeLocalService {
 	}
 
 	@Override
+	public com.idetronic.subur.model.ItemType add(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] { ClpSerializer.translateInput(name) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.idetronic.subur.model.ItemType)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public void decrementCounter(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName19,
-				_methodParameterTypes19, new Object[] { itemTypeId });
+			_invokableLocalService.invokeMethod(_methodName20,
+				_methodParameterTypes20, new Object[] { itemTypeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -697,8 +730,8 @@ public class ItemTypeLocalServiceClp implements ItemTypeLocalService {
 	public void incrementCounter(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName20,
-				_methodParameterTypes20, new Object[] { itemTypeId });
+			_invokableLocalService.invokeMethod(_methodName21,
+				_methodParameterTypes21, new Object[] { itemTypeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -758,4 +791,6 @@ public class ItemTypeLocalServiceClp implements ItemTypeLocalService {
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

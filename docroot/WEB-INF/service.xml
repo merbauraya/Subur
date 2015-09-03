@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
-<service-builder package-path="com.idetronic.subur">
+<service-builder package-path="com.idetronic.subur" auto-namespace-tables="true">
 	<author>Mazlan Mat</author>
 	<namespace>Subur</namespace>
 
@@ -49,50 +49,16 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
 	</entity>
-    <entity name="ItemFileEntry" local-service="true">
-        <column name="itemId" type="long" primary="true"></column>
-        <column name="fileEntryId" type="long" primary="true"></column>
-        <column name="entryType" type="long"></column>
-         <finder name="byItemId" return-type="Collection">
-			<finder-column name="itemId"></finder-column>
-		</finder>
-    </entity>
-    
-    <entity name="MetadataSchema" local-service="true" remote-service="false">
-        <column name="metadataSchemaId" type="long" primary="true"></column>
-        <column name="metadataName" type="String"></column>
-        <column name="nameSpace" type="String"></column>
-    </entity>
-    <entity name="MetadataProperty" local-service="true" remote-service="false">
-        <column name="metadataPropertyId" type="long" primary="true"></column>
-        <column name="metadataSchemaId" type="long"></column>
-        <column name="element" type="String"></column>
-        <column name="scope" type="String"></column>
-        <column name="note" type="String"></column>
-    </entity>
-    <entity name="MetadataPropertyValue" local-service="true" remote-service="false">
-    	<column name="metadataPropertyValueId" type="long" primary="true"> </column>
-        <column name="itemId" type="long"> </column>
-        <column name="propertyId" type="long"></column>
-        <column name="textValue" type="String"></column>
-        <column name="itemCount" type="int"></column>
-        <!-- Finder methods -->
-        <finder name="byItemId" return-type="Collection">
-			<finder-column name="itemId"></finder-column>
-		</finder>
-    </entity>
+  
+  
    
-    <entity name="ItemType" local-service="true" remote-service="false">
-        <column name="ItemTypeId" type="long" primary="true"></column>
-        <column name="ItemTypeName" type="String"></column>
+    <entity name="ItemType" local-service="true" remote-service="false" table="Subur_ItemType">
+        <column name="itemTypeId" type="long" primary="true"></column>
+        <column name="itemTypeName" type="String"></column>
         <column name="itemCount" type="int"></column>
     </entity>
-    <entity name="ItemTypeTemplate" local-service="true" remote-service="false">
-        <column name="itemTypeId" type="long" primary="true"></column>
-        <column name="metadataPropertyId" type="long" primary="true"></column>
-        <column name="required" type="boolean"></column>
-    </entity>
-    <entity name="ItemItemType" local-service="true" remote-service="false">
+  
+    <entity name="ItemItemType" local-service="true" remote-service="false" table="Subur_ItemItemType">
         <column name="itemId" type="long" primary="true"></column>
         <column name="itemTypeId" type="long" primary="true"></column>
          <finder name="ItemId" return-type="Collection">
@@ -103,8 +69,8 @@
 		</finder>
     </entity>
    
-    <entity name="Author" local-service="true" remote-service="false">
-    	<column name="authorId" type="long" primary="true" id-type="increment"></column>
+    <entity name="Author" local-service="true" remote-service="false" table="Subur_Author">
+    	<column name="authorId" type="long" primary="true"></column>
     	<column name="groupId" type="long" />
     	<column name="companyId" type="long" />
     	<column name="title" type="String" />
@@ -117,7 +83,8 @@
     	<column name="metadata" type="String"></column>
     	<column name="lastPublishedDate" type="Date"></column>
     	<column name="itemCount" type="int"></column>
-    	
+    	<column name="email" type="String"></column>
+    	<column name="officeNo" type="String"></column>
     	<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		<column name="Uuid" type="String" />
@@ -143,7 +110,7 @@
     	<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
     </entity>
-    <entity name="AuthorSite" local-service="true" remote-service="false">
+    <entity name="AuthorSite" local-service="true" remote-service="false" table="Subur_AuthorSite">
     	<column name="authorSiteId" type="long" primary="true" id-type="increment"></column>
     	<column name="authorId" type="long"/>
     	<column name="siteName" type="String"/>
@@ -156,7 +123,7 @@
     		<finder-column name="siteName"></finder-column>
     	</finder>
     </entity>
-    <entity name="ItemAuthor" local-service="true" remote-service="false">
+    <entity name="ItemAuthor" local-service="true" remote-service="false" table="Subur_ItemAuthor">
     	<column name="itemId" type="long" primary="true"></column>
     	<column name="authorId" type="long" primary="true"></column>
     	<finder name="itemId" return-type="Collection">
@@ -166,7 +133,7 @@
     		<finder-column name="authorId"></finder-column>
     	</finder>
     </entity>
-    <entity name="Expertise" local-service="true" remote-service="true">
+    <entity name="Expertise" local-service="true" remote-service="true" table="Subur_Expertise">
     	<column name="expertiseId" type="long" primary="true"></column>
     	<column name="groupId" type="long"></column>
     	<column name="companyId" type="long"></column>
@@ -185,7 +152,7 @@
     	</finder>
     	
     </entity>
-    <entity name="AuthorExpertise" local-service="true" remote-service="false">
+    <entity name="AuthorExpertise" local-service="true" remote-service="false" table="Subur_AuthorExpertise">
     	<column name="authorId" type="long" primary="true"></column>
         <column name="expertiseId" type="long" primary="true"></column>
          <finder name="Author" return-type="Collection">
@@ -193,6 +160,34 @@
 		</finder>
 		<finder name="Expertise" return-type="Collection">
 			<finder-column name="expertiseId"></finder-column>
+		</finder>
+    </entity>
+    <entity name="ResearchInterest" local-service="true" remote-service="true" table="Subur_ResearchInterest">
+    	<column name="researchInterestId" type="long" primary="true"></column>
+    	<column name="groupId" type="long"></column>
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="researchInterestName" type="String"></column>
+    	<column name="indexedName" type="String"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    	<column name="authorCount" type="int"></column>
+    	<finder name="Group" return-type="Collection">
+    		<finder-column name="groupId"></finder-column>
+    	</finder>
+    	<finder name="GroupName" return-type="ResearchInterest" unique="true">
+    		<finder-column name="groupId"></finder-column>
+    		<finder-column name="indexedName"></finder-column>
+    	</finder>
+    </entity>
+    <entity name="AuthorResearchInterest" local-service="true" remote-service="false" table="Subur_AuthorResearchInterest">
+    	<column name="authorId" type="long" primary="true"></column>
+        <column name="researchInterestId" type="long" primary="true"></column>
+         <finder name="Author" return-type="Collection">
+			<finder-column name="authorId"></finder-column>
+		</finder>
+		<finder name="ResearchInterest" return-type="Collection">
+			<finder-column name="researchInterestId"></finder-column>
 		</finder>
     </entity>
     <entity name="DownloadSummary" local-service="true" remote-service="false">
@@ -219,7 +214,7 @@
 		</finder>
  		
     </entity>
-     <entity name="StatDownloadPeriod" local-service="true" remote-service="false">
+     <entity name="StatDownloadPeriod" local-service="true" remote-service="false" table="Subur_StatDownloadPeriod">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
     	<column name="itemId" type="long"></column>
     	<column name="perMonth" type="int"></column>
@@ -230,7 +225,7 @@
 		</finder>
  		
     </entity>
-    <entity name="StatDownloadItemType" local-service="true" remote-service="false">
+    <entity name="StatDownloadItemType" local-service="true" remote-service="false" table="Subur_StatDownloadItemType">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
  
     	<column name="perMonth" type="int"></column>
@@ -241,7 +236,7 @@
 		</finder>
  		
     </entity>
-    <entity name="StatDownloadCategory" local-service="true" remote-service="false">
+    <entity name="StatDownloadCategory" local-service="true" remote-service="false" table="Subur_StatDownloadCategory">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
  
     	<column name="perMonth" type="int"></column>
@@ -252,7 +247,7 @@
 		</finder>
  		
     </entity>
-     <entity name="StatDownloadTag" local-service="true" remote-service="false">
+     <entity name="StatDownloadTag" local-service="true" remote-service="false" table="Subur_StatDownloadTag">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
     
     	<column name="perMonth" type="int"></column>
@@ -263,7 +258,7 @@
 		</finder>
  		
     </entity>
-    <entity name="ViewSummary" local-service="true" remote-service="true">
+    <entity name="ViewSummary" local-service="true" remote-service="true" table="Subur_ViewSummary">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
     	<column name="itemId" type="long"></column>
     	<column name="perMonth" type="int"></column>
@@ -284,7 +279,7 @@
 		</finder>
     </entity>
    
-     <entity name="StatViewItemType" local-service="true" remote-service="false">
+     <entity name="StatViewItemType" local-service="true" remote-service="false" table="Subur_StatViewItemType">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
     	<column name="perMonth" type="int"></column>
     	<column name="perYear" type="int"></column>
@@ -294,7 +289,7 @@
 		</finder>
  		
     </entity>
-    <entity name="StatViewCategory" local-service="true" remote-service="false">
+    <entity name="StatViewCategory" local-service="true" remote-service="false" table="Subur_StatViewCategory">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
     	<column name="perMonth" type="int"></column>
     	<column name="perYear" type="int"></column>
@@ -304,7 +299,7 @@
 		</finder>
  		
     </entity>
-     <entity name="StatViewTag" local-service="true" remote-service="false">
+     <entity name="StatViewTag" local-service="true" remote-service="false" table="Subur_StatViewTag">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
     	<column name="perMonth" type="int"></column>
     	<column name="perYear" type="int"></column>
@@ -312,5 +307,15 @@
  		<finder name="Tag" return-type="Collection">
 			<finder-column name="tagId"></finder-column>
 		</finder>
+    </entity>
+    <entity name="SuburConfig" local-service="true" remote-service="false" table="Subur_Config">
+    	<column name="id" type="long" primary="true" id-type="increment"></column>
+    	<column name="key" type="String"/> 
+    	<column name="description" type="String"></column>
+    	<column name="config" type="String"></column>
+    	<finder name="Key" return-type="SuburConfig" unique="true">
+    		<finder-column name="key"></finder-column>
+    		
+    	</finder>
     </entity>
 </service-builder>

@@ -317,6 +317,12 @@ public class ExpertiseLocalServiceUtil {
 		return getService().decrementAuthorCount(expertiseId);
 	}
 
+	public static java.util.List<com.idetronic.subur.model.Expertise> getTop10(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTop10(groupId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

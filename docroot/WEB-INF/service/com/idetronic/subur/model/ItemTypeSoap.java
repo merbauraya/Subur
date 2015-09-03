@@ -77,7 +77,7 @@ public class ItemTypeSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _ItemTypeId;
+		return _itemTypeId;
 	}
 
 	public void setPrimaryKey(long pk) {
@@ -85,19 +85,19 @@ public class ItemTypeSoap implements Serializable {
 	}
 
 	public long getItemTypeId() {
-		return _ItemTypeId;
+		return _itemTypeId;
 	}
 
-	public void setItemTypeId(long ItemTypeId) {
-		_ItemTypeId = ItemTypeId;
+	public void setItemTypeId(long itemTypeId) {
+		_itemTypeId = itemTypeId;
 	}
 
 	public String getItemTypeName() {
-		return _ItemTypeName;
+		return _itemTypeName;
 	}
 
-	public void setItemTypeName(String ItemTypeName) {
-		_ItemTypeName = ItemTypeName;
+	public void setItemTypeName(String itemTypeName) {
+		_itemTypeName = itemTypeName;
 	}
 
 	public int getItemCount() {
@@ -108,7 +108,7 @@ public class ItemTypeSoap implements Serializable {
 		_itemCount = itemCount;
 	}
 
-	private long _ItemTypeId;
-	private String _ItemTypeName;
+	private long _itemTypeId;
+	private String _itemTypeName;
 	private int _itemCount;
 }

@@ -5,7 +5,6 @@ import com.idetronic.subur.service.persistence.AuthorFinderImpl;
 import com.idetronic.subur.service.persistence.SuburItemFinderImpl;
 import com.idetronic.subur.service.persistence.ItemItemTypeFinderImpl;
 import com.idetronic.subur.service.persistence.MetadataPropertyValueFinder;
-import com.idetronic.subur.service.persistence.MetadataPropertyValueFinderImpl;
 
 public class SuburConstant {
 	
@@ -87,7 +86,6 @@ public class SuburConstant {
 	
 	/* Custom SQL */
 	public static String SQL_ITEM_AUTHOR = SuburItemFinderImpl.class.getName() + ".getItemAuthors";
-	public static String SQL_ITEM_ADDITIONAL_METADATA = MetadataPropertyValueFinderImpl.class.getName() + ".getAdditionalMetadata";
 	/* use this for building select list for selected item type */
 	public static String SQL_ITEM_ITEMTYPE = ItemItemTypeFinderImpl.class.getName() + ".getItemType";
 	/*use this for selecting item item type */

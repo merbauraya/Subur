@@ -37,10 +37,10 @@ public class ItemTypeCacheModel implements CacheModel<ItemType>, Externalizable 
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{ItemTypeId=");
-		sb.append(ItemTypeId);
-		sb.append(", ItemTypeName=");
-		sb.append(ItemTypeName);
+		sb.append("{itemTypeId=");
+		sb.append(itemTypeId);
+		sb.append(", itemTypeName=");
+		sb.append(itemTypeName);
 		sb.append(", itemCount=");
 		sb.append(itemCount);
 		sb.append("}");
@@ -52,13 +52,13 @@ public class ItemTypeCacheModel implements CacheModel<ItemType>, Externalizable 
 	public ItemType toEntityModel() {
 		ItemTypeImpl itemTypeImpl = new ItemTypeImpl();
 
-		itemTypeImpl.setItemTypeId(ItemTypeId);
+		itemTypeImpl.setItemTypeId(itemTypeId);
 
-		if (ItemTypeName == null) {
+		if (itemTypeName == null) {
 			itemTypeImpl.setItemTypeName(StringPool.BLANK);
 		}
 		else {
-			itemTypeImpl.setItemTypeName(ItemTypeName);
+			itemTypeImpl.setItemTypeName(itemTypeName);
 		}
 
 		itemTypeImpl.setItemCount(itemCount);
@@ -70,27 +70,27 @@ public class ItemTypeCacheModel implements CacheModel<ItemType>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		ItemTypeId = objectInput.readLong();
-		ItemTypeName = objectInput.readUTF();
+		itemTypeId = objectInput.readLong();
+		itemTypeName = objectInput.readUTF();
 		itemCount = objectInput.readInt();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(ItemTypeId);
+		objectOutput.writeLong(itemTypeId);
 
-		if (ItemTypeName == null) {
+		if (itemTypeName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(ItemTypeName);
+			objectOutput.writeUTF(itemTypeName);
 		}
 
 		objectOutput.writeInt(itemCount);
 	}
 
-	public long ItemTypeId;
-	public String ItemTypeName;
+	public long itemTypeId;
+	public String itemTypeName;
 	public int itemCount;
 }

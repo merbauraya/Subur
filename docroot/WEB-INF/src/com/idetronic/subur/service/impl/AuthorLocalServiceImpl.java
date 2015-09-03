@@ -19,20 +19,30 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.idetronic.subur.NoSuchAuthorException;
 import com.idetronic.subur.model.Author;
 import com.idetronic.subur.model.AuthorExpertise;
+import com.idetronic.subur.model.AuthorResearchInterest;
 import com.idetronic.subur.model.AuthorSite;
 import com.idetronic.subur.model.Expertise;
+import com.idetronic.subur.model.ItemAuthor;
+import com.idetronic.subur.model.ResearchInterest;
 import com.idetronic.subur.model.SuburItem;
 import com.idetronic.subur.service.AuthorExpertiseLocalServiceUtil;
+import com.idetronic.subur.service.AuthorResearchInterestLocalServiceUtil;
 import com.idetronic.subur.service.AuthorSiteLocalServiceUtil;
 import com.idetronic.subur.service.ExpertiseLocalServiceUtil;
 import com.idetronic.subur.service.ItemAuthorLocalServiceUtil;
+import com.idetronic.subur.service.ResearchInterestLocalServiceUtil;
 import com.idetronic.subur.service.base.AuthorLocalServiceBaseImpl;
 import com.idetronic.subur.service.persistence.AuthorExpertisePK;
 import com.idetronic.subur.service.persistence.AuthorFinderUtil;
+import com.idetronic.subur.service.persistence.AuthorQuery;
+import com.idetronic.subur.service.persistence.AuthorResearchInterestPK;
 import com.idetronic.subur.service.persistence.SuburItemFinderUtil;
+import com.idetronic.subur.util.AuthorQueryUtil;
 import com.idetronic.subur.util.SuburConstant;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,6 +51,14 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -83,11 +101,13 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	
 	
 	
-	public long addAuthor(String firstName,String lastName,String title,
+	public long addAuthor(String firstName,String middleName,String lastName,String title,
+			String email,String officeNo,
 			Map<String,String> authorSite,
 			String remoteId,int idType,
 			long userId, long groupId,long createdByUserId,
-			String[] expertiseNames,ServiceContext serviceContext) throws SystemException, PortalException
+			String[] expertiseNames,String[] researchInterestNames,
+			ServiceContext serviceContext) throws SystemException, PortalException
 	{
 		
 		User user = userLocalService.getUserById(userId);
@@ -96,8 +116,12 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 		long authorId = CounterLocalServiceUtil.increment(Author.class.getName());
 		Author author = authorPersistence.create(authorId);
 		author.setFirstName(firstName);
+		author.setMiddleName(middleName);
 		author.setLastName(lastName);
 		author.setTitle(title);
+		author.setEmail(email);
+		author.setOfficeNo(officeNo);
+		
 		author.setRemoteId(remoteId);
 		author.setIdType(idType);
 		author.setCompanyId(user.getCompanyId());
@@ -129,13 +153,25 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 			setExpertises(authorId,expertises);
 		}
 		
+		if (researchInterestNames != null)
+		{
+			long siteGroupId = PortalUtil.getSiteGroupId(groupId);
+			Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+			
+			List<ResearchInterest> researchInterests = ResearchInterestLocalServiceUtil.checkResearchInterests(userId, siteGroup, researchInterestNames);
+			
+			for (ResearchInterest researchInterest : researchInterests)
+			{
+				researchInterestLocalService.incrementAuthorCount(researchInterest.getResearchInterestId());
+			}
+			setResearchInterests(authorId,researchInterests);
+		}
+		
 		updateAuthorSite(authorId,authorSite);
 		authorPersistence.update(author);
-		logger.info("author upd");
 		
 		
 		
-		logger.info("res upd");
 		
 		
 		AssetEntry assetEntry = updateAssetEntry(createdByUserId,groupId,
@@ -154,8 +190,12 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
                 serviceContext.getAssetLinkEntryIds(),
                 AssetLinkConstants.TYPE_RELATED);
 		
-		logger.info("ass link upd");
 		
+		
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+                Author.class);
+		
+		indexer.reindex(author);
 		return authorId;
 		
 	}
@@ -191,6 +231,22 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 		}
 		
 	}
+	public void setResearchInterests(long authorId, List<ResearchInterest> researchInterests) throws SystemException
+	{
+		//remove existing/old expertises , if any
+		authorResearchInterestPersistence.removeByAuthor(authorId);
+		
+		for (ResearchInterest researchInterest : researchInterests)
+		{
+			AuthorResearchInterestPK pk = new AuthorResearchInterestPK();
+			pk.setAuthorId(authorId);
+			pk.setResearchInterestId(researchInterest.getResearchInterestId());
+			AuthorResearchInterest authorResearchInterest = AuthorResearchInterestLocalServiceUtil.createAuthorResearchInterest(pk);
+			AuthorResearchInterestLocalServiceUtil.updateAuthorResearchInterest(authorResearchInterest);
+			
+		}
+		
+	}
 	/**
 	 * Update existing author, throw Exception if author not found or update fails
 	 * @param authorId
@@ -204,17 +260,22 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	 * @throws SystemException
 	 * @throws PortalException 
 	 */
-	public Author updateAuthor(long authorId,String title,String firstName,
-				String lastName,Map<String,String> authorSite,
+	public Author updateAuthor(long authorId,String title,String firstName,String middleName,
+				String lastName,String email,String officeNo,
+				Map<String,String> authorSite,
 				String remoteId,int idType,
 				long userId, long groupId,
-				long createdByUserId,String[] expertiseNames,
+				long createdByUserId,
+				String[] expertiseNames, String[] researchInterestNames,
 				ServiceContext serviceContext) throws SystemException, PortalException
 	{
 		Author author = authorPersistence.fetchByPrimaryKey(authorId);
 		author.setTitle(title);
+		author.setMiddleName(middleName);
 		author.setFirstName(firstName);
 		author.setLastName(lastName);
+		author.setEmail(email);
+		author.setOfficeNo(officeNo);
 		author.setRemoteId(remoteId);
 		author.setIdType(idType);
 		
@@ -247,6 +308,35 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 			setExpertises(authorId,newExpertises);
 		}
 		
+		if (researchInterestNames != null)
+		{
+			long siteGroupId = PortalUtil.getSiteGroupId(groupId);
+			Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+			
+			//get existing author expertise and decrement the count
+			List<ResearchInterest> oldResearchInterests = getResearchInterests(authorId);
+			List<ResearchInterest> newResearchInterests = ResearchInterestLocalServiceUtil.checkResearchInterests(userId, siteGroup, researchInterestNames);
+
+			
+			for (ResearchInterest researchInterest: oldResearchInterests)
+			{
+				if (!newResearchInterests.contains(researchInterest))
+					researchInterestLocalService.decrementAuthorCount(researchInterest.getResearchInterestId());
+				
+					
+			}
+			
+			for (ResearchInterest researchInterest: newResearchInterests)
+			{
+				if (!oldResearchInterests.contains(researchInterest))
+					researchInterestLocalService.incrementAuthorCount(researchInterest.getResearchInterestId());
+			}
+			
+			
+			setResearchInterests(authorId,newResearchInterests);
+		}
+		
+		
 		//author Site
 		updateAuthorSite(authorId,authorSite);
 		
@@ -268,6 +358,11 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 		AssetLinkLocalServiceUtil.updateLinks(userId, assetEntry.getEntryId(),
                 serviceContext.getAssetLinkEntryIds(),
                 AssetLinkConstants.TYPE_RELATED);
+		
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+                Author.class);
+		
+		indexer.reindex(author);
 		
 		return author;
 
@@ -407,6 +502,18 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 		return expertises;
 		
 		
+	}
+	public List<ResearchInterest> getResearchInterests(long authorId) throws SystemException
+	{
+		List<AuthorResearchInterest> authorResearchInterests = authorResearchInterestPersistence.findByAuthor(authorId);
+		List<ResearchInterest> researchInterests = new ArrayList<ResearchInterest>(authorResearchInterests.size());
+		
+		for (AuthorResearchInterest authorResearchInterest: authorResearchInterests)
+		{
+			ResearchInterest researchInterest = researchInterestPersistence.fetchByPrimaryKey(authorResearchInterest.getResearchInterestId());
+			researchInterests.add(researchInterest);
+		}
+		return researchInterests;
 	}
 	
 	/**
@@ -629,4 +736,14 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	{
 		return AuthorFinderUtil.findByCompanyGroup(companyId,groupId,start,end);
 	}
+	
+	public void deleteItem(long itemId) throws SystemException
+	{
+		List<ItemAuthor> itemAuthors = itemAuthorPersistence.findByitemId(itemId);
+		for (ItemAuthor itemAuthor : itemAuthors)
+		{
+			decrementItemCount(itemAuthor.getAuthorId());
+		}
+	}
+	
 }

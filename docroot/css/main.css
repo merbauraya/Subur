@@ -46,5 +46,18 @@
 	.small-input
 	{width:100px;}
 	.fullwidth {width:90%;}
+	.taglib-asset-categories-summary:after{
+		content:"\A";
+		white-space:pre;
+	}
 	
+	/* hide tags suggestion button */
+	button[title="Suggestions"]
+	{
+		display:none;
+	}
+	.taglib-search-toggle button[title="Add Tags"]
+	{
+		display:none;
+	}
 }
