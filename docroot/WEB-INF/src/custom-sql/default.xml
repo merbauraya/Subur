@@ -44,10 +44,10 @@
 	
 	</sql>
 	<sql id="com.idetronic.subur.service.persistence.ItemItemTypeFinderImpl.getItemType">
-	select a.*,b.itemid from Subur_itemtype a
-	inner join Subur_itemitemtype b
-		on a.itemtypeid = b.itemtypeid
-		and b.itemid = ?
+	SELECT a.*,b.itemid from Subur_ItemType a
+	INNER JOIN Subur_ItemItemType b
+		ON a.itemtypeid = b.itemtypeid
+		AND b.itemid = ?
 	
 	
 	</sql>
@@ -66,35 +66,15 @@
 		where a.itemId = ?
 		and a.itemTypeId = b.itemTypeId
 	</sql>
-	<sql id="com.idetronic.subur.service.persistence.SuburItemFinderImpl.getItemDetails">
-		SELECT 
-		  * 
-		FROM 
-		  Subur_item, 
-		  Subur_metadatapropertyvalue
-		WHERE 
-		  Subur_item.itemid = Subur_metadatapropertyvalue.itemid
-		  and Subur_item.itemid=?
-	</sql>
+	
 	
 	<sql id="com.idetronic.subur.service.persistence.SuburItemFinderImpl.getItemAuthors">
-		select * from Subur_itemauthor , Subur_author 
-			where Subur_itemauthor.authorid = Subur_author.authorid
-			and Subur_itemauthor.itemid = ?
+		select * from Subur_ItemAuthor , Subur_Author 
+			where Subur_ItemAuthor.authorid = Subur_Author.authorid
+			and Subur_ItemAuthor.itemid = ?
 	
 	</sql>
-	<sql id="com.idetronic.subur.service.persistence.SuburItemFinderImpl.getFileEntries">
-		SELECT 
-		  * 
-		FROM 
-		  Subur_fileentrytype, 
-		  Subur_itemfileentry
-		WHERE 
-		  Subur_fileentrytype.typeid = Subur_itemfileentry.entrytype
-		  and Subur_itemfileentry.itemid=?
 	
-	
-	</sql>
 	
 	
 	
@@ -189,6 +169,21 @@
 	</sql>
 	
 	<!--  end expertise finder -->
+	<!--  ResearchInterest finder -->
+	<sql id="com.idetronic.subur.service.persistence.ResearchInterestFinder.findByGroupName">
+	         
+		SELECT * FROM 
+			Subur_ResearchInterest
+		
+		WHERE 
+			[$GROUP_ID$]
+			Subur_ResearchInterest.indexedName LIKE ? OR ? IS NULL
+		ORDER BY Subur_ResearchInterest.indexedName ASC
+	
+	</sql>
+	
+	<!--  end expertise finder -->	
+	
 	<!--  start stats finder -->
 	<sql id="com.idetronic.subur.service.persistence.ViewSummaryFinder.monthlySummary">
 		SELECT permonth,count(*) as totalview 

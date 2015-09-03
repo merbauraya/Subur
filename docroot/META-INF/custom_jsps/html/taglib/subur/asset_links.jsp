@@ -39,7 +39,7 @@ if (assetEntryId > 0) {
 				assetLinkEntry = assetLinkEntry.toEscapedModel();
 
 				String className = PortalUtil.getClassName(assetLinkEntry.getClassNameId());
-				
+				_log.info("className="+className);
 				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 				if (Validator.isNull(assetRendererFactory)) {
@@ -55,7 +55,7 @@ if (assetEntryId > 0) {
 				}
 
 				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetLinkEntry.getClassPK());
-
+				_log.info(assetRenderer);
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
 					String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
 
