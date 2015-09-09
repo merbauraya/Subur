@@ -16,7 +16,7 @@
 			<aui:nav>
 				<c:if test="<%= showAddEntry %>">
 					<portlet:renderURL var="addItemURL">
-						<portlet:param name="jspPage" value="<%= SuburConstant.PAGE_NEW_ITEM %>" />
+						<portlet:param name="mvcPath" value="<%= SuburConstant.PAGE_NEW_ITEM %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						 
@@ -25,7 +25,7 @@
 				</c:if>
 				<c:if test="<%= showAdminItem %>">
 					<portlet:renderURL var="adminItemURL">
-						<portlet:param name="jspPage" value="<%= SuburConstant.PAGE_ADMIN_ITEM %>" />
+						<portlet:param name="mvcPath" value="<%= SuburConstant.PAGE_ADMIN_ITEM %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						
@@ -46,7 +46,7 @@
 					
 				</c:if>
 				<portlet:renderURL var="testURL">
-						<portlet:param name="jspPage" value="/html/test/view.jsp"/>
+						<portlet:param name="mvcPath" value="/html/test/view.jsp"/>
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						

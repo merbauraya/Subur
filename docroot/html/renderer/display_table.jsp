@@ -9,7 +9,7 @@
 	String itemId = (String)request.getAttribute("view.jsp-itemId");
 %>
 <liferay-portlet:renderURL varImpl="viewURL">
-        <portlet:param name="jspPage" value="/html/renderer/item_full.jsp" />
+        <portlet:param name="mvcPath" value="/html/renderer/item_full.jsp" />
         <portlet:param name="itemId" value="<%=itemId %>"/>
 </liferay-portlet:renderURL>
 
@@ -63,7 +63,7 @@
 	<td class="table-cell">
 		<%
 			PortletURL viewAuthorURL = renderResponse.createRenderURL();
-			viewAuthorURL.setParameter("jspPage", "/html/author/view_author.jsp");
+			viewAuthorURL.setParameter("mvcPath", "/html/author/view_author.jsp");
 		%>	
 	
 		<subur:item-author-display 

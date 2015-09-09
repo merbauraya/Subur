@@ -134,7 +134,9 @@ AUI.add(
 						value: ''
 					},
 					instanceVar: {
-						value: ''
+						setter: '_setInstanceVar',
+						validator: Lang.isString
+						
 					},
 					portalModelResource: {
 						value: false
@@ -159,6 +161,8 @@ AUI.add(
 				EXTENDS: A.TextboxList,
 
 				NAME: NAME ,
+					
+					//NAME ,
 
 				prototype: {
 					renderUI: function() {
@@ -236,14 +240,19 @@ AUI.add(
 
 					_getPopup: function() {
 						var instance = this;
-
-						if (!instance._popup) {
+						
+						console.log(this);
+						/*if (!instance._popup) { */
 							var popup = Liferay.Util.Window.getWindow(
 								{
 									dialog: {
 										cssClass: CSS_POPUP,
 										hideClass: 'hide-accessible',
-										width: 600
+										width: 600,
+										cache: false,
+										modal: true,
+										destroyOnHide: true,
+										destroyOnClose:true,
 									}
 								}
 							);
@@ -266,13 +275,14 @@ AUI.add(
 							popup.entriesNode = entriesNode;
 
 							instance._popup = popup;
+							console.log(popup);
 
 							instance._initSearch();
 
 							var onCheckboxClick = A.bind('_onCheckboxClick', instance);
 
 							entriesNode.delegate('click', onCheckboxClick, 'input[type=checkbox]');
-						}
+						//}
 
 						return instance._popup;
 					},
@@ -510,9 +520,17 @@ AUI.add(
 					_setTagType: function(value){
 						return value;
 					},
+					_setInstanceVar: function(value){
+						return value;
+					},
+					_setNAME: function(value)
+					{
+						return value;
+					},
+					
 					_showPopup: function(event) {
 						var instance = this;
-
+						
 						event.domEvent.preventDefault();
 
 						var popup = instance._getPopup();
@@ -524,10 +542,12 @@ AUI.add(
 
 					_showSelectPopup: function(event) {
 						var instance = this;
-
+						var dialogTitle = Liferay.Language.get('research-interest');
 						instance._showPopup(event);
-
-						instance._popup.titleNode.html(Liferay.Language.get('tags'));
+						if (instance.getType == 'expertise')
+							dialogTitle = Liferay.Language.get('expertise');
+						console.log(dialogTitle);
+						instance._popup.titleNode.html(dialogTitle);
 
 						instance._getEntries(
 							function(entries) {

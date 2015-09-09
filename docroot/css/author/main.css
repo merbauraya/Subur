@@ -12,4 +12,14 @@ content:'\A';}
 {
 	line-height:25px;
 }
+/* hide tags suggestion button */
+	button[title="Suggestions"]
+	{
+		display:none;
+	}
+	
+	.taglib-search-toggle button[title="Add Tags"]
+	{
+		display:none;
+	}
 }

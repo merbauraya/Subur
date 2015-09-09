@@ -60,7 +60,7 @@ create table Subur_Expertise (
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
-	expertiseName VARCHAR(75) null,
+	name VARCHAR(75) null,
 	indexedName VARCHAR(75) null,
 	modifiedDate DATE null,
 	authorCount INTEGER
@@ -143,7 +143,7 @@ create table Subur_ResearchInterest (
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
-	researchInterestName VARCHAR(75) null,
+	name VARCHAR(75) null,
 	indexedName VARCHAR(75) null,
 	modifiedDate DATE null,
 	authorCount INTEGER

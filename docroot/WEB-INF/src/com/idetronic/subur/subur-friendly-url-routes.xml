@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 6.2.0//EN"
+"http://www.liferay.com/dtd/liferay-friendly-url-routes_6_2_0.dtd">
+
+<routes>
+    <route>
+        <pattern>/add_item</pattern>
+
+        <ignored-parameter name="redirect"/>
+        <ignored-parameter name="backURL"/>
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/deposit/new.jsp</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/manage</pattern>
+
+        <ignored-parameter name="redirect"/>
+        <ignored-parameter name="backURL"/>
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/admin/subur/view.jsp</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/search</pattern>
+
+        <ignored-parameter name="redirect"/>
+        <ignored-parameter name="backURL"/>
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/search/subur_search.jsp</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/{itemId}</pattern>
+        <ignored-parameter name="redirect"/>
+        <implicit-parameter name="mvcPath">/html/renderer/item_full.jsp</implicit-parameter>
+        
+        
+    </route>
+    <route>
+        <pattern>/{entryId}/view_entry</pattern>
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/guestbook/view_entry.jsp</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/{guestbookId}/view</pattern>
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/guestbook/view.jsp</implicit-parameter>
+    </route>
+</routes>

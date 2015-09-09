@@ -165,6 +165,7 @@ page import="javax.portlet.WindowState" %>
 <%@ page import="com.idetronic.subur.util.SuburConfiguration" %>
 <%@page import="com.idetronic.subur.model.ItemType" %>
 <%@ page import="com.idetronic.subur.model.Expertise" %>
+<%@ page import="com.idetronic.subur.search.SuburField" %>
 <%@
 page import="com.idetronic.subur.model.ItemItemType" %><%@
 page import="com.idetronic.subur.model.SuburItem" %><%@

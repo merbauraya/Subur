@@ -3,7 +3,7 @@
 <aui:nav-bar>
 	<aui:nav>
 		<portlet:renderURL var="manageItemTypeURL">
-			<portlet:param name="jspPage" value="/html/suburadmin/item_type.jsp" />
+			<portlet:param name="mvcPath" value="/html/suburadmin/item_type.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			 
@@ -25,7 +25,7 @@
 	<c:if test="<%=pageName.equalsIgnoreCase(\"itemType\")%>">
 		<aui:nav>
 		<portlet:renderURL var="newItemTypeURL">
-			<portlet:param name="jspPage" value="/html/suburadmin/edit_itemtype.jsp" />
+			<portlet:param name="mvcPath" value="/html/suburadmin/edit_itemtype.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 				 

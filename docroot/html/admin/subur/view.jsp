@@ -2,12 +2,12 @@
 <%
 	//List<Item> suburItems = ItemLocalServiceUtil.getDraftItems();	
 	PortletURL portletURL = renderResponse.createRenderURL();
-	portletURL.setParameter("jspPage", "/html/admin/subur/view.jsp");
+	portletURL.setParameter("mvcPath", "/html/admin/subur/view.jsp");
 	portletURL.setWindowState(WindowState.NORMAL);
 
 /*
 	PortletURL addItemURL = renderResponse.createRenderURL();
-	addItemURL.setParameter("jspPage", "/html/deposit/new.jsp");
+	addItemURL.setParameter("mvcPath", "/html/deposit/new.jsp");
 	addItemURL.setParameter(Constants.CMD, Constants.ADD);
 */
 	String catMsg="";
@@ -17,7 +17,7 @@
 	
 	
 	PortletURL editEntryURL = renderResponse.createActionURL();
-	editEntryURL.setParameter("jspPage", SuburConstant.PAGE_UPDATE_ITEM);
+	editEntryURL.setParameter("mvcPath", SuburConstant.PAGE_UPDATE_ITEM);
 	editEntryURL.setParameter(Constants.CMD, Constants.EDIT);
 	editEntryURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	int status = SuburConstant.STATUS_ANY;
@@ -85,7 +85,7 @@
 		<liferay-ui:icon-menu>
 			
 			<portlet:renderURL var="editURL" windowState="<%=LiferayWindowState.MAXIMIZED.toString() %>">
-				<portlet:param name="jspPage" value="<%=SuburConstant.PAGE_UPDATE_ITEM %>"/>
+				<portlet:param name="mvcPath" value="<%=SuburConstant.PAGE_UPDATE_ITEM %>"/>
 				<portlet:param name="itemId" value="<%=String.valueOf(item.getItemId()) %>" />
 				<portlet:param name="redirect" value="<%=portletURL.toString() %>"/>
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />

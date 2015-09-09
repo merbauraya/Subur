@@ -1,4 +1,4 @@
-package com.idetronic.subur;
+package com.idetronic.subur.portlet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

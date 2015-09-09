@@ -8,7 +8,7 @@
 	String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "addAuthor");
 
 	PortletURL portletURL = renderResponse.createRenderURL();
-	portletURL.setParameter("jspPage", "/html/deposit/authorlookup.jsp");
+	portletURL.setParameter("mvcPath", "/html/deposit/authorlookup.jsp");
 	portletURL.setParameter("eventName", eventName);
 	portletURL.setParameter("itemId", String.valueOf(itemId));
 	

@@ -2,9 +2,9 @@ package com.idetronic.subur.service.persistence;
 
 import java.util.List;
 
-import com.idetronic.subur.Subur;
 import com.idetronic.subur.model.Expertise;
 import com.idetronic.subur.model.impl.ExpertiseImpl;
+import com.idetronic.subur.portlet.Subur;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;

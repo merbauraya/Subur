@@ -1,4 +1,4 @@
-package com.idetronic.subur;
+package com.idetronic.subur.portlet;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +24,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.idetronic.subur.helper.GetFileActionHelper;
 import com.idetronic.subur.model.SuburItem;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
 import com.idetronic.subur.util.SuburConstant;
@@ -62,6 +63,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -410,18 +412,25 @@ public class Subur extends MVCPortlet {
 			FileEntry fe = DLAppServiceUtil.getFileEntry(dlFileEntryId);
 			String version = fe.getVersion();
 			
+			
 			FileVersion fv = fe.getFileVersion(version);
 			InputStream fis = fv.getContentStream(true);
 			String fileName = fv.getTitle();
 			long contentLength = fv.getSize();
 			String contentType = fv.getMimeType();
 			
-		
+			logger.info(contentType+" l="+contentLength+ " name="+fileName);
+			
+			
+			
 			
 			//byte[] fileContent = SuburUtil.inputStreamToByteArray(is);
-			String contentDispositionType = "attachment; filename= " + fileName;
+			String contentDispositionType = "Content-Disposition,attachment; filename= " + fileName;
 			
-			ServletResponseUtil.sendFile(request, response, fileName, fis,contentLength,contentType,contentDispositionType);
+			//ServletResponseUtil.sendFile(request, response, fileName, fis,contentLength,contentType,contentDispositionType);
+			
+			ServletResponseUtil.sendFile(request, response, fileName, fis,contentLength,contentType);//,contentDispositionType);
+
 			//set download stat
 			SuburItemLocalServiceUtil.addDownloadStats(itemId);
 			
@@ -493,20 +502,38 @@ public class Subur extends MVCPortlet {
 		themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		String resource = ParamUtil.getString(resourceRequest, "resource");
 		
-		PrintWriter out=resourceResponse.getWriter();
+		
+		
+		
+		
 		//logger.info(resource);
 		String resourceId = resourceRequest.getResourceID();
 		
 		
-		/*
-		if (Validator.equals(resourceId, SuburConstant.RESOURCE_ITEM_AUTHOR_LIST))
+		
+		if (Validator.equals(resourceId,SuburConstant.RESOURCE_SERVE_FILE))
 		{
-			out.print(itemAuthorList(resourceRequest,resourceResponse));
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(resourceRequest);
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(resourceResponse);
+			GetFileActionHelper fileAction = new GetFileActionHelper();
+			logger.info("inside");
+			try 
+			{
+				
+				fileAction.processRequest(request,response);
+				return;
+				
+			}catch (Exception e)
+			{
+				
+			}
+			//getFile(long fileEntryId,name,version);
 		}
-		*/
+		
 		
 		if (Validator.equals(resourceId,SuburConstant.RESOURCE_UPLOAD_FILE))
 		{
+			PrintWriter out=resourceResponse.getWriter();
 			JSONObject jSubject = JSONFactoryUtil.createJSONObject();
 			try {
 				long fileEntryId = uploadFile(resourceRequest,resourceResponse);
@@ -571,11 +598,13 @@ public class Subur extends MVCPortlet {
 	            }
 	        }
 	        fileEntries = new long[tempFileEntrys.size()];
-	        ServiceContext serviceContext = new ServiceContext();
+	        ServiceContext serviceContext = ServiceContextFactory.getInstance(actionRequest);
+	        		
         	
         	serviceContext.setAddGuestPermissions(true);
         	serviceContext.setAddGroupPermissions(true);
-        	
+        	long fileEntryTypeId = DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL;
+        	serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
         	
         	//serviceContext.setGuestPermissions(guestPermissions);
 	        for (int i = 0; i < tempFileEntrys.size(); i++)  //(FileEntry tmpFileEntry : tempFileEntrys)
@@ -586,12 +615,17 @@ public class Subur extends MVCPortlet {
 
 	        	
 	        	String version = tmpFileEntry.getVersion();
-	        	String sourceFileName = file.getName();
+	        	String sourceFileName = file.getName() + "."+ tmpFileEntry.getExtension();
 	        	String title = tmpFileEntry.getTitle();
 	        	String mimeType = tmpFileEntry.getMimeType();
+	        	logger.info("mime="+mimeType);
+	        	String extension = tmpFileEntry.getExtension();
 	        	long repositoryId = themeDisplay.getScopeGroupId();
+	        	logger.info(sourceFileName + ":"+ mimeType + ":"+ extension);
 	        	
 	        	
+	    		
+
 	        	//InputStream is = DLFileEntryLocalServiceUtil.getFileAsStream(themeDisplay.getUserId(),fileEntry.getFileEntryId(), fileEntry.getVersion());
 	        	//DLFileEntryLocalServiceUtil.addFileEntry(userId, groupId, repositoryId, folderId, sourceFileName, mimeType, title, description, changeLog, fileEntryTypeId, fieldsMap, file, is, size, new ServiceContext());
 		       // FileEntry fileEntry = DLAppServiceUtil.addFileEntry(themeDisplay.getScopeGroupId(), folderId, sourceFileName, mimeType, title, description, changeLog, file,  serviceContext);

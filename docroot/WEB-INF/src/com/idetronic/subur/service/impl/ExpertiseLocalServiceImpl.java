@@ -111,7 +111,7 @@ public class ExpertiseLocalServiceImpl extends ExpertiseLocalServiceBaseImpl {
 		
 		validate(name);
 
-		expertise.setExpertiseName(name);
+		expertise.setName(name);
 		expertise.setIndexedName(StringUtil.toLowerCase(name));
 		expertisePersistence.update(expertise);
 		

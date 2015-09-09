@@ -12,7 +12,7 @@
 
 			
 			<liferay-portlet:renderURL varImpl="addAuthorURL">
-				<portlet:param name="jspPage" value="/html/admin/author/edit_author.jsp" />
+				<portlet:param name="mvcPath" value="/html/admin/author/edit_author.jsp" />
 				<portlet:param name="redirect" value="<%= viewAuthorsURL %>" />
 			</liferay-portlet:renderURL>
 
@@ -102,13 +102,13 @@
 				orderableProperty="lastPublishedDate"
 		/>
 		<liferay-portlet:renderURL varImpl="editAuthorURL">
-				<portlet:param name="jspPage" value="/html/admin/author/edit_author.jsp" />
+				<portlet:param name="mvcPath" value="/html/admin/author/edit_author.jsp" />
 				<portlet:param name="redirect" value="<%= viewAuthorsURL %>" />
 				<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>" />
 				
 		</liferay-portlet:renderURL>
 		<liferay-portlet:renderURL varImpl="viewAuthorURL">
-				<portlet:param name="jspPage" value="/html/author/view_author.jsp" />
+				<portlet:param name="mvcPath" value="/html/author/view_author.jsp" />
 				<portlet:param name="redirect" value="<%= viewAuthorsURL %>" />
 				<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>" />
 				

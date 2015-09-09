@@ -71,12 +71,12 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
-			{ "expertiseName", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
 			{ "indexedName", Types.VARCHAR },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "authorCount", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subur_Expertise (expertiseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,expertiseName VARCHAR(75) null,indexedName VARCHAR(75) null,modifiedDate DATE null,authorCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Subur_Expertise (expertiseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,name VARCHAR(75) null,indexedName VARCHAR(75) null,modifiedDate DATE null,authorCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Subur_Expertise";
 	public static final String ORDER_BY_JPQL = " ORDER BY expertise.expertiseId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subur_Expertise.expertiseId ASC";
@@ -114,7 +114,7 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
-		model.setExpertiseName(soapModel.getExpertiseName());
+		model.setName(soapModel.getName());
 		model.setIndexedName(soapModel.getIndexedName());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setAuthorCount(soapModel.getAuthorCount());
@@ -187,7 +187,7 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("expertiseName", getExpertiseName());
+		attributes.put("name", getName());
 		attributes.put("indexedName", getIndexedName());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("authorCount", getAuthorCount());
@@ -227,10 +227,10 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 			setCreateDate(createDate);
 		}
 
-		String expertiseName = (String)attributes.get("expertiseName");
+		String name = (String)attributes.get("name");
 
-		if (expertiseName != null) {
-			setExpertiseName(expertiseName);
+		if (name != null) {
+			setName(name);
 		}
 
 		String indexedName = (String)attributes.get("indexedName");
@@ -331,18 +331,18 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 
 	@JSON
 	@Override
-	public String getExpertiseName() {
-		if (_expertiseName == null) {
+	public String getName() {
+		if (_name == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _expertiseName;
+			return _name;
 		}
 	}
 
 	@Override
-	public void setExpertiseName(String expertiseName) {
-		_expertiseName = expertiseName;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	@JSON
@@ -429,7 +429,7 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 		expertiseImpl.setCompanyId(getCompanyId());
 		expertiseImpl.setUserId(getUserId());
 		expertiseImpl.setCreateDate(getCreateDate());
-		expertiseImpl.setExpertiseName(getExpertiseName());
+		expertiseImpl.setName(getName());
 		expertiseImpl.setIndexedName(getIndexedName());
 		expertiseImpl.setModifiedDate(getModifiedDate());
 		expertiseImpl.setAuthorCount(getAuthorCount());
@@ -515,12 +515,12 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 			expertiseCacheModel.createDate = Long.MIN_VALUE;
 		}
 
-		expertiseCacheModel.expertiseName = getExpertiseName();
+		expertiseCacheModel.name = getName();
 
-		String expertiseName = expertiseCacheModel.expertiseName;
+		String name = expertiseCacheModel.name;
 
-		if ((expertiseName != null) && (expertiseName.length() == 0)) {
-			expertiseCacheModel.expertiseName = null;
+		if ((name != null) && (name.length() == 0)) {
+			expertiseCacheModel.name = null;
 		}
 
 		expertiseCacheModel.indexedName = getIndexedName();
@@ -559,8 +559,8 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 		sb.append(getUserId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
-		sb.append(", expertiseName=");
-		sb.append(getExpertiseName());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", indexedName=");
 		sb.append(getIndexedName());
 		sb.append(", modifiedDate=");
@@ -601,8 +601,8 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>expertiseName</column-name><column-value><![CDATA[");
-		sb.append(getExpertiseName());
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>indexedName</column-name><column-value><![CDATA[");
@@ -634,7 +634,7 @@ public class ExpertiseModelImpl extends BaseModelImpl<Expertise>
 	private long _userId;
 	private String _userUuid;
 	private Date _createDate;
-	private String _expertiseName;
+	private String _name;
 	private String _indexedName;
 	private String _originalIndexedName;
 	private Date _modifiedDate;

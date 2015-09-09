@@ -23,6 +23,7 @@ public class SuburDisplayTerms extends DisplayTerms{
 	protected String authorFirstName;
 	protected String authorLastName;
 	protected long itemType;
+	
 	public SuburDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
@@ -32,7 +33,9 @@ public class SuburDisplayTerms extends DisplayTerms{
 		authorFirstName = ParamUtil.getString(portletRequest, AUTHOR_FIRST_NAME);
 		authorLastName = ParamUtil.getString(portletRequest, AUTHOR_LAST_NAME);
 		itemType = ParamUtil.getLong(portletRequest, ITEM_TYPE);
+		
 	}
+	
 	public long getItemType()
 	{
 		return itemType;

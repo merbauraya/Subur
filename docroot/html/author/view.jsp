@@ -3,7 +3,7 @@
 <%
 	
 	PortletURL portletURL = renderResponse.createRenderURL();
-	portletURL.setParameter("jspPage", "/html/admin/author/view.jsp");
+	portletURL.setParameter("mvcPath", "/html/admin/author/view.jsp");
 	pageContext.setAttribute("portletURL", portletURL);
 
 	String portletURLString = portletURL.toString();
@@ -17,21 +17,17 @@
 	String andOperator = ParamUtil.getString(request,"andOperator");
 	boolean matchAll = Validator.equals(andOperator, "1");
 	
-	boolean showAdminAuthor = AuthorPermission.contains(permissionChecker, scopeGroupId, ActionKeys.UPDATE);
-	boolean showSearch = true;
 	
 	
-	/*
-	List<AssetVocabulary> authorVocabs = AssetVocabularyLocalServiceUtil.getGroupsVocabularies(new long[]{themeDisplay.getScopeGroupId()},
-			Author.class.getName());
+	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, delta, portletURL, null, null);
+
 	
-	_log.info("xx");
-	*/
+	
 	
 %>
 
 <portlet:renderURL var="viewAuthorsURL">
-	<portlet:param name="jspPage" value="/html/admin/author/view.jsp" />
+	<portlet:param name="mvcPath" value="/html/admin/author/view.jsp" />
 </portlet:renderURL>
 
 <%
@@ -46,41 +42,20 @@
 	*/	
 
 %>
-<c:if test="<%= showAdminAuthor%>">
-	<aui:nav-bar>
-		<c:if test="<%= showAdminAuthor %>">
-			<aui:nav>
-				
-				<portlet:renderURL var="addAuthorURL">
-					<portlet:param name="jspPage" value="/html/admin/author/edit_author.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-					 
-				</portlet:renderURL>
-				<aui:nav-item href="<%= addAuthorURL %>" label="add-subur-author" name="addItemButton" />
-				
-				
-				
-			</aui:nav>
-		</c:if>
-		
-			
-		
-		<c:if test="<%= showSearch %>">
-	        <aui:nav-bar-search cssClass="pull-right">
-				<liferay-ui:search-form
-					page="/html/author/author_search.jsp"
-					 
-					 servletContext="<%= this.getServletConfig().getServletContext() %>"
-				/>
-			</aui:nav-bar-search>
-		</c:if>
-    
-		
-	</aui:nav-bar>
+<liferay-portlet:renderURL varImpl="searchURL">
+        <portlet:param name="mvcPath" value="/html/search/author_search.jsp" />
+</liferay-portlet:renderURL>
+
+<aui:form action="<%=searchURL%>" name="fm" inlineLabel="<%= true %>">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<%@ include file="/html/author/toolbar.jsp" %>
+</aui:form>
 
 
-</c:if>
+<c:if test='<%= !paginationType.equals("none") && (searchContainer.getTotal() > searchContainer.getResults().size()) %>'>
+	
+	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= paginationType %>" />
+</c:if>	
 
 <c:choose>
 	<c:when test="<%=searched %>">

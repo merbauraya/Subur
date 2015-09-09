@@ -5,7 +5,7 @@
 		<arrayMapping xmlns:ns="urn:http.service.subur.idetronic.com" xmlns:cmp-ns="http://model.subur.idetronic.com" qname="ns:ArrayOf_tns2_ResearchInterestSoap" type="java:com.idetronic.subur.model.ResearchInterestSoap[]" innerType="cmp-ns:ResearchInterestSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.subur.idetronic.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.subur.idetronic.com" qname="ns:ResearchInterestSoap" type="java:com.idetronic.subur.model.ResearchInterestSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
-		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="urn:http.service.subur.idetronic.com" xmlns:tns2="http://model.subur.idetronic.com" name="getGroupExpertises" qname="operNS:getGroupExpertises" returnQName="getGroupExpertisesReturn" returnType="rtns:ArrayOf_tns2_ResearchInterestSoap" returnItemType="tns2:ResearchInterestSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="urn:http.service.subur.idetronic.com" xmlns:tns2="http://model.subur.idetronic.com" name="getGroupResearchInterests" qname="operNS:getGroupResearchInterests" returnQName="getGroupResearchInterestsReturn" returnType="rtns:ArrayOf_tns2_ResearchInterestSoap" returnItemType="tns2:ResearchInterestSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.subur.idetronic.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="urn:http.service.subur.idetronic.com" xmlns:tns2="http://model.subur.idetronic.com" name="getGroupResearchInterests" qname="operNS:getGroupResearchInterests" returnQName="getGroupResearchInterestsReturn" returnType="rtns:ArrayOf_tns2_ResearchInterestSoap" returnItemType="tns2:ResearchInterestSoap" soapAction="">
@@ -23,7 +23,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="getGroupExpertises getGroupResearchInterests search" />
+		<parameter name="allowedMethods" value="getGroupResearchInterests search" />
 		<parameter name="className" value="com.idetronic.subur.service.http.ResearchInterestServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.subur.idetronic.com,urn:http.service.subur.idetronic.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

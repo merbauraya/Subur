@@ -109,7 +109,7 @@ public class ResearchInterestLocalServiceImpl
 			
 			validate(name);
 
-			researchInterest.setResearchInterestName(name);
+			researchInterest.setName(name);
 			researchInterest.setIndexedName(StringUtil.toLowerCase(name));
 			researchInterestPersistence.update(researchInterest);
 			

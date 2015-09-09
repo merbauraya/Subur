@@ -43,7 +43,7 @@
 				orderableProperty="lastPublishedDate"
 		/>
         <liferay-portlet:renderURL varImpl="editItemTypeURL">
-				<portlet:param name="jspPage" value="/html/suburadmin/edit_itemtype.jsp" />
+				<portlet:param name="mvcPath" value="/html/suburadmin/edit_itemtype.jsp" />
 				<portlet:param name="redirect" value="<%=currentURL %>" />
 				<portlet:param name="itemTypeId" value="<%= String.valueOf(itemType.getItemTypeId()) %>" />
 				
@@ -62,7 +62,7 @@
 </liferay-ui:search-container>
 
 <portlet:renderURL var="newItemTypeURL">
-	<portlet:param name="jspPage" value="/html/suburadmin/edit_itemtype.jsp" />
+	<portlet:param name="mvcPath" value="/html/suburadmin/edit_itemtype.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="backURL" value="<%= currentURL %>" />
 				 

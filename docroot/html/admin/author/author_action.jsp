@@ -13,7 +13,7 @@
 <liferay-ui:icon-menu>
 	<portlet:renderURL var="editAuthorURL">
 		<portlet:param name="authorId" value="<%=String.valueOf(authorId) %>" />
-		<portlet:param name="jspPage" value="/html/admin/author/edit_author.jsp" />
+		<portlet:param name="mvcPath" value="/html/admin/author/edit_author.jsp" />
 	
 	</portlet:renderURL>
 	

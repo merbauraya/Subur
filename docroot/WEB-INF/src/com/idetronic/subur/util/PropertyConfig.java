@@ -6,7 +6,7 @@ import java.io.StringWriter;
 import java.util.Map;
 import java.util.Properties;
 
-import com.idetronic.subur.Subur;
+import com.idetronic.subur.portlet.Subur;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;

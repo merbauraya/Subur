@@ -4,11 +4,14 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>Subur</portlet-name>
-		<icon>/icon.png</icon>
+		<icon>/subur.png</icon>
+		
 		<configuration-action-class>
 			com.idetronic.subur.SuburConfigImpl
 		</configuration-action-class>
 		<indexer-class>com.idetronic.subur.search.SuburIndexer</indexer-class>
+		
+		
 		<scheduler-entry>
 	    	<scheduler-event-listener-class>com.idetronic.subur.Scheduler.StatsListener</scheduler-event-listener-class>
 	    	<trigger>
@@ -17,7 +20,9 @@
 	        	</cron>
 	    	</trigger>
 		</scheduler-entry>
-			
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>publications</friendly-url-mapping>
+		<friendly-url-routes>com/idetronic/subur/subur-friendly-url-routes.xml</friendly-url-routes>	
 		<asset-renderer-factory>com.idetronic.subur.asset.SuburItemAssetRendererFactory</asset-renderer-factory>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 

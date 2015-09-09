@@ -55,7 +55,7 @@ public class ResearchInterestWrapper implements ResearchInterest,
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("researchInterestName", getResearchInterestName());
+		attributes.put("name", getName());
 		attributes.put("indexedName", getIndexedName());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("authorCount", getAuthorCount());
@@ -95,11 +95,10 @@ public class ResearchInterestWrapper implements ResearchInterest,
 			setCreateDate(createDate);
 		}
 
-		String researchInterestName = (String)attributes.get(
-				"researchInterestName");
+		String name = (String)attributes.get("name");
 
-		if (researchInterestName != null) {
-			setResearchInterestName(researchInterestName);
+		if (name != null) {
+			setName(name);
 		}
 
 		String indexedName = (String)attributes.get("indexedName");
@@ -264,23 +263,23 @@ public class ResearchInterestWrapper implements ResearchInterest,
 	}
 
 	/**
-	* Returns the research interest name of this research interest.
+	* Returns the name of this research interest.
 	*
-	* @return the research interest name of this research interest
+	* @return the name of this research interest
 	*/
 	@Override
-	public java.lang.String getResearchInterestName() {
-		return _researchInterest.getResearchInterestName();
+	public java.lang.String getName() {
+		return _researchInterest.getName();
 	}
 
 	/**
-	* Sets the research interest name of this research interest.
+	* Sets the name of this research interest.
 	*
-	* @param researchInterestName the research interest name of this research interest
+	* @param name the name of this research interest
 	*/
 	@Override
-	public void setResearchInterestName(java.lang.String researchInterestName) {
-		_researchInterest.setResearchInterestName(researchInterestName);
+	public void setName(java.lang.String name) {
+		_researchInterest.setName(name);
 	}
 
 	/**

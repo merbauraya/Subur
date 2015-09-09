@@ -133,6 +133,7 @@ public class SuburConstant {
 	public static String RESOURCE_ITEM_AUTHOR_LIST="itemAuthorList";
 	public static String RESOURCE_SERVE_FILE="serveFile";
 	
+	
 	/* view mode */
 	public static String VIEW_LIST = "view-title-list";
 	public static String VIEW_TABLE = "view-table-list";

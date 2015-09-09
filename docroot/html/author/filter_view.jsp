@@ -2,10 +2,11 @@
 <%
 	
 	PortletURL portletURL = renderResponse.createRenderURL();
-	portletURL.setParameter("jspPage", "/html/author/filter_view.jsp");
+	portletURL.setParameter("mvcPath", "/html/author/filter_view.jsp");
+	portletURL.setParameter("search", "true");
 	pageContext.setAttribute("portletURL", portletURL);
 	String portletURLString = portletURL.toString();
-	int delta = ParamUtil.getInteger(request, "delta",10);
+	
 	
 	String filterBy = ParamUtil.getString(request,"filterBy");
 	long filterKey = ParamUtil.getLong(request, "filterKey");
@@ -37,7 +38,7 @@
 			
 			%>
 					<aui:option value="<%=expertise.getExpertiseId() %>">
-						<%=expertise.getExpertiseName() %>
+						<%=expertise.getName() %>
 					</aui:option>
 			
 			<%
@@ -54,7 +55,7 @@
 
 				%>
 					<aui:option value="<%=researchInterest.getResearchInterestId() %>">
-						<%=researchInterest.getResearchInterestName() %>
+						<%=researchInterest.getName() %>
 					</aui:option>
 				
 				<%
@@ -99,7 +100,7 @@
                 keyProperty="authorId" modelVar="author" escapedModel="<%=true%>">
                 
 				<liferay-portlet:renderURL varImpl="viewAuthorURL">
-					<portlet:param name="jspPage" value="/html/author/view_author.jsp" />
+					<portlet:param name="mvcPath" value="/html/author/view_author.jsp" />
 				
 					<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>" />
 				
@@ -124,7 +125,7 @@
                 		for (int i = 0; i < researchInterests.size(); i ++)
                 		{
                 			ResearchInterest researchInterest = researchInterests.get(i);
-                			String name=researchInterest.getResearchInterestName();
+                			String name=researchInterest.getName();
                 			if (i+1 < researchInterests.size())
                 			{
                 				name = name + StringPool.SEMICOLON;
@@ -154,7 +155,7 @@
 				orderableProperty="lastPublishedDate"
 		/>
         <liferay-portlet:renderURL varImpl="editAuthorURL">
-				<portlet:param name="jspPage" value="/html/admin/author/edit_author.jsp" />
+				<portlet:param name="mvcPath" value="/html/admin/author/edit_author.jsp" />
 				
 				<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>" />
 				
@@ -176,6 +177,6 @@
 
 
 <portlet:renderURL var="viewAuthorsURL">
-	<portlet:param name="jspPage" value="/html/admin/author/view.jsp" />
+	<portlet:param name="mvcPath" value="/html/admin/author/view.jsp" />
 </portlet:renderURL>
 

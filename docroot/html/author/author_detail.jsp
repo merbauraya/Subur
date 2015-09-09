@@ -9,7 +9,7 @@
 		<h2><%= author.getDisplayName()%></h2>
 		<c:if test="<%=canUpdate %>">
 			<portlet:renderURL var="editAuthorURL">
-					<portlet:param name="jspPage" value="/html/admin/author/edit_author.jsp" />
+					<portlet:param name="mvcPath" value="/html/admin/author/edit_author.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>"/>
@@ -24,12 +24,12 @@
 		
 		<div class="author-bio">
 			<div class="author-title">
-				<p><span class="title">Title : </span>
+				<p><span class="author-title">Title : </span>
 				<%=author.getTitle() %>
 				</p>
 			</div>
 			<div class="author-contrib">
-				<p><span class="title">Published Item : </span>
+				<p><span class="author-title">Published Item : </span>
 				<%=author.getItemCount() %>
 				</p>
 			

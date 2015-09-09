@@ -16,8 +16,8 @@ public class ExpertiseNameComparator implements Comparator<Expertise> {
 
 	@Override
 	public int compare(Expertise expertise1, Expertise expertise2) {
-		String name1 = expertise1.getExpertiseName();//  assetTag1.getName();
-		String name2 = expertise2.getExpertiseName();
+		String name1 = expertise1.getName();//  assetTag1.getName();
+		String name2 = expertise2.getName();
 
 		int value = 0;
 

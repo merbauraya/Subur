@@ -79,7 +79,7 @@ public class ExpertiseClp extends BaseModelImpl<Expertise> implements Expertise 
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("expertiseName", getExpertiseName());
+		attributes.put("name", getName());
 		attributes.put("indexedName", getIndexedName());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("authorCount", getAuthorCount());
@@ -119,10 +119,10 @@ public class ExpertiseClp extends BaseModelImpl<Expertise> implements Expertise 
 			setCreateDate(createDate);
 		}
 
-		String expertiseName = (String)attributes.get("expertiseName");
+		String name = (String)attributes.get("name");
 
-		if (expertiseName != null) {
-			setExpertiseName(expertiseName);
+		if (name != null) {
+			setName(name);
 		}
 
 		String indexedName = (String)attributes.get("indexedName");
@@ -270,21 +270,21 @@ public class ExpertiseClp extends BaseModelImpl<Expertise> implements Expertise 
 	}
 
 	@Override
-	public String getExpertiseName() {
-		return _expertiseName;
+	public String getName() {
+		return _name;
 	}
 
 	@Override
-	public void setExpertiseName(String expertiseName) {
-		_expertiseName = expertiseName;
+	public void setName(String name) {
+		_name = name;
 
 		if (_expertiseRemoteModel != null) {
 			try {
 				Class<?> clazz = _expertiseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setExpertiseName", String.class);
+				Method method = clazz.getMethod("setName", String.class);
 
-				method.invoke(_expertiseRemoteModel, expertiseName);
+				method.invoke(_expertiseRemoteModel, name);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -435,7 +435,7 @@ public class ExpertiseClp extends BaseModelImpl<Expertise> implements Expertise 
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
 		clone.setCreateDate(getCreateDate());
-		clone.setExpertiseName(getExpertiseName());
+		clone.setName(getName());
 		clone.setIndexedName(getIndexedName());
 		clone.setModifiedDate(getModifiedDate());
 		clone.setAuthorCount(getAuthorCount());
@@ -503,8 +503,8 @@ public class ExpertiseClp extends BaseModelImpl<Expertise> implements Expertise 
 		sb.append(getUserId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
-		sb.append(", expertiseName=");
-		sb.append(getExpertiseName());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", indexedName=");
 		sb.append(getIndexedName());
 		sb.append(", modifiedDate=");
@@ -545,8 +545,8 @@ public class ExpertiseClp extends BaseModelImpl<Expertise> implements Expertise 
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>expertiseName</column-name><column-value><![CDATA[");
-		sb.append(getExpertiseName());
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>indexedName</column-name><column-value><![CDATA[");
@@ -572,7 +572,7 @@ public class ExpertiseClp extends BaseModelImpl<Expertise> implements Expertise 
 	private long _userId;
 	private String _userUuid;
 	private Date _createDate;
-	private String _expertiseName;
+	private String _name;
 	private String _indexedName;
 	private Date _modifiedDate;
 	private int _authorCount;

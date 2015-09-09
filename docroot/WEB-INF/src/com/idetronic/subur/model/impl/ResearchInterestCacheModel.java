@@ -50,8 +50,8 @@ public class ResearchInterestCacheModel implements CacheModel<ResearchInterest>,
 		sb.append(userId);
 		sb.append(", createDate=");
 		sb.append(createDate);
-		sb.append(", researchInterestName=");
-		sb.append(researchInterestName);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", indexedName=");
 		sb.append(indexedName);
 		sb.append(", modifiedDate=");
@@ -79,11 +79,11 @@ public class ResearchInterestCacheModel implements CacheModel<ResearchInterest>,
 			researchInterestImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (researchInterestName == null) {
-			researchInterestImpl.setResearchInterestName(StringPool.BLANK);
+		if (name == null) {
+			researchInterestImpl.setName(StringPool.BLANK);
 		}
 		else {
-			researchInterestImpl.setResearchInterestName(researchInterestName);
+			researchInterestImpl.setName(name);
 		}
 
 		if (indexedName == null) {
@@ -114,7 +114,7 @@ public class ResearchInterestCacheModel implements CacheModel<ResearchInterest>,
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
-		researchInterestName = objectInput.readUTF();
+		name = objectInput.readUTF();
 		indexedName = objectInput.readUTF();
 		modifiedDate = objectInput.readLong();
 		authorCount = objectInput.readInt();
@@ -129,11 +129,11 @@ public class ResearchInterestCacheModel implements CacheModel<ResearchInterest>,
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 
-		if (researchInterestName == null) {
+		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(researchInterestName);
+			objectOutput.writeUTF(name);
 		}
 
 		if (indexedName == null) {
@@ -152,7 +152,7 @@ public class ResearchInterestCacheModel implements CacheModel<ResearchInterest>,
 	public long companyId;
 	public long userId;
 	public long createDate;
-	public String researchInterestName;
+	public String name;
 	public String indexedName;
 	public long modifiedDate;
 	public int authorCount;

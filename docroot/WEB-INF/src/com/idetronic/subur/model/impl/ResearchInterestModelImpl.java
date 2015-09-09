@@ -71,12 +71,12 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
-			{ "researchInterestName", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
 			{ "indexedName", Types.VARCHAR },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "authorCount", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subur_ResearchInterest (researchInterestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,researchInterestName VARCHAR(75) null,indexedName VARCHAR(75) null,modifiedDate DATE null,authorCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Subur_ResearchInterest (researchInterestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,name VARCHAR(75) null,indexedName VARCHAR(75) null,modifiedDate DATE null,authorCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Subur_ResearchInterest";
 	public static final String ORDER_BY_JPQL = " ORDER BY researchInterest.researchInterestId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subur_ResearchInterest.researchInterestId ASC";
@@ -114,7 +114,7 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
-		model.setResearchInterestName(soapModel.getResearchInterestName());
+		model.setName(soapModel.getName());
 		model.setIndexedName(soapModel.getIndexedName());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setAuthorCount(soapModel.getAuthorCount());
@@ -188,7 +188,7 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("researchInterestName", getResearchInterestName());
+		attributes.put("name", getName());
 		attributes.put("indexedName", getIndexedName());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("authorCount", getAuthorCount());
@@ -228,11 +228,10 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 			setCreateDate(createDate);
 		}
 
-		String researchInterestName = (String)attributes.get(
-				"researchInterestName");
+		String name = (String)attributes.get("name");
 
-		if (researchInterestName != null) {
-			setResearchInterestName(researchInterestName);
+		if (name != null) {
+			setName(name);
 		}
 
 		String indexedName = (String)attributes.get("indexedName");
@@ -333,18 +332,18 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 
 	@JSON
 	@Override
-	public String getResearchInterestName() {
-		if (_researchInterestName == null) {
+	public String getName() {
+		if (_name == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _researchInterestName;
+			return _name;
 		}
 	}
 
 	@Override
-	public void setResearchInterestName(String researchInterestName) {
-		_researchInterestName = researchInterestName;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	@JSON
@@ -431,7 +430,7 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 		researchInterestImpl.setCompanyId(getCompanyId());
 		researchInterestImpl.setUserId(getUserId());
 		researchInterestImpl.setCreateDate(getCreateDate());
-		researchInterestImpl.setResearchInterestName(getResearchInterestName());
+		researchInterestImpl.setName(getName());
 		researchInterestImpl.setIndexedName(getIndexedName());
 		researchInterestImpl.setModifiedDate(getModifiedDate());
 		researchInterestImpl.setAuthorCount(getAuthorCount());
@@ -517,13 +516,12 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 			researchInterestCacheModel.createDate = Long.MIN_VALUE;
 		}
 
-		researchInterestCacheModel.researchInterestName = getResearchInterestName();
+		researchInterestCacheModel.name = getName();
 
-		String researchInterestName = researchInterestCacheModel.researchInterestName;
+		String name = researchInterestCacheModel.name;
 
-		if ((researchInterestName != null) &&
-				(researchInterestName.length() == 0)) {
-			researchInterestCacheModel.researchInterestName = null;
+		if ((name != null) && (name.length() == 0)) {
+			researchInterestCacheModel.name = null;
 		}
 
 		researchInterestCacheModel.indexedName = getIndexedName();
@@ -562,8 +560,8 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 		sb.append(getUserId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
-		sb.append(", researchInterestName=");
-		sb.append(getResearchInterestName());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", indexedName=");
 		sb.append(getIndexedName());
 		sb.append(", modifiedDate=");
@@ -604,8 +602,8 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>researchInterestName</column-name><column-value><![CDATA[");
-		sb.append(getResearchInterestName());
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>indexedName</column-name><column-value><![CDATA[");
@@ -637,7 +635,7 @@ public class ResearchInterestModelImpl extends BaseModelImpl<ResearchInterest>
 	private long _userId;
 	private String _userUuid;
 	private Date _createDate;
-	private String _researchInterestName;
+	private String _name;
 	private String _indexedName;
 	private String _originalIndexedName;
 	private Date _modifiedDate;

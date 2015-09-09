@@ -32,7 +32,7 @@
 		
 		
 			<li><a href="<%=byExpertiseURL %>">
-				<%=expertise.getExpertiseName() %>
+				<%=expertise.getName() %>
 			</a>
 			
 			
@@ -58,7 +58,7 @@
 			</portlet:actionURL>
 		
 			<li><a href="<%=byRIURL %>">
-			<%=researchInterest.getResearchInterestName()  %>
+			<%=researchInterest.getName()  %>
 				</a>
 				<span class="badge"><%= researchInterest.getAuthorCount() %></span>
 			</li>

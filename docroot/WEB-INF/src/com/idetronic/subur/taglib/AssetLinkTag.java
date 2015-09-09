@@ -9,7 +9,7 @@ import com.liferay.taglib.util.IncludeTag;
 public class AssetLinkTag extends IncludeTag {
 	private long assetEntryId;
 	private String nameSpace;
-	private PortletURL serveFileURL;
+	private ResourceURL serveFileURL;
 	final String _PAGE = "/html/taglib/subur/asset_links.jsp";
 	
 	public void setNameSpace(String nameSpace)
@@ -20,12 +20,12 @@ public class AssetLinkTag extends IncludeTag {
 	{
 		return nameSpace;
 	}
-	public void setServeFileURL(PortletURL serveFileURL)
+	public void setServeFileURL(ResourceURL serveFileURL)
 	{
 		this.serveFileURL = serveFileURL;
 		
 	}
-	public PortletURL getServeFileURL()
+	public ResourceURL getServeFileURL()
 	{
 		return serveFileURL;
 	}

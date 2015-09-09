@@ -12,8 +12,11 @@
 <%@ page import="com.liferay.portal.kernel.search.BooleanClauseOccur" %>
 <%@ page import="com.liferay.portal.kernel.search.BooleanClause" %>
 <%@ page import="com.liferay.portal.kernel.search.SearchException" %>
+<%@ page import="com.idetronic.subur.NoSuchAuthorException" %>
 <%
-	String authorSalutationString = GetterUtil.getString(portletPreferences.getValue("authorSalutation",StringPool.BLANK), StringPool.BLANK);
-	String authorSiteNameString = GetterUtil.getString(portletPreferences.getValue("authorSiteName", StringPool.BLANK))	;		
-	String authorCategoryXML = GetterUtil.getString(portletPreferences.getValue("authorCategory", StringPool.BLANK))	;
+	int delta = GetterUtil.getInteger(portletPreferences.getValue("delta", null), SearchContainer.DEFAULT_DELTA);
+	String paginationType = GetterUtil.getString(portletPreferences.getValue("paginationType", "none"));
+
+	boolean showAdminAuthor = AuthorPermission.contains(permissionChecker, scopeGroupId, ActionKeys.UPDATE);
+	boolean showSearch = true;
 %>

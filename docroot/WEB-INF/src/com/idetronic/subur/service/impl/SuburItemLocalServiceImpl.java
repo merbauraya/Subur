@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -135,8 +136,7 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 	public SuburItem updateSuburItem(SuburItem suburItem,long userId,
 			long[] itemTypeIds, long[] authorIds, ServiceContext serviceContext) throws PortalException,SystemException 
 	{
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-                SuburItem.class);
+		
 		long groupId = serviceContext.getScopeGroupId();
 		
 		if (Validator.isNull(suburItem.getPublishedDate()) && suburItem.getStatus() == SuburConstant.STATUS_PUBLISHED_ITEM)
@@ -151,7 +151,7 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		Date publishedDate = suburItem.getPublishedDate();
 		suburItem.getMetadataValue();
 		
-		indexer.reindex(suburItem);
+		itemDescription = suburItem.getTitle();
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
                 groupId, suburItem.getCreateDate(),
                 suburItem.getModifiedDate(), SuburItem.class.getName(),
@@ -176,6 +176,12 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		
 		
 		ItemItemTypeLocalServiceUtil.updateItemItemType(suburItem.getItemId(),itemTypeIds);
+		
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+                SuburItem.class);
+
+		indexer.reindex(suburItem);
+		
 		return suburItemPersistence.update(suburItem);
 		
 	}
@@ -278,7 +284,10 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		assetEntryLocalService.updateEntry(
 				SuburItem.class.getName(), suburItem.getItemId(), null,
 				false);
-		
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+                SuburItem.class);
+
+		indexer.reindex(suburItem);
 		return suburItemPersistence.update(suburItem);
 	}
 	

@@ -347,7 +347,7 @@ String[] assetTagNames = StringUtil.split(assetTagName);
 		
 		
 		Object expertise =  getExpertiseMethod.invoke(expertiseService,expertise_Id);
-		String expertiseName = (String)expertise.getClass().getMethod("getExpertiseName", null).invoke(expertise);
+		String expertiseName = (String)expertise.getClass().getMethod("getName", null).invoke(expertise);
 		expertiseTitle.append(expertiseName).append(StringPool.SPACE);
 		PortletURL filterExpertiseURL = portletURL;
 		filterExpertiseURL.setParameter("expertiseId",StringUtil.merge(ArrayUtil.remove(

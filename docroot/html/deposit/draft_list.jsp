@@ -2,12 +2,12 @@
 <%
 	//List<Item> suburItems = ItemLocalServiceUtil.getDraftItems();	
 	PortletURL portletURL = renderResponse.createRenderURL();
-	portletURL.setParameter("jspPage", "/html/deposit/draft_list.jsp");
+	portletURL.setParameter("mvcPath", "/html/deposit/draft_list.jsp");
 	portletURL.setWindowState(WindowState.NORMAL);
 
 
 	PortletURL addItemURL = renderResponse.createRenderURL();
-	addItemURL.setParameter("jspPage", "/html/deposit/new.jsp");
+	addItemURL.setParameter("mvcPath", "/html/deposit/new.jsp");
 	addItemURL.setParameter(Constants.CMD, Constants.ADD);
 	String catMsg="";
 
@@ -16,7 +16,7 @@
 	deleteEntryURL.setParameter("redirectURL", portletURL.toString());
 	
 	PortletURL editEntryURL = renderResponse.createRenderURL();
-	editEntryURL.setParameter("jspPage", "/html/deposit.jsp");
+	editEntryURL.setParameter("mvcPath", "/html/deposit.jsp");
 	editEntryURL.setParameter(Constants.CMD, Constants.EDIT);
 	
 

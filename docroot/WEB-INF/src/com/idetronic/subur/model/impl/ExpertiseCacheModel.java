@@ -50,8 +50,8 @@ public class ExpertiseCacheModel implements CacheModel<Expertise>,
 		sb.append(userId);
 		sb.append(", createDate=");
 		sb.append(createDate);
-		sb.append(", expertiseName=");
-		sb.append(expertiseName);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", indexedName=");
 		sb.append(indexedName);
 		sb.append(", modifiedDate=");
@@ -79,11 +79,11 @@ public class ExpertiseCacheModel implements CacheModel<Expertise>,
 			expertiseImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (expertiseName == null) {
-			expertiseImpl.setExpertiseName(StringPool.BLANK);
+		if (name == null) {
+			expertiseImpl.setName(StringPool.BLANK);
 		}
 		else {
-			expertiseImpl.setExpertiseName(expertiseName);
+			expertiseImpl.setName(name);
 		}
 
 		if (indexedName == null) {
@@ -114,7 +114,7 @@ public class ExpertiseCacheModel implements CacheModel<Expertise>,
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
-		expertiseName = objectInput.readUTF();
+		name = objectInput.readUTF();
 		indexedName = objectInput.readUTF();
 		modifiedDate = objectInput.readLong();
 		authorCount = objectInput.readInt();
@@ -129,11 +129,11 @@ public class ExpertiseCacheModel implements CacheModel<Expertise>,
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 
-		if (expertiseName == null) {
+		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(expertiseName);
+			objectOutput.writeUTF(name);
 		}
 
 		if (indexedName == null) {
@@ -152,7 +152,7 @@ public class ExpertiseCacheModel implements CacheModel<Expertise>,
 	public long companyId;
 	public long userId;
 	public long createDate;
-	public String expertiseName;
+	public String name;
 	public String indexedName;
 	public long modifiedDate;
 	public int authorCount;

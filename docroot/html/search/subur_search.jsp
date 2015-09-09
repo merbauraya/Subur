@@ -92,7 +92,7 @@
 <%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("jspPage", SuburConstant.PAGE_SUBUR_SEARCH);
+	portletURL.setParameter("mvcPath", SuburConstant.PAGE_SUBUR_SEARCH);
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("keywords", keywords);
 	%>
@@ -234,8 +234,8 @@
         	{}
 			%>
 			<c:if test="<%= Validator.isNotNull(entry)%>">
-	        	<portlet:renderURL var="rowURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
-					<portlet:param name="jspPage" value="/html/renderer/item_full.jsp" />
+	        	<portlet:renderURL var="rowURL">
+					<portlet:param name="mvcPath" value="/html/renderer/item_full.jsp" />
 					<portlet:param name="itemId" value="<%= String.valueOf(itemId)%>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="urlTitle" value="<%= StringPool.BLANK %>" />

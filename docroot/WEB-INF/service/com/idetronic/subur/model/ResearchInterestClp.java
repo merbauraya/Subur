@@ -80,7 +80,7 @@ public class ResearchInterestClp extends BaseModelImpl<ResearchInterest>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("researchInterestName", getResearchInterestName());
+		attributes.put("name", getName());
 		attributes.put("indexedName", getIndexedName());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("authorCount", getAuthorCount());
@@ -120,11 +120,10 @@ public class ResearchInterestClp extends BaseModelImpl<ResearchInterest>
 			setCreateDate(createDate);
 		}
 
-		String researchInterestName = (String)attributes.get(
-				"researchInterestName");
+		String name = (String)attributes.get("name");
 
-		if (researchInterestName != null) {
-			setResearchInterestName(researchInterestName);
+		if (name != null) {
+			setName(name);
 		}
 
 		String indexedName = (String)attributes.get("indexedName");
@@ -273,22 +272,21 @@ public class ResearchInterestClp extends BaseModelImpl<ResearchInterest>
 	}
 
 	@Override
-	public String getResearchInterestName() {
-		return _researchInterestName;
+	public String getName() {
+		return _name;
 	}
 
 	@Override
-	public void setResearchInterestName(String researchInterestName) {
-		_researchInterestName = researchInterestName;
+	public void setName(String name) {
+		_name = name;
 
 		if (_researchInterestRemoteModel != null) {
 			try {
 				Class<?> clazz = _researchInterestRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setResearchInterestName",
-						String.class);
+				Method method = clazz.getMethod("setName", String.class);
 
-				method.invoke(_researchInterestRemoteModel, researchInterestName);
+				method.invoke(_researchInterestRemoteModel, name);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -441,7 +439,7 @@ public class ResearchInterestClp extends BaseModelImpl<ResearchInterest>
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
 		clone.setCreateDate(getCreateDate());
-		clone.setResearchInterestName(getResearchInterestName());
+		clone.setName(getName());
 		clone.setIndexedName(getIndexedName());
 		clone.setModifiedDate(getModifiedDate());
 		clone.setAuthorCount(getAuthorCount());
@@ -509,8 +507,8 @@ public class ResearchInterestClp extends BaseModelImpl<ResearchInterest>
 		sb.append(getUserId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
-		sb.append(", researchInterestName=");
-		sb.append(getResearchInterestName());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", indexedName=");
 		sb.append(getIndexedName());
 		sb.append(", modifiedDate=");
@@ -551,8 +549,8 @@ public class ResearchInterestClp extends BaseModelImpl<ResearchInterest>
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>researchInterestName</column-name><column-value><![CDATA[");
-		sb.append(getResearchInterestName());
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>indexedName</column-name><column-value><![CDATA[");
@@ -578,7 +576,7 @@ public class ResearchInterestClp extends BaseModelImpl<ResearchInterest>
 	private long _userId;
 	private String _userUuid;
 	private Date _createDate;
-	private String _researchInterestName;
+	private String _name;
 	private String _indexedName;
 	private Date _modifiedDate;
 	private int _authorCount;

@@ -146,19 +146,19 @@ public interface ResearchInterestModel extends BaseModel<ResearchInterest> {
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the research interest name of this research interest.
+	 * Returns the name of this research interest.
 	 *
-	 * @return the research interest name of this research interest
+	 * @return the name of this research interest
 	 */
 	@AutoEscape
-	public String getResearchInterestName();
+	public String getName();
 
 	/**
-	 * Sets the research interest name of this research interest.
+	 * Sets the name of this research interest.
 	 *
-	 * @param researchInterestName the research interest name of this research interest
+	 * @param name the name of this research interest
 	 */
-	public void setResearchInterestName(String researchInterestName);
+	public void setName(String name);
 
 	/**
 	 * Returns the indexed name of this research interest.

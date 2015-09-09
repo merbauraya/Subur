@@ -76,7 +76,7 @@ public class ExpertiseServiceImpl extends ExpertiseServiceBaseImpl {
 		name = StringUtil.lowerCase(name);		
 		List<Expertise> expertises = expertiseLocalService.findByGroupsName(groupIds, name, start, end, null);
 
-		return Autocomplete.listToJson(expertises, "expertiseName", "expertiseName");
+		return Autocomplete.listToJson(expertises, "name", "name");
 	}
 	
 	@Override

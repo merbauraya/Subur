@@ -6,6 +6,7 @@ import com.idetronic.subur.service.permission.SuburItemPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 
@@ -24,7 +25,13 @@ public class SuburItemAssetRendererFactory extends BaseAssetRendererFactory {
 
                 return new SuburItemAssetRenderer(suburItem);
         }
+        @Override
+        protected String getIconPath(ThemeDisplay themeDisplay) {
 
+                return themeDisplay.getURLPortal()
+                                + "/Subur-portlet/subur.png";
+
+        }
         @Override
         public String getClassName() {
                 return CLASS_NAME;

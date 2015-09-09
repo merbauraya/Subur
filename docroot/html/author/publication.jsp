@@ -27,7 +27,7 @@
 		>
 			<%
 			PortletURL viewItemURL = renderResponse.createRenderURL();
-			viewItemURL.setParameter("jspPage","/html/renderer/item_full.jsp");
+			viewItemURL.setParameter("mvcPath","/html/renderer/item_full.jsp");
 			viewItemURL.setParameter("itemId",String.valueOf(item.getItemId()));
 			
 			%>
@@ -46,7 +46,7 @@
 			</liferay-ui:search-container-column-text>
 			<%
 					PortletURL viewAuthorURL = renderResponse.createRenderURL();
-					viewAuthorURL.setParameter("jspPage", "/html/author/view_author.jsp");
+					viewAuthorURL.setParameter("mvcPath", "/html/author/view_author.jsp");
 				%>	
 			<liferay-ui:search-container-column-text
 				name="author">

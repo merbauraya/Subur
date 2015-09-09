@@ -38,7 +38,7 @@
 					<%	for (Expertise expertise : expertises) 
 						{	
 					%>
-							<li class="asset-entry"><%=expertise.getExpertiseName() %>
+							<li class="asset-entry"><%=expertise.getName() %>
 					<%
 					
 						}
@@ -65,7 +65,7 @@
 					<%	for (ResearchInterest ri : researchInterests) 
 						{	
 					%>
-							<li class="asset-entry"><%=ri.getResearchInterestName() %>
+							<li class="asset-entry"><%=ri.getName() %>
 					<%
 					
 						}

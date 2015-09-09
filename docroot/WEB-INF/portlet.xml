@@ -4,7 +4,7 @@
 	<portlet>
 		<portlet-name>Subur</portlet-name>
 		<display-name>Subur Repository</display-name>
-		<portlet-class>com.idetronic.subur.Subur</portlet-class>
+		<portlet-class>com.idetronic.subur.portlet.Subur</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/view.jsp</value>
@@ -54,7 +54,7 @@
 		<portlet-name>author-navigator</portlet-name>
 		<display-name>Subur Author Navigator</display-name>
 		<portlet-class>
-			com.idetronic.subur.AuthorNavigatorPortlet
+			com.idetronic.subur.portlet.AuthorNavigatorPortlet
 		</portlet-class>
 		<init-param>
 			<name>view-template</name>
@@ -96,7 +96,7 @@
 	<portlet>
 		<portlet-name>item-type</portlet-name>
 		<display-name>Subur Item Type Navigation</display-name>
-		<portlet-class>com.idetronic.subur.ItemTypeNavigationPortlet</portlet-class>
+		<portlet-class>com.idetronic.subur.portlet.ItemTypeNavigationPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/itemtype-navigation/view.jsp</value>
@@ -138,7 +138,7 @@
 		<portlet-name>1</portlet-name>
 		<display-name>Multi Categories Navigation</display-name>
 		<portlet-class>
-			com.idetronic.subur.CategoriesNavigationPortlet
+			com.idetronic.subur.portlet.CategoriesNavigationPortlet
 		</portlet-class>
 		<init-param>
 			<name>view-template</name>
@@ -181,7 +181,7 @@
 		<portlet-name>subur-statistic</portlet-name>
 		<display-name>Subur Statistic</display-name>
 		<portlet-class>
-			com.idetronic.subur.SuburStatisticPortlet
+			com.idetronic.subur.portlet.SuburStatisticPortlet
 		</portlet-class>
 		<init-param>
 			<name>view-template</name>
@@ -218,7 +218,7 @@
 	<portlet>
 		<portlet-name>Author</portlet-name>
 		<display-name>Author</display-name>
-		<portlet-class>com.idetronic.subur.AuthorPortlet</portlet-class>
+		<portlet-class>com.idetronic.subur.portlet.AuthorPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/author/view.jsp</value>

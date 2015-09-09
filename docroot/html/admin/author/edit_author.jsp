@@ -200,9 +200,9 @@
 	if (author!= null)
 	{
 		List<Expertise> curExpertises = AuthorLocalServiceUtil.getExpertises(authorId);
-		curTags = ListUtil.toString(curExpertises,"expertiseName");
+		curTags = ListUtil.toString(curExpertises,"name");
 		List<ResearchInterest> authorResearchInterests = AuthorLocalServiceUtil.getResearchInterests(authorId)	;
-		curResearchInterest = ListUtil.toString(authorResearchInterests,"researchInterestName");
+		curResearchInterest = ListUtil.toString(authorResearchInterests,"name");
 		
 	}
 	
@@ -211,8 +211,8 @@
 	String namespace = portletResponse.getNamespace();
 	String hiddenInput = "expertiseNames";
 	String hiddenInput2 = "researchInterestNames";
-	String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:id"));
-	String id2 = id+"researchInterest";
+	String id = "expertise";// GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:id"));
+	String id2 = "researchInterest";//id+"researchInterest";
 %>
 <liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="expertise-and-research-interest">
 
@@ -234,7 +234,7 @@
 
 </liferay-ui:panel>
 <aui:script use="expertise-tags-selector">
-	new Liferay.ExpertiseTagsSelector(
+	var expertiseSelector = new Liferay.ExpertiseTagsSelector(
 		{
 			allowSuggestions: <%= false %>,
 			contentBox: '#<%= namespace + id %>expertiseTagsSelector',
@@ -257,9 +257,11 @@
 			input: '#<%= id %>assetTagNames',
 			instanceVar: '<%= namespace + id %>',
 			tagType :'expertise',
+			NAME: 'expertiseTagSelector',
 			portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>
 		}
-	).render();
+	);
+	expertiseSelector.render();
 
 	<c:if test="<%= autoFocus %>">
 		Liferay.Util.focusFormField('#<%= id %>assetTagNames');
@@ -288,6 +290,7 @@
 				input: '#<%= id %>researchInterestTagNames',
 				instanceVar: '<%= namespace + id2 %>',
 				tagType :'researchInterest',
+				NAME: 'researchInterestTagSelector',
 				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>
 			}
 		);

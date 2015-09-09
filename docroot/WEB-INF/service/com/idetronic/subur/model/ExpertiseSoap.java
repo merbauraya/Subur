@@ -36,7 +36,7 @@ public class ExpertiseSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
-		soapModel.setExpertiseName(model.getExpertiseName());
+		soapModel.setName(model.getName());
 		soapModel.setIndexedName(model.getIndexedName());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAuthorCount(model.getAuthorCount());
@@ -132,12 +132,12 @@ public class ExpertiseSoap implements Serializable {
 		_createDate = createDate;
 	}
 
-	public String getExpertiseName() {
-		return _expertiseName;
+	public String getName() {
+		return _name;
 	}
 
-	public void setExpertiseName(String expertiseName) {
-		_expertiseName = expertiseName;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public String getIndexedName() {
@@ -169,7 +169,7 @@ public class ExpertiseSoap implements Serializable {
 	private long _companyId;
 	private long _userId;
 	private Date _createDate;
-	private String _expertiseName;
+	private String _name;
 	private String _indexedName;
 	private Date _modifiedDate;
 	private int _authorCount;

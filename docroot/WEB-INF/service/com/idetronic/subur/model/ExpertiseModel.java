@@ -146,19 +146,19 @@ public interface ExpertiseModel extends BaseModel<Expertise> {
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the expertise name of this expertise.
+	 * Returns the name of this expertise.
 	 *
-	 * @return the expertise name of this expertise
+	 * @return the name of this expertise
 	 */
 	@AutoEscape
-	public String getExpertiseName();
+	public String getName();
 
 	/**
-	 * Sets the expertise name of this expertise.
+	 * Sets the name of this expertise.
 	 *
-	 * @param expertiseName the expertise name of this expertise
+	 * @param name the name of this expertise
 	 */
-	public void setExpertiseName(String expertiseName);
+	public void setName(String name);
 
 	/**
 	 * Returns the indexed name of this expertise.

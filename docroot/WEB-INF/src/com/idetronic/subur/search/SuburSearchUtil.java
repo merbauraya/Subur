@@ -552,7 +552,7 @@ public class SuburSearchUtil {
 			qry = StringPool.BLANK;
 		
 		sb.append(qry);
-		logger.info(qry);
+		
 		return sb.toString();
 		
 		

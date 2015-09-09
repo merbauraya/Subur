@@ -64,36 +64,38 @@ public class AuthorIndexer extends BaseIndexer {
 	@Override
 	protected Document doGetDocument(Object arg0) throws Exception {
 		Author item = (Author)arg0;
-		_log.info("dogetDocument");
+		
          Document document = getBaseModelDocument(PORTLET_ID, item);
          Date createDate = item.getCreateDate();
          Calendar cal = Calendar.getInstance();
          cal.setTime(createDate);
        
          document.addDate(Field.MODIFIED_DATE, item.getModifiedDate());
-         //document.addText(Field.CONTENT, item.getItemAbstract());
-         document.addText(AuthorDisplayTerms.FIRSTNAME, item.getFirstName());
-         document.addText(AuthorDisplayTerms.LASTNAME, item.getLastName());
-         document.addKeyword(Field.GROUP_ID, getSiteGroupId(item.getGroupId()));
-         document.addKeyword(Field.SCOPE_GROUP_ID, item.getGroupId());
+         document.addText(SuburField.TITLE, item.getDisplayName());
+         document.addText(SuburField.AUTHOR_FIRST_NAME, item.getFirstName());
+         document.addText(SuburField.AUTHOR_LAST_NAME, item.getLastName());
+         document.addKeyword(SuburField.GROUP_ID, getSiteGroupId(item.getGroupId()));
+         document.addKeyword(SuburField.SCOPE_GROUP_ID, item.getGroupId());
         
          //expertise 
          List<Expertise> expertises = AuthorLocalServiceUtil.getExpertises(item.getAuthorId());
          String[] expertiseIds = new String[expertises.size()];
          String[] expertiseNames = new String[expertises.size()];
          
-         _log.info("exp");
+         
          for (int i = 0; i < expertises.size(); i++)
          {
         	 expertiseIds[i] = String.valueOf(expertises.get(i).getExpertiseId());
-        	 expertiseNames[i] = String.valueOf(expertises.get(i).getExpertiseName());
+        	 expertiseNames[i] = String.valueOf(expertises.get(i).getName());
          }
-         Field expertiseIdField = new Field(AuthorDisplayTerms.EXPERTISE_ID, expertiseIds );
-         Field expertiseNameField = new Field(AuthorDisplayTerms.EXPERTISE_NAME, expertiseNames );
+         Field expertiseIdField = new Field(SuburField.EXPERTISE_IDS, expertiseIds );
+         Field expertiseNameField = new Field(SuburField.EXPERTISE_NAMES, expertiseNames );
+         expertiseNameField.setTokenized(true);
+         
          document.add(expertiseIdField);
          document.add(expertiseNameField);
          
-         _log.info("ri");
+         
          //research interest
          List<ResearchInterest> researchInterests = AuthorLocalServiceUtil.getResearchInterests(item.getAuthorId());
          String[] researchInterestIds = new String[researchInterests.size()];
@@ -102,17 +104,17 @@ public class AuthorIndexer extends BaseIndexer {
          for (int i = 0; i < researchInterests.size(); i++)
          {
         	 researchInterestIds[i] = String.valueOf(researchInterests.get(i).getResearchInterestId());
-        	 researchInterestNames[i] = researchInterests.get(i).getResearchInterestName();
+        	 researchInterestNames[i] = researchInterests.get(i).getName();
          }
-         _log.info(researchInterests.size());
          
-         Field researchInterestIdField = new Field(AuthorDisplayTerms.RESEARCH_INTEREST_ID,researchInterestIds);
-         Field researchInterestNameField = new Field(AuthorDisplayTerms.RESEARCH_INTEREST_NAME,researchInterestNames);
          
+         Field researchInterestIdField = new Field(SuburField.RESEARCH_INTEREST_IDS,researchInterestIds);
+         Field researchInterestNameField = new Field(SuburField.RESEARCH_INTEREST_NAMES,researchInterestNames);
+         researchInterestNameField.setTokenized(true);
          document.add(researchInterestIdField);
          document.add(researchInterestNameField);
          
-         //category
+         //
         
          
         

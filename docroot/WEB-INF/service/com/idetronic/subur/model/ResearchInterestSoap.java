@@ -36,7 +36,7 @@ public class ResearchInterestSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
-		soapModel.setResearchInterestName(model.getResearchInterestName());
+		soapModel.setName(model.getName());
 		soapModel.setIndexedName(model.getIndexedName());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAuthorCount(model.getAuthorCount());
@@ -134,12 +134,12 @@ public class ResearchInterestSoap implements Serializable {
 		_createDate = createDate;
 	}
 
-	public String getResearchInterestName() {
-		return _researchInterestName;
+	public String getName() {
+		return _name;
 	}
 
-	public void setResearchInterestName(String researchInterestName) {
-		_researchInterestName = researchInterestName;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public String getIndexedName() {
@@ -171,7 +171,7 @@ public class ResearchInterestSoap implements Serializable {
 	private long _companyId;
 	private long _userId;
 	private Date _createDate;
-	private String _researchInterestName;
+	private String _name;
 	private String _indexedName;
 	private Date _modifiedDate;
 	private int _authorCount;

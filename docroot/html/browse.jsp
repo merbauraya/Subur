@@ -118,7 +118,7 @@
 
 //List<Item> suburItems = ItemLocalServiceUtil.getDraftItems();	
 	PortletURL portletURL = renderResponse.createRenderURL();
-	portletURL.setParameter("jspPage", "/html/view_subject.jsp");
+	portletURL.setParameter("mvcPath", "/html/view_subject.jsp");
 	portletURL.setParameter("subjectId", String.valueOf(subjectId));
 	portletURL.setWindowState(WindowState.NORMAL);
 	
@@ -127,7 +127,7 @@
 	deleteEntryURL.setParameter("redirectURL", portletURL.toString());
 	
 	PortletURL editEntryURL = renderResponse.createRenderURL();
-	editEntryURL.setParameter("jspPage", "/html/deposit.jsp");
+	editEntryURL.setParameter("mvcPath", "/html/deposit.jsp");
 	editEntryURL.setParameter(Constants.CMD, Constants.EDIT);
 	Subject subject=null;
 	ItemType itemType=null;
@@ -146,7 +146,7 @@
 	<c:if test="<%=!Validator.equals(subjectId, 0) %>">
 		<portlet:renderURL var="browseSubjectURL">
 			<portlet:param name="subjectId" value="<%=String.valueOf(subjectId) %>" />
-			<portlet:param name="jspPage" value="/html/browse.jsp" />
+			<portlet:param name="mvcPath" value="/html/browse.jsp" />
 			
 		</portlet:renderURL>
 		<li>
@@ -157,7 +157,7 @@
 	<c:if test="<%=!Validator.equals(itemTypeId, 0) %>">
 		<portlet:renderURL var="browseItemTypeURL">
 			<portlet:param name="itemTypeId" value="<%=String.valueOf(itemType.getItemTypeId()) %>" />
-			<portlet:param name="jspPage" value="/html/browse.jsp" />
+			<portlet:param name="mvcPath" value="/html/browse.jsp" />
 			
 		</portlet:renderURL>
 		<li>
@@ -167,7 +167,7 @@
 	<c:if test="<%=!Validator.isBlank(year) %>">
 		<portlet:renderURL var="browseYearURL">
 			<portlet:param name="year" value="<%=year %>" />
-			<portlet:param name="jspPage" value="/html/browse.jsp" />
+			<portlet:param name="mvcPath" value="/html/browse.jsp" />
 			
 		</portlet:renderURL>
 		<li>
@@ -258,7 +258,7 @@
 						break;
 			
 				PortletURL browseURL = renderResponse.createRenderURL();
-				browseURL.setParameter("jspPage", "/html/browse.jsp");
+				browseURL.setParameter("mvcPath", "/html/browse.jsp");
 				browseURL.setParameter("subjectId", String.valueOf(subjectId));
 				browseURL.setParameter("itemTypeId", String.valueOf(_itemType.getItemTypeId()));
 				browseURL.setParameter("year", year);
@@ -288,7 +288,7 @@
 				String authorLabel = authorTerm.getTerm() + " ("+ authorTerm.getFrequency() + ")";
 
 				PortletURL browseURL = renderResponse.createRenderURL();
-				browseURL.setParameter("jspPage", "/html/browse.jsp");
+				browseURL.setParameter("mvcPath", "/html/browse.jsp");
 				browseURL.setParameter("subjectId", String.valueOf(subjectId));
 				browseURL.setParameter("itemTypeId", String.valueOf(itemTypeId));
 				browseURL.setParameter("author", authorTerm.getTerm());
@@ -310,7 +310,7 @@
 				
 				String authorLabel = yearTerm.getTerm() + " ("+ yearTerm.getFrequency() + ")";
 				PortletURL browseURL = renderResponse.createRenderURL();
-				browseURL.setParameter("jspPage", "/html/browse.jsp");
+				browseURL.setParameter("mvcPath", "/html/browse.jsp");
 				browseURL.setParameter("subjectId", String.valueOf(subjectId));
 				browseURL.setParameter("itemTypeId", String.valueOf(itemTypeId));
 				browseURL.setParameter("author", author);

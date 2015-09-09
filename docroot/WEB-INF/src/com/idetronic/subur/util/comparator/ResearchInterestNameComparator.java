@@ -14,8 +14,8 @@ public class ResearchInterestNameComparator {
 
 	
 	public int compare(ResearchInterest ri1, ResearchInterest ri2) {
-		String name1 = ri1.getResearchInterestName();//  assetTag1.getName();
-		String name2 = ri1.getResearchInterestName();
+		String name1 = ri1.getName();//  assetTag1.getName();
+		String name2 = ri1.getName();
 
 		int value = 0;
 

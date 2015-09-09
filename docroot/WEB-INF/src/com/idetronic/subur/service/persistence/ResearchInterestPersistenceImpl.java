@@ -1176,7 +1176,7 @@ public class ResearchInterestPersistenceImpl extends BasePersistenceImpl<Researc
 		researchInterestImpl.setCompanyId(researchInterest.getCompanyId());
 		researchInterestImpl.setUserId(researchInterest.getUserId());
 		researchInterestImpl.setCreateDate(researchInterest.getCreateDate());
-		researchInterestImpl.setResearchInterestName(researchInterest.getResearchInterestName());
+		researchInterestImpl.setName(researchInterest.getName());
 		researchInterestImpl.setIndexedName(researchInterest.getIndexedName());
 		researchInterestImpl.setModifiedDate(researchInterest.getModifiedDate());
 		researchInterestImpl.setAuthorCount(researchInterest.getAuthorCount());

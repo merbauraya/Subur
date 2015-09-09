@@ -29,7 +29,11 @@
 <div class="item-detail">
 	<div class="item-header">
 		
-		<h1 class="item-title"><%= suburItem.getTitle() %></h1>
+		
+		
+		<h1 class="item-title"><%= suburItem.getTitle() %>
+			
+		</h1>
 	</div>
 	<c:if test="<%= SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.DELETE) || SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.PERMISSIONS) || SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.UPDATE) %>">
 		<div class="item-permission">
@@ -37,7 +41,7 @@
 				<c:if test="<%= SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.UPDATE) %>">
 					<li class="edit-entry">
 						<portlet:renderURL var="editEntryURL">
-							<portlet:param name="jspPage" value="<%= SuburConstant.PAGE_UPDATE_ITEM %>" />
+							<portlet:param name="mvcPath" value="<%= SuburConstant.PAGE_UPDATE_ITEM %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="backURL" value="<%= currentURL %>" />
 							<portlet:param name="itemId" value="<%= String.valueOf(suburItem.getItemId()) %>" />
@@ -126,7 +130,7 @@
 	<div class="item-author">
 		<%
 			PortletURL viewAuthorURL = renderResponse.createRenderURL();
-			viewAuthorURL.setParameter("jspPage", "/html/author/view_author.jsp");
+			viewAuthorURL.setParameter("mvcPath", "/html/author/view_author.jsp");
 		%>	
 		<subur:item-author-display 
 			itemId="<%=itemId %>" 
@@ -224,18 +228,23 @@
 		
 		
 		<%
-			PortletURL serveFileURL = renderResponse.createActionURL();
-			serveFileURL.setParameter("id", "serveFile");
-			serveFileURL.setParameter("itemId", String.valueOf(suburItem.getItemId()));
-			serveFileURL.setParameter("javax.portlet.action", "serveFile");
+			
 			String nameSpace = renderResponse.getNamespace();
+			
+			ResourceURL rURL = renderResponse.createResourceURL();
+			rURL.setResourceID(SuburConstant.RESOURCE_SERVE_FILE);
+			rURL.setParameter("itemId", String.valueOf(suburItem.getItemId()));
+			
+			
 		%>	
 		<subur:item-asset-links
 			assetEntryId="<%= assetEntry.getEntryId() %>"
-			serveFileURL="<%= serveFileURL %>"
+			serveFileURL="<%= rURL %>"
 			nameSpace="<%= nameSpace %>"
 							
 		/>
+		
+		
 						
 		
 	</div>

@@ -54,7 +54,7 @@ public class ExpertiseWrapper implements Expertise, ModelWrapper<Expertise> {
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("expertiseName", getExpertiseName());
+		attributes.put("name", getName());
 		attributes.put("indexedName", getIndexedName());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("authorCount", getAuthorCount());
@@ -94,10 +94,10 @@ public class ExpertiseWrapper implements Expertise, ModelWrapper<Expertise> {
 			setCreateDate(createDate);
 		}
 
-		String expertiseName = (String)attributes.get("expertiseName");
+		String name = (String)attributes.get("name");
 
-		if (expertiseName != null) {
-			setExpertiseName(expertiseName);
+		if (name != null) {
+			setName(name);
 		}
 
 		String indexedName = (String)attributes.get("indexedName");
@@ -262,23 +262,23 @@ public class ExpertiseWrapper implements Expertise, ModelWrapper<Expertise> {
 	}
 
 	/**
-	* Returns the expertise name of this expertise.
+	* Returns the name of this expertise.
 	*
-	* @return the expertise name of this expertise
+	* @return the name of this expertise
 	*/
 	@Override
-	public java.lang.String getExpertiseName() {
-		return _expertise.getExpertiseName();
+	public java.lang.String getName() {
+		return _expertise.getName();
 	}
 
 	/**
-	* Sets the expertise name of this expertise.
+	* Sets the name of this expertise.
 	*
-	* @param expertiseName the expertise name of this expertise
+	* @param name the name of this expertise
 	*/
 	@Override
-	public void setExpertiseName(java.lang.String expertiseName) {
-		_expertise.setExpertiseName(expertiseName);
+	public void setName(java.lang.String name) {
+		_expertise.setName(name);
 	}
 
 	/**

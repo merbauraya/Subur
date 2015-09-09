@@ -93,7 +93,7 @@
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="expertiseName" />
+			<basic name="name" />
 			<basic name="indexedName" />
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
@@ -144,7 +144,7 @@
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="researchInterestName" />
+			<basic name="name" />
 			<basic name="indexedName" />
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>

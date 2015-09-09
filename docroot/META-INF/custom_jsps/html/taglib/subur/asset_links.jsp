@@ -39,7 +39,7 @@ if (assetEntryId > 0) {
 				assetLinkEntry = assetLinkEntry.toEscapedModel();
 
 				String className = PortalUtil.getClassName(assetLinkEntry.getClassNameId());
-				_log.info("className="+className);
+				
 				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 				if (Validator.isNull(assetRendererFactory)) {
@@ -92,7 +92,7 @@ if (assetEntryId > 0) {
 					if (className.equalsIgnoreCase(DLFileEntry.class.getName()))
 					{
 						urlViewInContext = serveFileURL.toString();
-						urlViewInContext = HttpUtil.setParameter(urlViewInContext, nameSpace+"fileAssetId", String.valueOf(assetLinkEntry.getEntryId()));
+						urlViewInContext = HttpUtil.setParameter(urlViewInContext, nameSpace+"fileEntryId", String.valueOf(assetLinkEntry.getClassPK()));
 					}
 					
 			%>

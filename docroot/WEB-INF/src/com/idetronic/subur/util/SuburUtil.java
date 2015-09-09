@@ -1,6 +1,6 @@
 package com.idetronic.subur.util;
 
-import com.idetronic.subur.Subur;
+import com.idetronic.subur.portlet.Subur;
 import com.idetronic.subur.service.DivisionLocalServiceUtil;
 import com.idetronic.subur.service.MetadataValueLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;

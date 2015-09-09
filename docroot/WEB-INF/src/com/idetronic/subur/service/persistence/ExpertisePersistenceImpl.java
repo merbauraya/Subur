@@ -1156,7 +1156,7 @@ public class ExpertisePersistenceImpl extends BasePersistenceImpl<Expertise>
 		expertiseImpl.setCompanyId(expertise.getCompanyId());
 		expertiseImpl.setUserId(expertise.getUserId());
 		expertiseImpl.setCreateDate(expertise.getCreateDate());
-		expertiseImpl.setExpertiseName(expertise.getExpertiseName());
+		expertiseImpl.setName(expertise.getName());
 		expertiseImpl.setIndexedName(expertise.getIndexedName());
 		expertiseImpl.setModifiedDate(expertise.getModifiedDate());
 		expertiseImpl.setAuthorCount(expertise.getAuthorCount());

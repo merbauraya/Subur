@@ -74,7 +74,7 @@ public class ResearchInterestServiceImpl extends ResearchInterestServiceBaseImpl
 		name = StringUtil.lowerCase(name);		
 		List<ResearchInterest> researchInterests = researchInterestLocalService.findByGroupsName(groupIds, name, start, end, null);
 
-		return Autocomplete.listToJson(researchInterests, "researchInterestName", "researchInterestName");
+		return Autocomplete.listToJson(researchInterests, "name", "name");
 	}
 	
 	

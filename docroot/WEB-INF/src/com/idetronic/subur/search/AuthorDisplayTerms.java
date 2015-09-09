@@ -26,19 +26,32 @@ public class AuthorDisplayTerms  extends DisplayTerms{
 	protected boolean advanceSearch;
 	protected boolean matchAll;
 	protected int type;
+	protected String researchInterestName;
+	protected String expertiseName;
+	
 	
 	public AuthorDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
 		
-		firstName = ParamUtil.getString(portletRequest, FIRSTNAME);
-		lastName = ParamUtil.getString(portletRequest, LASTNAME);
+		firstName = ParamUtil.getString(portletRequest, SuburField.AUTHOR_FIRST_NAME);
+		lastName = ParamUtil.getString(portletRequest, SuburField.AUTHOR_LAST_NAME);
 		advanceSearch = ParamUtil.getBoolean(portletRequest, "advancedSearch");
 		String andOperator = ParamUtil.getString(portletRequest,"andOperator");
 		matchAll = Validator.equals(andOperator, "1");
-		
+		expertiseName = ParamUtil.getString(portletRequest, SuburField.EXPERTISE_NAMES);
+		researchInterestName = ParamUtil.getString(portletRequest, SuburField.RESEARCH_INTEREST_NAMES);
 		//lastPublishedDate = ParamUtil.getDate(portletRequest, LAST_PUBLISHED_DATE);//, dateFormat);//
 	}
+	public String getExpertiseName()
+	{
+		return expertiseName;
+	}
+	public String getResearchInterestName()
+	{
+		return researchInterestName;
+	}
+	
 	public boolean getAdvanceSearch()
 	{
 		return advanceSearch;
