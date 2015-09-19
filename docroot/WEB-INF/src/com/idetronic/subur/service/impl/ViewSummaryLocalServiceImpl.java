@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.idetronic.subur.model.DownloadSummary;
 import com.idetronic.subur.model.ItemItemType;
+import com.idetronic.subur.model.ResearchInterest;
 import com.idetronic.subur.model.StatViewCategory;
 import com.idetronic.subur.model.StatViewItemType;
 import com.idetronic.subur.model.StatViewPeriod;
@@ -168,6 +169,7 @@ public class ViewSummaryLocalServiceImpl extends ViewSummaryLocalServiceBaseImpl
 		viewTag.setPerMonth(month);
 		viewTag.setPerYear(year);
 		statViewTagPersistence.update(viewTag);
+		
 	}
 	private void addCategoryStat(int month, int year, long categoryId) throws SystemException
 	{

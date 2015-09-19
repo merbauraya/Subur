@@ -24,13 +24,20 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.idetronic.subur.NoSuchItemException;
 import com.idetronic.subur.helper.GetFileActionHelper;
 import com.idetronic.subur.model.SuburItem;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
+import com.idetronic.subur.service.SuburItemServiceUtil;
+import com.idetronic.subur.service.permission.AuthorPermission;
+import com.idetronic.subur.service.permission.SuburItemPermission;
+import com.idetronic.subur.service.permission.SuburPermission;
 import com.idetronic.subur.util.SuburConstant;
 import com.idetronic.subur.util.SuburFileUtil;
 import com.idetronic.subur.util.SuburFolderUtil;
 import com.idetronic.subur.util.SuburUtil;
+import com.idetronic.subur.util.WebKeys;
+import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -40,6 +47,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -54,7 +62,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -229,7 +239,7 @@ public class Subur extends MVCPortlet {
 		long itemId = ParamUtil.getLong(uploadRequest, "itemId");
 		
 		String itemTypeString = ParamUtil.getString(uploadRequest, "itemType");
-		logger.info(itemTypeString);
+		
 		long[] itemTypeIds = getLongArray(uploadRequest,"itemType");
 		String redirect = ParamUtil.getString(uploadRequest, "redirect");
 		File file = uploadRequest.getFile("itemFile");
@@ -274,8 +284,8 @@ public class Subur extends MVCPortlet {
 		
 		
 		//handle categories
-		long[] catIds = null;
-		logger.info(categoryIds);
+		long[] catIds = new long[]{};
+		
 		if (!categoryIds.isEmpty())
 		{
 			String[] catIdsArr = categoryIds.split(",");
@@ -288,8 +298,10 @@ public class Subur extends MVCPortlet {
 			}
 		}
 		//fail safe remove 0 from array if any
-		catIds = ArrayUtil.remove(catIds, 0L);		
-		
+		if (ArrayUtil.isNotEmpty(catIds))
+		{
+			catIds = ArrayUtil.remove(catIds, 0L);		
+		}
 		String tags = ParamUtil.getString(uploadRequest, "assetTagNames");
 		
 		String[] tagNamesArr = null;
@@ -459,13 +471,6 @@ public class Subur extends MVCPortlet {
 				
 			}
 		}
-		
-		
-		
-
-		
-		
-		
 		
 		
 	}
@@ -792,5 +797,106 @@ public class Subur extends MVCPortlet {
 
 		return StringUtil.split(GetterUtil.getString(value), 0L);
 	}
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchResourceException.class.getName()) ||
+				SessionErrors.contains(renderRequest, NoSuchItemException.class.getName()) ||
+				SessionErrors.contains(	renderRequest, PrincipalException.class.getName())) 
+		{
+			
+			logger.info("got error dispatch");
+			
+			include("/html/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+	
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException,IOException
+		
+	{
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		
+		SessionErrors.clear(renderRequest);
+		try 
+		{
+			
+			checkBeforeRender(renderRequest,renderResponse);
+			getSuburItem(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchResourceException ||
+				e instanceof PrincipalException ||
+				e instanceof NoSuchItemException) 
+			{
+				
+				SessionErrors.add(renderRequest, e.getClass());
+				SessionMessages.add(renderRequest, PortalUtil.getPortletId(renderRequest) + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+
+			}
+			else 
+			{
+				
+				throw new PortletException(e);
+				
+			}
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+	protected void getSuburItem(PortletRequest portletRequest) throws PrincipalException, 
+	PortalException, SystemException,NoSuchItemException
+	{
+		long suburItemId = ParamUtil.getLong(portletRequest, "itemId");
+
+		if (suburItemId <= 0) {
+			return;
+		}
+
+		SuburItem suburItem = SuburItemServiceUtil.getSuburItem(suburItemId);
+
+		portletRequest.setAttribute(WebKeys.SUBUR_ITEM, suburItem);
+	}
+	
+	protected void checkBeforeRender(RenderRequest renderRequest, RenderResponse renderResponse) throws PrincipalException
+	{
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		
+		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
+		
+		
+		if ((StringUtil.count(mvcPath,"new.jsp") > 0)||
+				(StringUtil.count(mvcPath, "deposit.jsp") > 0))
+		{
+			
+			if (!SuburPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.UPDATE))
+			{
+				
+				throw new PrincipalException();
+			}
+			
+		}
+				
+				
+	}
+	
+	protected boolean isSessionErrorException(Throwable cause) {
+		
+		if (
+			cause instanceof NoSuchResourceException ||
+			cause instanceof PrincipalException	) 
+		{
+			
+			return true;
+		}
+
+		return false;
+	}
+	
 	
 }

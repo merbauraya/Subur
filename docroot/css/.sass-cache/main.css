@@ -1,0 +1,40 @@
+.Subur-portlet {
+  /* hide tags suggestion button */ }
+  .Subur-portlet .item-header {
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 8px; }
+  .Subur-portlet .item-title {
+    font-size: 22px;
+    line-height: 27px;
+    margin: 0; }
+  .Subur-portlet .item-date {
+    background: url(@theme_image_path@/common/date.png) no-repeat 0 50%;
+    color: #999;
+    padding-left: 25px; }
+  .Subur-portlet .item-item-type > label {
+    font-weight: bold; }
+  .Subur-portlet .item-type-summary > a {
+    margin-right: 3px; }
+  .Subur-portlet .item-author {
+    background: url(@theme_image_path@/common/user_icon.png) no-repeat 0 50%;
+    color: #999;
+    padding-left: 25px; }
+  .Subur-portlet .item-detail div {
+    clear: both;
+    margin-bottom: 10px; }
+  .Subur-portlet ul {
+    margin: 0px 0px 5px 5px; }
+  .Subur-portlet li {
+    list-style-type: none; }
+  .Subur-portlet .small-input {
+    width: 100px; }
+  .Subur-portlet .fullwidth {
+    width: 90%; }
+  .Subur-portlet .taglib-asset-categories-summary:after {
+    content: "\A";
+    white-space: pre; }
+  .Subur-portlet button[title="Suggestions"] {
+    display: none; }
+  .Subur-portlet .taglib-search-toggle button[title="Add Tags"] {
+    display: none; }
+

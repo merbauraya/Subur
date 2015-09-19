@@ -44,6 +44,7 @@
 	<bean id="com.idetronic.subur.service.SuburConfigLocalService" class="com.idetronic.subur.service.impl.SuburConfigLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.SuburConfigPersistence" class="com.idetronic.subur.service.persistence.SuburConfigPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.SuburItemLocalService" class="com.idetronic.subur.service.impl.SuburItemLocalServiceImpl" />
+	<bean id="com.idetronic.subur.service.SuburItemService" class="com.idetronic.subur.service.impl.SuburItemServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.SuburItemPersistence" class="com.idetronic.subur.service.persistence.SuburItemPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.persistence.SuburItemFinder" class="com.idetronic.subur.service.persistence.SuburItemFinderImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.ViewSummaryLocalService" class="com.idetronic.subur.service.impl.ViewSummaryLocalServiceImpl" />

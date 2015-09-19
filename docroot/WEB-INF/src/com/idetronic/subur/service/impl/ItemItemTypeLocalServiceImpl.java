@@ -185,7 +185,7 @@ public class ItemItemTypeLocalServiceImpl
 	{
 		
 		List<ItemItemType> itemTypes = itemItemTypePersistence.findByItemId(itemId);
-		logger.info("id="+itemId +" size="+itemTypes.size());
+		
 		return itemTypes;
 	}
 }

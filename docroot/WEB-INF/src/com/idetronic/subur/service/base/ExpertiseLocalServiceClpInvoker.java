@@ -106,49 +106,49 @@ public class ExpertiseLocalServiceClpInvoker {
 				"com.idetronic.subur.model.Expertise"
 			};
 
-		_methodName126 = "getBeanIdentifier";
+		_methodName128 = "getBeanIdentifier";
 
-		_methodParameterTypes126 = new String[] {  };
+		_methodParameterTypes128 = new String[] {  };
 
-		_methodName127 = "setBeanIdentifier";
+		_methodName129 = "setBeanIdentifier";
 
-		_methodParameterTypes127 = new String[] { "java.lang.String" };
+		_methodParameterTypes129 = new String[] { "java.lang.String" };
 
-		_methodName132 = "checkExpertises";
+		_methodName134 = "checkExpertises";
 
-		_methodParameterTypes132 = new String[] {
+		_methodParameterTypes134 = new String[] {
 				"long", "com.liferay.portal.model.Group", "java.lang.String[][]"
 			};
 
-		_methodName133 = "addExpertise";
+		_methodName135 = "addExpertise";
 
-		_methodParameterTypes133 = new String[] {
+		_methodParameterTypes135 = new String[] {
 				"long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName134 = "getExpertise";
+		_methodName136 = "getExpertise";
 
-		_methodParameterTypes134 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes136 = new String[] { "long", "java.lang.String" };
 
-		_methodName135 = "findByGroupsName";
+		_methodName137 = "findByGroupsName";
 
-		_methodParameterTypes135 = new String[] {
+		_methodParameterTypes137 = new String[] {
 				"long[][]", "java.lang.String", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName137 = "incrementAuthorCount";
-
-		_methodParameterTypes137 = new String[] { "long" };
-
-		_methodName138 = "decrementAuthorCount";
-
-		_methodParameterTypes138 = new String[] { "long" };
-
-		_methodName139 = "getTop10";
+		_methodName139 = "incrementAuthorCount";
 
 		_methodParameterTypes139 = new String[] { "long" };
+
+		_methodName140 = "decrementAuthorCount";
+
+		_methodParameterTypes140 = new String[] { "long" };
+
+		_methodName141 = "getTop10";
+
+		_methodParameterTypes141 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -240,40 +240,40 @@ public class ExpertiseLocalServiceClpInvoker {
 			return ExpertiseLocalServiceUtil.updateExpertise((com.idetronic.subur.model.Expertise)arguments[0]);
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return ExpertiseLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			ExpertiseLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
 			return ExpertiseLocalServiceUtil.checkExpertises(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.model.Group)arguments[1],
 				(java.lang.String[])arguments[2]);
 		}
 
-		if (_methodName133.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			return ExpertiseLocalServiceUtil.addExpertise(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName134.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+		if (_methodName136.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
 			return ExpertiseLocalServiceUtil.getExpertise(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName135.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+		if (_methodName137.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
 			return ExpertiseLocalServiceUtil.findByGroupsName((long[])arguments[0],
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
@@ -281,18 +281,18 @@ public class ExpertiseLocalServiceClpInvoker {
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[4]);
 		}
 
-		if (_methodName137.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
+		if (_methodName139.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
 			return ExpertiseLocalServiceUtil.incrementAuthorCount(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName140.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
 			return ExpertiseLocalServiceUtil.decrementAuthorCount(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName141.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
 			return ExpertiseLocalServiceUtil.getTop10(((Long)arguments[0]).longValue());
 		}
 
@@ -331,22 +331,22 @@ public class ExpertiseLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
-	private String _methodName127;
-	private String[] _methodParameterTypes127;
-	private String _methodName132;
-	private String[] _methodParameterTypes132;
-	private String _methodName133;
-	private String[] _methodParameterTypes133;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
 	private String _methodName134;
 	private String[] _methodParameterTypes134;
 	private String _methodName135;
 	private String[] _methodParameterTypes135;
+	private String _methodName136;
+	private String[] _methodParameterTypes136;
 	private String _methodName137;
 	private String[] _methodParameterTypes137;
-	private String _methodName138;
-	private String[] _methodParameterTypes138;
 	private String _methodName139;
 	private String[] _methodParameterTypes139;
+	private String _methodName140;
+	private String[] _methodParameterTypes140;
+	private String _methodName141;
+	private String[] _methodParameterTypes141;
 }

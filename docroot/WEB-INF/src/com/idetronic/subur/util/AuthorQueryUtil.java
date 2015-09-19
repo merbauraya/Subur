@@ -137,8 +137,8 @@ public class AuthorQueryUtil {
 	}
 	
 	private final String ASSET_CATEGORY_IDS="assetCategoryIds";
-	private final String AUTHOR_EXPERTISE_IDS = " expertiseId";
-	private final String AUTHOR_RESEARCH_INTEREST_IDS = " researchInterestId";
+	private final String AUTHOR_EXPERTISE_IDS = " expertiseIds";
+	private final String AUTHOR_RESEARCH_INTEREST_IDS = " researchInterestIds";
 	
 	private static Log _log = LogFactoryUtil.getLog(AuthorQueryUtil.class);
 }

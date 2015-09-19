@@ -1,25 +1,28 @@
 <%@include file="/html/subur/init.jsp"%>
 <%@ page import="javax.portlet.ResourceURL" %>
 
+<liferay-ui:error exception="<%= NoSuchItemException.class %>" message="the-resource-could-not-be-found" />
+
+
+
+
 <%
 	long itemId = ParamUtil.getLong(request,"itemId");
-	//SuburItem suburItem = (SuburItem)request.getAttribute("suburItem");
-	SuburItem suburItem = SuburItemLocalServiceUtil.fetchSuburItem(itemId);
+	
+	SuburItem suburItem = (SuburItem)  request.getAttribute(WebKeys.SUBUR_ITEM);   //SuburItemServiceUtil.getSuburItem(itemId);//  SuburItemLocalServiceUtil.fetchSuburItem(itemId);
+
+%>
+<c:if test="<%= Validator.isNull(suburItem) %>">
+	<liferay-ui:error message="item-could-not-be-found" />
+
+</c:if>
+<%	
 	suburItem = suburItem.toEscapedModel();
 	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(SuburItem.class.getName(), itemId);
 	suburItem = suburItem.toEscapedModel();
 	Map<String,String> serieReportNoMap = suburItem.getSeriesReportNo();
 	Map<String,String> identifiers = suburItem.getIdentifiers();
-	/*
-	List<ItemFileEntry> itemFileEntries = ItemFileEntryLocalServiceUtil.getByItemId(suburItem.getItemId());
 	
-	List<DLFileEntry> fileEntries = new ArrayList<DLFileEntry>();
-	for (ItemFileEntry itemFileEntry: itemFileEntries)
-	{
-		DLFileEntry fileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(itemFileEntry.getFileEntryId());
-		fileEntries.add(fileEntry);
-	}
-	*/
 	
 	//view counter
 	SuburItemLocalServiceUtil.addViewStat(suburItem.getItemId());

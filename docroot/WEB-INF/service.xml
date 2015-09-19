@@ -4,7 +4,7 @@
 	<author>Mazlan Mat</author>
 	<namespace>Subur</namespace>
 
-	<entity name="SuburItem" local-service="true" remote-service="false" table="Subur_Item">
+	<entity name="SuburItem" local-service="true" remote-service="true" table="Subur_Item">
 
 		<!-- PK fields -->
 

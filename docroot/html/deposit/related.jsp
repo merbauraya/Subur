@@ -1,14 +1,13 @@
 <%@ include file="/html/subur/init.jsp" %>
 
-<portlet:actionURL  var="NAMEUrl" name="METHODJAVANAMEManageForm">
-</portlet:actionURL>
+
  <%
 	
  	SuburItem item = (SuburItem)request.getAttribute("suburItem");
  	long itemId = item.getItemId();
  	Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class.getName(), user.getUserId(), TicketConstants.TYPE_IMPERSONATE, null, null, new ServiceContext());
 	HttpServletRequest req = (HttpServletRequest)request;
- 	long folderId = SuburFolderUtil.getFolderId(req, themeDisplay);
+ 	//long folderId = SuburFolderUtil.getFolderId(req, themeDisplay);
  	
 %>
 <liferay-ui:panel defaultState="open" extended="<%= false %>" id="suburAssetLinksPanel" persistState="<%= true %>" title="select-related-assets">

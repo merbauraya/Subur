@@ -1,7 +1,8 @@
 <%@ include file="/html/author/init.jsp" %>
 
 <%
-
+	
+	boolean canUpdate = AuthorPermission.contains(permissionChecker, scopeGroupId, "UPDATE");
 	String redirect = ParamUtil.getString(request, "redirect");
 	String backURL = ParamUtil.getString(request, "backURL", redirect);
 	

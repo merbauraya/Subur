@@ -24,79 +24,79 @@ import java.util.Arrays;
  */
 public class ViewSummaryServiceClpInvoker {
 	public ViewSummaryServiceClpInvoker() {
-		_methodName110 = "getBeanIdentifier";
+		_methodName112 = "getBeanIdentifier";
 
-		_methodParameterTypes110 = new String[] {  };
+		_methodParameterTypes112 = new String[] {  };
 
-		_methodName111 = "setBeanIdentifier";
+		_methodName113 = "setBeanIdentifier";
 
-		_methodParameterTypes111 = new String[] { "java.lang.String" };
+		_methodParameterTypes113 = new String[] { "java.lang.String" };
 
-		_methodName116 = "getMonthlyCategory";
+		_methodName118 = "getMonthlyCategory";
 
-		_methodParameterTypes116 = new String[] { "int", "long" };
+		_methodParameterTypes118 = new String[] { "int", "long" };
 
-		_methodName117 = "getMonthlyItemType";
-
-		_methodParameterTypes117 = new String[] { "int" };
-
-		_methodName118 = "getMonthlySummary";
-
-		_methodParameterTypes118 = new String[] { "int" };
-
-		_methodName119 = "getMonthlyTagSummary";
+		_methodName119 = "getMonthlyItemType";
 
 		_methodParameterTypes119 = new String[] { "int" };
+
+		_methodName120 = "getMonthlySummary";
+
+		_methodParameterTypes120 = new String[] { "int" };
+
+		_methodName121 = "getMonthlyTagSummary";
+
+		_methodParameterTypes121 = new String[] { "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName110.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+		if (_methodName112.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
 			return ViewSummaryServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName111.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+		if (_methodName113.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
 			ViewSummaryServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlyCategory(((Integer)arguments[0]).intValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlyItemType(((Integer)arguments[0]).intValue());
 		}
 
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlySummary(((Integer)arguments[0]).intValue());
 		}
 
-		if (_methodName119.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+		if (_methodName121.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlyTagSummary(((Integer)arguments[0]).intValue());
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName110;
-	private String[] _methodParameterTypes110;
-	private String _methodName111;
-	private String[] _methodParameterTypes111;
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
+	private String _methodName112;
+	private String[] _methodParameterTypes112;
+	private String _methodName113;
+	private String[] _methodParameterTypes113;
 	private String _methodName118;
 	private String[] _methodParameterTypes118;
 	private String _methodName119;
 	private String[] _methodParameterTypes119;
+	private String _methodName120;
+	private String[] _methodParameterTypes120;
+	private String _methodName121;
+	private String[] _methodParameterTypes121;
 }

@@ -378,4 +378,51 @@ String[] assetTagNames = StringUtil.split(assetTagName);
 	
 	</h2>
 </c:if>
+<c:if test="<%= researchInterestIds.length > 0 %>">
+<%
+	StringBuilder riTitle = new StringBuilder();
+	
+%>
+	<liferay-util:buffer var="removeResearchInterest">
+<%
+	Object researchInterestService  = (Object)PortletBeanLocatorUtil.locate("Subur-portlet","ResearchInterestLocalService");
+
+	Method getResearchInterestMethod = researchInterestService.getClass().getMethod("fetchResearchInterest",new Class[]{long.class});
+	
+	for (long ri_Id : researchInterestIds)
+	{
+		
+		
+		Object riObject =  getResearchInterestMethod.invoke(researchInterestService,ri_Id);
+		String riName = (String)riObject.getClass().getMethod("getName", null).invoke(riObject);
+		riTitle.append(riName).append(StringPool.SPACE);
+		PortletURL filterResearchInterestURL = portletURL;
+		filterResearchInterestURL.setParameter("riId",StringUtil.merge(ArrayUtil.remove(
+				researchInterestIds, ri_Id)));
+		
+		filterResearchInterestURL.setParameter("filterBy","ri");
+%>
+		<span class="asset-entry">
+				<%= HtmlUtil.escape(riName) %>
+	
+				
+	
+				<a href="<%= filterResearchInterestURL %>" title="<liferay-ui:message key="remove" />">
+					<span class="icon icon-close textboxlistentry-close">
+						<i class="icon icon-remove"></i>
+					</span>
+				</a>
+			</span>
+
+
+<%
+	}
+%>
+	
+	</liferay-util:buffer>
+	<h2 class="taglib-categorization-filter entry-title">
+			<liferay-ui:message arguments="<%= removeResearchInterest %>" key='<%= assetType.concat("-with-research-interest-x") %>' />
+	
+	</h2>
+</c:if>
 

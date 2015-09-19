@@ -11,72 +11,14 @@
 	String filterBy = ParamUtil.getString(request,"filterBy");
 	long filterKey = ParamUtil.getLong(request, "filterKey");
 	List<Author> entries = (List<Author>) request.getAttribute("entries");
-	
+	boolean canUpdate = AuthorPermission.contains(permissionChecker, scopeGroupId, "UPDATE");
 	
 %>
 
 <liferay-portlet:actionURL name="search" varImpl="searchURL">
         
 </liferay-portlet:actionURL>
-<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="authorSearch" persistState="<%= true %>" title="author-search">
-	<aui:form action="<%= searchURL %>">
-		<aui:fieldset>
-			<aui:input inlineLabel ="left" inlineField="<%= true %>" name="firstName" size="20"  />
-			<aui:input inlineLabel ="left" inlineField="<%= true %>" name="middleName" size="20"  />
-			<aui:input inlineLabel ="left" inlineField="<%= true %>" name="lastName" size="20"  />
-			
-		
-		</aui:fieldset>
-		<aui:input type="checkbox" name="matchAny" label="match-any"/>
-		<aui:row>
-			<div class="span4">
-				<aui:select name="expertise" multiple="<%=true %>" size="4" label="expertise">
-			<%
-				List<Expertise> expertises = ExpertiseLocalServiceUtil.getExpertises(QueryUtil.ALL_POS, QueryUtil.ALL_POS) ;
-				for (Expertise expertise: expertises)
-				{
-			
-			%>
-					<aui:option value="<%=expertise.getExpertiseId() %>">
-						<%=expertise.getName() %>
-					</aui:option>
-			
-			<%
-				} 
-			%>
-				</aui:select>
-			</div>
-			<div class="span4">
-				<aui:select name="researchInterest" multiple="<%=true %>" size="4" label="research-interest">
-				<%
-				List<ResearchInterest> researchInterests = ResearchInterestLocalServiceUtil.getResearchInterests(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-				for (ResearchInterest researchInterest : researchInterests)
-				{
 
-				%>
-					<aui:option value="<%=researchInterest.getResearchInterestId() %>">
-						<%=researchInterest.getName() %>
-					</aui:option>
-				
-				<%
-					}
-				%>
-				</aui:select>
-			
-			
-			</div>
-			
-		
-		</aui:row>
-		<%@ include file="/html/author/filter_selector.jspf" %>
-		
-		
-		<aui:button name="submitBtn" type="submit" value="search" last="true" />
-		
-	</aui:form>
-
-
-</liferay-ui:panel>
 
 <subur:item-categorization-filter
 	assetType="author"
@@ -161,12 +103,12 @@
 				
 		</liferay-portlet:renderURL>
        
-		<liferay-ui:search-container-column-text>
-			<liferay-ui:icon-menu>
+       	<c:if test="<%= canUpdate %>">
+			<liferay-ui:search-container-column-text>
+				
 				<liferay-ui:icon image="edit" message="Edit" label="edit" url="<%= editAuthorURL.toString() %>" />
-				<liferay-ui:icon image="view" message="View" label="view" url="<%= viewAuthorURL.toString() %>" />
-			</liferay-ui:icon-menu>
-		</liferay-ui:search-container-column-text>        
+			</liferay-ui:search-container-column-text>
+		</c:if>        
 
                
         </liferay-ui:search-container-row>

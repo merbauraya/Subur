@@ -16,9 +16,11 @@ package com.idetronic.subur.model.impl;
 
 import com.idetronic.subur.model.SuburItem;
 import com.idetronic.subur.model.SuburItemModel;
+import com.idetronic.subur.model.SuburItemSoap;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -36,8 +38,10 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,6 +57,7 @@ import java.util.Map;
  * @see com.idetronic.subur.model.SuburItemModel
  * @generated
  */
+@JSON(strict = true)
 public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 	implements SuburItemModel {
 	/*
@@ -96,6 +101,58 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 	public static long GROUPID_COLUMN_BITMASK = 1L;
 	public static long STATUS_COLUMN_BITMASK = 2L;
 	public static long CREATEDATE_COLUMN_BITMASK = 4L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static SuburItem toModel(SuburItemSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		SuburItem model = new SuburItemImpl();
+
+		model.setItemId(soapModel.getItemId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setPublishedDate(soapModel.getPublishedDate());
+		model.setTitle(soapModel.getTitle());
+		model.setItemAbstract(soapModel.getItemAbstract());
+		model.setLanguage(soapModel.getLanguage());
+		model.setStatus(soapModel.getStatus());
+		model.setUuid(soapModel.getUuid());
+		model.setMetadataValue(soapModel.getMetadataValue());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<SuburItem> toModels(SuburItemSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<SuburItem> models = new ArrayList<SuburItem>(soapModels.length);
+
+		for (SuburItemSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.idetronic.subur.model.SuburItem"));
 
@@ -241,6 +298,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		}
 	}
 
+	@JSON
 	@Override
 	public long getItemId() {
 		return _itemId;
@@ -251,6 +309,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_itemId = itemId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -261,6 +320,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_companyId = companyId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -283,6 +343,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -303,6 +364,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_userUuid = userUuid;
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -318,6 +380,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -330,6 +393,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -340,6 +404,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public Date getPublishedDate() {
 		return _publishedDate;
@@ -350,6 +415,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_publishedDate = publishedDate;
 	}
 
+	@JSON
 	@Override
 	public String getTitle() {
 		if (_title == null) {
@@ -365,6 +431,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_title = title;
 	}
 
+	@JSON
 	@Override
 	public String getItemAbstract() {
 		if (_itemAbstract == null) {
@@ -380,6 +447,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_itemAbstract = itemAbstract;
 	}
 
+	@JSON
 	@Override
 	public String getLanguage() {
 		if (_language == null) {
@@ -395,6 +463,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_language = language;
 	}
 
+	@JSON
 	@Override
 	public int getStatus() {
 		return _status;
@@ -417,6 +486,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		return _originalStatus;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_Uuid == null) {
@@ -432,6 +502,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_Uuid = Uuid;
 	}
 
+	@JSON
 	@Override
 	public String getMetadataValue() {
 		if (_metadataValue == null) {

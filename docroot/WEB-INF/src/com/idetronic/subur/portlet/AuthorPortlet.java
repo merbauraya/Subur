@@ -12,13 +12,18 @@ import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import com.idetronic.subur.model.Author;
 import com.idetronic.subur.service.AuthorLocalServiceUtil;
+import com.idetronic.subur.service.ResearchInterestLocalServiceUtil;
+import com.idetronic.subur.service.permission.AuthorPermission;
 import com.idetronic.subur.service.persistence.AuthorQuery;
 import com.idetronic.subur.util.AuthorQueryUtil;
 import com.idetronic.subur.util.AuthorUtil;
+import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,6 +40,7 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.StringQueryFactoryUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -44,13 +50,15 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.util.bridges.mvc.MVCPortlet;
-
+import com.liferay.portal.security.permission.PermissionChecker;
 /**
  * Portlet implementation class AuthorPortlet
  */
@@ -291,7 +299,7 @@ public class AuthorPortlet extends MVCPortlet {
 		}
 		if (Validator.isNotNull(filterBy))
 		{
-			_log.info("filterBy="+filterKey+ " :"+filterBy);
+			
 			if (filterBy.equalsIgnoreCase("expertise"))
 			{
 				
@@ -318,7 +326,7 @@ public class AuthorPortlet extends MVCPortlet {
 		
 		PortalUtil.copyRequestParameters(request, response);
 
-		response.setRenderParameter("jspPage","/html/author/filter_view.jsp");
+		/*response.setRenderParameter("jspPage","/html/author/filter_view.jsp");*/
 		response.setRenderParameter("search", "true");
 		request.setAttribute("entries", entries);
 
@@ -415,6 +423,52 @@ public class AuthorPortlet extends MVCPortlet {
 			_log.error(se);
 		}
 	    return entries;
+	}
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException 
+	{
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+		String action = ParamUtil.getString(renderRequest, "action");
+		try {
+			if (action == ActionKeys.UPDATE)
+			{
+				PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
+				if (!AuthorPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.UPDATE))
+				{
+					throw new PrincipalException("Not Authorized");
+				}
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchResourceException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchResourceException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include("/html/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
 	}
  
 		private static Log _log = LogFactoryUtil.getLog(Subur.class);

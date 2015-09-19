@@ -106,21 +106,21 @@ public class DownloadSummaryLocalServiceClpInvoker {
 				"com.idetronic.subur.model.DownloadSummary"
 			};
 
-		_methodName126 = "getBeanIdentifier";
+		_methodName128 = "getBeanIdentifier";
 
-		_methodParameterTypes126 = new String[] {  };
+		_methodParameterTypes128 = new String[] {  };
 
-		_methodName127 = "setBeanIdentifier";
+		_methodName129 = "setBeanIdentifier";
 
-		_methodParameterTypes127 = new String[] { "java.lang.String" };
+		_methodParameterTypes129 = new String[] { "java.lang.String" };
 
-		_methodName132 = "addStats";
+		_methodName134 = "addStats";
 
-		_methodParameterTypes132 = new String[] { "long" };
+		_methodParameterTypes134 = new String[] { "long" };
 
-		_methodName133 = "updateStats";
+		_methodName135 = "updateStats";
 
-		_methodParameterTypes133 = new String[] {  };
+		_methodParameterTypes135 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -212,25 +212,25 @@ public class DownloadSummaryLocalServiceClpInvoker {
 			return DownloadSummaryLocalServiceUtil.updateDownloadSummary((com.idetronic.subur.model.DownloadSummary)arguments[0]);
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return DownloadSummaryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			DownloadSummaryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
 			return DownloadSummaryLocalServiceUtil.addStats(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName133.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			DownloadSummaryLocalServiceUtil.updateStats();
 
 			return null;
@@ -271,12 +271,12 @@ public class DownloadSummaryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
-	private String _methodName127;
-	private String[] _methodParameterTypes127;
-	private String _methodName132;
-	private String[] _methodParameterTypes132;
-	private String _methodName133;
-	private String[] _methodParameterTypes133;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
+	private String _methodName134;
+	private String[] _methodParameterTypes134;
+	private String _methodName135;
+	private String[] _methodParameterTypes135;
 }

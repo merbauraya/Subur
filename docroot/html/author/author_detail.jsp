@@ -8,13 +8,13 @@
 	<div class="author-summary">
 		<h2><%= author.getDisplayName()%></h2>
 		<c:if test="<%=canUpdate %>">
-			<portlet:renderURL var="editAuthorURL">
+			<liferay-portlet:renderURL var="editAuthorURL" portletName="Author_WAR_Suburportlet">
 					<portlet:param name="mvcPath" value="/html/admin/author/edit_author.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>"/>
 					 
-				</portlet:renderURL>
+				</liferay-portlet:renderURL>
 				<liferay-ui:icon
 							image="edit"
 							label="<%= true %>"

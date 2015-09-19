@@ -21,9 +21,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.idetronic.subur.service.http.SuburItemServiceSoap}.
  *
  * @author Mazlan Mat
+ * @see com.idetronic.subur.service.http.SuburItemServiceSoap
  * @generated
  */
 public class SuburItemSoap implements Serializable {

@@ -36,6 +36,7 @@ import com.idetronic.subur.service.StatViewItemTypeLocalServiceUtil;
 import com.idetronic.subur.service.StatViewTagLocalServiceUtil;
 import com.idetronic.subur.service.SuburConfigLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
+import com.idetronic.subur.service.SuburItemServiceUtil;
 import com.idetronic.subur.service.ViewSummaryLocalServiceUtil;
 import com.idetronic.subur.service.ViewSummaryServiceUtil;
 
@@ -97,6 +98,7 @@ public class ClpMessageListener extends BaseMessageListener {
 
 			SuburItemLocalServiceUtil.clearService();
 
+			SuburItemServiceUtil.clearService();
 			ViewSummaryLocalServiceUtil.clearService();
 
 			ViewSummaryServiceUtil.clearService();

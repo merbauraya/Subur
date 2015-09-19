@@ -9,7 +9,6 @@
 <%@page import="com.liferay.portal.kernel.util.StringBundler"%>
 <%@page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil"%>
 <%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
-<%@page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@page import="com.liferay.portal.kernel.util.StringPool"%>
 <%@page import="com.liferay.portal.kernel.exception.PortalException"%>
 <%@page import="com.liferay.portal.kernel.exception.SystemException"%>

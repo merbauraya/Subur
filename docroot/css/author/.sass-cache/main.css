@@ -1,0 +1,16 @@
+.author-portlet {
+  /* hide tags suggestion button */ }
+  .author-portlet .fullwidth {
+    width: 90%; }
+  .author-portlet .taglib-asset-categories-summary:after {
+    white-space: pre;
+    content: '\A'; }
+  .author-portlet .author-summary h2 {
+    display: inline; }
+  .author-portlet .author-categorization {
+    line-height: 25px; }
+  .author-portlet button[title="Suggestions"] {
+    display: none; }
+  .author-portlet .taglib-search-toggle button[title="Add Tags"] {
+    display: none; }
+

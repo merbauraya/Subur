@@ -30,6 +30,7 @@ import com.idetronic.subur.service.ItemItemTypeLocalServiceUtil;
 import com.idetronic.subur.service.ItemTypeLocalServiceUtil;
 import com.idetronic.subur.service.ViewSummaryLocalServiceUtil;
 import com.idetronic.subur.service.base.SuburItemLocalServiceBaseImpl;
+import com.idetronic.subur.service.permission.SuburItemPermission;
 import com.idetronic.subur.service.persistence.SuburItemFinderUtil;
 import com.idetronic.subur.util.SuburConstant;
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -72,7 +74,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
  * @see com.idetronic.subur.service.SuburItemLocalServiceUtil
  */
 public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
-	private static Log logger = LogFactoryUtil.getLog(SuburItemLocalServiceImpl.class);
+	private static Log LOGGER = LogFactoryUtil.getLog(SuburItemLocalServiceImpl.class);
 	
 	public SuburItem addItem(long userId,long groupId,String title,String itemAbstract,
 			long[] itemTypeId,ServiceContext serviceContext) throws PortalException, SystemException
@@ -174,6 +176,10 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		ItemAuthorLocalServiceUtil.setItemAuthor(suburItem.getItemId(), authorIds);
 		AuthorLocalServiceUtil.updateAuthorPosting(suburItem);
 		
+		resourceLocalService.addResources(serviceContext.getCompanyId(), groupId, userId,
+			       SuburItem.class.getName(), suburItem.getItemId(), false, true, true);
+		
+		
 		
 		ItemItemTypeLocalServiceUtil.updateItemItemType(suburItem.getItemId(),itemTypeIds);
 		
@@ -245,6 +251,7 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		return itemType;
 		
 	}
+	
 	public List<SuburItem> getSuburItems(int start,int end,int status) throws SystemException
 	{
 		if (status != SuburConstant.STATUS_ANY)
@@ -323,7 +330,6 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 	public void addDownloadStats(long itemId) throws SystemException, PortalException
 	{
 		
-		
 		DownloadSummaryLocalServiceUtil.addStats(itemId);
 		
 	}
@@ -335,11 +341,7 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 	 */
 	public void addViewStat(long itemId) throws PortalException, SystemException
 	{
-		//view asset entry counter
-		AssetEntry incrementAssetEntry = null;
-		incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(SuburItem.class.getName(), itemId);
-	
-		
+		AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(SuburItem.class.getName(), itemId);
 		ViewSummaryLocalServiceUtil.addStats(itemId);//, itemTypeIds, categoryIds, tagIds);
 		
 		

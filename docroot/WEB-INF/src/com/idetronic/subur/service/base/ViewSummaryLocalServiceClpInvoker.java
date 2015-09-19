@@ -106,29 +106,29 @@ public class ViewSummaryLocalServiceClpInvoker {
 				"com.idetronic.subur.model.ViewSummary"
 			};
 
-		_methodName126 = "getBeanIdentifier";
+		_methodName128 = "getBeanIdentifier";
 
-		_methodParameterTypes126 = new String[] {  };
+		_methodParameterTypes128 = new String[] {  };
 
-		_methodName127 = "setBeanIdentifier";
+		_methodName129 = "setBeanIdentifier";
 
-		_methodParameterTypes127 = new String[] { "java.lang.String" };
+		_methodParameterTypes129 = new String[] { "java.lang.String" };
 
-		_methodName132 = "getMonthlyStatRs";
+		_methodName134 = "getMonthlyStatRs";
 
-		_methodParameterTypes132 = new String[] { "int" };
+		_methodParameterTypes134 = new String[] { "int" };
 
-		_methodName133 = "getMonthlyTag";
+		_methodName135 = "getMonthlyTag";
 
-		_methodParameterTypes133 = new String[] { "int" };
+		_methodParameterTypes135 = new String[] { "int" };
 
-		_methodName134 = "addStats";
+		_methodName136 = "addStats";
 
-		_methodParameterTypes134 = new String[] { "long" };
+		_methodParameterTypes136 = new String[] { "long" };
 
-		_methodName135 = "updateStats";
+		_methodName137 = "updateStats";
 
-		_methodParameterTypes135 = new String[] {  };
+		_methodParameterTypes137 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -220,35 +220,35 @@ public class ViewSummaryLocalServiceClpInvoker {
 			return ViewSummaryLocalServiceUtil.updateViewSummary((com.idetronic.subur.model.ViewSummary)arguments[0]);
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return ViewSummaryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			ViewSummaryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
-			return ViewSummaryLocalServiceUtil.getMonthlyStatRs(((Integer)arguments[0]).intValue());
-		}
-
-		if (_methodName133.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
-			return ViewSummaryLocalServiceUtil.getMonthlyTag(((Integer)arguments[0]).intValue());
-		}
-
 		if (_methodName134.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
-			return ViewSummaryLocalServiceUtil.addStats(((Long)arguments[0]).longValue());
+			return ViewSummaryLocalServiceUtil.getMonthlyStatRs(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName135.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+			return ViewSummaryLocalServiceUtil.getMonthlyTag(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName136.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
+			return ViewSummaryLocalServiceUtil.addStats(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName137.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
 			ViewSummaryLocalServiceUtil.updateStats();
 
 			return null;
@@ -289,16 +289,16 @@ public class ViewSummaryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
-	private String _methodName127;
-	private String[] _methodParameterTypes127;
-	private String _methodName132;
-	private String[] _methodParameterTypes132;
-	private String _methodName133;
-	private String[] _methodParameterTypes133;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
 	private String _methodName134;
 	private String[] _methodParameterTypes134;
 	private String _methodName135;
 	private String[] _methodParameterTypes135;
+	private String _methodName136;
+	private String[] _methodParameterTypes136;
+	private String _methodName137;
+	private String[] _methodParameterTypes137;
 }

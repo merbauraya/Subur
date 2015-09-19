@@ -10,4 +10,5 @@
 		<param-name>portalContextConfigLocation</param-name>
         <param-value>/WEB-INF/classes/context/custom-spring.xml</param-value>
 	</context-param>
+	
 </web-app>

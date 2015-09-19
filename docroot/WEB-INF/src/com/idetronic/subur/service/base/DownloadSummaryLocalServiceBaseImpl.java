@@ -1118,6 +1118,25 @@ public abstract class DownloadSummaryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the subur item remote service.
+	 *
+	 * @return the subur item remote service
+	 */
+	public com.idetronic.subur.service.SuburItemService getSuburItemService() {
+		return suburItemService;
+	}
+
+	/**
+	 * Sets the subur item remote service.
+	 *
+	 * @param suburItemService the subur item remote service
+	 */
+	public void setSuburItemService(
+		com.idetronic.subur.service.SuburItemService suburItemService) {
+		this.suburItemService = suburItemService;
+	}
+
+	/**
 	 * Returns the subur item persistence.
 	 *
 	 * @return the subur item persistence
@@ -1491,6 +1510,8 @@ public abstract class DownloadSummaryLocalServiceBaseImpl
 	protected SuburConfigPersistence suburConfigPersistence;
 	@BeanReference(type = com.idetronic.subur.service.SuburItemLocalService.class)
 	protected com.idetronic.subur.service.SuburItemLocalService suburItemLocalService;
+	@BeanReference(type = com.idetronic.subur.service.SuburItemService.class)
+	protected com.idetronic.subur.service.SuburItemService suburItemService;
 	@BeanReference(type = SuburItemPersistence.class)
 	protected SuburItemPersistence suburItemPersistence;
 	@BeanReference(type = SuburItemFinder.class)
