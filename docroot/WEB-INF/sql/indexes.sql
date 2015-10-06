@@ -15,6 +15,10 @@ create unique index IX_278E0FFA on Subur_AuthorSite (authorId, siteName);
 
 create unique index IX_A8763E on Subur_Config (key_);
 
+create index IX_C278C500 on Subur_CopyRequest (companyId, groupId);
+create index IX_C3148BD0 on Subur_CopyRequest (companyId, status);
+create index IX_2D99A2D2 on Subur_CopyRequest (groupId, status);
+
 create index IX_22012CA4 on Subur_DownloadSummary (itemId);
 create index IX_4559BD91 on Subur_DownloadSummary (perMonth, perYear);
 create index IX_A4EC2AC8 on Subur_DownloadSummary (perYear);
@@ -25,6 +29,7 @@ create unique index IX_5FEE7F17 on Subur_Expertise (groupId, indexedName);
 
 create index IX_ED467B0F on Subur_Item (groupId);
 create index IX_EDC057E1 on Subur_Item (status);
+create index IX_1C5A7E9F on Subur_Item (status, groupId, companyId);
 
 create index IX_AFE1C520 on Subur_ItemAuthor (authorId);
 create index IX_504C54A8 on Subur_ItemAuthor (itemId);
@@ -48,14 +53,22 @@ create index IX_649E290E on Subur_StatDownloadPeriod (perMonth, perYear);
 create index IX_9BABC163 on Subur_StatDownloadTag (tagId);
 
 create index IX_95E6208C on Subur_StatViewCategory (categoryId);
+create unique index IX_DF3BB8B5 on Subur_StatViewCategory (categoryId, perYear, perMonth);
+create unique index IX_96F9E073 on Subur_StatViewCategory (companyId, groupId, categoryId, perYear, perMonth);
 
+create unique index IX_7831FB15 on Subur_StatViewItemType (companyId, groupId, itemTypeId, perYear, perMonth);
 create index IX_327E82AA on Subur_StatViewItemType (itemTypeId);
+create unique index IX_24AB35D7 on Subur_StatViewItemType (itemTypeId, perYear, perMonth);
 
+create unique index IX_AE36EC43 on Subur_StatViewTag (companyId, groupId, tagId, perYear, perMonth);
 create index IX_8B534B00 on Subur_StatViewTag (tagId);
+create unique index IX_E15264F3 on Subur_StatViewTag (tagId, perMonth, perYear);
+create unique index IX_932F71C1 on Subur_StatViewTag (tagId, perYear, perMonth);
 
 create index IX_A41A932E on Subur_ViewSummary (perMonth, perYear);
 create index IX_A1B0F0A5 on Subur_ViewSummary (perYear);
 create index IX_C73CF28B on Subur_ViewSummary (status);
+create index IX_C1192049 on Subur_ViewSummary (status, groupId, companyId);
 
 create index IX_3793AB1 on item (groupId);
 create index IX_28461BFF on item (status);

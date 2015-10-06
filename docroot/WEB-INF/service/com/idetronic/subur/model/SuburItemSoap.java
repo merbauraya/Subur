@@ -45,6 +45,8 @@ public class SuburItemSoap implements Serializable {
 		soapModel.setStatus(model.getStatus());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setMetadataValue(model.getMetadataValue());
+		soapModel.setRelatedRestricted(model.getRelatedRestricted());
+		soapModel.setPhotoCoverId(model.getPhotoCoverId());
 
 		return soapModel;
 	}
@@ -209,6 +211,26 @@ public class SuburItemSoap implements Serializable {
 		_metadataValue = metadataValue;
 	}
 
+	public boolean getRelatedRestricted() {
+		return _relatedRestricted;
+	}
+
+	public boolean isRelatedRestricted() {
+		return _relatedRestricted;
+	}
+
+	public void setRelatedRestricted(boolean relatedRestricted) {
+		_relatedRestricted = relatedRestricted;
+	}
+
+	public long getPhotoCoverId() {
+		return _photoCoverId;
+	}
+
+	public void setPhotoCoverId(long photoCoverId) {
+		_photoCoverId = photoCoverId;
+	}
+
 	private long _itemId;
 	private long _companyId;
 	private long _groupId;
@@ -223,4 +245,6 @@ public class SuburItemSoap implements Serializable {
 	private int _status;
 	private String _Uuid;
 	private String _metadataValue;
+	private boolean _relatedRestricted;
+	private long _photoCoverId;
 }

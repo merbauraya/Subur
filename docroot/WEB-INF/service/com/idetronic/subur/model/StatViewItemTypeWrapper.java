@@ -50,9 +50,12 @@ public class StatViewItemTypeWrapper implements StatViewItemType,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("id", getId());
-		attributes.put("perMonth", getPerMonth());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("perYear", getPerYear());
+		attributes.put("perMonth", getPerMonth());
 		attributes.put("itemTypeId", getItemTypeId());
+		attributes.put("viewCount", getViewCount());
 
 		return attributes;
 	}
@@ -65,10 +68,16 @@ public class StatViewItemTypeWrapper implements StatViewItemType,
 			setId(id);
 		}
 
-		Integer perMonth = (Integer)attributes.get("perMonth");
+		Long companyId = (Long)attributes.get("companyId");
 
-		if (perMonth != null) {
-			setPerMonth(perMonth);
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Integer perYear = (Integer)attributes.get("perYear");
@@ -77,10 +86,22 @@ public class StatViewItemTypeWrapper implements StatViewItemType,
 			setPerYear(perYear);
 		}
 
+		Integer perMonth = (Integer)attributes.get("perMonth");
+
+		if (perMonth != null) {
+			setPerMonth(perMonth);
+		}
+
 		Long itemTypeId = (Long)attributes.get("itemTypeId");
 
 		if (itemTypeId != null) {
 			setItemTypeId(itemTypeId);
+		}
+
+		Integer viewCount = (Integer)attributes.get("viewCount");
+
+		if (viewCount != null) {
+			setViewCount(viewCount);
 		}
 	}
 
@@ -125,23 +146,43 @@ public class StatViewItemTypeWrapper implements StatViewItemType,
 	}
 
 	/**
-	* Returns the per month of this stat view item type.
+	* Returns the company ID of this stat view item type.
 	*
-	* @return the per month of this stat view item type
+	* @return the company ID of this stat view item type
 	*/
 	@Override
-	public int getPerMonth() {
-		return _statViewItemType.getPerMonth();
+	public long getCompanyId() {
+		return _statViewItemType.getCompanyId();
 	}
 
 	/**
-	* Sets the per month of this stat view item type.
+	* Sets the company ID of this stat view item type.
 	*
-	* @param perMonth the per month of this stat view item type
+	* @param companyId the company ID of this stat view item type
 	*/
 	@Override
-	public void setPerMonth(int perMonth) {
-		_statViewItemType.setPerMonth(perMonth);
+	public void setCompanyId(long companyId) {
+		_statViewItemType.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the group ID of this stat view item type.
+	*
+	* @return the group ID of this stat view item type
+	*/
+	@Override
+	public long getGroupId() {
+		return _statViewItemType.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this stat view item type.
+	*
+	* @param groupId the group ID of this stat view item type
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_statViewItemType.setGroupId(groupId);
 	}
 
 	/**
@@ -165,6 +206,26 @@ public class StatViewItemTypeWrapper implements StatViewItemType,
 	}
 
 	/**
+	* Returns the per month of this stat view item type.
+	*
+	* @return the per month of this stat view item type
+	*/
+	@Override
+	public int getPerMonth() {
+		return _statViewItemType.getPerMonth();
+	}
+
+	/**
+	* Sets the per month of this stat view item type.
+	*
+	* @param perMonth the per month of this stat view item type
+	*/
+	@Override
+	public void setPerMonth(int perMonth) {
+		_statViewItemType.setPerMonth(perMonth);
+	}
+
+	/**
 	* Returns the item type ID of this stat view item type.
 	*
 	* @return the item type ID of this stat view item type
@@ -182,6 +243,26 @@ public class StatViewItemTypeWrapper implements StatViewItemType,
 	@Override
 	public void setItemTypeId(long itemTypeId) {
 		_statViewItemType.setItemTypeId(itemTypeId);
+	}
+
+	/**
+	* Returns the view count of this stat view item type.
+	*
+	* @return the view count of this stat view item type
+	*/
+	@Override
+	public int getViewCount() {
+		return _statViewItemType.getViewCount();
+	}
+
+	/**
+	* Sets the view count of this stat view item type.
+	*
+	* @param viewCount the view count of this stat view item type
+	*/
+	@Override
+	public void setViewCount(int viewCount) {
+		_statViewItemType.setViewCount(viewCount);
 	}
 
 	@Override

@@ -322,6 +322,14 @@ public class SuburItemLocalServiceWrapper implements SuburItemLocalService,
 	}
 
 	@Override
+	public java.util.List<com.idetronic.subur.model.SuburItem> getByGroupAndStatus(
+		long companyId, long groupId, int start, int end, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _suburItemLocalService.getByGroupAndStatus(companyId, groupId,
+			start, end, status);
+	}
+
+	@Override
 	public java.util.List<com.idetronic.subur.model.SuburItem> getSuburItems(
 		int start, int end, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -413,10 +421,10 @@ public class SuburItemLocalServiceWrapper implements SuburItemLocalService,
 	* @throws SystemException
 	*/
 	@Override
-	public void addViewStat(long itemId)
+	public void addViewStat(long itemId, long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_suburItemLocalService.addViewStat(itemId);
+		_suburItemLocalService.addViewStat(itemId, companyId, groupId);
 	}
 
 	/**

@@ -51,8 +51,10 @@ public class ViewSummaryWrapper implements ViewSummary,
 
 		attributes.put("id", getId());
 		attributes.put("itemId", getItemId());
-		attributes.put("perMonth", getPerMonth());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("perYear", getPerYear());
+		attributes.put("perMonth", getPerMonth());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -72,16 +74,28 @@ public class ViewSummaryWrapper implements ViewSummary,
 			setItemId(itemId);
 		}
 
-		Integer perMonth = (Integer)attributes.get("perMonth");
+		Long companyId = (Long)attributes.get("companyId");
 
-		if (perMonth != null) {
-			setPerMonth(perMonth);
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Integer perYear = (Integer)attributes.get("perYear");
 
 		if (perYear != null) {
 			setPerYear(perYear);
+		}
+
+		Integer perMonth = (Integer)attributes.get("perMonth");
+
+		if (perMonth != null) {
+			setPerMonth(perMonth);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -152,23 +166,43 @@ public class ViewSummaryWrapper implements ViewSummary,
 	}
 
 	/**
-	* Returns the per month of this view summary.
+	* Returns the company ID of this view summary.
 	*
-	* @return the per month of this view summary
+	* @return the company ID of this view summary
 	*/
 	@Override
-	public int getPerMonth() {
-		return _viewSummary.getPerMonth();
+	public long getCompanyId() {
+		return _viewSummary.getCompanyId();
 	}
 
 	/**
-	* Sets the per month of this view summary.
+	* Sets the company ID of this view summary.
 	*
-	* @param perMonth the per month of this view summary
+	* @param companyId the company ID of this view summary
 	*/
 	@Override
-	public void setPerMonth(int perMonth) {
-		_viewSummary.setPerMonth(perMonth);
+	public void setCompanyId(long companyId) {
+		_viewSummary.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the group ID of this view summary.
+	*
+	* @return the group ID of this view summary
+	*/
+	@Override
+	public long getGroupId() {
+		return _viewSummary.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this view summary.
+	*
+	* @param groupId the group ID of this view summary
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_viewSummary.setGroupId(groupId);
 	}
 
 	/**
@@ -189,6 +223,26 @@ public class ViewSummaryWrapper implements ViewSummary,
 	@Override
 	public void setPerYear(int perYear) {
 		_viewSummary.setPerYear(perYear);
+	}
+
+	/**
+	* Returns the per month of this view summary.
+	*
+	* @return the per month of this view summary
+	*/
+	@Override
+	public int getPerMonth() {
+		return _viewSummary.getPerMonth();
+	}
+
+	/**
+	* Sets the per month of this view summary.
+	*
+	* @param perMonth the per month of this view summary
+	*/
+	@Override
+	public void setPerMonth(int perMonth) {
+		_viewSummary.setPerMonth(perMonth);
 	}
 
 	/**

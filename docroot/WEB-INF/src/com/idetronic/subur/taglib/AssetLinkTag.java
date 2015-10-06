@@ -4,14 +4,28 @@ import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.HttpServletRequest;
 
+import com.idetronic.subur.portlet.Subur;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 public class AssetLinkTag extends IncludeTag {
 	private long assetEntryId;
 	private String nameSpace;
 	private ResourceURL serveFileURL;
+	private boolean hideTitle = false;
 	final String _PAGE = "/html/taglib/subur/asset_links.jsp";
 	
+	
+	public void setHideTitle(boolean hide)
+	{
+		this.hideTitle = hide;
+		
+	}
+	public boolean getHideTitle()
+	{
+		return this.hideTitle;
+	}
 	public void setNameSpace(String nameSpace)
 	{
 		this.nameSpace = nameSpace;
@@ -43,6 +57,7 @@ public class AssetLinkTag extends IncludeTag {
 		request.setAttribute("subur:item-asset-links:assetEntryId", String.valueOf(getAssetEntryId()));
 		request.setAttribute("subur:item-asset-links:serveFileURL", getServeFileURL());
 		request.setAttribute("subur:item-asset-links:nameSpace", getNameSpace());
+		request.setAttribute("subur:item-asset-links:hideTitle", String.valueOf(getHideTitle()));
 	}
 	@Override
 	public int doStartTag() {
@@ -67,5 +82,5 @@ public class AssetLinkTag extends IncludeTag {
 	protected String getPage() {
 		return _PAGE;
 	}
-
+	private static Log logger = LogFactoryUtil.getLog(AssetLinkTag.class);
 }

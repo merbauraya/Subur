@@ -22,4 +22,17 @@ content:'\A';}
 	{
 		display:none;
 	}
+	
+	.profile-image
+	{
+		padding:10px;
+	}
+	.list-style-none
+	{
+		list-style:none;
+	} 
+	.no-left-margin
+	{
+		margin-left:0 !important;
+	}
 }

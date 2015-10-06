@@ -23,7 +23,7 @@ public class AuthorNavigatorPortlet extends MVCPortlet {
 	      PortletException {
 
 	    String authorId = ParamUtil.getString(actionRequest, "authorId");
-	    _log.info("authornav action="+authorId);
+	    
 	    if (Validator.isNotNull(authorId)) {
 	    	QName qName = new QName("http://liferay.com", "authorNav", "x");
 		    	

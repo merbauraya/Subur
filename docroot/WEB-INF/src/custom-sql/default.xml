@@ -184,57 +184,8 @@
 	
 	<!--  end expertise finder -->	
 	
-	<!--  start stats finder -->
-	<sql id="com.idetronic.subur.service.persistence.ViewSummaryFinder.monthlySummary">
-		SELECT permonth,count(*) as totalview 
-		FROM 
-			Subur_ViewSummary
-		WHERE 
-			perYear=?
-		GROUP BY perMonth
-		ORDER BY perMonth ASC
 	
-	</sql>
-	<sql id="com.idetronic.subur.service.persistence.ViewSummaryFinder.monthlyTagSummary">
-		SELECT perMonth as permonth,assetTag.name as tagname,count(*) as totalview 
-		FROM 
-			Subur_StatViewTag
-		LEFT JOIN AssetTag
-		ON AssetTag.tagId = Subur_StatViewTag.tagId
-		WHERE
-			perYear=?
-		GROUP BY perMonth,AssetTag.name
-		ORDER BY AssetTag.name ASC
-	
-	</sql>
-	
-	<sql id="com.idetronic.subur.service.persistence.ViewSummaryFinder.monthlyItemTypeSummary">
-		SELECT itemTypeName as itemtypename,perMonth as permonth,count(*) as totalview 
-		FROM 
-			Subur_StatViewItemtype
-		LEFT JOIN Subur_ItemType
-		ON Subur_StatViewItemtype.itemTypeId = Subur_ItemType.itemTypeId
-		WHERE 
-			perYear = ?
-		GROUP BY perMonth,itemTypeName
-		ORDER BY itemTypeName ASC
-	
-	</sql>
-	<sql id="com.idetronic.subur.service.persistence.ViewSummaryFinder.monthlyCategorySummary">
-		SELECT permonth,name as categoryname,count(*) as totalview 
-		FROM 
-			Subur_StatViewCategory
-		LEFT JOIN AssetCategory 
-		ON Subur_StatViewCategory.categoryId = AssetCategory.categoryId
-		WHERE EXISTS
-			( SELECT 1 from AssetVocabulary WHERE vocabularyId = AssetCategory.vocabularyId
-				AND vocabularyId = [$VOCAB_ID$]
-			)
-		AND perYear = [$YEAR$]
-		GROUP BY perMonth,name
-		ORDER BY name
-	
-	</sql>
 	<!--  end stats finder -->
-	
+	<sql file="custom-sql/recent_authors.xml"/>
+	<sql file="custom-sql/stats.xml"/>
 </custom-sql>

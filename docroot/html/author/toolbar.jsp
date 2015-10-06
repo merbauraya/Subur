@@ -11,7 +11,7 @@
 			<aui:nav>
 				
 				<portlet:renderURL var="addAuthorURL">
-					<portlet:param name="mvcPath" value="/html/admin/author/edit_author.jsp" />
+					<portlet:param name="mvcPath" value="/html/author/new_author.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
 					 

@@ -1,13 +1,16 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.model.AssetLink" %><%@
-page import="com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.asset.model.AssetLink" %>
+<%@ page import="com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil" %>
 <%@ page import="javax.portlet.ResourceURL" %>
 
 <%
 long assetEntryId = GetterUtil.getLong((String)request.getAttribute("subur:item-asset-links:assetEntryId"));
 PortletURL serveFileURL = (PortletURL)request.getAttribute("subur:item-asset-links:serveFileURL");
 String nameSpace = (String)request.getAttribute("subur:item-asset-links:nameSpace");
+boolean hideTitle =  GetterUtil.getBoolean((String)request.getAttribute("subur:item-asset-links:hideTitle"));
+
+
 List<AssetLink> assetLinks = null;
 
 if (assetEntryId > 0) {
@@ -17,8 +20,10 @@ if (assetEntryId > 0) {
 
 <c:if test="<%= (assetLinks != null) && !assetLinks.isEmpty() %>">
 	<div class="taglib-asset-links">
+		
+	<c:if test="<%= !hideTitle %>">	
 		<h2 class="asset-links-title"><liferay-ui:message key="related-assets" />:</h2>
-
+	</c:if>
 		<ul class="asset-links-list">
 
 			<%
@@ -94,6 +99,8 @@ if (assetEntryId > 0) {
 						urlViewInContext = serveFileURL.toString();
 						urlViewInContext = HttpUtil.setParameter(urlViewInContext, nameSpace+"fileEntryId", String.valueOf(assetLinkEntry.getClassPK()));
 					}
+					
+					
 					
 			%>
 

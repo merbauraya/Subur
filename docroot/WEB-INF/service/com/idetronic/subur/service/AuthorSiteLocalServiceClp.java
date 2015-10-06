@@ -118,6 +118,16 @@ public class AuthorSiteLocalServiceClp implements AuthorSiteLocalService {
 		_methodName19 = "findByAuthorId";
 
 		_methodParameterTypes19 = new String[] { "long" };
+
+		_methodName20 = "deleteByAuthorId";
+
+		_methodParameterTypes20 = new String[] { "long" };
+
+		_methodName21 = "addAuthorSite";
+
+		_methodParameterTypes21 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 	}
 
 	@Override
@@ -698,6 +708,66 @@ public class AuthorSiteLocalServiceClp implements AuthorSiteLocalService {
 		return (java.util.List<com.idetronic.subur.model.AuthorSite>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public void deleteByAuthorId(long authorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName20,
+				_methodParameterTypes20, new Object[] { authorId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public com.idetronic.subur.model.AuthorSite addAuthorSite(long authorId,
+		java.lang.String siteName, java.lang.String siteURL)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] {
+						authorId,
+						
+					ClpSerializer.translateInput(siteName),
+						
+					ClpSerializer.translateInput(siteURL)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.idetronic.subur.model.AuthorSite)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -737,4 +807,8 @@ public class AuthorSiteLocalServiceClp implements AuthorSiteLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

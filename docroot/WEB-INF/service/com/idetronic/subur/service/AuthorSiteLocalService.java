@@ -256,4 +256,11 @@ public interface AuthorSiteLocalService extends BaseLocalService,
 	public java.util.List<com.idetronic.subur.model.AuthorSite> findByAuthorId(
 		long authorId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteByAuthorId(long authorId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.idetronic.subur.model.AuthorSite addAuthorSite(long authorId,
+		java.lang.String siteName, java.lang.String siteURL)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

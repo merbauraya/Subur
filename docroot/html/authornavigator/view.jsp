@@ -3,8 +3,12 @@
 
 
 <%
-	List<Author> authors = AuthorLocalServiceUtil.findByGroupCompany(themeDisplay.getCompanyId(),
-			themeDisplay.getScopeGroupId(),0,max);
+	//int max = Integer.valueOf(maxResearcher);
+	//List<Author> authors = AuthorLocalServiceUtil.findByGroupCompany(themeDisplay.getCompanyId(),
+	//		themeDisplay.getScopeGroupId(),0,maxResearcher);
+	
+	List<Author> authors = AuthorLocalServiceUtil.recentByGroup(themeDisplay.getCompanyId(),
+			themeDisplay.getScopeGroupId(), new Date(), 0, maxResearcher);
 
 
 %>
@@ -23,14 +27,55 @@
 			PortletURL viewAuthorURL = renderResponse.createActionURL();
 			viewAuthorURL.setParameter("authorId", String.valueOf(author.getAuthorId()));
 			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(author.getLastPublishedDate());
+			int day = cal.get(Calendar.DAY_OF_MONTH);
+			String month = cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, themeDisplay.getLocale());
+					
+			
 			
 	%>
-	<div class="author-nav-details">
-		<a href="<%= viewAuthorURL.toString() %>">
-			<%= author.getDisplayName() %>
-		</a>
-		<span> (<%= author.getItemCount() %> )</span>
-	</div>
+	<c:choose>
+		<c:when test='<%=displayStyle.equals("researcher-name") %>'>
+			<div class="author-nav-entry media">
+				<div class="pull-left">
+					<div class="date">
+						<span class="month"><%= month %></span>
+						<span class="day"><%= day %></span>
+					</div>
+				</div>
+				<div class="author-nav-link media-body">
+					<a href="<%= viewAuthorURL.toString() %>">
+						<h5> <%= author.getDisplayName() %></h5>
+					
+					</a>
+					
+					
+				</div>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="researcher-display media">
+				<aui:a href="<%= viewAuthorURL.toString() %>">
+					<span class="researcher-profile-image">
+					<%
+						String taglibAlt =  HtmlUtil.escapeAttribute(author.getDisplayName());
+		
+					%>
+						<img alt="<%= taglibAlt %>" class="avatar" src="<%=author.getPortraitURL(themeDisplay) %>" width="65" />
+					</span>
+		
+					<span class="user-name">
+						<%= author.getDisplayName() %>
+					</span>
+				</aui:a>
+				<div class="researcher-date">
+					<span><liferay-ui:message key="date" />:</span> <%= dateFormatDate.format(author.getLastPublishedDate()) %>
+				</div>
+					
+				</div>
+			</c:otherwise>
+		</c:choose>
 	
 				
 			

@@ -1,16 +1,15 @@
 <%
-	boolean showAddEntry = SuburPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY);
-	boolean showAdminItem = SuburPermission.contains(permissionChecker, scopeGroupId, ActionKeys.UPDATE);
+	boolean showAddEntry = SuburModelPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY);
+	boolean showAdminItem = SuburModelPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY);
 	boolean showPermission = SuburPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
-	boolean showSubscribe = SuburPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);// && (BlogsUtil.getEmailEntryAddedEnabled(portletPreferences) || BlogsUtil.getEmailEntryUpdatedEnabled(portletPreferences));
-	boolean showManageAuthor = SuburPermission.contains(permissionChecker, scopeGroupId, SuburConstant.PERMISSION_MANAGE_AUTHOR);// && (BlogsUtil.getEmailEntryAddedEnabled(portletPreferences) || BlogsUtil.getEmailEntryUpdatedEnabled(portletPreferences));
+	boolean showSubscribe = SuburPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
 	
 	SearchContainer suburSearchContainer = new SuburSearch(renderRequest, currentURLObj);
 	SuburDisplayTerms suburDisplayTerms = (SuburDisplayTerms)suburSearchContainer.getDisplayTerms();
 	boolean showSearch = true;
 %>
 
-<c:if test="<%= showAddEntry || showAdminItem || showPermission ||  showSubscribe || showSearch || showManageAuthor%>">
+<c:if test="<%= showAddEntry || showAdminItem || showPermission ||  showSubscribe || showSearch %>">
 	<aui:nav-bar>
 		<c:if test="<%= showAddEntry || showAdminItem || showPermission %>">
 			<aui:nav>
@@ -51,7 +50,7 @@
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						
 					</portlet:renderURL>
-				<aui:nav-item href="<%= testURL %>" label="test" title="test" useDialog="<%= false %>" />
+				
 				
 			</aui:nav>
 			

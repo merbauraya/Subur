@@ -29,7 +29,7 @@ public class StatsListener implements MessageListener{
 		try
 		{
 			DownloadSummaryLocalServiceUtil.updateStats();
-			ViewSummaryLocalServiceUtil.updateStats();
+			//ViewSummaryLocalServiceUtil.updateStats();
 		} catch (Exception e)
 		{
 			logger.error(e);

@@ -30,9 +30,12 @@ public class StatViewItemTypeSoap implements Serializable {
 		StatViewItemTypeSoap soapModel = new StatViewItemTypeSoap();
 
 		soapModel.setId(model.getId());
-		soapModel.setPerMonth(model.getPerMonth());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setPerYear(model.getPerYear());
+		soapModel.setPerMonth(model.getPerMonth());
 		soapModel.setItemTypeId(model.getItemTypeId());
+		soapModel.setViewCount(model.getViewCount());
 
 		return soapModel;
 	}
@@ -95,12 +98,20 @@ public class StatViewItemTypeSoap implements Serializable {
 		_id = id;
 	}
 
-	public int getPerMonth() {
-		return _perMonth;
+	public long getCompanyId() {
+		return _companyId;
 	}
 
-	public void setPerMonth(int perMonth) {
-		_perMonth = perMonth;
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	public int getPerYear() {
@@ -111,6 +122,14 @@ public class StatViewItemTypeSoap implements Serializable {
 		_perYear = perYear;
 	}
 
+	public int getPerMonth() {
+		return _perMonth;
+	}
+
+	public void setPerMonth(int perMonth) {
+		_perMonth = perMonth;
+	}
+
 	public long getItemTypeId() {
 		return _itemTypeId;
 	}
@@ -119,8 +138,19 @@ public class StatViewItemTypeSoap implements Serializable {
 		_itemTypeId = itemTypeId;
 	}
 
+	public int getViewCount() {
+		return _viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		_viewCount = viewCount;
+	}
+
 	private long _id;
-	private int _perMonth;
+	private long _companyId;
+	private long _groupId;
 	private int _perYear;
+	private int _perMonth;
 	private long _itemTypeId;
+	private int _viewCount;
 }

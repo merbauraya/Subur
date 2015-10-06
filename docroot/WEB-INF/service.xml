@@ -29,13 +29,14 @@
 		<column name="status" type="int" />
 		<column name="Uuid" type="String" />
 		<column name="metadataValue" type="String"/>
-		
+		<column name="relatedRestricted" type="boolean"></column>
+		<column name="photoCoverId" type="long"/>
 		
 		
 
 		<!-- Order -->
 
-		<order by="asc">
+		<order by="desc">
 			<order-column name="createDate" />
 		</order>
 
@@ -45,6 +46,12 @@
 		</finder>
 		<finder name="Status" return-type="Collection">
 			<finder-column name="status"></finder-column>
+			
+		</finder>
+		<finder return-type="Collection" name="StatusByGroup">
+			<finder-column name="status"></finder-column>
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="companyId"></finder-column>
 		</finder>
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
@@ -73,10 +80,8 @@
     	<column name="authorId" type="long" primary="true"></column>
     	<column name="groupId" type="long" />
     	<column name="companyId" type="long" />
-    	<column name="title" type="String" />
-    	<column name="idType" type="int"></column>
-    	<column name="remoteId" type="String"></column>
-    	<column name="firstName" type="String"></column>
+    	<column name="salutation" type="String" />
+       	<column name="firstName" type="String"></column>
     	<column name="lastName" type="String"></column>
     	<column name="middleName" type="String"></column>
     	<column name="userId" type="int"></column>
@@ -89,6 +94,8 @@
 		<column name="modifiedDate" type="Date" />
 		<column name="Uuid" type="String" />
 		<column name="createdBy" type="long" />
+		<column name="portraitId" type="long" />
+		<column name="title" type="String"/>
     	<finder name="Group" return-type="Collection">
     		<finder-column name="groupId"></finder-column>
     	</finder>
@@ -97,9 +104,7 @@
     		<finder-column name="groupId"></finder-column>
     		
     	</finder>
-    	<finder name="idType" return-type="Collection">
-    		<finder-column name="idType"></finder-column>
-    	</finder>
+    	
     	<finder name="firstName" return-type="Collection">
     		<finder-column name="firstName" comparator="LIKE"></finder-column>
     	</finder>
@@ -107,8 +112,10 @@
     		<finder-column name="lastName" comparator="LIKE"></finder-column>
     	
     	</finder>
+    	
     	<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
+		<reference package-path="com.liferay.portal" entity="Image"/>
     </entity>
     <entity name="AuthorSite" local-service="true" remote-service="false" table="Subur_AuthorSite">
     	<column name="authorSiteId" type="long" primary="true" id-type="increment"></column>
@@ -261,12 +268,17 @@
     <entity name="ViewSummary" local-service="true" remote-service="true" table="Subur_ViewSummary">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
     	<column name="itemId" type="long"></column>
-    	<column name="perMonth" type="int"></column>
+    	<column name="companyId" type="long"></column>
+    	<column name="groupId" type="long"></column>
     	<column name="perYear" type="int"></column>
+    	<column name="perMonth" type="int"></column>
+    	
  
  		<column name="status" type="int"></column>
  		<finder name="Status" return-type="Collection">
 			<finder-column name="status"></finder-column>
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="companyId"></finder-column>
 		</finder>
 		
  		<finder name="Period" return-type="Collection">
@@ -278,34 +290,88 @@
 			<finder-column name="perYear"></finder-column>
 		</finder>
     </entity>
-   
+    <entity name="CopyRequest" local-service="true">
+    	<column name="copyRequestId" type="long" primary="true"></column>
+    	<column name="companyId" type="long"/>
+    	<column name="groupId" type="long"></column>
+    	<column name="dateCreated" type="Date"></column>
+    	<column name="status" type="int"></column>
+    	<column name="suburItemId" type="long"></column>
+    	<column name="fromEmailAddress" type="String"></column>
+    	<column name="requesterName" type="String"></column>
+    	<column name="reason" type="String"></column>
+    	<column name="organization" type="String"></column>
+    	<column name="dateResponsed" type="Date"></column>
+    	<column name="respondText" type="String"></column>
+    	<column name="responsedByUserId" type="long"></column>
+    	<finder return-type="Collection" name="CompanyGroup">
+    		<finder-column name="companyId"></finder-column>
+    		<finder-column name="groupId"></finder-column>
+    	</finder>
+    	<finder return-type="Collection" name="GroupAndStatus">
+    		<finder-column name="groupId"></finder-column>
+    		<finder-column name="status"></finder-column>
+    	</finder>
+    	<finder return-type="Collection" name="CompanyAndStatus">
+    		<finder-column name="companyId"></finder-column>
+    		<finder-column name="status"></finder-column>
+    	</finder>
+    </entity>
      <entity name="StatViewItemType" local-service="true" remote-service="false" table="Subur_StatViewItemType">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
-    	<column name="perMonth" type="int"></column>
+    	<column name="companyId" type="long"></column>
+    	<column name="groupId" type="long"></column>
     	<column name="perYear" type="int"></column>
+    	<column name="perMonth" type="int"></column>
     	<column name="itemTypeId" type="long"></column>
-    	<finder name="ItemType" return-type="Collection">
+    	<column name="viewCount" type="int"></column>
+    	<finder name="ItemTypePeriodGroup" return-type="StatViewItemType" unique="true">
+			<finder-column name="companyId"></finder-column>
+			<finder-column name="groupId"></finder-column>
 			<finder-column name="itemTypeId"></finder-column>
+			<finder-column name="perYear"></finder-column>
+			<finder-column name="perMonth"></finder-column>
+		
 		</finder>
  		
     </entity>
     <entity name="StatViewCategory" local-service="true" remote-service="false" table="Subur_StatViewCategory">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
-    	<column name="perMonth" type="int"></column>
+    	<column name="companyId" type="long"></column>
+    	<column name="groupId" type="long"></column>
     	<column name="perYear" type="int"></column>
+    	<column name="perMonth" type="int"></column>
+    	
     	<column name="categoryId" type="long"></column>
+    	<column name="viewCount" type="int"></column>
     	<finder name="Category" return-type="Collection">
 			<finder-column name="categoryId"></finder-column>
+		</finder>
+		<finder name="CategoryPeriod" return-type="StatViewCategory" unique="true">
+			<finder-column name="companyId"></finder-column>
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="categoryId"></finder-column>
+			<finder-column name="perYear"></finder-column>
+			<finder-column name="perMonth"></finder-column>
 		</finder>
  		
     </entity>
      <entity name="StatViewTag" local-service="true" remote-service="false" table="Subur_StatViewTag">
     	<column name="id" type="long" primary="true" id-type="increment"></column>
+    	<column name="companyId" type="long"></column>
+    	<column name="groupId" type="long"></column>
     	<column name="perMonth" type="int"></column>
     	<column name="perYear" type="int"></column>
     	<column name="tagId" type="long"></column>
- 		<finder name="Tag" return-type="Collection">
+    	<column name="viewCount" type="int"></column>
+ 		<finder name="TagPeriod" return-type="StatViewTag" unique="true">
+			<finder-column name="companyId"></finder-column>
+			<finder-column name="groupId"></finder-column>
 			<finder-column name="tagId"></finder-column>
+			<finder-column name="perYear"></finder-column>
+			<finder-column name="perMonth"></finder-column>
+			
+			
 		</finder>
     </entity>
     <entity name="SuburConfig" local-service="true" remote-service="false" table="Subur_Config">
@@ -318,4 +384,5 @@
     		
     	</finder>
     </entity>
+   
 </service-builder>

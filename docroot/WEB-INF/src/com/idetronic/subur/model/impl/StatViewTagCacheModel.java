@@ -35,16 +35,22 @@ public class StatViewTagCacheModel implements CacheModel<StatViewTag>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{id=");
 		sb.append(id);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", perMonth=");
 		sb.append(perMonth);
 		sb.append(", perYear=");
 		sb.append(perYear);
 		sb.append(", tagId=");
 		sb.append(tagId);
+		sb.append(", viewCount=");
+		sb.append(viewCount);
 		sb.append("}");
 
 		return sb.toString();
@@ -55,9 +61,12 @@ public class StatViewTagCacheModel implements CacheModel<StatViewTag>,
 		StatViewTagImpl statViewTagImpl = new StatViewTagImpl();
 
 		statViewTagImpl.setId(id);
+		statViewTagImpl.setCompanyId(companyId);
+		statViewTagImpl.setGroupId(groupId);
 		statViewTagImpl.setPerMonth(perMonth);
 		statViewTagImpl.setPerYear(perYear);
 		statViewTagImpl.setTagId(tagId);
+		statViewTagImpl.setViewCount(viewCount);
 
 		statViewTagImpl.resetOriginalValues();
 
@@ -67,22 +76,31 @@ public class StatViewTagCacheModel implements CacheModel<StatViewTag>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		id = objectInput.readLong();
+		companyId = objectInput.readLong();
+		groupId = objectInput.readLong();
 		perMonth = objectInput.readInt();
 		perYear = objectInput.readInt();
 		tagId = objectInput.readLong();
+		viewCount = objectInput.readInt();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(id);
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(groupId);
 		objectOutput.writeInt(perMonth);
 		objectOutput.writeInt(perYear);
 		objectOutput.writeLong(tagId);
+		objectOutput.writeInt(viewCount);
 	}
 
 	public long id;
+	public long companyId;
+	public long groupId;
 	public int perMonth;
 	public int perYear;
 	public long tagId;
+	public int viewCount;
 }

@@ -21,6 +21,7 @@ import com.idetronic.subur.service.persistence.AuthorFinder;
 import com.idetronic.subur.service.persistence.AuthorPersistence;
 import com.idetronic.subur.service.persistence.AuthorResearchInterestPersistence;
 import com.idetronic.subur.service.persistence.AuthorSitePersistence;
+import com.idetronic.subur.service.persistence.CopyRequestPersistence;
 import com.idetronic.subur.service.persistence.DownloadSummaryPersistence;
 import com.idetronic.subur.service.persistence.ExpertiseFinder;
 import com.idetronic.subur.service.persistence.ExpertisePersistence;
@@ -58,6 +59,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
@@ -468,6 +470,63 @@ public abstract class AuthorLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setAuthorSitePersistence(
 		AuthorSitePersistence authorSitePersistence) {
 		this.authorSitePersistence = authorSitePersistence;
+	}
+
+	/**
+	 * Returns the copy request local service.
+	 *
+	 * @return the copy request local service
+	 */
+	public com.idetronic.subur.service.CopyRequestLocalService getCopyRequestLocalService() {
+		return copyRequestLocalService;
+	}
+
+	/**
+	 * Sets the copy request local service.
+	 *
+	 * @param copyRequestLocalService the copy request local service
+	 */
+	public void setCopyRequestLocalService(
+		com.idetronic.subur.service.CopyRequestLocalService copyRequestLocalService) {
+		this.copyRequestLocalService = copyRequestLocalService;
+	}
+
+	/**
+	 * Returns the copy request remote service.
+	 *
+	 * @return the copy request remote service
+	 */
+	public com.idetronic.subur.service.CopyRequestService getCopyRequestService() {
+		return copyRequestService;
+	}
+
+	/**
+	 * Sets the copy request remote service.
+	 *
+	 * @param copyRequestService the copy request remote service
+	 */
+	public void setCopyRequestService(
+		com.idetronic.subur.service.CopyRequestService copyRequestService) {
+		this.copyRequestService = copyRequestService;
+	}
+
+	/**
+	 * Returns the copy request persistence.
+	 *
+	 * @return the copy request persistence
+	 */
+	public CopyRequestPersistence getCopyRequestPersistence() {
+		return copyRequestPersistence;
+	}
+
+	/**
+	 * Sets the copy request persistence.
+	 *
+	 * @param copyRequestPersistence the copy request persistence
+	 */
+	public void setCopyRequestPersistence(
+		CopyRequestPersistence copyRequestPersistence) {
+		this.copyRequestPersistence = copyRequestPersistence;
 	}
 
 	/**
@@ -1264,6 +1323,62 @@ public abstract class AuthorLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the image local service.
+	 *
+	 * @return the image local service
+	 */
+	public com.liferay.portal.service.ImageLocalService getImageLocalService() {
+		return imageLocalService;
+	}
+
+	/**
+	 * Sets the image local service.
+	 *
+	 * @param imageLocalService the image local service
+	 */
+	public void setImageLocalService(
+		com.liferay.portal.service.ImageLocalService imageLocalService) {
+		this.imageLocalService = imageLocalService;
+	}
+
+	/**
+	 * Returns the image remote service.
+	 *
+	 * @return the image remote service
+	 */
+	public com.liferay.portal.service.ImageService getImageService() {
+		return imageService;
+	}
+
+	/**
+	 * Sets the image remote service.
+	 *
+	 * @param imageService the image remote service
+	 */
+	public void setImageService(
+		com.liferay.portal.service.ImageService imageService) {
+		this.imageService = imageService;
+	}
+
+	/**
+	 * Returns the image persistence.
+	 *
+	 * @return the image persistence
+	 */
+	public ImagePersistence getImagePersistence() {
+		return imagePersistence;
+	}
+
+	/**
+	 * Sets the image persistence.
+	 *
+	 * @param imagePersistence the image persistence
+	 */
+	public void setImagePersistence(ImagePersistence imagePersistence) {
+		this.imagePersistence = imagePersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -1533,6 +1648,12 @@ public abstract class AuthorLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.idetronic.subur.service.AuthorSiteLocalService authorSiteLocalService;
 	@BeanReference(type = AuthorSitePersistence.class)
 	protected AuthorSitePersistence authorSitePersistence;
+	@BeanReference(type = com.idetronic.subur.service.CopyRequestLocalService.class)
+	protected com.idetronic.subur.service.CopyRequestLocalService copyRequestLocalService;
+	@BeanReference(type = com.idetronic.subur.service.CopyRequestService.class)
+	protected com.idetronic.subur.service.CopyRequestService copyRequestService;
+	@BeanReference(type = CopyRequestPersistence.class)
+	protected CopyRequestPersistence copyRequestPersistence;
 	@BeanReference(type = com.idetronic.subur.service.DownloadSummaryLocalService.class)
 	protected com.idetronic.subur.service.DownloadSummaryLocalService downloadSummaryLocalService;
 	@BeanReference(type = DownloadSummaryPersistence.class)
@@ -1617,6 +1738,12 @@ public abstract class AuthorLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected ViewSummaryFinder viewSummaryFinder;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.service.ImageLocalService.class)
+	protected com.liferay.portal.service.ImageLocalService imageLocalService;
+	@BeanReference(type = com.liferay.portal.service.ImageService.class)
+	protected com.liferay.portal.service.ImageService imageService;
+	@BeanReference(type = ImagePersistence.class)
+	protected ImagePersistence imagePersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)

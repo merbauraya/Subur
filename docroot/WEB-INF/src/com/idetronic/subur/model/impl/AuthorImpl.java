@@ -15,6 +15,9 @@
 package com.idetronic.subur.model.impl;
 
 import com.idetronic.subur.util.SuburUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 /**
  * The extended model implementation for the Author service. Represents a row in the &quot;subur_Author&quot; database table, with each column mapped to a property of this class.
@@ -36,6 +39,45 @@ public class AuthorImpl extends AuthorBaseImpl {
 	public String getDisplayName()
 	{
 		return SuburUtil.getAuhorDisplayName(getFirstName(), getLastName());
+	}
+	public String getPortraitURL(ThemeDisplay themeDisplay)
+	{
+		long portraitId = getPortraitId();
+		StringBundler sb = new StringBundler(9);
+
+		sb.append(themeDisplay.getPathImage());
+		
+/*
+		if (male) {
+			sb.append("male");
+		}
+		else {
+			sb.append("female");
+		}
+*/
+		if (portraitId> 0)
+		{
+			sb.append("/author");
+			sb.append("_portrait?img_id=");
+			sb.append(portraitId);
+		}else
+		{
+			sb.append("/user_male_portrait?img_id=0");
+		}
+/*
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN))) {
+
+			sb.append("&img_id_token=");
+			sb.append(HttpUtil.encodeURL(DigesterUtil.digest(userUuid)));
+		}
+*/
+		sb.append("&t=");
+		sb.append(WebServerServletTokenUtil.getToken(portraitId));
+
+		return sb.toString();
+		
+		
 	}
 	
 }

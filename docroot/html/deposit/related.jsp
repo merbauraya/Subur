@@ -38,7 +38,7 @@
 </div>
 </liferay-ui:panel>
 
-
+<aui:input type="checkbox" name="relatedRestricted"/>
 <aui:script use="liferay-upload,aui-base">
     var liferayUpload = new Liferay.Upload(
         {

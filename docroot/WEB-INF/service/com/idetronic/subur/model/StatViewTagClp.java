@@ -74,9 +74,12 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("id", getId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("perMonth", getPerMonth());
 		attributes.put("perYear", getPerYear());
 		attributes.put("tagId", getTagId());
+		attributes.put("viewCount", getViewCount());
 
 		return attributes;
 	}
@@ -87,6 +90,18 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 
 		if (id != null) {
 			setId(id);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Integer perMonth = (Integer)attributes.get("perMonth");
@@ -106,6 +121,12 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 		if (tagId != null) {
 			setTagId(tagId);
 		}
+
+		Integer viewCount = (Integer)attributes.get("viewCount");
+
+		if (viewCount != null) {
+			setViewCount(viewCount);
+		}
 	}
 
 	@Override
@@ -124,6 +145,52 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 				Method method = clazz.getMethod("setId", long.class);
 
 				method.invoke(_statViewTagRemoteModel, id);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+
+		if (_statViewTagRemoteModel != null) {
+			try {
+				Class<?> clazz = _statViewTagRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_statViewTagRemoteModel, companyId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+
+		if (_statViewTagRemoteModel != null) {
+			try {
+				Class<?> clazz = _statViewTagRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGroupId", long.class);
+
+				method.invoke(_statViewTagRemoteModel, groupId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -193,6 +260,29 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 				Method method = clazz.getMethod("setTagId", long.class);
 
 				method.invoke(_statViewTagRemoteModel, tagId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getViewCount() {
+		return _viewCount;
+	}
+
+	@Override
+	public void setViewCount(int viewCount) {
+		_viewCount = viewCount;
+
+		if (_statViewTagRemoteModel != null) {
+			try {
+				Class<?> clazz = _statViewTagRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setViewCount", int.class);
+
+				method.invoke(_statViewTagRemoteModel, viewCount);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -270,9 +360,12 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 		StatViewTagClp clone = new StatViewTagClp();
 
 		clone.setId(getId());
+		clone.setCompanyId(getCompanyId());
+		clone.setGroupId(getGroupId());
 		clone.setPerMonth(getPerMonth());
 		clone.setPerYear(getPerYear());
 		clone.setTagId(getTagId());
+		clone.setViewCount(getViewCount());
 
 		return clone;
 	}
@@ -325,16 +418,22 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{id=");
 		sb.append(getId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", perMonth=");
 		sb.append(getPerMonth());
 		sb.append(", perYear=");
 		sb.append(getPerYear());
 		sb.append(", tagId=");
 		sb.append(getTagId());
+		sb.append(", viewCount=");
+		sb.append(getViewCount());
 		sb.append("}");
 
 		return sb.toString();
@@ -342,7 +441,7 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.StatViewTag");
@@ -351,6 +450,14 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 		sb.append(
 			"<column><column-name>id</column-name><column-value><![CDATA[");
 		sb.append(getId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>perMonth</column-name><column-value><![CDATA[");
@@ -364,6 +471,10 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 			"<column><column-name>tagId</column-name><column-value><![CDATA[");
 		sb.append(getTagId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>viewCount</column-name><column-value><![CDATA[");
+		sb.append(getViewCount());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -371,9 +482,12 @@ public class StatViewTagClp extends BaseModelImpl<StatViewTag>
 	}
 
 	private long _id;
+	private long _companyId;
+	private long _groupId;
 	private int _perMonth;
 	private int _perYear;
 	private long _tagId;
+	private int _viewCount;
 	private BaseModel<?> _statViewTagRemoteModel;
 	private Class<?> _clpSerializerClass = com.idetronic.subur.service.ClpSerializer.class;
 }

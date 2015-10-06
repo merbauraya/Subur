@@ -111,167 +111,103 @@ public class StatViewItemTypeUtil {
 	}
 
 	/**
-	* Returns all the stat view item types where itemTypeId = &#63;.
+	* Returns the stat view item type where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63; or throws a {@link com.idetronic.subur.NoSuchStatViewItemTypeException} if it could not be found.
 	*
+	* @param companyId the company ID
+	* @param groupId the group ID
 	* @param itemTypeId the item type ID
-	* @return the matching stat view item types
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.idetronic.subur.model.StatViewItemType> findByItemType(
-		long itemTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByItemType(itemTypeId);
-	}
-
-	/**
-	* Returns a range of all the stat view item types where itemTypeId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.StatViewItemTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param itemTypeId the item type ID
-	* @param start the lower bound of the range of stat view item types
-	* @param end the upper bound of the range of stat view item types (not inclusive)
-	* @return the range of matching stat view item types
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.idetronic.subur.model.StatViewItemType> findByItemType(
-		long itemTypeId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByItemType(itemTypeId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the stat view item types where itemTypeId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.StatViewItemTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param itemTypeId the item type ID
-	* @param start the lower bound of the range of stat view item types
-	* @param end the upper bound of the range of stat view item types (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching stat view item types
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.idetronic.subur.model.StatViewItemType> findByItemType(
-		long itemTypeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByItemType(itemTypeId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first stat view item type in the ordered set where itemTypeId = &#63;.
-	*
-	* @param itemTypeId the item type ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching stat view item type
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the matching stat view item type
 	* @throws com.idetronic.subur.NoSuchStatViewItemTypeException if a matching stat view item type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.idetronic.subur.model.StatViewItemType findByItemType_First(
-		long itemTypeId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.idetronic.subur.model.StatViewItemType findByItemTypePeriodGroup(
+		long companyId, long groupId, long itemTypeId, int perYear, int perMonth)
 		throws com.idetronic.subur.NoSuchStatViewItemTypeException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByItemType_First(itemTypeId, orderByComparator);
+				   .findByItemTypePeriodGroup(companyId, groupId, itemTypeId,
+			perYear, perMonth);
 	}
 
 	/**
-	* Returns the first stat view item type in the ordered set where itemTypeId = &#63;.
+	* Returns the stat view item type where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
+	* @param companyId the company ID
+	* @param groupId the group ID
 	* @param itemTypeId the item type ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching stat view item type, or <code>null</code> if a matching stat view item type could not be found
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the matching stat view item type, or <code>null</code> if a matching stat view item type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.idetronic.subur.model.StatViewItemType fetchByItemType_First(
-		long itemTypeId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.idetronic.subur.model.StatViewItemType fetchByItemTypePeriodGroup(
+		long companyId, long groupId, long itemTypeId, int perYear, int perMonth)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByItemType_First(itemTypeId, orderByComparator);
+				   .fetchByItemTypePeriodGroup(companyId, groupId, itemTypeId,
+			perYear, perMonth);
 	}
 
 	/**
-	* Returns the last stat view item type in the ordered set where itemTypeId = &#63;.
+	* Returns the stat view item type where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
+	* @param companyId the company ID
+	* @param groupId the group ID
 	* @param itemTypeId the item type ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching stat view item type
-	* @throws com.idetronic.subur.NoSuchStatViewItemTypeException if a matching stat view item type could not be found
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching stat view item type, or <code>null</code> if a matching stat view item type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.idetronic.subur.model.StatViewItemType findByItemType_Last(
-		long itemTypeId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.idetronic.subur.model.StatViewItemType fetchByItemTypePeriodGroup(
+		long companyId, long groupId, long itemTypeId, int perYear,
+		int perMonth, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByItemTypePeriodGroup(companyId, groupId, itemTypeId,
+			perYear, perMonth, retrieveFromCache);
+	}
+
+	/**
+	* Removes the stat view item type where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param itemTypeId the item type ID
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the stat view item type that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.StatViewItemType removeByItemTypePeriodGroup(
+		long companyId, long groupId, long itemTypeId, int perYear, int perMonth)
 		throws com.idetronic.subur.NoSuchStatViewItemTypeException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByItemType_Last(itemTypeId, orderByComparator);
+				   .removeByItemTypePeriodGroup(companyId, groupId, itemTypeId,
+			perYear, perMonth);
 	}
 
 	/**
-	* Returns the last stat view item type in the ordered set where itemTypeId = &#63;.
+	* Returns the number of stat view item types where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63;.
 	*
+	* @param companyId the company ID
+	* @param groupId the group ID
 	* @param itemTypeId the item type ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching stat view item type, or <code>null</code> if a matching stat view item type could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.idetronic.subur.model.StatViewItemType fetchByItemType_Last(
-		long itemTypeId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByItemType_Last(itemTypeId, orderByComparator);
-	}
-
-	/**
-	* Returns the stat view item types before and after the current stat view item type in the ordered set where itemTypeId = &#63;.
-	*
-	* @param id the primary key of the current stat view item type
-	* @param itemTypeId the item type ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next stat view item type
-	* @throws com.idetronic.subur.NoSuchStatViewItemTypeException if a stat view item type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.idetronic.subur.model.StatViewItemType[] findByItemType_PrevAndNext(
-		long id, long itemTypeId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.idetronic.subur.NoSuchStatViewItemTypeException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByItemType_PrevAndNext(id, itemTypeId, orderByComparator);
-	}
-
-	/**
-	* Removes all the stat view item types where itemTypeId = &#63; from the database.
-	*
-	* @param itemTypeId the item type ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByItemType(long itemTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByItemType(itemTypeId);
-	}
-
-	/**
-	* Returns the number of stat view item types where itemTypeId = &#63;.
-	*
-	* @param itemTypeId the item type ID
+	* @param perYear the per year
+	* @param perMonth the per month
 	* @return the number of matching stat view item types
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByItemType(long itemTypeId)
+	public static int countByItemTypePeriodGroup(long companyId, long groupId,
+		long itemTypeId, int perYear, int perMonth)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByItemType(itemTypeId);
+		return getPersistence()
+				   .countByItemTypePeriodGroup(companyId, groupId, itemTypeId,
+			perYear, perMonth);
 	}
 
 	/**

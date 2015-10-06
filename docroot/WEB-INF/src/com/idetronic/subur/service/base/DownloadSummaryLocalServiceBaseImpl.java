@@ -21,6 +21,7 @@ import com.idetronic.subur.service.persistence.AuthorFinder;
 import com.idetronic.subur.service.persistence.AuthorPersistence;
 import com.idetronic.subur.service.persistence.AuthorResearchInterestPersistence;
 import com.idetronic.subur.service.persistence.AuthorSitePersistence;
+import com.idetronic.subur.service.persistence.CopyRequestPersistence;
 import com.idetronic.subur.service.persistence.DownloadSummaryPersistence;
 import com.idetronic.subur.service.persistence.ExpertiseFinder;
 import com.idetronic.subur.service.persistence.ExpertisePersistence;
@@ -472,6 +473,63 @@ public abstract class DownloadSummaryLocalServiceBaseImpl
 	public void setAuthorSitePersistence(
 		AuthorSitePersistence authorSitePersistence) {
 		this.authorSitePersistence = authorSitePersistence;
+	}
+
+	/**
+	 * Returns the copy request local service.
+	 *
+	 * @return the copy request local service
+	 */
+	public com.idetronic.subur.service.CopyRequestLocalService getCopyRequestLocalService() {
+		return copyRequestLocalService;
+	}
+
+	/**
+	 * Sets the copy request local service.
+	 *
+	 * @param copyRequestLocalService the copy request local service
+	 */
+	public void setCopyRequestLocalService(
+		com.idetronic.subur.service.CopyRequestLocalService copyRequestLocalService) {
+		this.copyRequestLocalService = copyRequestLocalService;
+	}
+
+	/**
+	 * Returns the copy request remote service.
+	 *
+	 * @return the copy request remote service
+	 */
+	public com.idetronic.subur.service.CopyRequestService getCopyRequestService() {
+		return copyRequestService;
+	}
+
+	/**
+	 * Sets the copy request remote service.
+	 *
+	 * @param copyRequestService the copy request remote service
+	 */
+	public void setCopyRequestService(
+		com.idetronic.subur.service.CopyRequestService copyRequestService) {
+		this.copyRequestService = copyRequestService;
+	}
+
+	/**
+	 * Returns the copy request persistence.
+	 *
+	 * @return the copy request persistence
+	 */
+	public CopyRequestPersistence getCopyRequestPersistence() {
+		return copyRequestPersistence;
+	}
+
+	/**
+	 * Sets the copy request persistence.
+	 *
+	 * @param copyRequestPersistence the copy request persistence
+	 */
+	public void setCopyRequestPersistence(
+		CopyRequestPersistence copyRequestPersistence) {
+		this.copyRequestPersistence = copyRequestPersistence;
 	}
 
 	/**
@@ -1442,6 +1500,12 @@ public abstract class DownloadSummaryLocalServiceBaseImpl
 	protected com.idetronic.subur.service.AuthorSiteLocalService authorSiteLocalService;
 	@BeanReference(type = AuthorSitePersistence.class)
 	protected AuthorSitePersistence authorSitePersistence;
+	@BeanReference(type = com.idetronic.subur.service.CopyRequestLocalService.class)
+	protected com.idetronic.subur.service.CopyRequestLocalService copyRequestLocalService;
+	@BeanReference(type = com.idetronic.subur.service.CopyRequestService.class)
+	protected com.idetronic.subur.service.CopyRequestService copyRequestService;
+	@BeanReference(type = CopyRequestPersistence.class)
+	protected CopyRequestPersistence copyRequestPersistence;
 	@BeanReference(type = com.idetronic.subur.service.DownloadSummaryLocalService.class)
 	protected com.idetronic.subur.service.DownloadSummaryLocalService downloadSummaryLocalService;
 	@BeanReference(type = DownloadSummaryPersistence.class)

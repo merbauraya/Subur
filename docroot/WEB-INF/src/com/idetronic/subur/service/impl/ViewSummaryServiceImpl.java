@@ -17,11 +17,17 @@ package com.idetronic.subur.service.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormatSymbols;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import com.idetronic.subur.service.ViewSummaryLocalServiceUtil;
 import com.idetronic.subur.service.base.ViewSummaryServiceBaseImpl;
+import com.idetronic.subur.service.persistence.AuthorPersistence;
 import com.idetronic.subur.service.persistence.ViewSummaryFinderUtil;
+import com.idetronic.subur.util.SuburUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -51,8 +57,17 @@ public class ViewSummaryServiceImpl extends ViewSummaryServiceBaseImpl {
 	 */
 	
 	private static Log logger = LogFactoryUtil.getLog(ViewSummaryServiceImpl.class);
+	public JSONObject getTestChartData()
+	{
+		return SuburUtil.getLineChartData1();
+	}
 	
-	public JSONArray getMonthlyCategory(int year,long vocabularyId) throws Exception
+	public JSONObject getMonthlyAssetCategoryChart(int year,int vocabularyId) throws SQLException
+	{
+		return ViewSummaryFinderUtil.getMonthlyCategoryChart(year, vocabularyId);
+	}
+	
+	public JSONObject getMonthlyCategory(int year,long vocabularyId) throws Exception
 	{
 		return ViewSummaryFinderUtil.getMonthlyCategorySummary(year,vocabularyId);
 	}
@@ -70,8 +85,16 @@ public class ViewSummaryServiceImpl extends ViewSummaryServiceBaseImpl {
 				
 	}
 	
-	public JSONArray getMonthlyTagSummary(int year) throws Exception
+	public JSONObject getMonthlyTagSummary(int year) throws Exception
 	{
 		return ViewSummaryFinderUtil.getMothlyTagSummary(year);
 	}
+	/*
+	public JSONArray getMonthlyTagSummaryX(int year) throws Exception
+	{
+		return ViewSummaryFinderUtil.getMothlyTagSummary(year);
+	}
+	*/
+	
+	
 }

@@ -30,11 +30,17 @@
 		{
 			selectedStyle = "item-type-selected";
 			itemTypeParam = StringUtil.merge(ArrayUtil.remove(selectedItemTypesIds, String.valueOf(itemTypeId)));
+			PortletURL portletURL = renderResponse.createRenderURL();
+			portletURL.setParameter("itemTypeId", String.valueOf(itemTypeId));
+			
+			PortalUtil.addPortletBreadcrumbEntry(request, itemType.getItemTypeName(), portletURL.toString());
+			
+			
 		}else
 		{
 			itemTypeParam = StringUtil.merge(ArrayUtil.append(selectedItemTypesIds, String.valueOf(itemTypeId)));
 		}
-		itemTypeURL.setParameter("itemTypeIds", itemTypeParam);
+		itemTypeURL.setParameter("itemTypeIds", String.valueOf(itemTypeId));
 	
 %>
 		<li class="item-type-popular">

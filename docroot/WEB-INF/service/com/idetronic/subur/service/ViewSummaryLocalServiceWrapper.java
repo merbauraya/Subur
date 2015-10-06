@@ -289,26 +289,21 @@ public class ViewSummaryLocalServiceWrapper implements ViewSummaryLocalService,
 		return _viewSummaryLocalService.getMonthlyStatRs(year);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.json.JSONArray getMonthlyTag(int year)
-		throws java.sql.SQLException {
-		return _viewSummaryLocalService.getMonthlyTag(year);
-	}
-
 	/**
 	* Add view stats info the the entity.
 	*/
 	@Override
-	public com.idetronic.subur.model.ViewSummary addStats(long itemId)
+	public com.idetronic.subur.model.ViewSummary addStats(long itemId,
+		long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _viewSummaryLocalService.addStats(itemId);
+		return _viewSummaryLocalService.addStats(itemId, companyId, groupId);
 	}
 
 	@Override
-	public void updateStats()
+	public void updateStats(long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_viewSummaryLocalService.updateStats();
+		_viewSummaryLocalService.updateStats(companyId, groupId);
 	}
 
 	/**

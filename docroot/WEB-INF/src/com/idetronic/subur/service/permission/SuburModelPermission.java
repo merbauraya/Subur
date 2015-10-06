@@ -4,7 +4,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
-public class SuburItemModelPermission {
+public class SuburModelPermission {
 	public static final String RESOURCE_NAME = "com.idetronic.subur.model";
 
     public static void check(PermissionChecker permissionChecker, long groupId,

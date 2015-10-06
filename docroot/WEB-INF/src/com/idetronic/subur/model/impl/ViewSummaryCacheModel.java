@@ -35,16 +35,20 @@ public class ViewSummaryCacheModel implements CacheModel<ViewSummary>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{id=");
 		sb.append(id);
 		sb.append(", itemId=");
 		sb.append(itemId);
-		sb.append(", perMonth=");
-		sb.append(perMonth);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", perYear=");
 		sb.append(perYear);
+		sb.append(", perMonth=");
+		sb.append(perMonth);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -58,8 +62,10 @@ public class ViewSummaryCacheModel implements CacheModel<ViewSummary>,
 
 		viewSummaryImpl.setId(id);
 		viewSummaryImpl.setItemId(itemId);
-		viewSummaryImpl.setPerMonth(perMonth);
+		viewSummaryImpl.setCompanyId(companyId);
+		viewSummaryImpl.setGroupId(groupId);
 		viewSummaryImpl.setPerYear(perYear);
+		viewSummaryImpl.setPerMonth(perMonth);
 		viewSummaryImpl.setStatus(status);
 
 		viewSummaryImpl.resetOriginalValues();
@@ -71,8 +77,10 @@ public class ViewSummaryCacheModel implements CacheModel<ViewSummary>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		id = objectInput.readLong();
 		itemId = objectInput.readLong();
-		perMonth = objectInput.readInt();
+		companyId = objectInput.readLong();
+		groupId = objectInput.readLong();
 		perYear = objectInput.readInt();
+		perMonth = objectInput.readInt();
 		status = objectInput.readInt();
 	}
 
@@ -81,14 +89,18 @@ public class ViewSummaryCacheModel implements CacheModel<ViewSummary>,
 		throws IOException {
 		objectOutput.writeLong(id);
 		objectOutput.writeLong(itemId);
-		objectOutput.writeInt(perMonth);
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(groupId);
 		objectOutput.writeInt(perYear);
+		objectOutput.writeInt(perMonth);
 		objectOutput.writeInt(status);
 	}
 
 	public long id;
 	public long itemId;
-	public int perMonth;
+	public long companyId;
+	public long groupId;
 	public int perYear;
+	public int perMonth;
 	public int status;
 }

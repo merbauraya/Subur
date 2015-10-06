@@ -24,79 +24,102 @@ import java.util.Arrays;
  */
 public class ViewSummaryServiceClpInvoker {
 	public ViewSummaryServiceClpInvoker() {
-		_methodName112 = "getBeanIdentifier";
+		_methodName118 = "getBeanIdentifier";
 
-		_methodParameterTypes112 = new String[] {  };
+		_methodParameterTypes118 = new String[] {  };
 
-		_methodName113 = "setBeanIdentifier";
+		_methodName119 = "setBeanIdentifier";
 
-		_methodParameterTypes113 = new String[] { "java.lang.String" };
+		_methodParameterTypes119 = new String[] { "java.lang.String" };
 
-		_methodName118 = "getMonthlyCategory";
+		_methodName124 = "getTestChartData";
 
-		_methodParameterTypes118 = new String[] { "int", "long" };
+		_methodParameterTypes124 = new String[] {  };
 
-		_methodName119 = "getMonthlyItemType";
+		_methodName125 = "getMonthlyAssetCategoryChart";
 
-		_methodParameterTypes119 = new String[] { "int" };
+		_methodParameterTypes125 = new String[] { "int", "int" };
 
-		_methodName120 = "getMonthlySummary";
+		_methodName126 = "getMonthlyCategory";
 
-		_methodParameterTypes120 = new String[] { "int" };
+		_methodParameterTypes126 = new String[] { "int", "long" };
 
-		_methodName121 = "getMonthlyTagSummary";
+		_methodName127 = "getMonthlyItemType";
 
-		_methodParameterTypes121 = new String[] { "int" };
+		_methodParameterTypes127 = new String[] { "int" };
+
+		_methodName128 = "getMonthlySummary";
+
+		_methodParameterTypes128 = new String[] { "int" };
+
+		_methodName129 = "getMonthlyTagSummary";
+
+		_methodParameterTypes129 = new String[] { "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName112.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return ViewSummaryServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName113.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			ViewSummaryServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+			return ViewSummaryServiceUtil.getTestChartData();
+		}
+
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+			return ViewSummaryServiceUtil.getMonthlyAssetCategoryChart(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlyCategory(((Integer)arguments[0]).intValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName119.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlyItemType(((Integer)arguments[0]).intValue());
 		}
 
-		if (_methodName120.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlySummary(((Integer)arguments[0]).intValue());
 		}
 
-		if (_methodName121.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			return ViewSummaryServiceUtil.getMonthlyTagSummary(((Integer)arguments[0]).intValue());
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName112;
-	private String[] _methodParameterTypes112;
-	private String _methodName113;
-	private String[] _methodParameterTypes113;
 	private String _methodName118;
 	private String[] _methodParameterTypes118;
 	private String _methodName119;
 	private String[] _methodParameterTypes119;
-	private String _methodName120;
-	private String[] _methodParameterTypes120;
-	private String _methodName121;
-	private String[] _methodParameterTypes121;
+	private String _methodName124;
+	private String[] _methodParameterTypes124;
+	private String _methodName125;
+	private String[] _methodParameterTypes125;
+	private String _methodName126;
+	private String[] _methodParameterTypes126;
+	private String _methodName127;
+	private String[] _methodParameterTypes127;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
 }

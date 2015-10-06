@@ -86,129 +86,151 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(StatViewItemTypeModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewItemTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ITEMTYPE = new FinderPath(StatViewItemTypeModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP = new FinderPath(StatViewItemTypeModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewItemTypeModelImpl.FINDER_CACHE_ENABLED,
-			StatViewItemTypeImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByItemType",
+			StatViewItemTypeImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByItemTypePeriodGroup",
 			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMTYPE =
-		new FinderPath(StatViewItemTypeModelImpl.ENTITY_CACHE_ENABLED,
-			StatViewItemTypeModelImpl.FINDER_CACHE_ENABLED,
-			StatViewItemTypeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByItemType",
-			new String[] { Long.class.getName() },
-			StatViewItemTypeModelImpl.ITEMTYPEID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ITEMTYPE = new FinderPath(StatViewItemTypeModelImpl.ENTITY_CACHE_ENABLED,
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName()
+			},
+			StatViewItemTypeModelImpl.COMPANYID_COLUMN_BITMASK |
+			StatViewItemTypeModelImpl.GROUPID_COLUMN_BITMASK |
+			StatViewItemTypeModelImpl.ITEMTYPEID_COLUMN_BITMASK |
+			StatViewItemTypeModelImpl.PERYEAR_COLUMN_BITMASK |
+			StatViewItemTypeModelImpl.PERMONTH_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ITEMTYPEPERIODGROUP = new FinderPath(StatViewItemTypeModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewItemTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByItemType",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByItemTypePeriodGroup",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName()
+			});
 
 	/**
-	 * Returns all the stat view item types where itemTypeId = &#63;.
+	 * Returns the stat view item type where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63; or throws a {@link com.idetronic.subur.NoSuchStatViewItemTypeException} if it could not be found.
 	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param itemTypeId the item type ID
-	 * @return the matching stat view item types
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the matching stat view item type
+	 * @throws com.idetronic.subur.NoSuchStatViewItemTypeException if a matching stat view item type could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<StatViewItemType> findByItemType(long itemTypeId)
+	public StatViewItemType findByItemTypePeriodGroup(long companyId,
+		long groupId, long itemTypeId, int perYear, int perMonth)
+		throws NoSuchStatViewItemTypeException, SystemException {
+		StatViewItemType statViewItemType = fetchByItemTypePeriodGroup(companyId,
+				groupId, itemTypeId, perYear, perMonth);
+
+		if (statViewItemType == null) {
+			StringBundler msg = new StringBundler(12);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", groupId=");
+			msg.append(groupId);
+
+			msg.append(", itemTypeId=");
+			msg.append(itemTypeId);
+
+			msg.append(", perYear=");
+			msg.append(perYear);
+
+			msg.append(", perMonth=");
+			msg.append(perMonth);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchStatViewItemTypeException(msg.toString());
+		}
+
+		return statViewItemType;
+	}
+
+	/**
+	 * Returns the stat view item type where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param itemTypeId the item type ID
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the matching stat view item type, or <code>null</code> if a matching stat view item type could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public StatViewItemType fetchByItemTypePeriodGroup(long companyId,
+		long groupId, long itemTypeId, int perYear, int perMonth)
 		throws SystemException {
-		return findByItemType(itemTypeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return fetchByItemTypePeriodGroup(companyId, groupId, itemTypeId,
+			perYear, perMonth, true);
 	}
 
 	/**
-	 * Returns a range of all the stat view item types where itemTypeId = &#63;.
+	 * Returns the stat view item type where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.StatViewItemTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param itemTypeId the item type ID
-	 * @param start the lower bound of the range of stat view item types
-	 * @param end the upper bound of the range of stat view item types (not inclusive)
-	 * @return the range of matching stat view item types
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching stat view item type, or <code>null</code> if a matching stat view item type could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<StatViewItemType> findByItemType(long itemTypeId, int start,
-		int end) throws SystemException {
-		return findByItemType(itemTypeId, start, end, null);
-	}
+	public StatViewItemType fetchByItemTypePeriodGroup(long companyId,
+		long groupId, long itemTypeId, int perYear, int perMonth,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, groupId, itemTypeId, perYear, perMonth
+			};
 
-	/**
-	 * Returns an ordered range of all the stat view item types where itemTypeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.StatViewItemTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param itemTypeId the item type ID
-	 * @param start the lower bound of the range of stat view item types
-	 * @param end the upper bound of the range of stat view item types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching stat view item types
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<StatViewItemType> findByItemType(long itemTypeId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+		Object result = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMTYPE;
-			finderArgs = new Object[] { itemTypeId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ITEMTYPE;
-			finderArgs = new Object[] { itemTypeId, start, end, orderByComparator };
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP,
+					finderArgs, this);
 		}
 
-		List<StatViewItemType> list = (List<StatViewItemType>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		if (result instanceof StatViewItemType) {
+			StatViewItemType statViewItemType = (StatViewItemType)result;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (StatViewItemType statViewItemType : list) {
-				if ((itemTypeId != statViewItemType.getItemTypeId())) {
-					list = null;
-
-					break;
-				}
+			if ((companyId != statViewItemType.getCompanyId()) ||
+					(groupId != statViewItemType.getGroupId()) ||
+					(itemTypeId != statViewItemType.getItemTypeId()) ||
+					(perYear != statViewItemType.getPerYear()) ||
+					(perMonth != statViewItemType.getPerMonth())) {
+				result = null;
 			}
 		}
 
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
+		if (result == null) {
+			StringBundler query = new StringBundler(7);
 
 			query.append(_SQL_SELECT_STATVIEWITEMTYPE_WHERE);
 
-			query.append(_FINDER_COLUMN_ITEMTYPE_ITEMTYPEID_2);
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_COMPANYID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(StatViewItemTypeModelImpl.ORDER_BY_JPQL);
-			}
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_ITEMTYPEID_2);
+
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_PERYEAR_2);
+
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_PERMONTH_2);
 
 			String sql = query.toString();
 
@@ -221,27 +243,42 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
 				qPos.add(itemTypeId);
 
-				if (!pagination) {
-					list = (List<StatViewItemType>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+				qPos.add(perYear);
 
-					Collections.sort(list);
+				qPos.add(perMonth);
 
-					list = new UnmodifiableList<StatViewItemType>(list);
+				List<StatViewItemType> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP,
+						finderArgs, list);
 				}
 				else {
-					list = (List<StatViewItemType>)QueryUtil.list(q,
-							getDialect(), start, end);
+					StatViewItemType statViewItemType = list.get(0);
+
+					result = statViewItemType;
+
+					cacheResult(statViewItemType);
+
+					if ((statViewItemType.getCompanyId() != companyId) ||
+							(statViewItemType.getGroupId() != groupId) ||
+							(statViewItemType.getItemTypeId() != itemTypeId) ||
+							(statViewItemType.getPerYear() != perYear) ||
+							(statViewItemType.getPerMonth() != perMonth)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP,
+							finderArgs, statViewItemType);
+					}
 				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP,
+					finderArgs);
 
 				throw processException(e);
 			}
@@ -250,303 +287,72 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 			}
 		}
 
-		return list;
-	}
-
-	/**
-	 * Returns the first stat view item type in the ordered set where itemTypeId = &#63;.
-	 *
-	 * @param itemTypeId the item type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching stat view item type
-	 * @throws com.idetronic.subur.NoSuchStatViewItemTypeException if a matching stat view item type could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public StatViewItemType findByItemType_First(long itemTypeId,
-		OrderByComparator orderByComparator)
-		throws NoSuchStatViewItemTypeException, SystemException {
-		StatViewItemType statViewItemType = fetchByItemType_First(itemTypeId,
-				orderByComparator);
-
-		if (statViewItemType != null) {
-			return statViewItemType;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("itemTypeId=");
-		msg.append(itemTypeId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchStatViewItemTypeException(msg.toString());
-	}
-
-	/**
-	 * Returns the first stat view item type in the ordered set where itemTypeId = &#63;.
-	 *
-	 * @param itemTypeId the item type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching stat view item type, or <code>null</code> if a matching stat view item type could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public StatViewItemType fetchByItemType_First(long itemTypeId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<StatViewItemType> list = findByItemType(itemTypeId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last stat view item type in the ordered set where itemTypeId = &#63;.
-	 *
-	 * @param itemTypeId the item type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching stat view item type
-	 * @throws com.idetronic.subur.NoSuchStatViewItemTypeException if a matching stat view item type could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public StatViewItemType findByItemType_Last(long itemTypeId,
-		OrderByComparator orderByComparator)
-		throws NoSuchStatViewItemTypeException, SystemException {
-		StatViewItemType statViewItemType = fetchByItemType_Last(itemTypeId,
-				orderByComparator);
-
-		if (statViewItemType != null) {
-			return statViewItemType;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("itemTypeId=");
-		msg.append(itemTypeId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchStatViewItemTypeException(msg.toString());
-	}
-
-	/**
-	 * Returns the last stat view item type in the ordered set where itemTypeId = &#63;.
-	 *
-	 * @param itemTypeId the item type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching stat view item type, or <code>null</code> if a matching stat view item type could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public StatViewItemType fetchByItemType_Last(long itemTypeId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByItemType(itemTypeId);
-
-		if (count == 0) {
+		if (result instanceof List<?>) {
 			return null;
 		}
-
-		List<StatViewItemType> list = findByItemType(itemTypeId, count - 1,
-				count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
+		else {
+			return (StatViewItemType)result;
 		}
-
-		return null;
 	}
 
 	/**
-	 * Returns the stat view item types before and after the current stat view item type in the ordered set where itemTypeId = &#63;.
+	 * Removes the stat view item type where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63; from the database.
 	 *
-	 * @param id the primary key of the current stat view item type
+	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param itemTypeId the item type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next stat view item type
-	 * @throws com.idetronic.subur.NoSuchStatViewItemTypeException if a stat view item type with the primary key could not be found
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the stat view item type that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public StatViewItemType[] findByItemType_PrevAndNext(long id,
-		long itemTypeId, OrderByComparator orderByComparator)
+	public StatViewItemType removeByItemTypePeriodGroup(long companyId,
+		long groupId, long itemTypeId, int perYear, int perMonth)
 		throws NoSuchStatViewItemTypeException, SystemException {
-		StatViewItemType statViewItemType = findByPrimaryKey(id);
+		StatViewItemType statViewItemType = findByItemTypePeriodGroup(companyId,
+				groupId, itemTypeId, perYear, perMonth);
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			StatViewItemType[] array = new StatViewItemTypeImpl[3];
-
-			array[0] = getByItemType_PrevAndNext(session, statViewItemType,
-					itemTypeId, orderByComparator, true);
-
-			array[1] = statViewItemType;
-
-			array[2] = getByItemType_PrevAndNext(session, statViewItemType,
-					itemTypeId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected StatViewItemType getByItemType_PrevAndNext(Session session,
-		StatViewItemType statViewItemType, long itemTypeId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_STATVIEWITEMTYPE_WHERE);
-
-		query.append(_FINDER_COLUMN_ITEMTYPE_ITEMTYPEID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(StatViewItemTypeModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(itemTypeId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(statViewItemType);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<StatViewItemType> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
+		return remove(statViewItemType);
 	}
 
 	/**
-	 * Removes all the stat view item types where itemTypeId = &#63; from the database.
+	 * Returns the number of stat view item types where companyId = &#63; and groupId = &#63; and itemTypeId = &#63; and perYear = &#63; and perMonth = &#63;.
 	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param itemTypeId the item type ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void removeByItemType(long itemTypeId) throws SystemException {
-		for (StatViewItemType statViewItemType : findByItemType(itemTypeId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(statViewItemType);
-		}
-	}
-
-	/**
-	 * Returns the number of stat view item types where itemTypeId = &#63;.
-	 *
-	 * @param itemTypeId the item type ID
+	 * @param perYear the per year
+	 * @param perMonth the per month
 	 * @return the number of matching stat view item types
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByItemType(long itemTypeId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ITEMTYPE;
+	public int countByItemTypePeriodGroup(long companyId, long groupId,
+		long itemTypeId, int perYear, int perMonth) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ITEMTYPEPERIODGROUP;
 
-		Object[] finderArgs = new Object[] { itemTypeId };
+		Object[] finderArgs = new Object[] {
+				companyId, groupId, itemTypeId, perYear, perMonth
+			};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(6);
 
 			query.append(_SQL_COUNT_STATVIEWITEMTYPE_WHERE);
 
-			query.append(_FINDER_COLUMN_ITEMTYPE_ITEMTYPEID_2);
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_ITEMTYPEID_2);
+
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_PERYEAR_2);
+
+			query.append(_FINDER_COLUMN_ITEMTYPEPERIODGROUP_PERMONTH_2);
 
 			String sql = query.toString();
 
@@ -559,7 +365,15 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
 				qPos.add(itemTypeId);
+
+				qPos.add(perYear);
+
+				qPos.add(perMonth);
 
 				count = (Long)q.uniqueResult();
 
@@ -578,7 +392,11 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ITEMTYPE_ITEMTYPEID_2 = "statViewItemType.itemTypeId = ?";
+	private static final String _FINDER_COLUMN_ITEMTYPEPERIODGROUP_COMPANYID_2 = "statViewItemType.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_ITEMTYPEPERIODGROUP_GROUPID_2 = "statViewItemType.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_ITEMTYPEPERIODGROUP_ITEMTYPEID_2 = "statViewItemType.itemTypeId = ? AND ";
+	private static final String _FINDER_COLUMN_ITEMTYPEPERIODGROUP_PERYEAR_2 = "statViewItemType.perYear = ? AND ";
+	private static final String _FINDER_COLUMN_ITEMTYPEPERIODGROUP_PERMONTH_2 = "statViewItemType.perMonth = ?";
 
 	public StatViewItemTypePersistenceImpl() {
 		setModelClass(StatViewItemType.class);
@@ -594,6 +412,13 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 		EntityCacheUtil.putResult(StatViewItemTypeModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewItemTypeImpl.class, statViewItemType.getPrimaryKey(),
 			statViewItemType);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP,
+			new Object[] {
+				statViewItemType.getCompanyId(), statViewItemType.getGroupId(),
+				statViewItemType.getItemTypeId(), statViewItemType.getPerYear(),
+				statViewItemType.getPerMonth()
+			}, statViewItemType);
 
 		statViewItemType.resetOriginalValues();
 	}
@@ -652,6 +477,8 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(statViewItemType);
 	}
 
 	@Override
@@ -662,6 +489,75 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 		for (StatViewItemType statViewItemType : statViewItemTypes) {
 			EntityCacheUtil.removeResult(StatViewItemTypeModelImpl.ENTITY_CACHE_ENABLED,
 				StatViewItemTypeImpl.class, statViewItemType.getPrimaryKey());
+
+			clearUniqueFindersCache(statViewItemType);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(StatViewItemType statViewItemType) {
+		if (statViewItemType.isNew()) {
+			Object[] args = new Object[] {
+					statViewItemType.getCompanyId(),
+					statViewItemType.getGroupId(),
+					statViewItemType.getItemTypeId(),
+					statViewItemType.getPerYear(),
+					statViewItemType.getPerMonth()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ITEMTYPEPERIODGROUP,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP,
+				args, statViewItemType);
+		}
+		else {
+			StatViewItemTypeModelImpl statViewItemTypeModelImpl = (StatViewItemTypeModelImpl)statViewItemType;
+
+			if ((statViewItemTypeModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						statViewItemType.getCompanyId(),
+						statViewItemType.getGroupId(),
+						statViewItemType.getItemTypeId(),
+						statViewItemType.getPerYear(),
+						statViewItemType.getPerMonth()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ITEMTYPEPERIODGROUP,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP,
+					args, statViewItemType);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(StatViewItemType statViewItemType) {
+		StatViewItemTypeModelImpl statViewItemTypeModelImpl = (StatViewItemTypeModelImpl)statViewItemType;
+
+		Object[] args = new Object[] {
+				statViewItemType.getCompanyId(), statViewItemType.getGroupId(),
+				statViewItemType.getItemTypeId(), statViewItemType.getPerYear(),
+				statViewItemType.getPerMonth()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ITEMTYPEPERIODGROUP,
+			args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP,
+			args);
+
+		if ((statViewItemTypeModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					statViewItemTypeModelImpl.getOriginalCompanyId(),
+					statViewItemTypeModelImpl.getOriginalGroupId(),
+					statViewItemTypeModelImpl.getOriginalItemTypeId(),
+					statViewItemTypeModelImpl.getOriginalPerYear(),
+					statViewItemTypeModelImpl.getOriginalPerMonth()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ITEMTYPEPERIODGROUP,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ITEMTYPEPERIODGROUP,
+				args);
 		}
 	}
 
@@ -777,8 +673,6 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 
 		boolean isNew = statViewItemType.isNew();
 
-		StatViewItemTypeModelImpl statViewItemTypeModelImpl = (StatViewItemTypeModelImpl)statViewItemType;
-
 		Session session = null;
 
 		try {
@@ -806,28 +700,12 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
-		else {
-			if ((statViewItemTypeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMTYPE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						statViewItemTypeModelImpl.getOriginalItemTypeId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ITEMTYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMTYPE,
-					args);
-
-				args = new Object[] { statViewItemTypeModelImpl.getItemTypeId() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ITEMTYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMTYPE,
-					args);
-			}
-		}
-
 		EntityCacheUtil.putResult(StatViewItemTypeModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewItemTypeImpl.class, statViewItemType.getPrimaryKey(),
 			statViewItemType);
+
+		clearUniqueFindersCache(statViewItemType);
+		cacheUniqueFindersCache(statViewItemType);
 
 		return statViewItemType;
 	}
@@ -844,9 +722,12 @@ public class StatViewItemTypePersistenceImpl extends BasePersistenceImpl<StatVie
 		statViewItemTypeImpl.setPrimaryKey(statViewItemType.getPrimaryKey());
 
 		statViewItemTypeImpl.setId(statViewItemType.getId());
-		statViewItemTypeImpl.setPerMonth(statViewItemType.getPerMonth());
+		statViewItemTypeImpl.setCompanyId(statViewItemType.getCompanyId());
+		statViewItemTypeImpl.setGroupId(statViewItemType.getGroupId());
 		statViewItemTypeImpl.setPerYear(statViewItemType.getPerYear());
+		statViewItemTypeImpl.setPerMonth(statViewItemType.getPerMonth());
 		statViewItemTypeImpl.setItemTypeId(statViewItemType.getItemTypeId());
+		statViewItemTypeImpl.setViewCount(statViewItemType.getViewCount());
 
 		return statViewItemTypeImpl;
 	}

@@ -10,8 +10,7 @@
 	
 	
 	
-	long[] anyItemTypeIds = new long[]{};
-	long[] allItemTypeIds = new long[]{};
+	
 	//set item types
 	if (itemTypeIds.length == 1)
 	{

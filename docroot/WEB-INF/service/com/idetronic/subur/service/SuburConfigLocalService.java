@@ -261,6 +261,14 @@ public interface SuburConfigLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.idetronic.subur.model.SuburConfig updateConfig(
+		java.lang.String configKey, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.idetronic.subur.model.SuburConfig addConfig(
+		java.lang.String configKey, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.idetronic.subur.model.SuburConfig updateConfig(
 		java.util.Map<java.lang.String, java.lang.String> configMap,
 		java.lang.String configKey)
 		throws com.liferay.portal.kernel.exception.SystemException;

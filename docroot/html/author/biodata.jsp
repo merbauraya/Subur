@@ -6,7 +6,7 @@
 
 		<h4>Sites</h4>
 
-		<ul>
+		<ul class="list-style-none no-left-margin">
 
 <%
 	for (AuthorSite authorSite : authorSites)
@@ -34,7 +34,7 @@
 		<div class="author-expertise">
 			<h4>Expertise </h4>
 			
-				<ul>
+				<ul class="list-style-none no-left-margin">
 					<%	for (Expertise expertise : expertises) 
 						{	
 					%>
@@ -61,7 +61,7 @@
 		<div class="author-ri">
 			<h4>Research Interest </h4>
 			
-				<ul>
+				<ul class="list-style-none no-left-margin">
 					<%	for (ResearchInterest ri : researchInterests) 
 						{	
 					%>

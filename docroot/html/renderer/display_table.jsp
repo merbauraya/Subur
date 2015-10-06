@@ -7,6 +7,8 @@
 	AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 	int assetEntryIndex = ((Integer)request.getAttribute("view.jsp-assetEntryIndex")).intValue();
 	String itemId = (String)request.getAttribute("view.jsp-itemId");
+	boolean showTitleOnly = GetterUtil.getBoolean(request.getAttribute("show-title-only"));
+	//boolean backgroundImage = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:card:backgroundImage"));
 %>
 <liferay-portlet:renderURL varImpl="viewURL">
         <portlet:param name="mvcPath" value="/html/renderer/item_full.jsp" />
@@ -23,16 +25,17 @@
 		<th class="table-header">
 			<liferay-ui:message key="item-type" />
 		</th>
-		<th class="table-header">
-			<liferay-ui:message key="author" />
-		</th>
-		<th class="table-header">
-			<liferay-ui:message key="published-date" />
-		</th>
-		<th class="table-header">
-			<liferay-ui:message key="views" />
-		</th>
-		
+		<c:if test="<%= !showTitleOnly %>">
+			<th class="table-header">
+				<liferay-ui:message key="author" />
+			</th>
+			<th class="table-header">
+				<liferay-ui:message key="published-date" />
+			</th>
+			<th class="table-header">
+				<liferay-ui:message key="views" />
+			</th>
+		</c:if>
 	</tr>
 	</thead>
 
@@ -60,6 +63,7 @@
 			viewItemTypeURL ="<%=viewItemTypeURL %>"	
 		/>
 	</td>
+	<c:if test="<%= !showTitleOnly %>">
 	<td class="table-cell">
 		<%
 			PortletURL viewAuthorURL = renderResponse.createRenderURL();
@@ -81,7 +85,7 @@
 	
 	</td>	
 
-	
+	</c:if>
 	
 </tr>
 

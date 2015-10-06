@@ -35,16 +35,22 @@ public class StatViewCategoryCacheModel implements CacheModel<StatViewCategory>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{id=");
 		sb.append(id);
-		sb.append(", perMonth=");
-		sb.append(perMonth);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", perYear=");
 		sb.append(perYear);
+		sb.append(", perMonth=");
+		sb.append(perMonth);
 		sb.append(", categoryId=");
 		sb.append(categoryId);
+		sb.append(", viewCount=");
+		sb.append(viewCount);
 		sb.append("}");
 
 		return sb.toString();
@@ -55,9 +61,12 @@ public class StatViewCategoryCacheModel implements CacheModel<StatViewCategory>,
 		StatViewCategoryImpl statViewCategoryImpl = new StatViewCategoryImpl();
 
 		statViewCategoryImpl.setId(id);
-		statViewCategoryImpl.setPerMonth(perMonth);
+		statViewCategoryImpl.setCompanyId(companyId);
+		statViewCategoryImpl.setGroupId(groupId);
 		statViewCategoryImpl.setPerYear(perYear);
+		statViewCategoryImpl.setPerMonth(perMonth);
 		statViewCategoryImpl.setCategoryId(categoryId);
+		statViewCategoryImpl.setViewCount(viewCount);
 
 		statViewCategoryImpl.resetOriginalValues();
 
@@ -67,22 +76,31 @@ public class StatViewCategoryCacheModel implements CacheModel<StatViewCategory>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		id = objectInput.readLong();
-		perMonth = objectInput.readInt();
+		companyId = objectInput.readLong();
+		groupId = objectInput.readLong();
 		perYear = objectInput.readInt();
+		perMonth = objectInput.readInt();
 		categoryId = objectInput.readLong();
+		viewCount = objectInput.readInt();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(id);
-		objectOutput.writeInt(perMonth);
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(groupId);
 		objectOutput.writeInt(perYear);
+		objectOutput.writeInt(perMonth);
 		objectOutput.writeLong(categoryId);
+		objectOutput.writeInt(viewCount);
 	}
 
 	public long id;
-	public int perMonth;
+	public long companyId;
+	public long groupId;
 	public int perYear;
+	public int perMonth;
 	public long categoryId;
+	public int viewCount;
 }

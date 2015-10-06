@@ -14,6 +14,9 @@
 
 package com.idetronic.subur.service.impl;
 
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +25,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.idetronic.subur.NoSuchAuthorException;
+import com.idetronic.subur.NoSuchConfigException;
+import com.idetronic.subur.actionhelper.SuburActionHelper;
 import com.idetronic.subur.model.Author;
 import com.idetronic.subur.model.AuthorExpertise;
 import com.idetronic.subur.model.AuthorResearchInterest;
@@ -43,14 +48,22 @@ import com.idetronic.subur.service.persistence.AuthorQuery;
 import com.idetronic.subur.service.persistence.AuthorResearchInterestPK;
 import com.idetronic.subur.service.persistence.SuburItemFinderUtil;
 import com.idetronic.subur.util.AuthorQueryUtil;
+import com.idetronic.subur.util.SuburConfiguration;
 import com.idetronic.subur.util.SuburConstant;
+import com.idetronic.subur.util.SuburFolderUtil;
+import com.idetronic.subur.util.WebKeys;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.UserPortraitSizeException;
+import com.liferay.portal.UserPortraitTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
@@ -60,14 +73,19 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -75,7 +93,10 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.ImageSizeException;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
+import com.liferay.util.portlet.PortletProps;
 
 /**
  * The implementation of the author local service.
@@ -99,15 +120,48 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	 */
 	private static Log logger = LogFactoryUtil.getLog(AuthorLocalServiceImpl.class);
 	
+	/**
+	 * 
+	 * @param firstName
+	 * @param middleName
+	 * @param lastName
+	 * @param salutation
+	 * @param email
+	 * @param officeNo
+	 * @param serviceContext
+	 * @return
+	 * @throws SystemException
+	 */
+	public Author newAuthor(String firstName,String middleName,String lastName,
+			String salutation,String email,String officeNo,ServiceContext serviceContext) throws SystemException
+	{
+		Date now = new Date();
+		long authorId = CounterLocalServiceUtil.increment(Author.class.getName());
+		Author author = authorPersistence.create(authorId);
+		author.setFirstName(firstName);
+		author.setMiddleName(middleName);
+		author.setLastName(lastName);
+		author.setEmail(email);
+		author.setOfficeNo(officeNo);
+		author.setCompanyId(serviceContext.getCompanyId());
+		author.setGroupId(serviceContext.getScopeGroupId());
+		author.setCreateDate(now);
+		author.setModifiedDate(now);
+		author.setCreatedBy(serviceContext.getUserId());
+		author.setUuid(PortalUUIDUtil.generate());
+		
+		return authorPersistence.update(author);
+		
+	}
 	
 	
-	public long addAuthor(String firstName,String middleName,String lastName,String title,
+	public long addAuthor(String firstName,String middleName,String lastName,String salutation,
 			String email,String officeNo,
 			Map<String,String> authorSite,
 			String remoteId,int idType,
 			long userId, long groupId,long createdByUserId,
 			String[] expertiseNames,String[] researchInterestNames,
-			ServiceContext serviceContext) throws SystemException, PortalException
+			ServiceContext serviceContext) throws SystemException, PortalException,IOException
 	{
 		
 		User user = userLocalService.getUserById(userId);
@@ -118,12 +172,12 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 		author.setFirstName(firstName);
 		author.setMiddleName(middleName);
 		author.setLastName(lastName);
-		author.setTitle(title);
+		author.setSalutation(salutation);
 		author.setEmail(email);
 		author.setOfficeNo(officeNo);
 		
-		author.setRemoteId(remoteId);
-		author.setIdType(idType);
+	//	author.setRemoteId(remoteId);
+//		author.setIdType(idType);
 		author.setCompanyId(user.getCompanyId());
 		author.setGroupId(groupId);
 		author.setCreateDate(now);
@@ -168,6 +222,11 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 		}
 		
 		updateAuthorSite(authorId,authorSite);
+		
+		//long coverPhotoId = attachCoverPhoto(author,serviceContext);
+		
+		//author.setCoverPhotoId(coverPhotoId);
+		
 		authorPersistence.update(author);
 		
 		
@@ -260,24 +319,26 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	 * @throws SystemException
 	 * @throws PortalException 
 	 */
-	public Author updateAuthor(long authorId,String title,String firstName,String middleName,
+	public Author updateAuthor(long authorId,String salutation,String firstName,String middleName,
 				String lastName,String email,String officeNo,
 				Map<String,String> authorSite,
-				String remoteId,int idType,
+				String title,
 				long userId, long groupId,
 				long createdByUserId,
 				String[] expertiseNames, String[] researchInterestNames,
-				ServiceContext serviceContext) throws SystemException, PortalException
+				ServiceContext serviceContext) throws SystemException, PortalException,IOException
 	{
 		Author author = authorPersistence.fetchByPrimaryKey(authorId);
-		author.setTitle(title);
+		author.setSalutation(salutation);
 		author.setMiddleName(middleName);
 		author.setFirstName(firstName);
 		author.setLastName(lastName);
 		author.setEmail(email);
 		author.setOfficeNo(officeNo);
-		author.setRemoteId(remoteId);
-		author.setIdType(idType);
+		author.setTitle(title);
+		
+		
+		
 		
 		
 		if (expertiseNames != null)
@@ -339,7 +400,6 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 		
 		//author Site
 		updateAuthorSite(authorId,authorSite);
-		
 		
 		
 		
@@ -414,65 +474,68 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	 * @param authorId to be updated
 	 * @param authorSiteMap of Author site
 	 * @throws SystemException 
+	 * @throws IOException 
+	 * @throws PortalException 
 	 */
-	private void updateAuthorSite(long authorId,Map<String,String> authorSiteMap) throws SystemException
+	private void updateAuthorSite(long authorId,Map<String,String> authorSiteMap) throws SystemException, IOException, PortalException
 	{
 		//AuthorSite authorSite = null;
 		List<AuthorSite> authorSites = AuthorSiteLocalServiceUtil.findByAuthorId(authorId);
 		
+		//
+		//String authorSiteString = SuburConfiguration.getConfig(SuburConfiguration.AUTHOR_SITES);
+		//String[] authorSiteConfig = StringUtil.split(authorSiteString);
 		
+		//AuthorSiteLocalServiceUtil.deleteByAuthorId(authorId);
 		
 		//update existing if matches
+		logger.info("size="+authorSiteMap.size());
 		for (Map.Entry<String, String> entry : authorSiteMap.entrySet()) 
 		{
-		    String siteName = entry.getKey();
+			String siteName = entry.getKey();
 		    String siteURL = entry.getValue();
-		    
-		    boolean siteFound = false;
+		    boolean exists = false;
 		    for (AuthorSite authorSite : authorSites)
 		    {
 		    	if (authorSite.getSiteName().equalsIgnoreCase(siteName))
 		    	{
-		    		siteFound = true;
 		    		authorSite.setSiteURL(siteURL);
-		    		authorSitePersistence.update(authorSite);
-		    		break;
+		    		AuthorSiteLocalServiceUtil.updateAuthorSite(authorSite);
+		    		exists = true;
 		    	}
-		    	
 		    }
-		  //add if does not exist
-	    	if (!siteFound)
-	    	{
-	    		
-	    		long id = CounterLocalServiceUtil.increment(AuthorSite.class.getName());
-	    		AuthorSite newAuthorSite = authorSitePersistence.create(id);
-	    		newAuthorSite.setAuthorId(authorId);
-	    		newAuthorSite.setSiteName(siteName);
-	    		newAuthorSite.setSiteURL(siteURL);
-	    		authorSitePersistence.update(newAuthorSite);
-	    	}
+		    if (!exists) //create if not exists
+		    {
+		    	logger.info("new="+siteName + "-"+siteURL);
+		    	AuthorSiteLocalServiceUtil.addAuthorSite(authorId,siteName,siteURL);
+		    }
 		}
-	    //delete existing site
-	    for (AuthorSite authorSite : authorSites)
-	    {
-	    	boolean found = false;
-	    	for (Map.Entry<String, String> entrySite : authorSiteMap.entrySet()) 
-	    	{
-	    		if (StringUtil.equalsIgnoreCase(authorSite.getSiteName(),entrySite.getKey()))
-	    		{
-	    			found = true;
-	    			break;
-	    		}
-	    		
-	    				
-	    	}
-	    	if (!found)
-    		{
-    			authorSitePersistence.remove(authorSite);
-    		}
-	    	
-	    }
-		    
+		
+		//delete existing entry if does not match with new ones
+		
+		for (AuthorSite authorSite : authorSites)
+		{
+			boolean match = false;
+			for (Map.Entry<String, String> entry : authorSiteMap.entrySet()) 
+			{
+				String siteName = entry.getKey();
+				if (siteName.equalsIgnoreCase(authorSite.getSiteName()))
+				{
+					match = true;
+					break;
+				}
+			}
+			if (!match)
+			{
+				logger.info("not match="+authorSite.getSiteName());
+				AuthorSiteLocalServiceUtil.deleteAuthorSite(authorSite);
+			}
+		}
+		
+		
+		
+		
+		
 		    
 		    
 		    
@@ -736,7 +799,10 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	{
 		return AuthorFinderUtil.findByCompanyGroup(companyId,groupId,start,end);
 	}
-	
+	public List<Author> recentByGroup(long companyId, long groupId,Date lastPublishedDate, int start,int end) throws SystemException
+	{
+		return AuthorFinderUtil.recentByGroupIds(companyId, groupId, lastPublishedDate, start, end);
+	}
 	public void deleteItem(long itemId) throws SystemException
 	{
 		List<ItemAuthor> itemAuthors = itemAuthorPersistence.findByitemId(itemId);
@@ -745,5 +811,56 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 			decrementItemCount(itemAuthor.getAuthorId());
 		}
 	}
+	public Author updatePortrait(long authorId, byte[] bytes)
+			throws PortalException, SystemException 
+	{
+
+			Author author = authorPersistence.findByPrimaryKey(authorId);
+
+			long imageMaxSize = Long.valueOf(PortletProps.get("author.image.max.size"));
+
+			if ((imageMaxSize > 0) &&
+				((bytes == null) || (bytes.length > imageMaxSize))) {
+
+				throw new UserPortraitSizeException();
+			}
+
+			long portraitId = author.getPortraitId();
+
+			if (portraitId <= 0) {
+				portraitId = counterLocalService.increment();
+
+				author.setPortraitId(portraitId);
+			}
+
+			try {
+				ImageBag imageBag = ImageToolUtil.read(bytes);
+
+				RenderedImage renderedImage = imageBag.getRenderedImage();
+
+				if (renderedImage == null) {
+					throw new UserPortraitTypeException();
+				}
+				int maxHeight = Integer.valueOf(PortletProps.get("author.image.max.height"));
+				int maxWidth = Integer.valueOf(PortletProps.get("author.image.max.width"));
+				renderedImage = ImageToolUtil.scale(
+					renderedImage, maxHeight,
+					maxWidth);
+
+				String contentType = imageBag.getType();
+
+				imageLocalService.updateImage(
+					portraitId,
+					ImageToolUtil.getBytes(renderedImage, contentType));
+			}
+			catch (IOException ioe) {
+				throw new ImageSizeException(ioe);
+			}
+			authorPersistence.update(author);
+			
+
+			return author;
+		}
+	private static Log LOGGER = LogFactoryUtil.getLog(AuthorLocalServiceImpl.class);
 	
 }

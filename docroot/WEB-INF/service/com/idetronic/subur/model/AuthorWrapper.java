@@ -52,9 +52,7 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 		attributes.put("authorId", getAuthorId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("title", getTitle());
-		attributes.put("idType", getIdType());
-		attributes.put("remoteId", getRemoteId());
+		attributes.put("salutation", getSalutation());
 		attributes.put("firstName", getFirstName());
 		attributes.put("lastName", getLastName());
 		attributes.put("middleName", getMiddleName());
@@ -68,6 +66,8 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("Uuid", getUuid());
 		attributes.put("createdBy", getCreatedBy());
+		attributes.put("portraitId", getPortraitId());
+		attributes.put("title", getTitle());
 
 		return attributes;
 	}
@@ -92,22 +92,10 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 			setCompanyId(companyId);
 		}
 
-		String title = (String)attributes.get("title");
+		String salutation = (String)attributes.get("salutation");
 
-		if (title != null) {
-			setTitle(title);
-		}
-
-		Integer idType = (Integer)attributes.get("idType");
-
-		if (idType != null) {
-			setIdType(idType);
-		}
-
-		String remoteId = (String)attributes.get("remoteId");
-
-		if (remoteId != null) {
-			setRemoteId(remoteId);
+		if (salutation != null) {
+			setSalutation(salutation);
 		}
 
 		String firstName = (String)attributes.get("firstName");
@@ -186,6 +174,18 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 
 		if (createdBy != null) {
 			setCreatedBy(createdBy);
+		}
+
+		Long portraitId = (Long)attributes.get("portraitId");
+
+		if (portraitId != null) {
+			setPortraitId(portraitId);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
 		}
 	}
 
@@ -270,63 +270,23 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 	}
 
 	/**
-	* Returns the title of this author.
+	* Returns the salutation of this author.
 	*
-	* @return the title of this author
+	* @return the salutation of this author
 	*/
 	@Override
-	public java.lang.String getTitle() {
-		return _author.getTitle();
+	public java.lang.String getSalutation() {
+		return _author.getSalutation();
 	}
 
 	/**
-	* Sets the title of this author.
+	* Sets the salutation of this author.
 	*
-	* @param title the title of this author
+	* @param salutation the salutation of this author
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
-		_author.setTitle(title);
-	}
-
-	/**
-	* Returns the id type of this author.
-	*
-	* @return the id type of this author
-	*/
-	@Override
-	public int getIdType() {
-		return _author.getIdType();
-	}
-
-	/**
-	* Sets the id type of this author.
-	*
-	* @param idType the id type of this author
-	*/
-	@Override
-	public void setIdType(int idType) {
-		_author.setIdType(idType);
-	}
-
-	/**
-	* Returns the remote ID of this author.
-	*
-	* @return the remote ID of this author
-	*/
-	@Override
-	public java.lang.String getRemoteId() {
-		return _author.getRemoteId();
-	}
-
-	/**
-	* Sets the remote ID of this author.
-	*
-	* @param remoteId the remote ID of this author
-	*/
-	@Override
-	public void setRemoteId(java.lang.String remoteId) {
-		_author.setRemoteId(remoteId);
+	public void setSalutation(java.lang.String salutation) {
+		_author.setSalutation(salutation);
 	}
 
 	/**
@@ -589,6 +549,46 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 		_author.setCreatedBy(createdBy);
 	}
 
+	/**
+	* Returns the portrait ID of this author.
+	*
+	* @return the portrait ID of this author
+	*/
+	@Override
+	public long getPortraitId() {
+		return _author.getPortraitId();
+	}
+
+	/**
+	* Sets the portrait ID of this author.
+	*
+	* @param portraitId the portrait ID of this author
+	*/
+	@Override
+	public void setPortraitId(long portraitId) {
+		_author.setPortraitId(portraitId);
+	}
+
+	/**
+	* Returns the title of this author.
+	*
+	* @return the title of this author
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _author.getTitle();
+	}
+
+	/**
+	* Sets the title of this author.
+	*
+	* @param title the title of this author
+	*/
+	@Override
+	public void setTitle(java.lang.String title) {
+		_author.setTitle(title);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _author.isNew();
@@ -696,6 +696,12 @@ public class AuthorWrapper implements Author, ModelWrapper<Author> {
 	@Override
 	public java.lang.String getDisplayName() {
 		return _author.getDisplayName();
+	}
+
+	@Override
+	public java.lang.String getPortraitURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return _author.getPortraitURL(themeDisplay);
 	}
 
 	@Override

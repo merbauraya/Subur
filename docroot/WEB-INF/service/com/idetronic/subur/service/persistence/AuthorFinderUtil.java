@@ -73,6 +73,15 @@ public class AuthorFinderUtil {
 		return getFinder().findByCompanyGroup(companyId, groupId, start, end);
 	}
 
+	public static java.util.List<com.idetronic.subur.model.Author> recentByGroupIds(
+		long companyId, long groupId, java.util.Date lastPublishedDate,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .recentByGroupIds(companyId, groupId, lastPublishedDate,
+			start, end);
+	}
+
 	public static AuthorFinder getFinder() {
 		if (_finder == null) {
 			_finder = (AuthorFinder)PortletBeanLocatorUtil.locate(com.idetronic.subur.service.ClpSerializer.getServletContextName(),

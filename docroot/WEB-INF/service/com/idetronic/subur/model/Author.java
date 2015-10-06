@@ -32,4 +32,7 @@ public interface Author extends AuthorModel, PersistedModel {
 	 * Never modify this interface directly. Add methods to {@link com.idetronic.subur.model.impl.AuthorImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public java.lang.String getDisplayName();
+
+	public java.lang.String getPortraitURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 }

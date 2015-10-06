@@ -579,6 +579,315 @@ public class StatViewCategoryPersistenceImpl extends BasePersistenceImpl<StatVie
 	}
 
 	private static final String _FINDER_COLUMN_CATEGORY_CATEGORYID_2 = "statViewCategory.categoryId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_CATEGORYPERIOD = new FinderPath(StatViewCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			StatViewCategoryModelImpl.FINDER_CACHE_ENABLED,
+			StatViewCategoryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByCategoryPeriod",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName()
+			},
+			StatViewCategoryModelImpl.COMPANYID_COLUMN_BITMASK |
+			StatViewCategoryModelImpl.GROUPID_COLUMN_BITMASK |
+			StatViewCategoryModelImpl.CATEGORYID_COLUMN_BITMASK |
+			StatViewCategoryModelImpl.PERYEAR_COLUMN_BITMASK |
+			StatViewCategoryModelImpl.PERMONTH_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CATEGORYPERIOD = new FinderPath(StatViewCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			StatViewCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCategoryPeriod",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName()
+			});
+
+	/**
+	 * Returns the stat view category where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63; or throws a {@link com.idetronic.subur.NoSuchStatViewCategoryException} if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the matching stat view category
+	 * @throws com.idetronic.subur.NoSuchStatViewCategoryException if a matching stat view category could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public StatViewCategory findByCategoryPeriod(long companyId, long groupId,
+		long categoryId, int perYear, int perMonth)
+		throws NoSuchStatViewCategoryException, SystemException {
+		StatViewCategory statViewCategory = fetchByCategoryPeriod(companyId,
+				groupId, categoryId, perYear, perMonth);
+
+		if (statViewCategory == null) {
+			StringBundler msg = new StringBundler(12);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", groupId=");
+			msg.append(groupId);
+
+			msg.append(", categoryId=");
+			msg.append(categoryId);
+
+			msg.append(", perYear=");
+			msg.append(perYear);
+
+			msg.append(", perMonth=");
+			msg.append(perMonth);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchStatViewCategoryException(msg.toString());
+		}
+
+		return statViewCategory;
+	}
+
+	/**
+	 * Returns the stat view category where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the matching stat view category, or <code>null</code> if a matching stat view category could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public StatViewCategory fetchByCategoryPeriod(long companyId, long groupId,
+		long categoryId, int perYear, int perMonth) throws SystemException {
+		return fetchByCategoryPeriod(companyId, groupId, categoryId, perYear,
+			perMonth, true);
+	}
+
+	/**
+	 * Returns the stat view category where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching stat view category, or <code>null</code> if a matching stat view category could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public StatViewCategory fetchByCategoryPeriod(long companyId, long groupId,
+		long categoryId, int perYear, int perMonth, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, groupId, categoryId, perYear, perMonth
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_CATEGORYPERIOD,
+					finderArgs, this);
+		}
+
+		if (result instanceof StatViewCategory) {
+			StatViewCategory statViewCategory = (StatViewCategory)result;
+
+			if ((companyId != statViewCategory.getCompanyId()) ||
+					(groupId != statViewCategory.getGroupId()) ||
+					(categoryId != statViewCategory.getCategoryId()) ||
+					(perYear != statViewCategory.getPerYear()) ||
+					(perMonth != statViewCategory.getPerMonth())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(7);
+
+			query.append(_SQL_SELECT_STATVIEWCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_CATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_PERYEAR_2);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_PERMONTH_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
+				qPos.add(categoryId);
+
+				qPos.add(perYear);
+
+				qPos.add(perMonth);
+
+				List<StatViewCategory> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CATEGORYPERIOD,
+						finderArgs, list);
+				}
+				else {
+					StatViewCategory statViewCategory = list.get(0);
+
+					result = statViewCategory;
+
+					cacheResult(statViewCategory);
+
+					if ((statViewCategory.getCompanyId() != companyId) ||
+							(statViewCategory.getGroupId() != groupId) ||
+							(statViewCategory.getCategoryId() != categoryId) ||
+							(statViewCategory.getPerYear() != perYear) ||
+							(statViewCategory.getPerMonth() != perMonth)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CATEGORYPERIOD,
+							finderArgs, statViewCategory);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CATEGORYPERIOD,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (StatViewCategory)result;
+		}
+	}
+
+	/**
+	 * Removes the stat view category where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the stat view category that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public StatViewCategory removeByCategoryPeriod(long companyId,
+		long groupId, long categoryId, int perYear, int perMonth)
+		throws NoSuchStatViewCategoryException, SystemException {
+		StatViewCategory statViewCategory = findByCategoryPeriod(companyId,
+				groupId, categoryId, perYear, perMonth);
+
+		return remove(statViewCategory);
+	}
+
+	/**
+	 * Returns the number of stat view categories where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the number of matching stat view categories
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByCategoryPeriod(long companyId, long groupId,
+		long categoryId, int perYear, int perMonth) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CATEGORYPERIOD;
+
+		Object[] finderArgs = new Object[] {
+				companyId, groupId, categoryId, perYear, perMonth
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_COUNT_STATVIEWCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_CATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_PERYEAR_2);
+
+			query.append(_FINDER_COLUMN_CATEGORYPERIOD_PERMONTH_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
+				qPos.add(categoryId);
+
+				qPos.add(perYear);
+
+				qPos.add(perMonth);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CATEGORYPERIOD_COMPANYID_2 = "statViewCategory.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_CATEGORYPERIOD_GROUPID_2 = "statViewCategory.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_CATEGORYPERIOD_CATEGORYID_2 = "statViewCategory.categoryId = ? AND ";
+	private static final String _FINDER_COLUMN_CATEGORYPERIOD_PERYEAR_2 = "statViewCategory.perYear = ? AND ";
+	private static final String _FINDER_COLUMN_CATEGORYPERIOD_PERMONTH_2 = "statViewCategory.perMonth = ?";
 
 	public StatViewCategoryPersistenceImpl() {
 		setModelClass(StatViewCategory.class);
@@ -594,6 +903,13 @@ public class StatViewCategoryPersistenceImpl extends BasePersistenceImpl<StatVie
 		EntityCacheUtil.putResult(StatViewCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewCategoryImpl.class, statViewCategory.getPrimaryKey(),
 			statViewCategory);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CATEGORYPERIOD,
+			new Object[] {
+				statViewCategory.getCompanyId(), statViewCategory.getGroupId(),
+				statViewCategory.getCategoryId(), statViewCategory.getPerYear(),
+				statViewCategory.getPerMonth()
+			}, statViewCategory);
 
 		statViewCategory.resetOriginalValues();
 	}
@@ -652,6 +968,8 @@ public class StatViewCategoryPersistenceImpl extends BasePersistenceImpl<StatVie
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(statViewCategory);
 	}
 
 	@Override
@@ -662,6 +980,73 @@ public class StatViewCategoryPersistenceImpl extends BasePersistenceImpl<StatVie
 		for (StatViewCategory statViewCategory : statViewCategories) {
 			EntityCacheUtil.removeResult(StatViewCategoryModelImpl.ENTITY_CACHE_ENABLED,
 				StatViewCategoryImpl.class, statViewCategory.getPrimaryKey());
+
+			clearUniqueFindersCache(statViewCategory);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(StatViewCategory statViewCategory) {
+		if (statViewCategory.isNew()) {
+			Object[] args = new Object[] {
+					statViewCategory.getCompanyId(),
+					statViewCategory.getGroupId(),
+					statViewCategory.getCategoryId(),
+					statViewCategory.getPerYear(),
+					statViewCategory.getPerMonth()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CATEGORYPERIOD,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CATEGORYPERIOD,
+				args, statViewCategory);
+		}
+		else {
+			StatViewCategoryModelImpl statViewCategoryModelImpl = (StatViewCategoryModelImpl)statViewCategory;
+
+			if ((statViewCategoryModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_CATEGORYPERIOD.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						statViewCategory.getCompanyId(),
+						statViewCategory.getGroupId(),
+						statViewCategory.getCategoryId(),
+						statViewCategory.getPerYear(),
+						statViewCategory.getPerMonth()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CATEGORYPERIOD,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CATEGORYPERIOD,
+					args, statViewCategory);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(StatViewCategory statViewCategory) {
+		StatViewCategoryModelImpl statViewCategoryModelImpl = (StatViewCategoryModelImpl)statViewCategory;
+
+		Object[] args = new Object[] {
+				statViewCategory.getCompanyId(), statViewCategory.getGroupId(),
+				statViewCategory.getCategoryId(), statViewCategory.getPerYear(),
+				statViewCategory.getPerMonth()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CATEGORYPERIOD, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CATEGORYPERIOD, args);
+
+		if ((statViewCategoryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_CATEGORYPERIOD.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					statViewCategoryModelImpl.getOriginalCompanyId(),
+					statViewCategoryModelImpl.getOriginalGroupId(),
+					statViewCategoryModelImpl.getOriginalCategoryId(),
+					statViewCategoryModelImpl.getOriginalPerYear(),
+					statViewCategoryModelImpl.getOriginalPerMonth()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CATEGORYPERIOD,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CATEGORYPERIOD,
+				args);
 		}
 	}
 
@@ -829,6 +1214,9 @@ public class StatViewCategoryPersistenceImpl extends BasePersistenceImpl<StatVie
 			StatViewCategoryImpl.class, statViewCategory.getPrimaryKey(),
 			statViewCategory);
 
+		clearUniqueFindersCache(statViewCategory);
+		cacheUniqueFindersCache(statViewCategory);
+
 		return statViewCategory;
 	}
 
@@ -844,9 +1232,12 @@ public class StatViewCategoryPersistenceImpl extends BasePersistenceImpl<StatVie
 		statViewCategoryImpl.setPrimaryKey(statViewCategory.getPrimaryKey());
 
 		statViewCategoryImpl.setId(statViewCategory.getId());
-		statViewCategoryImpl.setPerMonth(statViewCategory.getPerMonth());
+		statViewCategoryImpl.setCompanyId(statViewCategory.getCompanyId());
+		statViewCategoryImpl.setGroupId(statViewCategory.getGroupId());
 		statViewCategoryImpl.setPerYear(statViewCategory.getPerYear());
+		statViewCategoryImpl.setPerMonth(statViewCategory.getPerMonth());
 		statViewCategoryImpl.setCategoryId(statViewCategory.getCategoryId());
+		statViewCategoryImpl.setViewCount(statViewCategory.getViewCount());
 
 		return statViewCategoryImpl;
 	}

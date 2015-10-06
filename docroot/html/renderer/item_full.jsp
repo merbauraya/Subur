@@ -1,5 +1,5 @@
 <%@include file="/html/subur/init.jsp"%>
-<%@ page import="javax.portlet.ResourceURL" %>
+
 
 <liferay-ui:error exception="<%= NoSuchItemException.class %>" message="the-resource-could-not-be-found" />
 
@@ -12,10 +12,7 @@
 	SuburItem suburItem = (SuburItem)  request.getAttribute(WebKeys.SUBUR_ITEM);   //SuburItemServiceUtil.getSuburItem(itemId);//  SuburItemLocalServiceUtil.fetchSuburItem(itemId);
 
 %>
-<c:if test="<%= Validator.isNull(suburItem) %>">
-	<liferay-ui:error message="item-could-not-be-found" />
 
-</c:if>
 <%	
 	suburItem = suburItem.toEscapedModel();
 	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(SuburItem.class.getName(), itemId);
@@ -25,7 +22,7 @@
 	
 	
 	//view counter
-	SuburItemLocalServiceUtil.addViewStat(suburItem.getItemId());
+	SuburItemLocalServiceUtil.addViewStat(suburItem.getItemId(),themeDisplay.getCompanyId(),themeDisplay.getScopeGroupId());
 	
 	
 %>
@@ -239,13 +236,28 @@
 			rURL.setParameter("itemId", String.valueOf(suburItem.getItemId()));
 			
 			
-		%>	
-		<subur:item-asset-links
-			assetEntryId="<%= assetEntry.getEntryId() %>"
-			serveFileURL="<%= rURL %>"
-			nameSpace="<%= nameSpace %>"
+		%>
+		<c:choose>
+			<c:when test="<%= themeDisplay.isSignedIn() || !suburItem.getRelatedRestricted() %>">
+				<subur:item-asset-links
+					assetEntryId="<%= assetEntry.getEntryId() %>"
+					serveFileURL="<%= rURL %>"
+					nameSpace="<%= nameSpace %>"
 							
-		/>
+				/>
+				<aui:button name="requestCopyBtn" type="button" value="request-copy" style="display:none;"/>
+			
+			</c:when>
+			<c:otherwise>
+				<div class="alert">
+					<liferay-ui:message key="restricted-related-asset"></liferay-ui:message>
+				</div>
+				<aui:button name="requestCopyBtn" type="button" value="request-copy" />
+			</c:otherwise>
+		
+		</c:choose>
+			
+		
 		
 		
 						
@@ -253,3 +265,40 @@
 	</div>
 	
 </div>
+<liferay-portlet:renderURL var="requestCopyURL" windowState="<%=LiferayWindowState.POP_UP.toString()%>">
+	<liferay-portlet:param name="mvcPath" value="/html/subur/request_copy.jsp"/>
+	<liferay-portlet:param name="suburItemId" value="<%= String.valueOf(suburItem.getItemId()) %>"/>
+	
+</liferay-portlet:renderURL>
+
+
+<aui:script use="aui-toggler,liferay-util-window">
+	var A = AUI();
+	
+A.one('#<portlet:namespace/>requestCopyBtn').on('click', function(event) {
+	Liferay.Util.selectEntity(
+	{
+		dialog: {
+			centered: true,
+			height: 600,
+			modal: true,
+			width: 400
+		},
+		id: '<portlet:namespace/>dialog',
+		title: '<liferay-ui:message key="request-copy" />',
+		eventName: '<portlet:namespace />doSearch',
+		uri: '<%=requestCopyURL %>'
+	},
+	function (event)
+	{
+		
+		<portlet:namespace />doSearch(data);
+		
+		
+	}
+	
+	
+	);
+});
+
+</aui:script>

@@ -7,11 +7,11 @@
 	String backURL = ParamUtil.getString(request, "backURL", redirect);
 	
 	
-	String authorSalutationConfigString = SuburConfiguration.getConfigString(SuburConfiguration.AUTHOR_SALUTATION);
-	String authorSiteConfigString = SuburConfiguration.getConfigString(SuburConfiguration.AUTHOR_SITES);
+	String authorSalutationConfigString =  SuburConfiguration.getConfig(SuburConfiguration.AUTHOR_SALUTATION);
+	String authorSiteConfigString = SuburConfiguration.getConfig(SuburConfiguration.AUTHOR_SITES);
 	
 	String[] siteNameList = StringUtil.split(authorSiteConfigString,",");
-	String[] titles = StringUtil.split(authorSalutationConfigString, ",");
+	String[] salutations = StringUtil.split(authorSalutationConfigString, ",");
 	long authorId = ParamUtil.getLong(request,"authorId");
 	
 	Author author = null;
@@ -23,6 +23,8 @@
 	{
 		author = AuthorLocalServiceUtil.getAuthor(authorId);
 		authorSites = AuthorSiteLocalServiceUtil.findByAuthorId(authorId);
+		
+		
 		authorSiteIndexes = new int[authorSites.size()];
 		for (int i = 0; i < authorSites.size(); i++)
 		{
@@ -58,6 +60,7 @@
 
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:actionURL>
+
 <aui:form action="<%=editAuthorActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "submitForm();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (author == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -65,30 +68,60 @@
 	
 	<aui:model-context bean="<%= author %>" model="<%= Author.class %>" />
 	
-		<aui:select name="title">
-		<%	for (String authorTitle : titles) {
-			boolean selected = false;
-			if ((author != null) && (author.getTitle() == authorTitle))
-				selected = true;
-		%>
-			<aui:option selected="<%= selected %>"  value="<%=authorTitle %>"><%=authorTitle %></aui:option>
-		<%
-		}
-		%>
-		</aui:select>
-		<aui:input type="text" name="firstName" cssClass="fullwidth">
-			<aui:validator name="required" />	
-			
+	<aui:row>
+	<aui:fieldset cssClass="span6">	
+		<aui:select name="salutation">
+			<%	for (String authorSalutation : salutations) {
+				boolean selected = false;
+				if ((author != null) && (author.getSalutation() == authorSalutation))
+					selected = true;
+			%>
+				<aui:option selected="<%= selected %>"  value="<%=authorSalutation %>"><%=authorSalutation %></aui:option>
+			<%
+			}
+			%>
+			</aui:select>
 		
-		</aui:input>
-		<aui:input type="text" name="middleName" cssClass="fullwidth"/>
-		<aui:input type="text" name="lastName" cssClass="fullwidth">
-			<aui:validator name="required" />	
-		</aui:input>
-		<aui:input type="text" name="email" cssClass="fullwidth">
-			<aui:validator name="email" />
-		</aui:input>
-		<aui:input name="officeNo" cssClass="fullwidth"/>
+		
+		
+			
+			
+			<aui:input type="text" name="firstName" cssClass="fullwidth">
+				<aui:validator name="required" />	
+			
+			</aui:input>
+			<aui:input type="text" name="middleName" cssClass="fullwidth"/>
+			<aui:input type="text" name="lastName" cssClass="fullwidth">
+				<aui:validator name="required" />	
+			</aui:input>
+			<aui:input type="text" name="title" cssClass="fullWidth"/>
+			<aui:input type="text" name="email" cssClass="fullwidth">
+				<aui:validator name="email" />
+			</aui:input>
+			<aui:input name="officeNo" cssClass="fullwidth"/>
+		</aui:fieldset>
+		<aui:fieldset cssClass="span6">	
+			<div>
+				<c:if test="<%= author != null %>">
+					<portlet:renderURL var="editAuthorPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value="/html/author/edit_author_portrait.jsp" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>" />
+							<portlet:param name="portrait_id" value="<%= String.valueOf(author.getPortraitId()) %>" />
+						</portlet:renderURL>
+					<liferay-ui:logo-selector
+							currentLogoURL="<%= author.getPortraitURL(themeDisplay) %>"
+							defaultLogoURL="<%= SuburUtil.getDefaultPortraitURL(themeDisplay.getPathImage()) %>"
+							editLogoURL="<%= editAuthorPortraitURL %>"
+							imageId="<%= author.getPortraitId() %>"
+							logoDisplaySelector=".user-logo"
+						/>
+					
+				</c:if>
+			</div>
+		</aui:fieldset>
+	</aui:row>		
+<aui:row>
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="categorization">
 			<%
 				PortletURL portletURL = renderResponse.createRenderURL();
@@ -136,9 +169,10 @@
 			for (int i = 0; i < authorSiteIndexes.length; i++) {
 				int authorSiteIndex = authorSiteIndexes[i];
 				AuthorSite authorSite = authorSites.get(i);
+				out.print(authorSite.getSiteName()+"-"+ authorSite.getSiteURL());
 		%>
 		
-			<aui:model-context bean="<%= authorSite %>" model="<%= AuthorSite.class %>" />
+			
 			<div class="lfr-form-row lfr-form-row-inline">
 				<div class="row-fields">
 					<aui:input name='<%= "authorSiteId" + authorSiteIndex %>' type="hidden" value="<%= authorSite.getAuthorSiteId() %>" />
@@ -146,9 +180,13 @@
 					<%
 						for (String siteName : siteNameList) 
 						{
+							
 							boolean selected = false;
-							if (siteName.equalsIgnoreCase(authorSite.getSiteName())) 
+							if (siteName.trim().equalsIgnoreCase(authorSite.getSiteName().trim())) 
+							{
 								selected = true;
+								
+							}
 					%>
 						<aui:option selected="<%= selected %>"  value="<%=siteName %>"><%=siteName %></aui:option>
 					<%		
@@ -159,8 +197,9 @@
 					<aui:input type="text" label="site-url" fieldParam='<%= "siteURL" + authorSiteIndex %>' 
 						id='<%= "siteURL" + authorSiteIndex %>'
 						inlineField="<%= true %>" 
-						name='siteURL' 
+						name='<%= "siteURL" + authorSiteIndex%>' 
 						cssClass="fullwidth"
+						value="<%= Validator.isNull(authorSite) ? StringPool.BLANK : authorSite.getSiteURL() %>"
 						
 					>
 						<aui:validator name="uri" />	
@@ -186,7 +225,7 @@
   </aui:script>
 	
 </liferay-ui:panel>		
-		
+	</aui:row>		
 	
 
 

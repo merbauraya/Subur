@@ -271,9 +271,31 @@ public class AuthorLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	/**
+	* @param firstName
+	* @param middleName
+	* @param lastName
+	* @param salutation
+	* @param email
+	* @param officeNo
+	* @param serviceContext
+	* @return
+	* @throws SystemException
+	*/
+	public static com.idetronic.subur.model.Author newAuthor(
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String salutation,
+		java.lang.String email, java.lang.String officeNo,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .newAuthor(firstName, middleName, lastName, salutation,
+			email, officeNo, serviceContext);
+	}
+
 	public static long addAuthor(java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String title, java.lang.String email,
+		java.lang.String salutation, java.lang.String email,
 		java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
 		java.lang.String remoteId, int idType, long userId, long groupId,
@@ -281,10 +303,11 @@ public class AuthorLocalServiceUtil {
 		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException {
 		return getService()
-				   .addAuthor(firstName, middleName, lastName, title, email,
-			officeNo, authorSite, remoteId, idType, userId, groupId,
+				   .addAuthor(firstName, middleName, lastName, salutation,
+			email, officeNo, authorSite, remoteId, idType, userId, groupId,
 			createdByUserId, expertiseNames, researchInterestNames,
 			serviceContext);
 	}
@@ -316,20 +339,21 @@ public class AuthorLocalServiceUtil {
 	* @throws PortalException
 	*/
 	public static com.idetronic.subur.model.Author updateAuthor(long authorId,
-		java.lang.String title, java.lang.String firstName,
+		java.lang.String salutation, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName,
 		java.lang.String email, java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
-		java.lang.String remoteId, int idType, long userId, long groupId,
+		java.lang.String title, long userId, long groupId,
 		long createdByUserId, java.lang.String[] expertiseNames,
 		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException {
 		return getService()
-				   .updateAuthor(authorId, title, firstName, middleName,
-			lastName, email, officeNo, authorSite, remoteId, idType, userId,
-			groupId, createdByUserId, expertiseNames, researchInterestNames,
+				   .updateAuthor(authorId, salutation, firstName, middleName,
+			lastName, email, officeNo, authorSite, title, userId, groupId,
+			createdByUserId, expertiseNames, researchInterestNames,
 			serviceContext);
 	}
 
@@ -475,9 +499,25 @@ public class AuthorLocalServiceUtil {
 		return getService().findByGroupCompany(companyId, groupId, start, end);
 	}
 
+	public static java.util.List<com.idetronic.subur.model.Author> recentByGroup(
+		long companyId, long groupId, java.util.Date lastPublishedDate,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .recentByGroup(companyId, groupId, lastPublishedDate, start,
+			end);
+	}
+
 	public static void deleteItem(long itemId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteItem(itemId);
+	}
+
+	public static com.idetronic.subur.model.Author updatePortrait(
+		long authorId, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updatePortrait(authorId, bytes);
 	}
 
 	public static void clearService() {

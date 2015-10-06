@@ -85,18 +85,32 @@ public interface ViewSummaryModel extends BaseModel<ViewSummary> {
 	public void setItemId(long itemId);
 
 	/**
-	 * Returns the per month of this view summary.
+	 * Returns the company ID of this view summary.
 	 *
-	 * @return the per month of this view summary
+	 * @return the company ID of this view summary
 	 */
-	public int getPerMonth();
+	public long getCompanyId();
 
 	/**
-	 * Sets the per month of this view summary.
+	 * Sets the company ID of this view summary.
 	 *
-	 * @param perMonth the per month of this view summary
+	 * @param companyId the company ID of this view summary
 	 */
-	public void setPerMonth(int perMonth);
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the group ID of this view summary.
+	 *
+	 * @return the group ID of this view summary
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this view summary.
+	 *
+	 * @param groupId the group ID of this view summary
+	 */
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the per year of this view summary.
@@ -111,6 +125,20 @@ public interface ViewSummaryModel extends BaseModel<ViewSummary> {
 	 * @param perYear the per year of this view summary
 	 */
 	public void setPerYear(int perYear);
+
+	/**
+	 * Returns the per month of this view summary.
+	 *
+	 * @return the per month of this view summary
+	 */
+	public int getPerMonth();
+
+	/**
+	 * Sets the per month of this view summary.
+	 *
+	 * @param perMonth the per month of this view summary
+	 */
+	public void setPerMonth(int perMonth);
 
 	/**
 	 * Returns the status of this view summary.

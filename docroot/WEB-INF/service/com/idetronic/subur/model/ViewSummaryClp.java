@@ -75,8 +75,10 @@ public class ViewSummaryClp extends BaseModelImpl<ViewSummary>
 
 		attributes.put("id", getId());
 		attributes.put("itemId", getItemId());
-		attributes.put("perMonth", getPerMonth());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("perYear", getPerYear());
+		attributes.put("perMonth", getPerMonth());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -96,16 +98,28 @@ public class ViewSummaryClp extends BaseModelImpl<ViewSummary>
 			setItemId(itemId);
 		}
 
-		Integer perMonth = (Integer)attributes.get("perMonth");
+		Long companyId = (Long)attributes.get("companyId");
 
-		if (perMonth != null) {
-			setPerMonth(perMonth);
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Integer perYear = (Integer)attributes.get("perYear");
 
 		if (perYear != null) {
 			setPerYear(perYear);
+		}
+
+		Integer perMonth = (Integer)attributes.get("perMonth");
+
+		if (perMonth != null) {
+			setPerMonth(perMonth);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -162,21 +176,44 @@ public class ViewSummaryClp extends BaseModelImpl<ViewSummary>
 	}
 
 	@Override
-	public int getPerMonth() {
-		return _perMonth;
+	public long getCompanyId() {
+		return _companyId;
 	}
 
 	@Override
-	public void setPerMonth(int perMonth) {
-		_perMonth = perMonth;
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 
 		if (_viewSummaryRemoteModel != null) {
 			try {
 				Class<?> clazz = _viewSummaryRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setPerMonth", int.class);
+				Method method = clazz.getMethod("setCompanyId", long.class);
 
-				method.invoke(_viewSummaryRemoteModel, perMonth);
+				method.invoke(_viewSummaryRemoteModel, companyId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+
+		if (_viewSummaryRemoteModel != null) {
+			try {
+				Class<?> clazz = _viewSummaryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGroupId", long.class);
+
+				method.invoke(_viewSummaryRemoteModel, groupId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -200,6 +237,29 @@ public class ViewSummaryClp extends BaseModelImpl<ViewSummary>
 				Method method = clazz.getMethod("setPerYear", int.class);
 
 				method.invoke(_viewSummaryRemoteModel, perYear);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getPerMonth() {
+		return _perMonth;
+	}
+
+	@Override
+	public void setPerMonth(int perMonth) {
+		_perMonth = perMonth;
+
+		if (_viewSummaryRemoteModel != null) {
+			try {
+				Class<?> clazz = _viewSummaryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setPerMonth", int.class);
+
+				method.invoke(_viewSummaryRemoteModel, perMonth);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -301,8 +361,10 @@ public class ViewSummaryClp extends BaseModelImpl<ViewSummary>
 
 		clone.setId(getId());
 		clone.setItemId(getItemId());
-		clone.setPerMonth(getPerMonth());
+		clone.setCompanyId(getCompanyId());
+		clone.setGroupId(getGroupId());
 		clone.setPerYear(getPerYear());
+		clone.setPerMonth(getPerMonth());
 		clone.setStatus(getStatus());
 
 		return clone;
@@ -356,16 +418,20 @@ public class ViewSummaryClp extends BaseModelImpl<ViewSummary>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{id=");
 		sb.append(getId());
 		sb.append(", itemId=");
 		sb.append(getItemId());
-		sb.append(", perMonth=");
-		sb.append(getPerMonth());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", perYear=");
 		sb.append(getPerYear());
+		sb.append(", perMonth=");
+		sb.append(getPerMonth());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append("}");
@@ -375,7 +441,7 @@ public class ViewSummaryClp extends BaseModelImpl<ViewSummary>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.ViewSummary");
@@ -390,12 +456,20 @@ public class ViewSummaryClp extends BaseModelImpl<ViewSummary>
 		sb.append(getItemId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>perMonth</column-name><column-value><![CDATA[");
-		sb.append(getPerMonth());
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>perYear</column-name><column-value><![CDATA[");
 		sb.append(getPerYear());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>perMonth</column-name><column-value><![CDATA[");
+		sb.append(getPerMonth());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
@@ -409,8 +483,10 @@ public class ViewSummaryClp extends BaseModelImpl<ViewSummary>
 
 	private long _id;
 	private long _itemId;
-	private int _perMonth;
+	private long _companyId;
+	private long _groupId;
 	private int _perYear;
+	private int _perMonth;
 	private int _status;
 	private BaseModel<?> _viewSummaryRemoteModel;
 	private Class<?> _clpSerializerClass = com.idetronic.subur.service.ClpSerializer.class;

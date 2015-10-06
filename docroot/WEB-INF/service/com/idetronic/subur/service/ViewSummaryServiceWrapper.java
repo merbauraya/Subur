@@ -57,7 +57,19 @@ public class ViewSummaryServiceWrapper implements ViewSummaryService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONArray getMonthlyCategory(
+	public com.liferay.portal.kernel.json.JSONObject getTestChartData() {
+		return _viewSummaryService.getTestChartData();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyAssetCategoryChart(
+		int year, int vocabularyId) throws java.sql.SQLException {
+		return _viewSummaryService.getMonthlyAssetCategoryChart(year,
+			vocabularyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyCategory(
 		int year, long vocabularyId) throws java.lang.Exception {
 		return _viewSummaryService.getMonthlyCategory(year, vocabularyId);
 	}
@@ -75,7 +87,7 @@ public class ViewSummaryServiceWrapper implements ViewSummaryService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONArray getMonthlyTagSummary(
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyTagSummary(
 		int year) throws java.lang.Exception {
 		return _viewSummaryService.getMonthlyTagSummary(year);
 	}

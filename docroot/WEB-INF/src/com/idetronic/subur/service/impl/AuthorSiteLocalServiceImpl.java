@@ -18,6 +18,7 @@ import java.util.List;
 
 import com.idetronic.subur.model.AuthorSite;
 import com.idetronic.subur.service.base.AuthorSiteLocalServiceBaseImpl;
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 
 /**
@@ -43,5 +44,19 @@ public class AuthorSiteLocalServiceImpl extends AuthorSiteLocalServiceBaseImpl {
 	public List<AuthorSite> findByAuthorId(long authorId) throws SystemException
 	{
 		return authorSitePersistence.findByAuthor(authorId);
+		
+	}
+	public void deleteByAuthorId(long authorId) throws SystemException
+	{
+		authorSitePersistence.removeByAuthor(authorId);
+	}
+	public AuthorSite addAuthorSite(long authorId,String siteName,String siteURL) throws SystemException
+	{
+		long id = CounterLocalServiceUtil.increment(AuthorSite.class.getName());
+		AuthorSite newAuthorSite = authorSitePersistence.create(id);
+		newAuthorSite.setAuthorId(authorId);
+		newAuthorSite.setSiteName(siteName);
+		newAuthorSite.setSiteURL(siteURL);
+		return authorSitePersistence.update(newAuthorSite);
 	}
 }

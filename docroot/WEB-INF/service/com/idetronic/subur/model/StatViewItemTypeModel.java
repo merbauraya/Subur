@@ -71,18 +71,32 @@ public interface StatViewItemTypeModel extends BaseModel<StatViewItemType> {
 	public void setId(long id);
 
 	/**
-	 * Returns the per month of this stat view item type.
+	 * Returns the company ID of this stat view item type.
 	 *
-	 * @return the per month of this stat view item type
+	 * @return the company ID of this stat view item type
 	 */
-	public int getPerMonth();
+	public long getCompanyId();
 
 	/**
-	 * Sets the per month of this stat view item type.
+	 * Sets the company ID of this stat view item type.
 	 *
-	 * @param perMonth the per month of this stat view item type
+	 * @param companyId the company ID of this stat view item type
 	 */
-	public void setPerMonth(int perMonth);
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the group ID of this stat view item type.
+	 *
+	 * @return the group ID of this stat view item type
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this stat view item type.
+	 *
+	 * @param groupId the group ID of this stat view item type
+	 */
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the per year of this stat view item type.
@@ -99,6 +113,20 @@ public interface StatViewItemTypeModel extends BaseModel<StatViewItemType> {
 	public void setPerYear(int perYear);
 
 	/**
+	 * Returns the per month of this stat view item type.
+	 *
+	 * @return the per month of this stat view item type
+	 */
+	public int getPerMonth();
+
+	/**
+	 * Sets the per month of this stat view item type.
+	 *
+	 * @param perMonth the per month of this stat view item type
+	 */
+	public void setPerMonth(int perMonth);
+
+	/**
 	 * Returns the item type ID of this stat view item type.
 	 *
 	 * @return the item type ID of this stat view item type
@@ -111,6 +139,20 @@ public interface StatViewItemTypeModel extends BaseModel<StatViewItemType> {
 	 * @param itemTypeId the item type ID of this stat view item type
 	 */
 	public void setItemTypeId(long itemTypeId);
+
+	/**
+	 * Returns the view count of this stat view item type.
+	 *
+	 * @return the view count of this stat view item type
+	 */
+	public int getViewCount();
+
+	/**
+	 * Sets the view count of this stat view item type.
+	 *
+	 * @param viewCount the view count of this stat view item type
+	 */
+	public void setViewCount(int viewCount);
 
 	@Override
 	public boolean isNew();

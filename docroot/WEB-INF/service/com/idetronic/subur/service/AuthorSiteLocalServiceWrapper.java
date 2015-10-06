@@ -293,6 +293,19 @@ public class AuthorSiteLocalServiceWrapper implements AuthorSiteLocalService,
 		return _authorSiteLocalService.findByAuthorId(authorId);
 	}
 
+	@Override
+	public void deleteByAuthorId(long authorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_authorSiteLocalService.deleteByAuthorId(authorId);
+	}
+
+	@Override
+	public com.idetronic.subur.model.AuthorSite addAuthorSite(long authorId,
+		java.lang.String siteName, java.lang.String siteURL)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _authorSiteLocalService.addAuthorSite(authorId, siteName, siteURL);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

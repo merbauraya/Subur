@@ -16,13 +16,29 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.util.portlet.PortletProps;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class SuburFolderUtil {
+	
+	
 	static ThemeDisplay _themeDisplay;
+	private static String SUBUR_ROOT_FOLDER_KEY = "DL.root.folder.name";
+	private static String SUBUR_AUTHOR_ROOT_FOLDER_KEY = "DL.author.root.folder";
+	
+	public static int FOLDER_ITEM_ATTACHMENT = 1;
+	public static int FOLDER_AUTHOR_ATTACHMENT = 2;
 	private static Log logger = LogFactoryUtil.getLog(SuburFolderUtil.class);
 	
-	public static long getFolderId(PortletRequest request,ThemeDisplay themeDisplay)
+	/**
+	 * Return the folder id based on the following tree
+	 * Subur->Year->Month
+	 * @param request
+	 * @param themeDisplay
+	 * @return
+	 */
+	public static long getFolderId(PortletRequest request,ThemeDisplay themeDisplay,int folderType)
 	{
 		_themeDisplay = themeDisplay;
 		
@@ -33,12 +49,13 @@ public class SuburFolderUtil {
 		
 		//check if 
 		//logger.info("getting foler");
-		DLFolder dir = getRootFolder(request);
+		DLFolder dir = getRootFolder(request,folderType);
 		DLFolder folderYear = getFolder(dir.getFolderId(),year,request);
 		DLFolder folderMonth = getFolder(folderYear.getFolderId(),month,request);
 		
 		return folderMonth.getFolderId();
 	}
+	
 	public static long getFolderId(HttpServletRequest request,ThemeDisplay themeDisplay)
 	{
 		_themeDisplay = themeDisplay;
@@ -78,7 +95,7 @@ public class SuburFolderUtil {
 	}
 	private static DLFolder getFolder(long parentFolderId,String folderName,HttpServletRequest request)
 	{
-		logger.info("getfolder "+ folderName + parentFolderId);
+		
 		try {
 			DLFolder dir = DLFolderLocalServiceUtil.getFolder(_themeDisplay.getScopeGroupId(), parentFolderId, folderName);
 			return dir;
@@ -96,15 +113,24 @@ public class SuburFolderUtil {
 		}
 		return null;
 	}
-	private static DLFolder getRootFolder(PortletRequest request)
+	private static DLFolder getRootFolder(PortletRequest request,int folderType)
 	{
 		long ROOT_FOLDER=0;
+		String rootFolder;
+		if (folderType == FOLDER_ITEM_ATTACHMENT)
+		{
+			rootFolder = PortletProps.get(SUBUR_ROOT_FOLDER_KEY);
+		}else
+		{
+			rootFolder = PortletProps.get(SUBUR_AUTHOR_ROOT_FOLDER_KEY);
+		}
+		
 		try {
 			DLFolder dir = DLFolderLocalServiceUtil.getFolder(_themeDisplay.getScopeGroupId(), 0, SuburConstant.SUBUR_ROOT_FOLDER);
 			return dir;
 		}catch (NoSuchFolderException e)
 		{
-			return createFolder(SuburConstant.SUBUR_ROOT_FOLDER,ROOT_FOLDER,request);
+			return createFolder(rootFolder,ROOT_FOLDER,request);
 		}
 		catch (PortalException e) {
 			

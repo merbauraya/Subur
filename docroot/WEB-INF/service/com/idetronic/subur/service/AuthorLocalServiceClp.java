@@ -110,9 +110,17 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "addAuthor";
+		_methodName19 = "newAuthor";
 
 		_methodParameterTypes19 = new String[] {
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName20 = "addAuthor";
+
+		_methodParameterTypes20 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.util.Map", "java.lang.String", "int", "long", "long",
@@ -120,105 +128,114 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName20 = "setExpertises";
-
-		_methodParameterTypes20 = new String[] { "long", "java.util.List" };
-
-		_methodName21 = "setResearchInterests";
+		_methodName21 = "setExpertises";
 
 		_methodParameterTypes21 = new String[] { "long", "java.util.List" };
 
-		_methodName22 = "updateAuthor";
+		_methodName22 = "setResearchInterests";
 
-		_methodParameterTypes22 = new String[] {
+		_methodParameterTypes22 = new String[] { "long", "java.util.List" };
+
+		_methodName23 = "updateAuthor";
+
+		_methodParameterTypes23 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Map", "java.lang.String", "int",
-				"long", "long", "long", "java.lang.String[][]",
-				"java.lang.String[][]",
+				"java.lang.String", "java.util.Map", "java.lang.String", "long",
+				"long", "long", "java.lang.String[][]", "java.lang.String[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName23 = "getItemByAuthorGroup";
+		_methodName24 = "getItemByAuthorGroup";
 
-		_methodParameterTypes23 = new String[] {
+		_methodParameterTypes24 = new String[] {
 				"long", "long", "int", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName24 = "getExpertises";
-
-		_methodParameterTypes24 = new String[] { "long" };
-
-		_methodName25 = "getResearchInterests";
+		_methodName25 = "getExpertises";
 
 		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "updateAuthorPosting";
+		_methodName26 = "getResearchInterests";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes26 = new String[] { "long" };
+
+		_methodName27 = "updateAuthorPosting";
+
+		_methodParameterTypes27 = new String[] {
 				"com.idetronic.subur.model.SuburItem"
 			};
 
-		_methodName27 = "updateNewPosting";
+		_methodName28 = "updateNewPosting";
 
-		_methodParameterTypes27 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes28 = new String[] { "long", "java.util.Date" };
 
-		_methodName28 = "getAuthors";
+		_methodName29 = "getAuthors";
 
-		_methodParameterTypes28 = new String[] { "long[][]" };
+		_methodParameterTypes29 = new String[] { "long[][]" };
 
-		_methodName29 = "updateAllItemCount";
+		_methodName30 = "updateAllItemCount";
 
-		_methodParameterTypes29 = new String[] { "long", "long" };
+		_methodParameterTypes30 = new String[] { "long", "long" };
 
-		_methodName30 = "decrementItemCount";
+		_methodName31 = "decrementItemCount";
 
-		_methodParameterTypes30 = new String[] { "long" };
-
-		_methodName31 = "getSearchCount";
-
-		_methodParameterTypes31 = new String[] {
-				"java.lang.String", "long", "long"
-			};
+		_methodParameterTypes31 = new String[] { "long" };
 
 		_methodName32 = "getSearchCount";
 
 		_methodParameterTypes32 = new String[] {
-				"java.lang.String", "long", "long", "java.lang.String",
-				"java.lang.String", "boolean", "boolean", "int", "int",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+				"java.lang.String", "long", "long"
 			};
 
-		_methodName33 = "getSuburItems";
+		_methodName33 = "getSearchCount";
 
 		_methodParameterTypes33 = new String[] {
-				"long", "int", "int",
+				"java.lang.String", "long", "long", "java.lang.String",
+				"java.lang.String", "boolean", "boolean", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName34 = "search";
+		_methodName34 = "getSuburItems";
 
 		_methodParameterTypes34 = new String[] {
-				"java.lang.String", "long", "long", "java.lang.String",
-				"java.lang.String", "boolean", "boolean", "int", "int",
+				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
 		_methodName35 = "search";
 
 		_methodParameterTypes35 = new String[] {
+				"java.lang.String", "long", "long", "java.lang.String",
+				"java.lang.String", "boolean", "boolean", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			};
+
+		_methodName36 = "search";
+
+		_methodParameterTypes36 = new String[] {
 				"java.lang.String", "long", "long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName36 = "findByGroupCompany";
+		_methodName37 = "findByGroupCompany";
 
-		_methodParameterTypes36 = new String[] { "long", "long", "int", "int" };
+		_methodParameterTypes37 = new String[] { "long", "long", "int", "int" };
 
-		_methodName37 = "deleteItem";
+		_methodName38 = "recentByGroup";
 
-		_methodParameterTypes37 = new String[] { "long" };
+		_methodParameterTypes38 = new String[] {
+				"long", "long", "java.util.Date", "int", "int"
+			};
+
+		_methodName39 = "deleteItem";
+
+		_methodParameterTypes39 = new String[] { "long" };
+
+		_methodName40 = "updatePortrait";
+
+		_methodParameterTypes40 = new String[] { "long", "byte[][]" };
 	}
 
 	@Override
@@ -768,17 +785,12 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 	}
 
 	@Override
-	public long addAuthor(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String title, java.lang.String email,
-		java.lang.String officeNo,
-		java.util.Map<java.lang.String, java.lang.String> authorSite,
-		java.lang.String remoteId, int idType, long userId, long groupId,
-		long createdByUserId, java.lang.String[] expertiseNames,
-		java.lang.String[] researchInterestNames,
+	public com.idetronic.subur.model.Author newAuthor(
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String salutation,
+		java.lang.String email, java.lang.String officeNo,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
@@ -791,7 +803,60 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 						
 					ClpSerializer.translateInput(lastName),
 						
-					ClpSerializer.translateInput(title),
+					ClpSerializer.translateInput(salutation),
+						
+					ClpSerializer.translateInput(email),
+						
+					ClpSerializer.translateInput(officeNo),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.idetronic.subur.model.Author)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long addAuthor(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String salutation, java.lang.String email,
+		java.lang.String officeNo,
+		java.util.Map<java.lang.String, java.lang.String> authorSite,
+		java.lang.String remoteId, int idType, long userId, long groupId,
+		long createdByUserId, java.lang.String[] expertiseNames,
+		java.lang.String[] researchInterestNames,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] {
+						ClpSerializer.translateInput(firstName),
+						
+					ClpSerializer.translateInput(middleName),
+						
+					ClpSerializer.translateInput(lastName),
+						
+					ClpSerializer.translateInput(salutation),
 						
 					ClpSerializer.translateInput(email),
 						
@@ -827,6 +892,10 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 				throw (com.liferay.portal.kernel.exception.SystemException)t;
 			}
 
+			if (t instanceof java.io.IOException) {
+				throw (java.io.IOException)t;
+			}
+
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -844,8 +913,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		java.util.List<com.idetronic.subur.model.Expertise> expertises)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName20,
-				_methodParameterTypes20,
+			_invokableLocalService.invokeMethod(_methodName21,
+				_methodParameterTypes21,
 				new Object[] { authorId, ClpSerializer.translateInput(
 						expertises) });
 		}
@@ -871,8 +940,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		java.util.List<com.idetronic.subur.model.ResearchInterest> researchInterests)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName21,
-				_methodParameterTypes21,
+			_invokableLocalService.invokeMethod(_methodName22,
+				_methodParameterTypes22,
 				new Object[] {
 					authorId,
 					
@@ -898,25 +967,26 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 
 	@Override
 	public com.idetronic.subur.model.Author updateAuthor(long authorId,
-		java.lang.String title, java.lang.String firstName,
+		java.lang.String salutation, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName,
 		java.lang.String email, java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
-		java.lang.String remoteId, int idType, long userId, long groupId,
+		java.lang.String title, long userId, long groupId,
 		long createdByUserId, java.lang.String[] expertiseNames,
 		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						authorId,
 						
-					ClpSerializer.translateInput(title),
+					ClpSerializer.translateInput(salutation),
 						
 					ClpSerializer.translateInput(firstName),
 						
@@ -930,9 +1000,7 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 						
 					ClpSerializer.translateInput(authorSite),
 						
-					ClpSerializer.translateInput(remoteId),
-						
-					idType,
+					ClpSerializer.translateInput(title),
 						
 					userId,
 						
@@ -958,6 +1026,10 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 				throw (com.liferay.portal.kernel.exception.SystemException)t;
 			}
 
+			if (t instanceof java.io.IOException) {
+				throw (java.io.IOException)t;
+			}
+
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -978,8 +1050,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						groupId,
 						
@@ -1020,8 +1092,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24, new Object[] { authorId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] { authorId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1049,8 +1121,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { authorId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { authorId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1076,8 +1148,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		com.idetronic.subur.model.SuburItem suburItem)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName26,
-				_methodParameterTypes26,
+			_invokableLocalService.invokeMethod(_methodName27,
+				_methodParameterTypes27,
 				new Object[] { ClpSerializer.translateInput(suburItem) });
 		}
 		catch (Throwable t) {
@@ -1103,8 +1175,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						authorId,
 						
@@ -1138,8 +1210,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] { ClpSerializer.translateInput(authorIds) });
 		}
 		catch (Throwable t) {
@@ -1168,8 +1240,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 	@Override
 	public void updateAllItemCount(long companyId, long groupId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName29,
-				_methodParameterTypes29, new Object[] { companyId, groupId });
+			_invokableLocalService.invokeMethod(_methodName30,
+				_methodParameterTypes30, new Object[] { companyId, groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1188,8 +1260,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 	public void decrementItemCount(long authorId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName30,
-				_methodParameterTypes30, new Object[] { authorId });
+			_invokableLocalService.invokeMethod(_methodName31,
+				_methodParameterTypes31, new Object[] { authorId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1215,8 +1287,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						ClpSerializer.translateInput(keyword),
 						
@@ -1252,8 +1324,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(keyword),
 						
@@ -1298,8 +1370,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						authorId,
 						
@@ -1335,8 +1407,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] {
 						ClpSerializer.translateInput(keyword),
 						
@@ -1386,8 +1458,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] {
 						ClpSerializer.translateInput(keyword),
 						
@@ -1427,8 +1499,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] { companyId, groupId, start, end });
 		}
 		catch (Throwable t) {
@@ -1447,11 +1519,26 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 	}
 
 	@Override
-	public void deleteItem(long itemId)
+	public java.util.List<com.idetronic.subur.model.Author> recentByGroup(
+		long companyId, long groupId, java.util.Date lastPublishedDate,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
 		try {
-			_invokableLocalService.invokeMethod(_methodName37,
-				_methodParameterTypes37, new Object[] { itemId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
+					new Object[] {
+						companyId,
+						
+					groupId,
+						
+					ClpSerializer.translateInput(lastPublishedDate),
+						
+					start,
+						
+					end
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1468,6 +1555,67 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 					" is not a valid exception");
 			}
 		}
+
+		return (java.util.List<com.idetronic.subur.model.Author>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void deleteItem(long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName39,
+				_methodParameterTypes39, new Object[] { itemId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public com.idetronic.subur.model.Author updatePortrait(long authorId,
+		byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
+					new Object[] { authorId, ClpSerializer.translateInput(bytes) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.idetronic.subur.model.Author)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -1545,4 +1693,10 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 	private String[] _methodParameterTypes36;
 	private String _methodName37;
 	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
+	private String _methodName39;
+	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
 }

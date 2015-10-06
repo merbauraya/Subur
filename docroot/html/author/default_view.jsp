@@ -18,7 +18,7 @@
 		<div class="span4">
 		<h4>By Expertise</h4>	
 		
-		<ul>
+		<ul class="author no-margin style-none">
 		<%
 			List<Expertise> top10Expertises = ExpertiseLocalServiceUtil.getTop10(themeDisplay.getScopeGroupId());
 			for (Expertise expertise: top10Expertises)
@@ -44,7 +44,7 @@
 	</div>
 	<div class="span4">
 		<h4>By Research Interest</h4>	
-		<ul>
+		<ul class="author no-margin style-none">
 		
 		<%
 			List<ResearchInterest> top10ResearchInterest = ResearchInterestLocalServiceUtil.getTop10(themeDisplay.getScopeGroupId());
@@ -72,29 +72,29 @@
 </aui:layout>
 </aui:row>
 
-	<aui:row>
+	<div class="row-fluid">
 	<%
-	int vocabCol = 0;
+	int vocabCol = 1;
 	for (AssetVocabulary vocab: authorVocabularies)
 	{
 		
 	%>
 		<div class="span4">
 			<h4>By <%=vocab.getName() %></h4>
-				<ul>
+				<ul class="author no-margin style-none">
 				<%
-	
-				Map<String,AssetCategory> top10Categories = AuthorUtil.getTop10CategoryByVocabulary(vocab.getVocabularyId());
-				int i = 0;
-				for (Map.Entry<String, AssetCategory> entries : top10Categories.entrySet())
-				{
-					AssetCategory category = entries.getValue();
-					String keyWithCount = entries.getKey();
-					int count = Integer.parseInt(StringUtil.split(keyWithCount,"-")[0]);
-					String key = StringUtil.split(keyWithCount,"-")[1];
-					i++;
-					if (i > 10)
-						break;
+					vocabCol++;
+					Map<String,AssetCategory> top10Categories = AuthorUtil.getTop10CategoryByVocabulary(vocab.getVocabularyId());
+					int i = 0;
+					for (Map.Entry<String, AssetCategory> entries : top10Categories.entrySet())
+					{
+						AssetCategory category = entries.getValue();
+						String keyWithCount = entries.getKey();
+						int count = Integer.parseInt(StringUtil.split(keyWithCount,"-")[0]);
+						String key = StringUtil.split(keyWithCount,"-")[1];
+						i++;
+						if (i > 10)
+							break;
 				%>
 				<portlet:actionURL var="byCategory" name="search">
 				
@@ -117,6 +117,11 @@
 		
 		
 		</div>
+		<c:if test="<%=vocabCol>3 %>">
+			<% vocabCol = 1; %>
+			</div>
+			<div class="row-fluid">
+		</c:if>		
 	<%
 	}
 	%>
@@ -124,4 +129,4 @@
 	
 	
 	
-	</aui:row>
+	</div>

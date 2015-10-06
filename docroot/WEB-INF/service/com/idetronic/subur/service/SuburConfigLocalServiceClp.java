@@ -128,6 +128,18 @@ public class SuburConfigLocalServiceClp implements SuburConfigLocalService {
 		_methodName21 = "updateConfig";
 
 		_methodParameterTypes21 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
+
+		_methodName22 = "addConfig";
+
+		_methodParameterTypes22 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
+
+		_methodName23 = "updateConfig";
+
+		_methodParameterTypes23 = new String[] {
 				"java.util.Map", "java.lang.String"
 			};
 	}
@@ -749,14 +761,82 @@ public class SuburConfigLocalServiceClp implements SuburConfigLocalService {
 
 	@Override
 	public com.idetronic.subur.model.SuburConfig updateConfig(
-		java.util.Map<java.lang.String, java.lang.String> configMap,
-		java.lang.String configKey)
+		java.lang.String configKey, java.lang.String value)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
 					_methodParameterTypes21,
+					new Object[] {
+						ClpSerializer.translateInput(configKey),
+						
+					ClpSerializer.translateInput(value)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.idetronic.subur.model.SuburConfig)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.idetronic.subur.model.SuburConfig addConfig(
+		java.lang.String configKey, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] {
+						ClpSerializer.translateInput(configKey),
+						
+					ClpSerializer.translateInput(value)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.idetronic.subur.model.SuburConfig)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.idetronic.subur.model.SuburConfig updateConfig(
+		java.util.Map<java.lang.String, java.lang.String> configMap,
+		java.lang.String configKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						ClpSerializer.translateInput(configMap),
 						
@@ -825,4 +905,8 @@ public class SuburConfigLocalServiceClp implements SuburConfigLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
 }

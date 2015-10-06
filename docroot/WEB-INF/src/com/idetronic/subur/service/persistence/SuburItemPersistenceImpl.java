@@ -1421,6 +1421,979 @@ public class SuburItemPersistenceImpl extends BasePersistenceImpl<SuburItem>
 	}
 
 	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "suburItem.status = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUSBYGROUP =
+		new FinderPath(SuburItemModelImpl.ENTITY_CACHE_ENABLED,
+			SuburItemModelImpl.FINDER_CACHE_ENABLED, SuburItemImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatusByGroup",
+			new String[] {
+				Integer.class.getName(), Long.class.getName(),
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUSBYGROUP =
+		new FinderPath(SuburItemModelImpl.ENTITY_CACHE_ENABLED,
+			SuburItemModelImpl.FINDER_CACHE_ENABLED, SuburItemImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatusByGroup",
+			new String[] {
+				Integer.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			},
+			SuburItemModelImpl.STATUS_COLUMN_BITMASK |
+			SuburItemModelImpl.GROUPID_COLUMN_BITMASK |
+			SuburItemModelImpl.COMPANYID_COLUMN_BITMASK |
+			SuburItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_STATUSBYGROUP = new FinderPath(SuburItemModelImpl.ENTITY_CACHE_ENABLED,
+			SuburItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatusByGroup",
+			new String[] {
+				Integer.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			});
+
+	/**
+	 * Returns all the subur items where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @return the matching subur items
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<SuburItem> findByStatusByGroup(int status, long groupId,
+		long companyId) throws SystemException {
+		return findByStatusByGroup(status, groupId, companyId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the subur items where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of subur items
+	 * @param end the upper bound of the range of subur items (not inclusive)
+	 * @return the range of matching subur items
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<SuburItem> findByStatusByGroup(int status, long groupId,
+		long companyId, int start, int end) throws SystemException {
+		return findByStatusByGroup(status, groupId, companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the subur items where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of subur items
+	 * @param end the upper bound of the range of subur items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching subur items
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<SuburItem> findByStatusByGroup(int status, long groupId,
+		long companyId, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUSBYGROUP;
+			finderArgs = new Object[] { status, groupId, companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUSBYGROUP;
+			finderArgs = new Object[] {
+					status, groupId, companyId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<SuburItem> list = (List<SuburItem>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (SuburItem suburItem : list) {
+				if ((status != suburItem.getStatus()) ||
+						(groupId != suburItem.getGroupId()) ||
+						(companyId != suburItem.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_SUBURITEM_WHERE);
+
+			query.append(_FINDER_COLUMN_STATUSBYGROUP_STATUS_2);
+
+			query.append(_FINDER_COLUMN_STATUSBYGROUP_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_STATUSBYGROUP_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(SuburItemModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(status);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
+
+				if (!pagination) {
+					list = (List<SuburItem>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<SuburItem>(list);
+				}
+				else {
+					list = (List<SuburItem>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first subur item in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching subur item
+	 * @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SuburItem findByStatusByGroup_First(int status, long groupId,
+		long companyId, OrderByComparator orderByComparator)
+		throws NoSuchItemException, SystemException {
+		SuburItem suburItem = fetchByStatusByGroup_First(status, groupId,
+				companyId, orderByComparator);
+
+		if (suburItem != null) {
+			return suburItem;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("status=");
+		msg.append(status);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchItemException(msg.toString());
+	}
+
+	/**
+	 * Returns the first subur item in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching subur item, or <code>null</code> if a matching subur item could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SuburItem fetchByStatusByGroup_First(int status, long groupId,
+		long companyId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<SuburItem> list = findByStatusByGroup(status, groupId, companyId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last subur item in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching subur item
+	 * @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SuburItem findByStatusByGroup_Last(int status, long groupId,
+		long companyId, OrderByComparator orderByComparator)
+		throws NoSuchItemException, SystemException {
+		SuburItem suburItem = fetchByStatusByGroup_Last(status, groupId,
+				companyId, orderByComparator);
+
+		if (suburItem != null) {
+			return suburItem;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("status=");
+		msg.append(status);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchItemException(msg.toString());
+	}
+
+	/**
+	 * Returns the last subur item in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching subur item, or <code>null</code> if a matching subur item could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SuburItem fetchByStatusByGroup_Last(int status, long groupId,
+		long companyId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByStatusByGroup(status, groupId, companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<SuburItem> list = findByStatusByGroup(status, groupId, companyId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the subur items before and after the current subur item in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param itemId the primary key of the current subur item
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next subur item
+	 * @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SuburItem[] findByStatusByGroup_PrevAndNext(long itemId, int status,
+		long groupId, long companyId, OrderByComparator orderByComparator)
+		throws NoSuchItemException, SystemException {
+		SuburItem suburItem = findByPrimaryKey(itemId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SuburItem[] array = new SuburItemImpl[3];
+
+			array[0] = getByStatusByGroup_PrevAndNext(session, suburItem,
+					status, groupId, companyId, orderByComparator, true);
+
+			array[1] = suburItem;
+
+			array[2] = getByStatusByGroup_PrevAndNext(session, suburItem,
+					status, groupId, companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SuburItem getByStatusByGroup_PrevAndNext(Session session,
+		SuburItem suburItem, int status, long groupId, long companyId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SUBURITEM_WHERE);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_STATUS_2);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SuburItemModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(status);
+
+		qPos.add(groupId);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(suburItem);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SuburItem> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the subur items that the user has permission to view where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @return the matching subur items that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<SuburItem> filterFindByStatusByGroup(int status, long groupId,
+		long companyId) throws SystemException {
+		return filterFindByStatusByGroup(status, groupId, companyId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the subur items that the user has permission to view where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of subur items
+	 * @param end the upper bound of the range of subur items (not inclusive)
+	 * @return the range of matching subur items that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<SuburItem> filterFindByStatusByGroup(int status, long groupId,
+		long companyId, int start, int end) throws SystemException {
+		return filterFindByStatusByGroup(status, groupId, companyId, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the subur items that the user has permissions to view where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of subur items
+	 * @param end the upper bound of the range of subur items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching subur items that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<SuburItem> filterFindByStatusByGroup(int status, long groupId,
+		long companyId, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByStatusByGroup(status, groupId, companyId, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SUBURITEM_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SUBURITEM_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_STATUS_2);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_COMPANYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SUBURITEM_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(SuburItemModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(SuburItemModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				SuburItem.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, SuburItemImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, SuburItemImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(status);
+
+			qPos.add(groupId);
+
+			qPos.add(companyId);
+
+			return (List<SuburItem>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the subur items before and after the current subur item in the ordered set of subur items that the user has permission to view where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param itemId the primary key of the current subur item
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next subur item
+	 * @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SuburItem[] filterFindByStatusByGroup_PrevAndNext(long itemId,
+		int status, long groupId, long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchItemException, SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByStatusByGroup_PrevAndNext(itemId, status, groupId,
+				companyId, orderByComparator);
+		}
+
+		SuburItem suburItem = findByPrimaryKey(itemId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SuburItem[] array = new SuburItemImpl[3];
+
+			array[0] = filterGetByStatusByGroup_PrevAndNext(session, suburItem,
+					status, groupId, companyId, orderByComparator, true);
+
+			array[1] = suburItem;
+
+			array[2] = filterGetByStatusByGroup_PrevAndNext(session, suburItem,
+					status, groupId, companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SuburItem filterGetByStatusByGroup_PrevAndNext(Session session,
+		SuburItem suburItem, int status, long groupId, long companyId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SUBURITEM_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SUBURITEM_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_STATUS_2);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_COMPANYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SUBURITEM_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(SuburItemModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(SuburItemModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				SuburItem.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, SuburItemImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, SuburItemImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(status);
+
+		qPos.add(groupId);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(suburItem);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SuburItem> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the subur items where status = &#63; and groupId = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByStatusByGroup(int status, long groupId, long companyId)
+		throws SystemException {
+		for (SuburItem suburItem : findByStatusByGroup(status, groupId,
+				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(suburItem);
+		}
+	}
+
+	/**
+	 * Returns the number of subur items where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @return the number of matching subur items
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByStatusByGroup(int status, long groupId, long companyId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_STATUSBYGROUP;
+
+		Object[] finderArgs = new Object[] { status, groupId, companyId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_SUBURITEM_WHERE);
+
+			query.append(_FINDER_COLUMN_STATUSBYGROUP_STATUS_2);
+
+			query.append(_FINDER_COLUMN_STATUSBYGROUP_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_STATUSBYGROUP_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(status);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of subur items that the user has permission to view where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @return the number of matching subur items that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int filterCountByStatusByGroup(int status, long groupId,
+		long companyId) throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByStatusByGroup(status, groupId, companyId);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_SUBURITEM_WHERE);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_STATUS_2);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_STATUSBYGROUP_COMPANYID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				SuburItem.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(status);
+
+			qPos.add(groupId);
+
+			qPos.add(companyId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_STATUSBYGROUP_STATUS_2 = "suburItem.status = ? AND ";
+	private static final String _FINDER_COLUMN_STATUSBYGROUP_GROUPID_2 = "suburItem.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_STATUSBYGROUP_COMPANYID_2 = "suburItem.companyId = ?";
 
 	public SuburItemPersistenceImpl() {
 		setModelClass(SuburItem.class);
@@ -1679,6 +2652,31 @@ public class SuburItemPersistenceImpl extends BasePersistenceImpl<SuburItem>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
 					args);
 			}
+
+			if ((suburItemModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUSBYGROUP.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						suburItemModelImpl.getOriginalStatus(),
+						suburItemModelImpl.getOriginalGroupId(),
+						suburItemModelImpl.getOriginalCompanyId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUSBYGROUP,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUSBYGROUP,
+					args);
+
+				args = new Object[] {
+						suburItemModelImpl.getStatus(),
+						suburItemModelImpl.getGroupId(),
+						suburItemModelImpl.getCompanyId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUSBYGROUP,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUSBYGROUP,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(SuburItemModelImpl.ENTITY_CACHE_ENABLED,
@@ -1711,6 +2709,8 @@ public class SuburItemPersistenceImpl extends BasePersistenceImpl<SuburItem>
 		suburItemImpl.setStatus(suburItem.getStatus());
 		suburItemImpl.setUuid(suburItem.getUuid());
 		suburItemImpl.setMetadataValue(suburItem.getMetadataValue());
+		suburItemImpl.setRelatedRestricted(suburItem.isRelatedRestricted());
+		suburItemImpl.setPhotoCoverId(suburItem.getPhotoCoverId());
 
 		return suburItemImpl;
 	}

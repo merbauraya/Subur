@@ -74,9 +74,12 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("id", getId());
-		attributes.put("perMonth", getPerMonth());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("perYear", getPerYear());
+		attributes.put("perMonth", getPerMonth());
 		attributes.put("categoryId", getCategoryId());
+		attributes.put("viewCount", getViewCount());
 
 		return attributes;
 	}
@@ -89,10 +92,16 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 			setId(id);
 		}
 
-		Integer perMonth = (Integer)attributes.get("perMonth");
+		Long companyId = (Long)attributes.get("companyId");
 
-		if (perMonth != null) {
-			setPerMonth(perMonth);
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Integer perYear = (Integer)attributes.get("perYear");
@@ -101,10 +110,22 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 			setPerYear(perYear);
 		}
 
+		Integer perMonth = (Integer)attributes.get("perMonth");
+
+		if (perMonth != null) {
+			setPerMonth(perMonth);
+		}
+
 		Long categoryId = (Long)attributes.get("categoryId");
 
 		if (categoryId != null) {
 			setCategoryId(categoryId);
+		}
+
+		Integer viewCount = (Integer)attributes.get("viewCount");
+
+		if (viewCount != null) {
+			setViewCount(viewCount);
 		}
 	}
 
@@ -132,21 +153,44 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 	}
 
 	@Override
-	public int getPerMonth() {
-		return _perMonth;
+	public long getCompanyId() {
+		return _companyId;
 	}
 
 	@Override
-	public void setPerMonth(int perMonth) {
-		_perMonth = perMonth;
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 
 		if (_statViewCategoryRemoteModel != null) {
 			try {
 				Class<?> clazz = _statViewCategoryRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setPerMonth", int.class);
+				Method method = clazz.getMethod("setCompanyId", long.class);
 
-				method.invoke(_statViewCategoryRemoteModel, perMonth);
+				method.invoke(_statViewCategoryRemoteModel, companyId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+
+		if (_statViewCategoryRemoteModel != null) {
+			try {
+				Class<?> clazz = _statViewCategoryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGroupId", long.class);
+
+				method.invoke(_statViewCategoryRemoteModel, groupId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -178,6 +222,29 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 	}
 
 	@Override
+	public int getPerMonth() {
+		return _perMonth;
+	}
+
+	@Override
+	public void setPerMonth(int perMonth) {
+		_perMonth = perMonth;
+
+		if (_statViewCategoryRemoteModel != null) {
+			try {
+				Class<?> clazz = _statViewCategoryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setPerMonth", int.class);
+
+				method.invoke(_statViewCategoryRemoteModel, perMonth);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public long getCategoryId() {
 		return _categoryId;
 	}
@@ -193,6 +260,29 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 				Method method = clazz.getMethod("setCategoryId", long.class);
 
 				method.invoke(_statViewCategoryRemoteModel, categoryId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getViewCount() {
+		return _viewCount;
+	}
+
+	@Override
+	public void setViewCount(int viewCount) {
+		_viewCount = viewCount;
+
+		if (_statViewCategoryRemoteModel != null) {
+			try {
+				Class<?> clazz = _statViewCategoryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setViewCount", int.class);
+
+				method.invoke(_statViewCategoryRemoteModel, viewCount);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -272,9 +362,12 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 		StatViewCategoryClp clone = new StatViewCategoryClp();
 
 		clone.setId(getId());
-		clone.setPerMonth(getPerMonth());
+		clone.setCompanyId(getCompanyId());
+		clone.setGroupId(getGroupId());
 		clone.setPerYear(getPerYear());
+		clone.setPerMonth(getPerMonth());
 		clone.setCategoryId(getCategoryId());
+		clone.setViewCount(getViewCount());
 
 		return clone;
 	}
@@ -327,16 +420,22 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{id=");
 		sb.append(getId());
-		sb.append(", perMonth=");
-		sb.append(getPerMonth());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", perYear=");
 		sb.append(getPerYear());
+		sb.append(", perMonth=");
+		sb.append(getPerMonth());
 		sb.append(", categoryId=");
 		sb.append(getCategoryId());
+		sb.append(", viewCount=");
+		sb.append(getViewCount());
 		sb.append("}");
 
 		return sb.toString();
@@ -344,7 +443,7 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.StatViewCategory");
@@ -355,16 +454,28 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 		sb.append(getId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>perMonth</column-name><column-value><![CDATA[");
-		sb.append(getPerMonth());
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>perYear</column-name><column-value><![CDATA[");
 		sb.append(getPerYear());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>perMonth</column-name><column-value><![CDATA[");
+		sb.append(getPerMonth());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
 		sb.append(getCategoryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>viewCount</column-name><column-value><![CDATA[");
+		sb.append(getViewCount());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -373,9 +484,12 @@ public class StatViewCategoryClp extends BaseModelImpl<StatViewCategory>
 	}
 
 	private long _id;
-	private int _perMonth;
+	private long _companyId;
+	private long _groupId;
 	private int _perYear;
+	private int _perMonth;
 	private long _categoryId;
+	private int _viewCount;
 	private BaseModel<?> _statViewCategoryRemoteModel;
 	private Class<?> _clpSerializerClass = com.idetronic.subur.service.ClpSerializer.class;
 }

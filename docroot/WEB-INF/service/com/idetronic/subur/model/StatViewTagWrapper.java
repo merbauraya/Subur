@@ -50,9 +50,12 @@ public class StatViewTagWrapper implements StatViewTag,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("id", getId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("perMonth", getPerMonth());
 		attributes.put("perYear", getPerYear());
 		attributes.put("tagId", getTagId());
+		attributes.put("viewCount", getViewCount());
 
 		return attributes;
 	}
@@ -63,6 +66,18 @@ public class StatViewTagWrapper implements StatViewTag,
 
 		if (id != null) {
 			setId(id);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Integer perMonth = (Integer)attributes.get("perMonth");
@@ -81,6 +96,12 @@ public class StatViewTagWrapper implements StatViewTag,
 
 		if (tagId != null) {
 			setTagId(tagId);
+		}
+
+		Integer viewCount = (Integer)attributes.get("viewCount");
+
+		if (viewCount != null) {
+			setViewCount(viewCount);
 		}
 	}
 
@@ -122,6 +143,46 @@ public class StatViewTagWrapper implements StatViewTag,
 	@Override
 	public void setId(long id) {
 		_statViewTag.setId(id);
+	}
+
+	/**
+	* Returns the company ID of this stat view tag.
+	*
+	* @return the company ID of this stat view tag
+	*/
+	@Override
+	public long getCompanyId() {
+		return _statViewTag.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this stat view tag.
+	*
+	* @param companyId the company ID of this stat view tag
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_statViewTag.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the group ID of this stat view tag.
+	*
+	* @return the group ID of this stat view tag
+	*/
+	@Override
+	public long getGroupId() {
+		return _statViewTag.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this stat view tag.
+	*
+	* @param groupId the group ID of this stat view tag
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_statViewTag.setGroupId(groupId);
 	}
 
 	/**
@@ -182,6 +243,26 @@ public class StatViewTagWrapper implements StatViewTag,
 	@Override
 	public void setTagId(long tagId) {
 		_statViewTag.setTagId(tagId);
+	}
+
+	/**
+	* Returns the view count of this stat view tag.
+	*
+	* @return the view count of this stat view tag
+	*/
+	@Override
+	public int getViewCount() {
+		return _statViewTag.getViewCount();
+	}
+
+	/**
+	* Sets the view count of this stat view tag.
+	*
+	* @param viewCount the view count of this stat view tag
+	*/
+	@Override
+	public void setViewCount(int viewCount) {
+		_statViewTag.setViewCount(viewCount);
 	}
 
 	@Override

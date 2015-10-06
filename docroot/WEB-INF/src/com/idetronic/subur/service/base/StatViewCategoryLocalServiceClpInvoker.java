@@ -106,13 +106,13 @@ public class StatViewCategoryLocalServiceClpInvoker {
 				"com.idetronic.subur.model.StatViewCategory"
 			};
 
-		_methodName128 = "getBeanIdentifier";
+		_methodName134 = "getBeanIdentifier";
 
-		_methodParameterTypes128 = new String[] {  };
+		_methodParameterTypes134 = new String[] {  };
 
-		_methodName129 = "setBeanIdentifier";
+		_methodName135 = "setBeanIdentifier";
 
-		_methodParameterTypes129 = new String[] { "java.lang.String" };
+		_methodParameterTypes135 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -204,13 +204,13 @@ public class StatViewCategoryLocalServiceClpInvoker {
 			return StatViewCategoryLocalServiceUtil.updateStatViewCategory((com.idetronic.subur.model.StatViewCategory)arguments[0]);
 		}
 
-		if (_methodName128.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
 			return StatViewCategoryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			StatViewCategoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -251,8 +251,8 @@ public class StatViewCategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName128;
-	private String[] _methodParameterTypes128;
-	private String _methodName129;
-	private String[] _methodParameterTypes129;
+	private String _methodName134;
+	private String[] _methodParameterTypes134;
+	private String _methodName135;
+	private String[] _methodParameterTypes135;
 }

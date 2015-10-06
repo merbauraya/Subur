@@ -55,7 +55,8 @@
 				<action-key>ADD_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
-			
+				<action-key>MANAGE_AUTHOR</action-key>
+				<action-key>UPDATE</action-key>
 			</supports>
 			<site-member-defaults/>
 			<guest-defaults>
@@ -72,7 +73,7 @@
 	<model-resource>
 		<model-name>com.idetronic.subur.Author</model-name>
 		<portlet-ref>
-			<portlet-name>Subur</portlet-name>
+			<portlet-name>Author</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<permissions>

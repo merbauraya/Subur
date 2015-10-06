@@ -30,9 +30,12 @@ public class StatViewTagSoap implements Serializable {
 		StatViewTagSoap soapModel = new StatViewTagSoap();
 
 		soapModel.setId(model.getId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setPerMonth(model.getPerMonth());
 		soapModel.setPerYear(model.getPerYear());
 		soapModel.setTagId(model.getTagId());
+		soapModel.setViewCount(model.getViewCount());
 
 		return soapModel;
 	}
@@ -93,6 +96,22 @@ public class StatViewTagSoap implements Serializable {
 		_id = id;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public int getPerMonth() {
 		return _perMonth;
 	}
@@ -117,8 +136,19 @@ public class StatViewTagSoap implements Serializable {
 		_tagId = tagId;
 	}
 
+	public int getViewCount() {
+		return _viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		_viewCount = viewCount;
+	}
+
 	private long _id;
+	private long _companyId;
+	private long _groupId;
 	private int _perMonth;
 	private int _perYear;
 	private long _tagId;
+	private int _viewCount;
 }

@@ -84,124 +84,148 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(StatViewTagModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TAG = new FinderPath(StatViewTagModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_TAGPERIOD = new FinderPath(StatViewTagModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewTagModelImpl.FINDER_CACHE_ENABLED, StatViewTagImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTag",
+			FINDER_CLASS_NAME_ENTITY, "fetchByTagPeriod",
 			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TAG = new FinderPath(StatViewTagModelImpl.ENTITY_CACHE_ENABLED,
-			StatViewTagModelImpl.FINDER_CACHE_ENABLED, StatViewTagImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTag",
-			new String[] { Long.class.getName() },
-			StatViewTagModelImpl.TAGID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_TAG = new FinderPath(StatViewTagModelImpl.ENTITY_CACHE_ENABLED,
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName()
+			},
+			StatViewTagModelImpl.COMPANYID_COLUMN_BITMASK |
+			StatViewTagModelImpl.GROUPID_COLUMN_BITMASK |
+			StatViewTagModelImpl.TAGID_COLUMN_BITMASK |
+			StatViewTagModelImpl.PERYEAR_COLUMN_BITMASK |
+			StatViewTagModelImpl.PERMONTH_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_TAGPERIOD = new FinderPath(StatViewTagModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTag",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTagPeriod",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName()
+			});
 
 	/**
-	 * Returns all the stat view tags where tagId = &#63;.
+	 * Returns the stat view tag where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63; or throws a {@link com.idetronic.subur.NoSuchStatViewTagException} if it could not be found.
 	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param tagId the tag ID
-	 * @return the matching stat view tags
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the matching stat view tag
+	 * @throws com.idetronic.subur.NoSuchStatViewTagException if a matching stat view tag could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<StatViewTag> findByTag(long tagId) throws SystemException {
-		return findByTag(tagId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public StatViewTag findByTagPeriod(long companyId, long groupId,
+		long tagId, int perYear, int perMonth)
+		throws NoSuchStatViewTagException, SystemException {
+		StatViewTag statViewTag = fetchByTagPeriod(companyId, groupId, tagId,
+				perYear, perMonth);
+
+		if (statViewTag == null) {
+			StringBundler msg = new StringBundler(12);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", groupId=");
+			msg.append(groupId);
+
+			msg.append(", tagId=");
+			msg.append(tagId);
+
+			msg.append(", perYear=");
+			msg.append(perYear);
+
+			msg.append(", perMonth=");
+			msg.append(perMonth);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchStatViewTagException(msg.toString());
+		}
+
+		return statViewTag;
 	}
 
 	/**
-	 * Returns a range of all the stat view tags where tagId = &#63;.
+	 * Returns the stat view tag where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.StatViewTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param tagId the tag ID
-	 * @param start the lower bound of the range of stat view tags
-	 * @param end the upper bound of the range of stat view tags (not inclusive)
-	 * @return the range of matching stat view tags
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the matching stat view tag, or <code>null</code> if a matching stat view tag could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<StatViewTag> findByTag(long tagId, int start, int end)
+	public StatViewTag fetchByTagPeriod(long companyId, long groupId,
+		long tagId, int perYear, int perMonth) throws SystemException {
+		return fetchByTagPeriod(companyId, groupId, tagId, perYear, perMonth,
+			true);
+	}
+
+	/**
+	 * Returns the stat view tag where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param tagId the tag ID
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching stat view tag, or <code>null</code> if a matching stat view tag could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public StatViewTag fetchByTagPeriod(long companyId, long groupId,
+		long tagId, int perYear, int perMonth, boolean retrieveFromCache)
 		throws SystemException {
-		return findByTag(tagId, start, end, null);
-	}
+		Object[] finderArgs = new Object[] {
+				companyId, groupId, tagId, perYear, perMonth
+			};
 
-	/**
-	 * Returns an ordered range of all the stat view tags where tagId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.StatViewTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param tagId the tag ID
-	 * @param start the lower bound of the range of stat view tags
-	 * @param end the upper bound of the range of stat view tags (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching stat view tags
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<StatViewTag> findByTag(long tagId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+		Object result = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TAG;
-			finderArgs = new Object[] { tagId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TAG;
-			finderArgs = new Object[] { tagId, start, end, orderByComparator };
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_TAGPERIOD,
+					finderArgs, this);
 		}
 
-		List<StatViewTag> list = (List<StatViewTag>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		if (result instanceof StatViewTag) {
+			StatViewTag statViewTag = (StatViewTag)result;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (StatViewTag statViewTag : list) {
-				if ((tagId != statViewTag.getTagId())) {
-					list = null;
-
-					break;
-				}
+			if ((companyId != statViewTag.getCompanyId()) ||
+					(groupId != statViewTag.getGroupId()) ||
+					(tagId != statViewTag.getTagId()) ||
+					(perYear != statViewTag.getPerYear()) ||
+					(perMonth != statViewTag.getPerMonth())) {
+				result = null;
 			}
 		}
 
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
+		if (result == null) {
+			StringBundler query = new StringBundler(7);
 
 			query.append(_SQL_SELECT_STATVIEWTAG_WHERE);
 
-			query.append(_FINDER_COLUMN_TAG_TAGID_2);
+			query.append(_FINDER_COLUMN_TAGPERIOD_COMPANYID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(StatViewTagModelImpl.ORDER_BY_JPQL);
-			}
+			query.append(_FINDER_COLUMN_TAGPERIOD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_TAGPERIOD_TAGID_2);
+
+			query.append(_FINDER_COLUMN_TAGPERIOD_PERYEAR_2);
+
+			query.append(_FINDER_COLUMN_TAGPERIOD_PERMONTH_2);
 
 			String sql = query.toString();
 
@@ -214,27 +238,42 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
 				qPos.add(tagId);
 
-				if (!pagination) {
-					list = (List<StatViewTag>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+				qPos.add(perYear);
 
-					Collections.sort(list);
+				qPos.add(perMonth);
 
-					list = new UnmodifiableList<StatViewTag>(list);
+				List<StatViewTag> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TAGPERIOD,
+						finderArgs, list);
 				}
 				else {
-					list = (List<StatViewTag>)QueryUtil.list(q, getDialect(),
-							start, end);
+					StatViewTag statViewTag = list.get(0);
+
+					result = statViewTag;
+
+					cacheResult(statViewTag);
+
+					if ((statViewTag.getCompanyId() != companyId) ||
+							(statViewTag.getGroupId() != groupId) ||
+							(statViewTag.getTagId() != tagId) ||
+							(statViewTag.getPerYear() != perYear) ||
+							(statViewTag.getPerMonth() != perMonth)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TAGPERIOD,
+							finderArgs, statViewTag);
+					}
 				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TAGPERIOD,
+					finderArgs);
 
 				throw processException(e);
 			}
@@ -243,300 +282,72 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 			}
 		}
 
-		return list;
-	}
-
-	/**
-	 * Returns the first stat view tag in the ordered set where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching stat view tag
-	 * @throws com.idetronic.subur.NoSuchStatViewTagException if a matching stat view tag could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public StatViewTag findByTag_First(long tagId,
-		OrderByComparator orderByComparator)
-		throws NoSuchStatViewTagException, SystemException {
-		StatViewTag statViewTag = fetchByTag_First(tagId, orderByComparator);
-
-		if (statViewTag != null) {
-			return statViewTag;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("tagId=");
-		msg.append(tagId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchStatViewTagException(msg.toString());
-	}
-
-	/**
-	 * Returns the first stat view tag in the ordered set where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching stat view tag, or <code>null</code> if a matching stat view tag could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public StatViewTag fetchByTag_First(long tagId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<StatViewTag> list = findByTag(tagId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last stat view tag in the ordered set where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching stat view tag
-	 * @throws com.idetronic.subur.NoSuchStatViewTagException if a matching stat view tag could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public StatViewTag findByTag_Last(long tagId,
-		OrderByComparator orderByComparator)
-		throws NoSuchStatViewTagException, SystemException {
-		StatViewTag statViewTag = fetchByTag_Last(tagId, orderByComparator);
-
-		if (statViewTag != null) {
-			return statViewTag;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("tagId=");
-		msg.append(tagId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchStatViewTagException(msg.toString());
-	}
-
-	/**
-	 * Returns the last stat view tag in the ordered set where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching stat view tag, or <code>null</code> if a matching stat view tag could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public StatViewTag fetchByTag_Last(long tagId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByTag(tagId);
-
-		if (count == 0) {
+		if (result instanceof List<?>) {
 			return null;
 		}
-
-		List<StatViewTag> list = findByTag(tagId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
+		else {
+			return (StatViewTag)result;
 		}
-
-		return null;
 	}
 
 	/**
-	 * Returns the stat view tags before and after the current stat view tag in the ordered set where tagId = &#63;.
+	 * Removes the stat view tag where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63; from the database.
 	 *
-	 * @param id the primary key of the current stat view tag
+	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next stat view tag
-	 * @throws com.idetronic.subur.NoSuchStatViewTagException if a stat view tag with the primary key could not be found
+	 * @param perYear the per year
+	 * @param perMonth the per month
+	 * @return the stat view tag that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public StatViewTag[] findByTag_PrevAndNext(long id, long tagId,
-		OrderByComparator orderByComparator)
+	public StatViewTag removeByTagPeriod(long companyId, long groupId,
+		long tagId, int perYear, int perMonth)
 		throws NoSuchStatViewTagException, SystemException {
-		StatViewTag statViewTag = findByPrimaryKey(id);
+		StatViewTag statViewTag = findByTagPeriod(companyId, groupId, tagId,
+				perYear, perMonth);
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			StatViewTag[] array = new StatViewTagImpl[3];
-
-			array[0] = getByTag_PrevAndNext(session, statViewTag, tagId,
-					orderByComparator, true);
-
-			array[1] = statViewTag;
-
-			array[2] = getByTag_PrevAndNext(session, statViewTag, tagId,
-					orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected StatViewTag getByTag_PrevAndNext(Session session,
-		StatViewTag statViewTag, long tagId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_STATVIEWTAG_WHERE);
-
-		query.append(_FINDER_COLUMN_TAG_TAGID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(StatViewTagModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(tagId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(statViewTag);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<StatViewTag> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
+		return remove(statViewTag);
 	}
 
 	/**
-	 * Removes all the stat view tags where tagId = &#63; from the database.
+	 * Returns the number of stat view tags where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63;.
 	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param tagId the tag ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void removeByTag(long tagId) throws SystemException {
-		for (StatViewTag statViewTag : findByTag(tagId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
-			remove(statViewTag);
-		}
-	}
-
-	/**
-	 * Returns the number of stat view tags where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
+	 * @param perYear the per year
+	 * @param perMonth the per month
 	 * @return the number of matching stat view tags
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByTag(long tagId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_TAG;
+	public int countByTagPeriod(long companyId, long groupId, long tagId,
+		int perYear, int perMonth) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_TAGPERIOD;
 
-		Object[] finderArgs = new Object[] { tagId };
+		Object[] finderArgs = new Object[] {
+				companyId, groupId, tagId, perYear, perMonth
+			};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(6);
 
 			query.append(_SQL_COUNT_STATVIEWTAG_WHERE);
 
-			query.append(_FINDER_COLUMN_TAG_TAGID_2);
+			query.append(_FINDER_COLUMN_TAGPERIOD_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_TAGPERIOD_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_TAGPERIOD_TAGID_2);
+
+			query.append(_FINDER_COLUMN_TAGPERIOD_PERYEAR_2);
+
+			query.append(_FINDER_COLUMN_TAGPERIOD_PERMONTH_2);
 
 			String sql = query.toString();
 
@@ -549,7 +360,15 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
 				qPos.add(tagId);
+
+				qPos.add(perYear);
+
+				qPos.add(perMonth);
 
 				count = (Long)q.uniqueResult();
 
@@ -568,7 +387,11 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TAG_TAGID_2 = "statViewTag.tagId = ?";
+	private static final String _FINDER_COLUMN_TAGPERIOD_COMPANYID_2 = "statViewTag.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_TAGPERIOD_GROUPID_2 = "statViewTag.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_TAGPERIOD_TAGID_2 = "statViewTag.tagId = ? AND ";
+	private static final String _FINDER_COLUMN_TAGPERIOD_PERYEAR_2 = "statViewTag.perYear = ? AND ";
+	private static final String _FINDER_COLUMN_TAGPERIOD_PERMONTH_2 = "statViewTag.perMonth = ?";
 
 	public StatViewTagPersistenceImpl() {
 		setModelClass(StatViewTag.class);
@@ -583,6 +406,13 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 	public void cacheResult(StatViewTag statViewTag) {
 		EntityCacheUtil.putResult(StatViewTagModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewTagImpl.class, statViewTag.getPrimaryKey(), statViewTag);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TAGPERIOD,
+			new Object[] {
+				statViewTag.getCompanyId(), statViewTag.getGroupId(),
+				statViewTag.getTagId(), statViewTag.getPerYear(),
+				statViewTag.getPerMonth()
+			}, statViewTag);
 
 		statViewTag.resetOriginalValues();
 	}
@@ -640,6 +470,8 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(statViewTag);
 	}
 
 	@Override
@@ -650,6 +482,67 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 		for (StatViewTag statViewTag : statViewTags) {
 			EntityCacheUtil.removeResult(StatViewTagModelImpl.ENTITY_CACHE_ENABLED,
 				StatViewTagImpl.class, statViewTag.getPrimaryKey());
+
+			clearUniqueFindersCache(statViewTag);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(StatViewTag statViewTag) {
+		if (statViewTag.isNew()) {
+			Object[] args = new Object[] {
+					statViewTag.getCompanyId(), statViewTag.getGroupId(),
+					statViewTag.getTagId(), statViewTag.getPerYear(),
+					statViewTag.getPerMonth()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_TAGPERIOD, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TAGPERIOD, args,
+				statViewTag);
+		}
+		else {
+			StatViewTagModelImpl statViewTagModelImpl = (StatViewTagModelImpl)statViewTag;
+
+			if ((statViewTagModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_TAGPERIOD.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						statViewTag.getCompanyId(), statViewTag.getGroupId(),
+						statViewTag.getTagId(), statViewTag.getPerYear(),
+						statViewTag.getPerMonth()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_TAGPERIOD, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TAGPERIOD, args,
+					statViewTag);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(StatViewTag statViewTag) {
+		StatViewTagModelImpl statViewTagModelImpl = (StatViewTagModelImpl)statViewTag;
+
+		Object[] args = new Object[] {
+				statViewTag.getCompanyId(), statViewTag.getGroupId(),
+				statViewTag.getTagId(), statViewTag.getPerYear(),
+				statViewTag.getPerMonth()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TAGPERIOD, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TAGPERIOD, args);
+
+		if ((statViewTagModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_TAGPERIOD.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					statViewTagModelImpl.getOriginalCompanyId(),
+					statViewTagModelImpl.getOriginalGroupId(),
+					statViewTagModelImpl.getOriginalTagId(),
+					statViewTagModelImpl.getOriginalPerYear(),
+					statViewTagModelImpl.getOriginalPerMonth()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TAGPERIOD, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TAGPERIOD, args);
 		}
 	}
 
@@ -765,8 +658,6 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 
 		boolean isNew = statViewTag.isNew();
 
-		StatViewTagModelImpl statViewTagModelImpl = (StatViewTagModelImpl)statViewTag;
-
 		Session session = null;
 
 		try {
@@ -794,27 +685,11 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
-		else {
-			if ((statViewTagModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TAG.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						statViewTagModelImpl.getOriginalTagId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TAG, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TAG,
-					args);
-
-				args = new Object[] { statViewTagModelImpl.getTagId() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TAG, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TAG,
-					args);
-			}
-		}
-
 		EntityCacheUtil.putResult(StatViewTagModelImpl.ENTITY_CACHE_ENABLED,
 			StatViewTagImpl.class, statViewTag.getPrimaryKey(), statViewTag);
+
+		clearUniqueFindersCache(statViewTag);
+		cacheUniqueFindersCache(statViewTag);
 
 		return statViewTag;
 	}
@@ -830,9 +705,12 @@ public class StatViewTagPersistenceImpl extends BasePersistenceImpl<StatViewTag>
 		statViewTagImpl.setPrimaryKey(statViewTag.getPrimaryKey());
 
 		statViewTagImpl.setId(statViewTag.getId());
+		statViewTagImpl.setCompanyId(statViewTag.getCompanyId());
+		statViewTagImpl.setGroupId(statViewTag.getGroupId());
 		statViewTagImpl.setPerMonth(statViewTag.getPerMonth());
 		statViewTagImpl.setPerYear(statViewTag.getPerYear());
 		statViewTagImpl.setTagId(statViewTag.getTagId());
+		statViewTagImpl.setViewCount(statViewTag.getViewCount());
 
 		return statViewTagImpl;
 	}

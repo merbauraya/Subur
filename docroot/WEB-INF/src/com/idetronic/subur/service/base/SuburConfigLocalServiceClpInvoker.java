@@ -106,27 +106,39 @@ public class SuburConfigLocalServiceClpInvoker {
 				"com.idetronic.subur.model.SuburConfig"
 			};
 
-		_methodName128 = "getBeanIdentifier";
+		_methodName134 = "getBeanIdentifier";
 
-		_methodParameterTypes128 = new String[] {  };
+		_methodParameterTypes134 = new String[] {  };
 
-		_methodName129 = "setBeanIdentifier";
-
-		_methodParameterTypes129 = new String[] { "java.lang.String" };
-
-		_methodName134 = "addConfig";
-
-		_methodParameterTypes134 = new String[] {
-				"java.util.Map", "java.lang.String"
-			};
-
-		_methodName135 = "get";
+		_methodName135 = "setBeanIdentifier";
 
 		_methodParameterTypes135 = new String[] { "java.lang.String" };
 
-		_methodName136 = "updateConfig";
+		_methodName140 = "addConfig";
 
-		_methodParameterTypes136 = new String[] {
+		_methodParameterTypes140 = new String[] {
+				"java.util.Map", "java.lang.String"
+			};
+
+		_methodName141 = "get";
+
+		_methodParameterTypes141 = new String[] { "java.lang.String" };
+
+		_methodName142 = "updateConfig";
+
+		_methodParameterTypes142 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
+
+		_methodName143 = "addConfig";
+
+		_methodParameterTypes143 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
+
+		_methodName144 = "updateConfig";
+
+		_methodParameterTypes144 = new String[] {
 				"java.util.Map", "java.lang.String"
 			};
 	}
@@ -220,31 +232,43 @@ public class SuburConfigLocalServiceClpInvoker {
 			return SuburConfigLocalServiceUtil.updateSuburConfig((com.idetronic.subur.model.SuburConfig)arguments[0]);
 		}
 
-		if (_methodName128.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
 			return SuburConfigLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			SuburConfigLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName134.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+		if (_methodName140.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
 			return SuburConfigLocalServiceUtil.addConfig((java.util.Map<java.lang.String, java.lang.String>)arguments[0],
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName135.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+		if (_methodName141.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
 			return SuburConfigLocalServiceUtil.get((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName136.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+			return SuburConfigLocalServiceUtil.updateConfig((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+			return SuburConfigLocalServiceUtil.addConfig((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			return SuburConfigLocalServiceUtil.updateConfig((java.util.Map<java.lang.String, java.lang.String>)arguments[0],
 				(java.lang.String)arguments[1]);
 		}
@@ -284,14 +308,18 @@ public class SuburConfigLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName128;
-	private String[] _methodParameterTypes128;
-	private String _methodName129;
-	private String[] _methodParameterTypes129;
 	private String _methodName134;
 	private String[] _methodParameterTypes134;
 	private String _methodName135;
 	private String[] _methodParameterTypes135;
-	private String _methodName136;
-	private String[] _methodParameterTypes136;
+	private String _methodName140;
+	private String[] _methodParameterTypes140;
+	private String _methodName141;
+	private String[] _methodParameterTypes141;
+	private String _methodName142;
+	private String[] _methodParameterTypes142;
+	private String _methodName143;
+	private String[] _methodParameterTypes143;
+	private String _methodName144;
+	private String[] _methodParameterTypes144;
 }

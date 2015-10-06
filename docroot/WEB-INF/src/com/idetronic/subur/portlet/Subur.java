@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.AddressException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Event;
@@ -25,13 +27,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.idetronic.subur.NoSuchItemException;
+import com.idetronic.subur.actionhelper.SuburActionHelper;
 import com.idetronic.subur.helper.GetFileActionHelper;
+import com.idetronic.subur.model.CopyRequest;
 import com.idetronic.subur.model.SuburItem;
+import com.idetronic.subur.notification.SuburNotificationHandler;
+import com.idetronic.subur.service.CopyRequestLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemServiceUtil;
 import com.idetronic.subur.service.permission.AuthorPermission;
 import com.idetronic.subur.service.permission.SuburItemPermission;
+import com.idetronic.subur.service.permission.SuburModelPermission;
 import com.idetronic.subur.service.permission.SuburPermission;
+import com.idetronic.subur.util.SuburConfiguration;
 import com.idetronic.subur.util.SuburConstant;
 import com.idetronic.subur.util.SuburFileUtil;
 import com.idetronic.subur.util.SuburFolderUtil;
@@ -57,16 +65,20 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -78,6 +90,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.liferay.util.portlet.PortletProps;
 
 public class Subur extends MVCPortlet {
 	private static Log logger = LogFactoryUtil.getLog(Subur.class);
@@ -87,15 +100,17 @@ public class Subur extends MVCPortlet {
 	ThemeDisplay themeDisplay;
 	
 	
-	public void processEvent(EventRequest request,EventResponse response) throws PortletException, IOException {
+	public void processEvent(EventRequest request,EventResponse response) throws PortletException, IOException 
+	{
 		
 		Event event = request.getEvent();
         String value = (String) event.getValue();
-        
+        logger.info("event");
 		
        // if (event.getName().equalsIgnoreCase("categoryNav"))
         //{
         response.setRenderParameter("jspPage", "/html/view.jsp");
+        response.setRenderParameter("filtered", Boolean.TRUE.toString());
        // }
 	}
 	
@@ -232,7 +247,7 @@ public class Subur extends MVCPortlet {
 		themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
 		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
-		logger.info(DLFileEntry.class.getName());
+		
 		
 		
 		
@@ -242,16 +257,15 @@ public class Subur extends MVCPortlet {
 		
 		long[] itemTypeIds = getLongArray(uploadRequest,"itemType");
 		String redirect = ParamUtil.getString(uploadRequest, "redirect");
-		File file = uploadRequest.getFile("itemFile");
-		String sourceFile = uploadRequest.getFileName("itemFile");
 	
+		boolean relatedRestricted = ParamUtil.getBoolean(uploadRequest, "relatedRestricted");
 		String title = ParamUtil.getString(uploadRequest, "title");
 		String language = ParamUtil.getString(uploadRequest, "language");
 		int itemStatus = ParamUtil.getInteger(uploadRequest, "itemStatus");
 		
 		String itemAbstract = ParamUtil.getString(uploadRequest, "itemAbstract");
 		
-		//String otherTitle = ParamUtil.getString(uploadRequest, "otherTitle");
+		
 		String categoryIds = ParamUtil.getString(uploadRequest, "categoryIds");
 		
 		categoryIds = StringUtil.replace(categoryIds, ",,",",");
@@ -365,6 +379,7 @@ public class Subur extends MVCPortlet {
 		
 		}
 		
+		//author profile photo
 		
 		
 		try {
@@ -377,6 +392,7 @@ public class Subur extends MVCPortlet {
 			suburItem.setOtherTitle(otherTitles);
 			suburItem.setSeriesReportNo(serieReportNoMap);
 			suburItem.setIdentifier(itemIdentifierMap);
+			suburItem.setRelatedRestricted(relatedRestricted);
 			serviceContext.setAssetTagNames(tagNamesArr);
 			serviceContext.setAssetCategoryIds(catIds);
 			
@@ -431,7 +447,7 @@ public class Subur extends MVCPortlet {
 			long contentLength = fv.getSize();
 			String contentType = fv.getMimeType();
 			
-			logger.info(contentType+" l="+contentLength+ " name="+fileName);
+			
 			
 			
 			
@@ -482,9 +498,7 @@ public class Subur extends MVCPortlet {
 
 			UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(portletRequest);
 
-			String uploadFileName = uploadRequest.getFileName("fileUpload");
-			File uploadFile = uploadRequest.getFile("fileUpload");
-
+			
 			ServiceContext serviceContext = null;
 			try {
 			serviceContext = ServiceContextFactory.getInstance(request);
@@ -505,11 +519,6 @@ public class Subur extends MVCPortlet {
 			PortletException 
 	{
 		themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		String resource = ParamUtil.getString(resourceRequest, "resource");
-		
-		
-		
-		
 		
 		//logger.info(resource);
 		String resourceId = resourceRequest.getResourceID();
@@ -575,7 +584,7 @@ public class Subur extends MVCPortlet {
 		
 		long[] fileEntries = {};
 		
-		long folderId = SuburFolderUtil.getFolderId(actionRequest, themeDisplay);
+		long folderId = SuburFolderUtil.getFolderId(actionRequest, themeDisplay,SuburFolderUtil.FOLDER_ITEM_ATTACHMENT);
 		String changeLog = StringPool.BLANK;
 		String description = StringPool.BLANK;
 		boolean incrementCounter = false;
@@ -623,19 +632,13 @@ public class Subur extends MVCPortlet {
 	        	String sourceFileName = file.getName() + "."+ tmpFileEntry.getExtension();
 	        	String title = tmpFileEntry.getTitle();
 	        	String mimeType = tmpFileEntry.getMimeType();
-	        	logger.info("mime="+mimeType);
+	        	
 	        	String extension = tmpFileEntry.getExtension();
 	        	long repositoryId = themeDisplay.getScopeGroupId();
-	        	logger.info(sourceFileName + ":"+ mimeType + ":"+ extension);
 	        	
 	        	
-	    		
-
-	        	//InputStream is = DLFileEntryLocalServiceUtil.getFileAsStream(themeDisplay.getUserId(),fileEntry.getFileEntryId(), fileEntry.getVersion());
-	        	//DLFileEntryLocalServiceUtil.addFileEntry(userId, groupId, repositoryId, folderId, sourceFileName, mimeType, title, description, changeLog, fileEntryTypeId, fieldsMap, file, is, size, new ServiceContext());
-		       // FileEntry fileEntry = DLAppServiceUtil.addFileEntry(themeDisplay.getScopeGroupId(), folderId, sourceFileName, mimeType, title, description, changeLog, file,  serviceContext);
-		        
-		        FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType, title,
+	        	
+	    	    FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType, title,
 						description, changeLog, file,serviceContext);
 		        
 		        
@@ -673,7 +676,7 @@ public class Subur extends MVCPortlet {
         String fileName = uploadRequest.getFileName("myFile");
         
         themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
-        long folderId = SuburFolderUtil.getFolderId(resourceRequest, themeDisplay);
+        long folderId = SuburFolderUtil.getFolderId(resourceRequest, themeDisplay,SuburFolderUtil.FOLDER_ITEM_ATTACHMENT);
 		long fileEntryId = SuburFileUtil.addFile(resourceRequest, folderId, file,fileName);
 		long entryType = 0;
 		
@@ -685,7 +688,7 @@ public class Subur extends MVCPortlet {
 	public void manageTempFileUpload(ActionRequest request,ActionResponse response) throws Exception
 	{
 		
-		logger.info("manage file upload");
+		
 		
 		//upload file in liferay tmp folder
 	    UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
@@ -761,7 +764,8 @@ public class Subur extends MVCPortlet {
 	{
 	    //delete file from liferay tmp folder, before uploaded
 	    ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	    long folderId = SuburFolderUtil.getFolderId(actionRequest, themeDisplay);
+	    HttpServletRequest servletRequest = PortalUtil.getHttpServletRequest(actionRequest);
+	    long folderId = SuburFolderUtil.getFolderId(servletRequest, themeDisplay);
 	    String fileName = ParamUtil.getString(actionRequest, "fileName");
 	    long itemId = ParamUtil.getLong(actionRequest, "suburItemId");
 	    
@@ -779,6 +783,97 @@ public class Subur extends MVCPortlet {
 	    }
 	    writeJSON(actionRequest, actionResponse, jsonObject);
 	}
+	/**
+	 * Guest request for restricted access to related item. We create a RequestCopy entry and
+	 * create notification event to portal admin.
+	 * @param actionRequest
+	 * @param actionResponse
+	 * @throws SystemException
+	 * @throws PortalException
+	 * @throws IOException 
+	 */
+	public void saveRequestCopy(ActionRequest actionRequest, ActionResponse actionResponse) throws SystemException, PortalException, IOException
+	{
+	    ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+	    long companyId = themeDisplay.getCompanyId();
+	    long groupId = themeDisplay.getScopeGroupId();
+		
+		String fromEmailAddress = ParamUtil.getString(actionRequest, "fromEmailAddress");
+		String reason = ParamUtil.getString(actionRequest, "reason");
+		String organization = ParamUtil.getString(actionRequest, "organization");
+		long suburItemId = ParamUtil.getLong(actionRequest, "suburItemId");
+		String requesterName = ParamUtil.getString(actionRequest, "requesterName");
+		
+		CopyRequest copyRequest = CopyRequestLocalServiceUtil.addCopyRequest(suburItemId, requesterName,fromEmailAddress, 
+				organization, reason,companyId,groupId);
+		
+		//add notification to admin
+		//UserNotificationEventLocalServiceUtil//
+		JSONObject payloadJSON = JSONFactoryUtil.createJSONObject();
+	    payloadJSON.put("userId", themeDisplay.getUserId());
+	    payloadJSON.put("copyRequestId", copyRequest.getCopyRequestId());
+	    payloadJSON.put("itemId", suburItemId);
+	    
+	    payloadJSON.put("additionalData", "Your notification was added!");
+		
+	    ServiceContext serviceContext = ServiceContextFactory.getInstance(actionRequest);
+	    
+	    //who will receive the notification
+	    String notificationRoleString = SuburConfiguration.getConfig(SuburConfiguration.NOTIFICATION_ROLES);
+	    long[] notificationRoles = StringUtil.split(notificationRoleString, 0L);
+	    
+	    long[] notificationUsers = SuburUtil.getUserByRole(themeDisplay.getCompanyId(), notificationRoles);
+	   
+	    
+	    for (long userId : notificationUsers)
+	    {
+		    UserNotificationEventLocalServiceUtil.addUserNotificationEvent(userId, 
+		    		SuburNotificationHandler.PORTLET_ID, 
+		    		(new Date()).getTime(),
+		    		themeDisplay.getUserId(),
+		    		payloadJSON.toString(),
+		    		false, serviceContext);	
+		    
+		    
+		    
+	    }
+		
+		actionResponse.setRenderParameter("jspPage","/html/subur/request_copy_success.jsp");
+		actionRequest.setAttribute(WebKeys.SUBUR_COPY_REQUEST, copyRequest);
+		
+	}
+	
+	public void approveRestrictedRequest(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, SystemException 
+	{
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		long copyRequestId = ParamUtil.getLong(actionRequest, "copyRequestId");
+		long suburItemId = ParamUtil.getLong(actionRequest, "suburItemId");
+		
+		
+		try {
+			SuburActionHelper.approveRequestCopy(actionRequest, actionResponse);
+			CopyRequestLocalServiceUtil.approveRequest(copyRequestId, themeDisplay.getUserId());
+		} catch (PortletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new PortletException(e);
+		}
+		
+		
+		
+	}
+	
+	public void rejectRestrictedRequest(ActionRequest actionRequest, ActionResponse actionResponse) throws AddressException, SystemException, PortalException, PortletException
+	{
+		long copyRequestId = ParamUtil.getLong(actionRequest, "copyRequestId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		
+		SuburActionHelper.rejectRequestCopy(actionRequest, actionResponse);
+		CopyRequestLocalServiceUtil.rejectRequest(copyRequestId,themeDisplay.getUserId());
+		
+	}
+	
 	protected long[] getLongArray(PortletRequest portletRequest, String name) {
 		String value = portletRequest.getParameter(name);
 
@@ -807,7 +902,7 @@ public class Subur extends MVCPortlet {
 				SessionErrors.contains(	renderRequest, PrincipalException.class.getName())) 
 		{
 			
-			logger.info("got error dispatch");
+			
 			
 			include("/html/error.jsp", renderRequest, renderResponse);
 		}
@@ -822,11 +917,16 @@ public class Subur extends MVCPortlet {
 	{
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
+		
+		//PortletProps.set("mykey", "myvalue");
+	
+		
+	
 		SessionErrors.clear(renderRequest);
 		try 
 		{
 			
-			checkBeforeRender(renderRequest,renderResponse);
+			checkRenderPermission(renderRequest);
 			getSuburItem(renderRequest);
 		}
 		catch (Exception e) {
@@ -862,8 +962,12 @@ public class Subur extends MVCPortlet {
 
 		portletRequest.setAttribute(WebKeys.SUBUR_ITEM, suburItem);
 	}
-	
-	protected void checkBeforeRender(RenderRequest renderRequest, RenderResponse renderResponse) throws PrincipalException
+	/**
+	 * Check permission based on render request page. If adding/editing, check permissions
+	 * @param renderRequest
+	 * @throws PrincipalException
+	 */
+	protected void checkRenderPermission(RenderRequest renderRequest) throws PrincipalException
 	{
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
@@ -874,7 +978,7 @@ public class Subur extends MVCPortlet {
 				(StringUtil.count(mvcPath, "deposit.jsp") > 0))
 		{
 			
-			if (!SuburPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.UPDATE))
+			if (!SuburModelPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY))
 			{
 				
 				throw new PrincipalException();

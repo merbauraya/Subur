@@ -71,6 +71,34 @@ public interface StatViewTagModel extends BaseModel<StatViewTag> {
 	public void setId(long id);
 
 	/**
+	 * Returns the company ID of this stat view tag.
+	 *
+	 * @return the company ID of this stat view tag
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this stat view tag.
+	 *
+	 * @param companyId the company ID of this stat view tag
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the group ID of this stat view tag.
+	 *
+	 * @return the group ID of this stat view tag
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this stat view tag.
+	 *
+	 * @param groupId the group ID of this stat view tag
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the per month of this stat view tag.
 	 *
 	 * @return the per month of this stat view tag
@@ -111,6 +139,20 @@ public interface StatViewTagModel extends BaseModel<StatViewTag> {
 	 * @param tagId the tag ID of this stat view tag
 	 */
 	public void setTagId(long tagId);
+
+	/**
+	 * Returns the view count of this stat view tag.
+	 *
+	 * @return the view count of this stat view tag
+	 */
+	public int getViewCount();
+
+	/**
+	 * Sets the view count of this stat view tag.
+	 *
+	 * @param viewCount the view count of this stat view tag
+	 */
+	public void setViewCount(int viewCount);
 
 	@Override
 	public boolean isNew();

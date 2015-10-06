@@ -32,6 +32,15 @@
 			<handler type="LocalResponder" />
 		</responseFlow>
 	</transport>
+	<service name="Plugin_Subur_CopyRequestService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.idetronic.subur.service.http.CopyRequestServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="CopyRequestServiceSoap" />
+		<parameter name="wsdlServiceElement" value="CopyRequestServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_Subur_CopyRequestService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.subur.idetronic.com" />
+	</service>
 	<service name="Plugin_Subur_ExpertiseService" provider="java:RPC" style="rpc" use="encoded">
 		<arrayMapping xmlns:ns="urn:http.service.subur.idetronic.com" xmlns:cmp-ns="http://model.subur.idetronic.com" qname="ns:ArrayOf_tns2_ExpertiseSoap" type="java:com.idetronic.subur.model.ExpertiseSoap[]" innerType="cmp-ns:ExpertiseSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.subur.idetronic.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -94,7 +103,25 @@
 		<parameter name="wsdlServicePort" value="Plugin_Subur_ResearchInterestService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.subur.idetronic.com" />
 	</service>
+	<service name="Plugin_Subur_SuburItemService" provider="java:RPC" style="rpc" use="encoded">
+		<typeMapping xmlns:ns="http://model.subur.idetronic.com" qname="ns:SuburItemSoap" type="java:com.idetronic.subur.model.SuburItemSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="http://model.subur.idetronic.com" name="getSuburItem" qname="operNS:getSuburItem" returnQName="getSuburItemReturn" returnType="rtns:SuburItemSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="suburItemId" type="tns:long"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getSuburItem" />
+		<parameter name="className" value="com.idetronic.subur.service.http.SuburItemServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.subur.idetronic.com" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="SuburItemServiceSoap" />
+		<parameter name="wsdlServiceElement" value="SuburItemServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_Subur_SuburItemService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.subur.idetronic.com" />
+	</service>
 	<service name="Plugin_Subur_ViewSummaryService" provider="java:RPC" style="rpc" use="encoded">
+		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getMonthlyAssetCategoryChart" qname="operNS:getMonthlyAssetCategoryChart" returnQName="getMonthlyAssetCategoryChartReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="year" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="vocabularyId" type="tns:int"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getMonthlyCategory" qname="operNS:getMonthlyCategory" returnQName="getMonthlyCategoryReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="year" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="vocabularyId" type="tns:long"></parameter>
@@ -105,10 +132,14 @@
 		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getMonthlySummary" qname="operNS:getMonthlySummary" returnQName="getMonthlySummaryReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="year" type="tns:int"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getMonthlyTagSummaryX" qname="operNS:getMonthlyTagSummaryX" returnQName="getMonthlyTagSummaryXReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="year" type="tns:int"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getMonthlyTagSummary" qname="operNS:getMonthlyTagSummary" returnQName="getMonthlyTagSummaryReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="year" type="tns:int"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="getMonthlyCategory getMonthlyItemType getMonthlySummary getMonthlyTagSummary" />
+		<operation xmlns:operNS="urn:http.service.subur.idetronic.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getTestChartData" qname="operNS:getTestChartData" returnQName="getTestChartDataReturn" returnType="rtns:string" soapAction=""> </operation>
+		<parameter name="allowedMethods" value="getMonthlyAssetCategoryChart getMonthlyCategory getMonthlyItemType getMonthlySummary getMonthlyTagSummary getMonthlyTagSummaryX getTestChartData" />
 		<parameter name="className" value="com.idetronic.subur.service.http.ViewSummaryServiceSoap" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="ViewSummaryServiceSoap" />

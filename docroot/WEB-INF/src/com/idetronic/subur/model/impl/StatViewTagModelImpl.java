@@ -58,11 +58,14 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 	public static final String TABLE_NAME = "Subur_StatViewTag";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "id_", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
 			{ "perMonth", Types.INTEGER },
 			{ "perYear", Types.INTEGER },
-			{ "tagId", Types.BIGINT }
+			{ "tagId", Types.BIGINT },
+			{ "viewCount", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subur_StatViewTag (id_ LONG not null primary key,perMonth INTEGER,perYear INTEGER,tagId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Subur_StatViewTag (id_ LONG not null primary key,companyId LONG,groupId LONG,perMonth INTEGER,perYear INTEGER,tagId LONG,viewCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Subur_StatViewTag";
 	public static final String ORDER_BY_JPQL = " ORDER BY statViewTag.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subur_StatViewTag.id_ ASC";
@@ -78,8 +81,12 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.idetronic.subur.model.StatViewTag"),
 			true);
-	public static long TAGID_COLUMN_BITMASK = 1L;
-	public static long ID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long PERMONTH_COLUMN_BITMASK = 4L;
+	public static long PERYEAR_COLUMN_BITMASK = 8L;
+	public static long TAGID_COLUMN_BITMASK = 16L;
+	public static long ID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.idetronic.subur.model.StatViewTag"));
 
@@ -121,9 +128,12 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("id", getId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("perMonth", getPerMonth());
 		attributes.put("perYear", getPerYear());
 		attributes.put("tagId", getTagId());
+		attributes.put("viewCount", getViewCount());
 
 		return attributes;
 	}
@@ -134,6 +144,18 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 
 		if (id != null) {
 			setId(id);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Integer perMonth = (Integer)attributes.get("perMonth");
@@ -153,6 +175,12 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 		if (tagId != null) {
 			setTagId(tagId);
 		}
+
+		Integer viewCount = (Integer)attributes.get("viewCount");
+
+		if (viewCount != null) {
+			setViewCount(viewCount);
+		}
 	}
 
 	@Override
@@ -166,13 +194,69 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	@Override
 	public int getPerMonth() {
 		return _perMonth;
 	}
 
 	@Override
 	public void setPerMonth(int perMonth) {
+		_columnBitmask |= PERMONTH_COLUMN_BITMASK;
+
+		if (!_setOriginalPerMonth) {
+			_setOriginalPerMonth = true;
+
+			_originalPerMonth = _perMonth;
+		}
+
 		_perMonth = perMonth;
+	}
+
+	public int getOriginalPerMonth() {
+		return _originalPerMonth;
 	}
 
 	@Override
@@ -182,7 +266,19 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 
 	@Override
 	public void setPerYear(int perYear) {
+		_columnBitmask |= PERYEAR_COLUMN_BITMASK;
+
+		if (!_setOriginalPerYear) {
+			_setOriginalPerYear = true;
+
+			_originalPerYear = _perYear;
+		}
+
 		_perYear = perYear;
+	}
+
+	public int getOriginalPerYear() {
+		return _originalPerYear;
 	}
 
 	@Override
@@ -207,13 +303,23 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 		return _originalTagId;
 	}
 
+	@Override
+	public int getViewCount() {
+		return _viewCount;
+	}
+
+	@Override
+	public void setViewCount(int viewCount) {
+		_viewCount = viewCount;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			StatViewTag.class.getName(), getPrimaryKey());
 	}
 
@@ -239,9 +345,12 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 		StatViewTagImpl statViewTagImpl = new StatViewTagImpl();
 
 		statViewTagImpl.setId(getId());
+		statViewTagImpl.setCompanyId(getCompanyId());
+		statViewTagImpl.setGroupId(getGroupId());
 		statViewTagImpl.setPerMonth(getPerMonth());
 		statViewTagImpl.setPerYear(getPerYear());
 		statViewTagImpl.setTagId(getTagId());
+		statViewTagImpl.setViewCount(getViewCount());
 
 		statViewTagImpl.resetOriginalValues();
 
@@ -294,6 +403,22 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 	public void resetOriginalValues() {
 		StatViewTagModelImpl statViewTagModelImpl = this;
 
+		statViewTagModelImpl._originalCompanyId = statViewTagModelImpl._companyId;
+
+		statViewTagModelImpl._setOriginalCompanyId = false;
+
+		statViewTagModelImpl._originalGroupId = statViewTagModelImpl._groupId;
+
+		statViewTagModelImpl._setOriginalGroupId = false;
+
+		statViewTagModelImpl._originalPerMonth = statViewTagModelImpl._perMonth;
+
+		statViewTagModelImpl._setOriginalPerMonth = false;
+
+		statViewTagModelImpl._originalPerYear = statViewTagModelImpl._perYear;
+
+		statViewTagModelImpl._setOriginalPerYear = false;
+
 		statViewTagModelImpl._originalTagId = statViewTagModelImpl._tagId;
 
 		statViewTagModelImpl._setOriginalTagId = false;
@@ -307,27 +432,39 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 
 		statViewTagCacheModel.id = getId();
 
+		statViewTagCacheModel.companyId = getCompanyId();
+
+		statViewTagCacheModel.groupId = getGroupId();
+
 		statViewTagCacheModel.perMonth = getPerMonth();
 
 		statViewTagCacheModel.perYear = getPerYear();
 
 		statViewTagCacheModel.tagId = getTagId();
 
+		statViewTagCacheModel.viewCount = getViewCount();
+
 		return statViewTagCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{id=");
 		sb.append(getId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", perMonth=");
 		sb.append(getPerMonth());
 		sb.append(", perYear=");
 		sb.append(getPerYear());
 		sb.append(", tagId=");
 		sb.append(getTagId());
+		sb.append(", viewCount=");
+		sb.append(getViewCount());
 		sb.append("}");
 
 		return sb.toString();
@@ -335,7 +472,7 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.StatViewTag");
@@ -344,6 +481,14 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 		sb.append(
 			"<column><column-name>id</column-name><column-value><![CDATA[");
 		sb.append(getId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>perMonth</column-name><column-value><![CDATA[");
@@ -357,6 +502,10 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 			"<column><column-name>tagId</column-name><column-value><![CDATA[");
 		sb.append(getTagId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>viewCount</column-name><column-value><![CDATA[");
+		sb.append(getViewCount());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -368,11 +517,22 @@ public class StatViewTagModelImpl extends BaseModelImpl<StatViewTag>
 			StatViewTag.class
 		};
 	private long _id;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private int _perMonth;
+	private int _originalPerMonth;
+	private boolean _setOriginalPerMonth;
 	private int _perYear;
+	private int _originalPerYear;
+	private boolean _setOriginalPerYear;
 	private long _tagId;
 	private long _originalTagId;
 	private boolean _setOriginalTagId;
+	private int _viewCount;
 	private long _columnBitmask;
 	private StatViewTag _escapedModel;
 }

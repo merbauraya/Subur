@@ -32,21 +32,29 @@ public class ViewSummaryServiceClp implements ViewSummaryService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "getMonthlyCategory";
+		_methodName3 = "getTestChartData";
 
-		_methodParameterTypes3 = new String[] { "int", "long" };
+		_methodParameterTypes3 = new String[] {  };
 
-		_methodName4 = "getMonthlyItemType";
+		_methodName4 = "getMonthlyAssetCategoryChart";
 
-		_methodParameterTypes4 = new String[] { "int" };
+		_methodParameterTypes4 = new String[] { "int", "int" };
 
-		_methodName5 = "getMonthlySummary";
+		_methodName5 = "getMonthlyCategory";
 
-		_methodParameterTypes5 = new String[] { "int" };
+		_methodParameterTypes5 = new String[] { "int", "long" };
 
-		_methodName6 = "getMonthlyTagSummary";
+		_methodName6 = "getMonthlyItemType";
 
 		_methodParameterTypes6 = new String[] { "int" };
+
+		_methodName7 = "getMonthlySummary";
+
+		_methodParameterTypes7 = new String[] { "int" };
+
+		_methodName8 = "getMonthlyTagSummary";
+
+		_methodParameterTypes8 = new String[] { "int" };
 	}
 
 	@Override
@@ -100,13 +108,64 @@ public class ViewSummaryServiceClp implements ViewSummaryService {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONArray getMonthlyCategory(
-		int year, long vocabularyId) throws java.lang.Exception {
+	public com.liferay.portal.kernel.json.JSONObject getTestChartData() {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName3,
-					_methodParameterTypes3, new Object[] { year, vocabularyId });
+					_methodParameterTypes3, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.kernel.json.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyAssetCategoryChart(
+		int year, int vocabularyId) throws java.sql.SQLException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4, new Object[] { year, vocabularyId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof java.sql.SQLException) {
+				throw (java.sql.SQLException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.kernel.json.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyCategory(
+		int year, long vocabularyId) throws java.lang.Exception {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { year, vocabularyId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -124,7 +183,7 @@ public class ViewSummaryServiceClp implements ViewSummaryService {
 			}
 		}
 
-		return (com.liferay.portal.kernel.json.JSONArray)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.json.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -133,8 +192,8 @@ public class ViewSummaryServiceClp implements ViewSummaryService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4, new Object[] { year });
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6, new Object[] { year });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -161,8 +220,8 @@ public class ViewSummaryServiceClp implements ViewSummaryService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName5,
-					_methodParameterTypes5, new Object[] { year });
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7, new Object[] { year });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -184,13 +243,13 @@ public class ViewSummaryServiceClp implements ViewSummaryService {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONArray getMonthlyTagSummary(
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyTagSummary(
 		int year) throws java.lang.Exception {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] { year });
+			returnObj = _invokableService.invokeMethod(_methodName8,
+					_methodParameterTypes8, new Object[] { year });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -208,7 +267,7 @@ public class ViewSummaryServiceClp implements ViewSummaryService {
 			}
 		}
 
-		return (com.liferay.portal.kernel.json.JSONArray)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.json.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableService _invokableService;
@@ -224,4 +283,8 @@ public class ViewSummaryServiceClp implements ViewSummaryService {
 	private String[] _methodParameterTypes5;
 	private String _methodName6;
 	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
+	private String _methodName8;
+	private String[] _methodParameterTypes8;
 }

@@ -12,9 +12,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
-/**
- * Portlet implementation class CategoriesNavigationPortlet
- */
+
 public class CategoriesNavigationPortlet extends MVCPortlet {
 	 @Override
 	  public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException,

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -60,26 +61,32 @@ public class SuburAdmin extends MVCPortlet {
 		String authorSite = ParamUtil.getString(request, "authorSite");
 		String itemIdentifier = ParamUtil.getString(request, "itemIdentifier");
 		
-		Map<String,String> authorSalutationMap = new HashMap<String,String>();
-		authorSalutationMap.put(SuburConfiguration.AUTHOR_SALUTATION, authorSalutation);
+		SuburConfigLocalServiceUtil.updateConfig(SuburConfiguration.AUTHOR_SALUTATION, authorSalutation);
+		SuburConfigLocalServiceUtil.updateConfig(SuburConfiguration.AUTHOR_SITES, authorSite);
+		SuburConfigLocalServiceUtil.updateConfig(SuburConfiguration.ITEM_IDENTIFIERS, itemIdentifier);
 		
-		Map<String,String> authorSiteMap = new HashMap<String,String>();
-		authorSiteMap.put(SuburConfiguration.AUTHOR_SITES, authorSite);
 		
-		Map<String,String> itemIdentifierMap = new HashMap<String,String>();
-		itemIdentifierMap.put(SuburConfiguration.ITEM_IDENTIFIERS, itemIdentifier);
-		
-		SuburConfigLocalServiceUtil.updateConfig(authorSalutationMap, SuburConfiguration.AUTHOR_SALUTATION);
-		SuburConfigLocalServiceUtil.updateConfig(authorSiteMap, SuburConfiguration.AUTHOR_SITES);
-		SuburConfigLocalServiceUtil.updateConfig(itemIdentifierMap, SuburConfiguration.ITEM_IDENTIFIERS);
 		
 	}
 	
+	public void saveNotificationRole (ActionRequest actionRequest, ActionResponse actionResponse) throws SystemException
+	{
+		String notificationRoleArray[] = actionRequest.getParameterValues("notificationRole");
+	
+		String notificationRoles = StringUtil.merge(notificationRoleArray);
+		
+		
+		
+		SuburConfigLocalServiceUtil.updateConfig(SuburConfiguration.NOTIFICATION_ROLES, notificationRoles);
+	}
 	public void updateStats(ActionRequest request,ActionResponse response)throws PortalException, SystemException
 	{
-		ViewSummaryLocalServiceUtil.updateStats();
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		
+		LOGGER.info(themeDisplay.getCompanyId() + "::" + themeDisplay.getScopeGroupId());
+		ViewSummaryLocalServiceUtil.updateStats(themeDisplay.getCompanyId(),themeDisplay.getScopeGroupId());
 		DownloadSummaryLocalServiceUtil.updateStats();
 	}
 	
-	private static Log _log = LogFactoryUtil.getLog(SuburAdmin.class);
+	private static Log LOGGER = LogFactoryUtil.getLog(SuburAdmin.class);
 }

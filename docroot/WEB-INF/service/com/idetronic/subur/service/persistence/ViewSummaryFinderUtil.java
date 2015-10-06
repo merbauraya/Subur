@@ -21,7 +21,12 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Mazlan Mat
  */
 public class ViewSummaryFinderUtil {
-	public static com.liferay.portal.kernel.json.JSONArray getMonthlyCategorySummary(
+	public static com.liferay.portal.kernel.json.JSONObject getMonthlyCategoryChart(
+		int year, long vocabularyId) throws java.sql.SQLException {
+		return getFinder().getMonthlyCategoryChart(year, vocabularyId);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject getMonthlyCategorySummary(
 		int year, long vocabularyId) throws java.sql.SQLException {
 		return getFinder().getMonthlyCategorySummary(year, vocabularyId);
 	}
@@ -31,7 +36,7 @@ public class ViewSummaryFinderUtil {
 		return getFinder().getMothlyItemTypeSummary(year);
 	}
 
-	public static com.liferay.portal.kernel.json.JSONArray getMothlyTagSummary(
+	public static com.liferay.portal.kernel.json.JSONObject getMothlyTagSummary(
 		int year) throws java.sql.SQLException {
 		return getFinder().getMothlyTagSummary(year);
 	}

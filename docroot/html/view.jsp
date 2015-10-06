@@ -36,6 +36,8 @@
 
 
 <%
+	boolean filteredView = ParamUtil.getBoolean(request, "filtered");//  GetterUtil.getBoolean(request.getAttribute("filtered"));
+
 	String itemId = renderRequest.getParameter("itemId");
 	
 	String x = ParamUtil.getString(request, "categoryId");
@@ -75,8 +77,14 @@
 <%
 	
 	String itemTypeId = ParamUtil.getString(request, "itemTypeId");
-	String[] itemTypeIds = StringUtil.split(itemTypeId);
+	if (Validator.isNotNull(itemTypeId))
+	{
+		filteredView = true;
+	}
 
+	String[] itemTypeIds = StringUtil.split(itemTypeId);
+	long[] anyItemTypeIds = new long[]{};
+	long[] allItemTypeIds = new long[]{};
 	boolean filterByTagOrCategory = false;
 	
 
@@ -88,8 +96,8 @@
 	
 	AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 	Map<String, Object> attributes = new HashMap<String, Object>();
-	attributes.put("itemType", 1);
-	assetEntryQuery.setAttribute("itemType", 1);
+	//attributes.put("itemType", 1);
+	//assetEntryQuery.setAttribute("itemType", 1);
 	
 	
 	//assetEntryQuery.setAttributes(attributes);
@@ -99,6 +107,7 @@
 	
 	
 if (Validator.isNotNull(assetTagName)) {
+	filteredView = true;
 	allAssetTagNames = new String[] {assetTagName};
 	filterByTagOrCategory = true;
 	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(siteGroupIds, allAssetTagNames);
@@ -120,6 +129,11 @@ if (Validator.isNotNull(assetTagName)) {
 	filterByTagOrCategory = filterByTagOrCategory? true: Validator.isNotNull(categoryId);
 	
 	String[] categoryIds = StringUtil.split(categoryId);
+	
+	if (categoryIds.length >= 1)
+	{
+		filteredView = true;
+	}
 	
 	if (categoryIds.length == 1)
 	{
@@ -174,19 +188,31 @@ if (Validator.isNotNull(assetTagName)) {
 	assetEntryQuery.setOrderByCol2(orderByColumn2);
 	assetEntryQuery.setOrderByType1(orderByType1);
 	assetEntryQuery.setOrderByType2(orderByType2);
+	
+	
+	
 %>
-<div class="">
-	<%@ include file="/html/view/process_view_l.jsp" %>
 
+<c:choose>
+	<c:when test="<%= !filteredView%>">
+		<%@ include file="/html/subur/default_view.jsp" %>
+	</c:when>
+	<c:otherwise>
 
-<c:if test='<%= !paginationType.equals("none") && (searchContainer.getTotal() > searchContainer.getResults().size()) %>'>
-	
-	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= paginationType %>" />
-</c:if>	
-	
-	
-	
-</div>
+		<div class="">
+			<%@ include file="/html/view/process_view_l.jsp" %>
+		
+		
+		<c:if test='<%= !paginationType.equals("none") && (searchContainer.getTotal() > searchContainer.getResults().size()) %>'>
+			
+			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= paginationType %>" />
+		</c:if>	
+			
+			
+			
+		</div>
+	</c:otherwise>
+</c:choose>
 <%!
 private static Log _log = LogFactoryUtil.getLog("subur.html.view");
 %>

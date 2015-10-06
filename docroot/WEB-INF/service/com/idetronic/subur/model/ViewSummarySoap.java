@@ -32,8 +32,10 @@ public class ViewSummarySoap implements Serializable {
 
 		soapModel.setId(model.getId());
 		soapModel.setItemId(model.getItemId());
-		soapModel.setPerMonth(model.getPerMonth());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setPerYear(model.getPerYear());
+		soapModel.setPerMonth(model.getPerMonth());
 		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
@@ -103,12 +105,20 @@ public class ViewSummarySoap implements Serializable {
 		_itemId = itemId;
 	}
 
-	public int getPerMonth() {
-		return _perMonth;
+	public long getCompanyId() {
+		return _companyId;
 	}
 
-	public void setPerMonth(int perMonth) {
-		_perMonth = perMonth;
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	public int getPerYear() {
@@ -117,6 +127,14 @@ public class ViewSummarySoap implements Serializable {
 
 	public void setPerYear(int perYear) {
 		_perYear = perYear;
+	}
+
+	public int getPerMonth() {
+		return _perMonth;
+	}
+
+	public void setPerMonth(int perMonth) {
+		_perMonth = perMonth;
 	}
 
 	public int getStatus() {
@@ -129,7 +147,9 @@ public class ViewSummarySoap implements Serializable {
 
 	private long _id;
 	private long _itemId;
-	private int _perMonth;
+	private long _companyId;
+	private long _groupId;
 	private int _perYear;
+	private int _perMonth;
 	private int _status;
 }

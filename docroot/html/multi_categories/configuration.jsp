@@ -1,4 +1,3 @@
-
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@page import="com.liferay.portal.util.PortalUtil"%>
 <%@page import="com.liferay.portlet.asset.model.AssetCategory"%>

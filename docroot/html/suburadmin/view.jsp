@@ -3,9 +3,9 @@
 
 <%
 	String pageName=StringPool.BLANK;
-	String authorSalutation = SuburConfiguration.getConfigString(SuburConfiguration.AUTHOR_SALUTATION);
-	String authorSite = SuburConfiguration.getConfigString(SuburConfiguration.AUTHOR_SITES);
-	String itemIdentifier = SuburConfiguration.getConfigString(SuburConfiguration.ITEM_IDENTIFIERS);
+	String authorSalutation = SuburConfiguration.getConfig(SuburConfiguration.AUTHOR_SALUTATION);
+	String authorSite = SuburConfiguration.getConfig(SuburConfiguration.AUTHOR_SITES);
+	String itemIdentifier = SuburConfiguration.getConfig(SuburConfiguration.ITEM_IDENTIFIERS);
 	if (Validator.isNull(authorSalutation))
 	{
 		authorSalutation = "Mr,Mrs,Ms,Dr,Prof";

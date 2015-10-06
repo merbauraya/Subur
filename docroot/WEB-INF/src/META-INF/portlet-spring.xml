@@ -10,6 +10,9 @@
 	<bean id="com.idetronic.subur.service.persistence.AuthorResearchInterestPersistence" class="com.idetronic.subur.service.persistence.AuthorResearchInterestPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.AuthorSiteLocalService" class="com.idetronic.subur.service.impl.AuthorSiteLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.AuthorSitePersistence" class="com.idetronic.subur.service.persistence.AuthorSitePersistenceImpl" parent="basePersistence" />
+	<bean id="com.idetronic.subur.service.CopyRequestLocalService" class="com.idetronic.subur.service.impl.CopyRequestLocalServiceImpl" />
+	<bean id="com.idetronic.subur.service.CopyRequestService" class="com.idetronic.subur.service.impl.CopyRequestServiceImpl" />
+	<bean id="com.idetronic.subur.service.persistence.CopyRequestPersistence" class="com.idetronic.subur.service.persistence.CopyRequestPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.DownloadSummaryLocalService" class="com.idetronic.subur.service.impl.DownloadSummaryLocalServiceImpl" />
 	<bean id="com.idetronic.subur.service.persistence.DownloadSummaryPersistence" class="com.idetronic.subur.service.persistence.DownloadSummaryPersistenceImpl" parent="basePersistence" />
 	<bean id="com.idetronic.subur.service.ExpertiseLocalService" class="com.idetronic.subur.service.impl.ExpertiseLocalServiceImpl" />

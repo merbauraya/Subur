@@ -250,9 +250,27 @@ public interface AuthorLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	/**
+	* @param firstName
+	* @param middleName
+	* @param lastName
+	* @param salutation
+	* @param email
+	* @param officeNo
+	* @param serviceContext
+	* @return
+	* @throws SystemException
+	*/
+	public com.idetronic.subur.model.Author newAuthor(
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String salutation,
+		java.lang.String email, java.lang.String officeNo,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public long addAuthor(java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String title, java.lang.String email,
+		java.lang.String salutation, java.lang.String email,
 		java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
 		java.lang.String remoteId, int idType, long userId, long groupId,
@@ -260,7 +278,8 @@ public interface AuthorLocalService extends BaseLocalService,
 		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException;
 
 	public void setExpertises(long authorId,
 		java.util.List<com.idetronic.subur.model.Expertise> expertises)
@@ -285,16 +304,17 @@ public interface AuthorLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	public com.idetronic.subur.model.Author updateAuthor(long authorId,
-		java.lang.String title, java.lang.String firstName,
+		java.lang.String salutation, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName,
 		java.lang.String email, java.lang.String officeNo,
 		java.util.Map<java.lang.String, java.lang.String> authorSite,
-		java.lang.String remoteId, int idType, long userId, long groupId,
+		java.lang.String title, long userId, long groupId,
 		long createdByUserId, java.lang.String[] expertiseNames,
 		java.lang.String[] researchInterestNames,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException;
 
 	/**
 	* Find all item under a given author
@@ -413,6 +433,16 @@ public interface AuthorLocalService extends BaseLocalService,
 	public java.util.List<com.idetronic.subur.model.Author> findByGroupCompany(
 		long companyId, long groupId, int start, int end);
 
+	public java.util.List<com.idetronic.subur.model.Author> recentByGroup(
+		long companyId, long groupId, java.util.Date lastPublishedDate,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteItem(long itemId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.idetronic.subur.model.Author updatePortrait(long authorId,
+		byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

@@ -18,13 +18,16 @@ package com.idetronic.subur.service.persistence;
  * @author Mazlan Mat
  */
 public interface ViewSummaryFinder {
-	public com.liferay.portal.kernel.json.JSONArray getMonthlyCategorySummary(
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyCategoryChart(
+		int year, long vocabularyId) throws java.sql.SQLException;
+
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyCategorySummary(
 		int year, long vocabularyId) throws java.sql.SQLException;
 
 	public com.liferay.portal.kernel.json.JSONArray getMothlyItemTypeSummary(
 		int year) throws java.sql.SQLException;
 
-	public com.liferay.portal.kernel.json.JSONArray getMothlyTagSummary(
+	public com.liferay.portal.kernel.json.JSONObject getMothlyTagSummary(
 		int year) throws java.sql.SQLException;
 
 	public com.liferay.portal.kernel.json.JSONArray getMonthlySummary(int year)

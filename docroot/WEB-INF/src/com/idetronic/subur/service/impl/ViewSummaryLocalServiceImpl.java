@@ -14,23 +14,21 @@
 
 package com.idetronic.subur.service.impl;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
-import com.idetronic.subur.model.DownloadSummary;
+import com.idetronic.subur.NoSuchStatViewCategoryException;
+import com.idetronic.subur.NoSuchStatViewItemTypeException;
+import com.idetronic.subur.NoSuchStatViewTagException;
 import com.idetronic.subur.model.ItemItemType;
-import com.idetronic.subur.model.ResearchInterest;
 import com.idetronic.subur.model.StatViewCategory;
 import com.idetronic.subur.model.StatViewItemType;
-import com.idetronic.subur.model.StatViewPeriod;
 import com.idetronic.subur.model.StatViewTag;
 import com.idetronic.subur.model.SuburItem;
 import com.idetronic.subur.model.ViewSummary;
 import com.idetronic.subur.service.ItemItemTypeLocalServiceUtil;
 import com.idetronic.subur.service.base.ViewSummaryLocalServiceBaseImpl;
-import com.idetronic.subur.service.persistence.SuburItemFinderImpl;
 import com.idetronic.subur.service.persistence.ViewSummaryFinderUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,12 +37,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagServiceUtil;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 /**
  * The implementation of the view summary local service.
@@ -80,16 +75,16 @@ public class ViewSummaryLocalServiceImpl extends ViewSummaryLocalServiceBaseImpl
 		
 		
 	}
-	
+	/*
 	public JSONArray getMonthlyTag(int year) throws SQLException
 	{
 		return ViewSummaryFinderUtil.getMothlyTagSummary(year);
 	}
-	
+	*/
 	/**
 	 * Add view stats info the the entity. 
 	 */
-	public ViewSummary addStats(long itemId) throws SystemException
+	public ViewSummary addStats(long itemId,long companyId,long groupId) throws SystemException
 	{
 		
 		
@@ -100,19 +95,23 @@ public class ViewSummaryLocalServiceImpl extends ViewSummaryLocalServiceBaseImpl
 		dSummary.setItemId(itemId);
 		
 		Calendar now = Calendar.getInstance();
+		
 		int year = now.get(Calendar.YEAR);
 		int month = now.get(Calendar.MONTH) + 1;
 		dSummary.setStatus(STATUS_NEW);
 		dSummary.setPerYear(year);
 		dSummary.setPerMonth(month);
+		dSummary.setCompanyId(companyId);
+		dSummary.setGroupId(groupId);
+		
 		viewSummaryPersistence.update(dSummary);
 		
 		return dSummary;
 	}
 	@Override
-	public void updateStats() throws SystemException,PortalException
+	public void updateStats(long companyId,long groupId) throws SystemException,PortalException
 	{
-		List<ViewSummary> viewSummaries = viewSummaryPersistence.findByStatus(STATUS_NEW);
+		List<ViewSummary> viewSummaries = viewSummaryPersistence.findByStatus(STATUS_NEW, groupId, companyId);
 		
 		long id = 0L;
 		for (ViewSummary viewSummary : viewSummaries)
@@ -127,7 +126,8 @@ public class ViewSummaryLocalServiceImpl extends ViewSummaryLocalServiceBaseImpl
 			
 			for (int i = 0; i < itemItemTypes.size(); i++)
 			{
-				addItemTypeStat(month,year,itemItemTypes.get(i).getItemTypeId());
+				generateViewYearItemTypeRow(companyId,groupId,year,month,itemItemTypes.get(i).getItemTypeId());
+				updateItemTypeStat(companyId,groupId,year,month,itemItemTypes.get(i).getItemTypeId());
 				
 			}
 			
@@ -138,7 +138,9 @@ public class ViewSummaryLocalServiceImpl extends ViewSummaryLocalServiceBaseImpl
 			
 			for (int i = 0; i < categories.size(); i++)
 			{
-				addCategoryStat(month,year,categories.get(i).getCategoryId());
+				generateViewYearCategoryRow(companyId,groupId,year,month,categories.get(i).getCategoryId());
+				updateCategoryStat(companyId,groupId,year,month,categories.get(i).getCategoryId());
+				
 			}
 			
 			//tags
@@ -146,7 +148,8 @@ public class ViewSummaryLocalServiceImpl extends ViewSummaryLocalServiceBaseImpl
 			
 			for (int i = 0; i < tags.size(); i++)
 			{
-				addTagStat(month,year,tags.get(i).getTagId());
+				generateViewYearTagRow(companyId,groupId,year,month,tags.get(i).getTagId());
+				updateTagStat(companyId,groupId,year,month,tags.get(i).getTagId());
 			}
 			
 			
@@ -161,34 +164,171 @@ public class ViewSummaryLocalServiceImpl extends ViewSummaryLocalServiceBaseImpl
 			viewSummaryPersistence.update(viewSummary);
 		}
 	}
-	private void addTagStat(int month,int year,long tagId) throws SystemException
+	private void updateItemTypeStat(long companyId,long groupId,int year,int month,long itemTypeId) throws SystemException
 	{
-		long id  = CounterLocalServiceUtil.increment(StatViewTag.class.getName());
-		StatViewTag viewTag = statViewTagPersistence.create(id);
-		viewTag.setTagId(tagId);
-		viewTag.setPerMonth(month);
-		viewTag.setPerYear(year);
+		//item type stats
+		
+		StatViewItemType viewItemType = getStatViewItemType(companyId,groupId,year,month,itemTypeId);
+		int viewCount = viewItemType.getViewCount() +1;
+		
+		viewItemType.setViewCount(viewCount);
+		
+		statViewItemTypePersistence.update(viewItemType);
+	}
+	private void updateTagStat(long companyId,long groupId,int year,int month,long tagId) throws SystemException
+	{
+		
+		StatViewTag viewTag = getStatViewTag(companyId,groupId,year,month,tagId);
+		
+		int viewCount = viewTag.getViewCount() +1;
+		viewTag.setViewCount(viewCount);
+		
 		statViewTagPersistence.update(viewTag);
 		
 	}
-	private void addCategoryStat(int month, int year, long categoryId) throws SystemException
+	private StatViewItemType getStatViewItemType(long companyId,long groupId,int perYear,int perMonth,long itemTypeId) throws SystemException
 	{
-		long id  = CounterLocalServiceUtil.increment(StatViewCategory.class.getName());
-		StatViewCategory viewCategory = statViewCategoryPersistence.create(id);
-		viewCategory.setCategoryId(categoryId);
-		viewCategory.setPerYear(year);
-		viewCategory.setPerMonth(month);
+		StatViewItemType viewItemType = null;
+		
+		
+		try
+		{
+			viewItemType = statViewItemTypePersistence.findByItemTypePeriodGroup(companyId,groupId,itemTypeId, perYear, perMonth);
+		
+		} catch (NoSuchStatViewItemTypeException e)
+		{
+			long id  = CounterLocalServiceUtil.increment(StatViewItemType.class.getName());
+			viewItemType = statViewItemTypePersistence.create(id);
+			viewItemType.setViewCount(0);
+			viewItemType.setItemTypeId(itemTypeId);
+			viewItemType.setCompanyId(companyId);
+			viewItemType.setGroupId(groupId);
+			viewItemType.setPerYear(perYear);
+			viewItemType.setPerMonth(perMonth);
+			viewItemType.setNew(true);
+			
+			
+		}
+		return viewItemType;
+	}
+	private StatViewTag getStatViewTag(long companyId,long groupId,int perYear,int perMonth,long tagId) throws SystemException
+	{
+		StatViewTag viewStat = null;
+		try
+		{
+			viewStat = statViewTagPersistence.findByTagPeriod(companyId,groupId,tagId, perYear,perMonth );
+		
+		} catch (NoSuchStatViewTagException e)
+		{
+			long id  = CounterLocalServiceUtil.increment(StatViewTag.class.getName());
+			viewStat = statViewTagPersistence.create(id);
+			viewStat.setViewCount(0);
+			viewStat.setTagId(tagId);
+			viewStat.setCompanyId(companyId);
+			viewStat.setGroupId(groupId);
+			viewStat.setPerMonth(perMonth);
+			viewStat.setPerYear(perYear);
+			viewStat.setNew(true);
+			
+			
+		}
+		return viewStat;
+	}
+	private void updateCategoryStat(long companyId,long groupId,int perYear, int perMonth, long categoryId) throws SystemException
+	{
+		
+		StatViewCategory viewCategory = getStatViewCategory(companyId,groupId,perYear,perMonth,categoryId);
+		
+		
+		int viewCount = viewCategory.getViewCount() +1;
+		
+		//LOGGER.info(categoryId + "  view="+viewCount);
+		viewCategory.setViewCount(viewCount);	
+		
+		
+		
 		statViewCategoryPersistence.update(viewCategory);
 	}
-	private void addItemTypeStat(int month,int year,long itemTypeId) throws SystemException
+	/**
+	 * Get Statistic View Category based on period and Vocabulary Id. If none exist
+	 * new row will be created with 0 viewCount 
+	 * @param perMonth
+	 * @param perYear
+	 * @param categoryId
+	 * @return
+	 * @throws SystemException
+	 */
+	private StatViewCategory getStatViewCategory(long companyId,long groupId,int perYear, int perMonth, long categoryId) throws SystemException
 	{
-		//item type stats
-		long id  = CounterLocalServiceUtil.increment(StatViewItemType.class.getName());
-		StatViewItemType viewItemType = statViewItemTypePersistence.create(id);
-		viewItemType.setItemTypeId(itemTypeId);
-		viewItemType.setPerMonth(month);
-		viewItemType.setPerYear(year);
-		statViewItemTypePersistence.update(viewItemType);
+		StatViewCategory viewCategory = null;
+		
+		LOGGER.info(companyId + ":"+groupId + ":"+perYear+":"+perMonth+":"+categoryId);
+		try
+		{
+			viewCategory = statViewCategoryPersistence.findByCategoryPeriod(companyId,groupId,categoryId, perYear, perMonth);
+		
+		} catch (NoSuchStatViewCategoryException nsvce)
+		{
+			LOGGER.info("newCatStat:"+perYear+":"+perMonth+":"+ categoryId);
+			long id  = CounterLocalServiceUtil.increment(StatViewCategory.class.getName());
+			viewCategory = statViewCategoryPersistence.create(id);
+			viewCategory.setViewCount(0);
+			viewCategory.setCategoryId(categoryId);
+			viewCategory.setPerYear(perYear);
+			viewCategory.setPerMonth(perMonth);
+			viewCategory.setNew(true);
+			viewCategory.setCompanyId(companyId);
+			viewCategory.setGroupId(groupId);
+			
+		}
+		return viewCategory;
+		
 	}
+	
+	/**
+	 * Generate view by Category statistic current + previous month row to
+	 * ensure no month are missing in the db
+	 * @param year
+	 * @param month
+	 * @param categoryId
+	 * @throws SystemException
+	 */
+	private void generateViewYearCategoryRow(long companyId,long groupId,int perYear,int perMonth,long categoryId) throws SystemException
+	{
+		for (int month = perMonth; month > 0; month--)
+		{
+			StatViewCategory viewCategory = getStatViewCategory(companyId,groupId,perYear,month,categoryId);
+			if (viewCategory.isNew())
+			{
+				statViewCategoryPersistence.update(viewCategory);
+			}
+		}
+		
+	}
+	private void generateViewYearTagRow(long companyId,long groupId,int perYear,int perMonth, long tagId) throws SystemException
+	{
+		for (int month = perMonth; month > 0; month--)
+		{
+			StatViewTag viewTag = getStatViewTag(companyId,groupId,perYear,month,tagId);
+			if (viewTag.isNew())
+			{
+				statViewTagPersistence.update(viewTag);
+			}
+
+		}
+	}
+	private void generateViewYearItemTypeRow(long companyId,long groupId,int perYear,int perMonth,long itemTypeId) throws SystemException
+	{
+		for (int month = perMonth; month > 0; month--)
+		{
+			StatViewItemType viewItemType = getStatViewItemType(companyId,groupId,perYear,month,itemTypeId);
+			if (viewItemType.isNew())
+			{
+				statViewItemTypePersistence.update(viewItemType);
+			}
+
+		}
+	}
+	private static Log LOGGER = LogFactoryUtil.getLog(ViewSummaryLocalServiceImpl.class);
 	
 }

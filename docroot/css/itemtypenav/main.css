@@ -2,3 +2,11 @@
 {
 	list-style:outside none none;
 }
+.item-type-selected
+{
+	font-weight:bold;
+}
+.item-type-nav ul, .item-type-nav ol
+{
+	margin:0px !important;
+}

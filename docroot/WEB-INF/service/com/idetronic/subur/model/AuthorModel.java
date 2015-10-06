@@ -102,48 +102,19 @@ public interface AuthorModel extends BaseModel<Author> {
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the title of this author.
+	 * Returns the salutation of this author.
 	 *
-	 * @return the title of this author
+	 * @return the salutation of this author
 	 */
 	@AutoEscape
-	public String getTitle();
+	public String getSalutation();
 
 	/**
-	 * Sets the title of this author.
+	 * Sets the salutation of this author.
 	 *
-	 * @param title the title of this author
+	 * @param salutation the salutation of this author
 	 */
-	public void setTitle(String title);
-
-	/**
-	 * Returns the id type of this author.
-	 *
-	 * @return the id type of this author
-	 */
-	public int getIdType();
-
-	/**
-	 * Sets the id type of this author.
-	 *
-	 * @param idType the id type of this author
-	 */
-	public void setIdType(int idType);
-
-	/**
-	 * Returns the remote ID of this author.
-	 *
-	 * @return the remote ID of this author
-	 */
-	@AutoEscape
-	public String getRemoteId();
-
-	/**
-	 * Sets the remote ID of this author.
-	 *
-	 * @param remoteId the remote ID of this author
-	 */
-	public void setRemoteId(String remoteId);
+	public void setSalutation(String salutation);
 
 	/**
 	 * Returns the first name of this author.
@@ -333,6 +304,35 @@ public interface AuthorModel extends BaseModel<Author> {
 	 * @param createdBy the created by of this author
 	 */
 	public void setCreatedBy(long createdBy);
+
+	/**
+	 * Returns the portrait ID of this author.
+	 *
+	 * @return the portrait ID of this author
+	 */
+	public long getPortraitId();
+
+	/**
+	 * Sets the portrait ID of this author.
+	 *
+	 * @param portraitId the portrait ID of this author
+	 */
+	public void setPortraitId(long portraitId);
+
+	/**
+	 * Returns the title of this author.
+	 *
+	 * @return the title of this author
+	 */
+	@AutoEscape
+	public String getTitle();
+
+	/**
+	 * Sets the title of this author.
+	 *
+	 * @param title the title of this author
+	 */
+	public void setTitle(String title);
 
 	@Override
 	public boolean isNew();

@@ -76,9 +76,7 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		attributes.put("authorId", getAuthorId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("title", getTitle());
-		attributes.put("idType", getIdType());
-		attributes.put("remoteId", getRemoteId());
+		attributes.put("salutation", getSalutation());
 		attributes.put("firstName", getFirstName());
 		attributes.put("lastName", getLastName());
 		attributes.put("middleName", getMiddleName());
@@ -92,6 +90,8 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("Uuid", getUuid());
 		attributes.put("createdBy", getCreatedBy());
+		attributes.put("portraitId", getPortraitId());
+		attributes.put("title", getTitle());
 
 		return attributes;
 	}
@@ -116,22 +116,10 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 			setCompanyId(companyId);
 		}
 
-		String title = (String)attributes.get("title");
+		String salutation = (String)attributes.get("salutation");
 
-		if (title != null) {
-			setTitle(title);
-		}
-
-		Integer idType = (Integer)attributes.get("idType");
-
-		if (idType != null) {
-			setIdType(idType);
-		}
-
-		String remoteId = (String)attributes.get("remoteId");
-
-		if (remoteId != null) {
-			setRemoteId(remoteId);
+		if (salutation != null) {
+			setSalutation(salutation);
 		}
 
 		String firstName = (String)attributes.get("firstName");
@@ -211,6 +199,18 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		if (createdBy != null) {
 			setCreatedBy(createdBy);
 		}
+
+		Long portraitId = (Long)attributes.get("portraitId");
+
+		if (portraitId != null) {
+			setPortraitId(portraitId);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
 	}
 
 	@Override
@@ -283,67 +283,21 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 	}
 
 	@Override
-	public String getTitle() {
-		return _title;
+	public String getSalutation() {
+		return _salutation;
 	}
 
 	@Override
-	public void setTitle(String title) {
-		_title = title;
+	public void setSalutation(String salutation) {
+		_salutation = salutation;
 
 		if (_authorRemoteModel != null) {
 			try {
 				Class<?> clazz = _authorRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setTitle", String.class);
+				Method method = clazz.getMethod("setSalutation", String.class);
 
-				method.invoke(_authorRemoteModel, title);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public int getIdType() {
-		return _idType;
-	}
-
-	@Override
-	public void setIdType(int idType) {
-		_idType = idType;
-
-		if (_authorRemoteModel != null) {
-			try {
-				Class<?> clazz = _authorRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setIdType", int.class);
-
-				method.invoke(_authorRemoteModel, idType);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getRemoteId() {
-		return _remoteId;
-	}
-
-	@Override
-	public void setRemoteId(String remoteId) {
-		_remoteId = remoteId;
-
-		if (_authorRemoteModel != null) {
-			try {
-				Class<?> clazz = _authorRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setRemoteId", String.class);
-
-				method.invoke(_authorRemoteModel, remoteId);
+				method.invoke(_authorRemoteModel, salutation);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -652,6 +606,74 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 	}
 
 	@Override
+	public long getPortraitId() {
+		return _portraitId;
+	}
+
+	@Override
+	public void setPortraitId(long portraitId) {
+		_portraitId = portraitId;
+
+		if (_authorRemoteModel != null) {
+			try {
+				Class<?> clazz = _authorRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setPortraitId", long.class);
+
+				method.invoke(_authorRemoteModel, portraitId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getTitle() {
+		return _title;
+	}
+
+	@Override
+	public void setTitle(String title) {
+		_title = title;
+
+		if (_authorRemoteModel != null) {
+			try {
+				Class<?> clazz = _authorRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setTitle", String.class);
+
+				method.invoke(_authorRemoteModel, title);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public java.lang.String getPortraitURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		try {
+			String methodName = "getPortraitURL";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					com.liferay.portal.theme.ThemeDisplay.class
+				};
+
+			Object[] parameterValues = new Object[] { themeDisplay };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public java.lang.String getDisplayName() {
 		try {
 			String methodName = "getDisplayName";
@@ -742,9 +764,7 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		clone.setAuthorId(getAuthorId());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
-		clone.setTitle(getTitle());
-		clone.setIdType(getIdType());
-		clone.setRemoteId(getRemoteId());
+		clone.setSalutation(getSalutation());
 		clone.setFirstName(getFirstName());
 		clone.setLastName(getLastName());
 		clone.setMiddleName(getMiddleName());
@@ -758,6 +778,8 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		clone.setModifiedDate(getModifiedDate());
 		clone.setUuid(getUuid());
 		clone.setCreatedBy(getCreatedBy());
+		clone.setPortraitId(getPortraitId());
+		clone.setTitle(getTitle());
 
 		return clone;
 	}
@@ -818,12 +840,8 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", idType=");
-		sb.append(getIdType());
-		sb.append(", remoteId=");
-		sb.append(getRemoteId());
+		sb.append(", salutation=");
+		sb.append(getSalutation());
 		sb.append(", firstName=");
 		sb.append(getFirstName());
 		sb.append(", lastName=");
@@ -850,6 +868,10 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		sb.append(getUuid());
 		sb.append(", createdBy=");
 		sb.append(getCreatedBy());
+		sb.append(", portraitId=");
+		sb.append(getPortraitId());
+		sb.append(", title=");
+		sb.append(getTitle());
 		sb.append("}");
 
 		return sb.toString();
@@ -876,16 +898,8 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>idType</column-name><column-value><![CDATA[");
-		sb.append(getIdType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>remoteId</column-name><column-value><![CDATA[");
-		sb.append(getRemoteId());
+			"<column><column-name>salutation</column-name><column-value><![CDATA[");
+		sb.append(getSalutation());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>firstName</column-name><column-value><![CDATA[");
@@ -939,6 +953,14 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 			"<column><column-name>createdBy</column-name><column-value><![CDATA[");
 		sb.append(getCreatedBy());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>portraitId</column-name><column-value><![CDATA[");
+		sb.append(getPortraitId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>title</column-name><column-value><![CDATA[");
+		sb.append(getTitle());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -948,9 +970,7 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 	private long _authorId;
 	private long _groupId;
 	private long _companyId;
-	private String _title;
-	private int _idType;
-	private String _remoteId;
+	private String _salutation;
 	private String _firstName;
 	private String _lastName;
 	private String _middleName;
@@ -964,6 +984,8 @@ public class AuthorClp extends BaseModelImpl<Author> implements Author {
 	private Date _modifiedDate;
 	private String _Uuid;
 	private long _createdBy;
+	private long _portraitId;
+	private String _title;
 	private BaseModel<?> _authorRemoteModel;
 	private Class<?> _clpSerializerClass = com.idetronic.subur.service.ClpSerializer.class;
 }

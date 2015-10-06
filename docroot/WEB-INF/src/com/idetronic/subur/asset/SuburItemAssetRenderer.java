@@ -99,7 +99,7 @@ public class SuburItemAssetRenderer extends BaseAssetRenderer {
 
     @Override
     public long getUserId() {
-
+    	
             return _suburItem.getUserId();
     }
 

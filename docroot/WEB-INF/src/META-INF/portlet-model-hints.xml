@@ -18,9 +18,7 @@
 		<field name="authorId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
-		<field name="title" type="String" />
-		<field name="idType" type="int" />
-		<field name="remoteId" type="String" />
+		<field name="salutation" type="String" />
 		<field name="firstName" type="String" />
 		<field name="lastName" type="String" />
 		<field name="middleName" type="String" />
@@ -34,6 +32,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="Uuid" type="String" />
 		<field name="createdBy" type="long" />
+		<field name="portraitId" type="long" />
+		<field name="title" type="String" />
 	</model>
 	<model name="com.idetronic.subur.model.AuthorExpertise">
 		<field name="authorId" type="long" />
@@ -50,6 +50,25 @@
 		<field name="siteURL" type="String">
 			<hint name="max-length">150</hint>
 		</field>
+	</model>
+	<model name="com.idetronic.subur.model.CopyRequest">
+		<field name="copyRequestId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="dateCreated" type="Date" />
+		<field name="status" type="int" />
+		<field name="suburItemId" type="long" />
+		<field name="fromEmailAddress" type="String" />
+		<field name="requesterName" type="String" />
+		<field name="reason" type="String">
+			<hint-collection name="DESCRIPTION-TEXTAREA" />
+		</field>
+		<field name="organization" type="String" />
+		<field name="dateResponsed" type="Date" />
+		<field name="respondText" type="String">
+			<hint-collection name="DESCRIPTION-TEXTAREA" />
+		</field>
+		<field name="responsedByUserId" type="long" />
 	</model>
 	<model name="com.idetronic.subur.model.DownloadSummary">
 		<field name="id" type="long" />
@@ -119,21 +138,30 @@
 	</model>
 	<model name="com.idetronic.subur.model.StatViewCategory">
 		<field name="id" type="long" />
-		<field name="perMonth" type="int" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="perYear" type="int" />
+		<field name="perMonth" type="int" />
 		<field name="categoryId" type="long" />
+		<field name="viewCount" type="int" />
 	</model>
 	<model name="com.idetronic.subur.model.StatViewItemType">
 		<field name="id" type="long" />
-		<field name="perMonth" type="int" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="perYear" type="int" />
+		<field name="perMonth" type="int" />
 		<field name="itemTypeId" type="long" />
+		<field name="viewCount" type="int" />
 	</model>
 	<model name="com.idetronic.subur.model.StatViewTag">
 		<field name="id" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="perMonth" type="int" />
 		<field name="perYear" type="int" />
 		<field name="tagId" type="long" />
+		<field name="viewCount" type="int" />
 	</model>
 	<model name="com.idetronic.subur.model.SuburConfig">
 		<field name="id" type="long" />
@@ -166,12 +194,16 @@
 		<field name="metadataValue" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="relatedRestricted" type="boolean" />
+		<field name="photoCoverId" type="long" />
 	</model>
 	<model name="com.idetronic.subur.model.ViewSummary">
 		<field name="id" type="long" />
 		<field name="itemId" type="long" />
-		<field name="perMonth" type="int" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="perYear" type="int" />
+		<field name="perMonth" type="int" />
 		<field name="status" type="int" />
 	</model>
 </model-hints>

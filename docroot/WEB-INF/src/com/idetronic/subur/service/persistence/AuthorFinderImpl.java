@@ -1,6 +1,7 @@
 package com.idetronic.subur.service.persistence;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -357,6 +358,43 @@ public class AuthorFinderImpl extends BasePersistenceImpl<SuburItem> implements 
 		return null;
 		
 	}
+	public List<Author> recentByGroupIds(long companyId, long groupId, Date lastPublishedDate,
+			int start, int end) throws SystemException
+	{
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(RECENT_BY_GROUPS_IDS);
+
+			
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("Author", AuthorImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(groupId);
+			qPos.add(groupId);
+			qPos.add(groupId);
+			qPos.add(lastPublishedDate);
+
+			
+
+			return (List<Author>)QueryUtil.list(
+				q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 	protected String getWhere(LinkedHashMap<String, Object> params) {
 		if ((params == null) || params.isEmpty()) {
 			return StringPool.BLANK;
@@ -395,5 +433,6 @@ public class AuthorFinderImpl extends BasePersistenceImpl<SuburItem> implements 
 
 		return join;
 	}
-
+	public static final String RECENT_BY_GROUPS_IDS =
+			AuthorFinder.class.getName() + ".recentByGroupIds";
 }

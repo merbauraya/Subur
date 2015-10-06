@@ -33,9 +33,7 @@ public class AuthorSoap implements Serializable {
 		soapModel.setAuthorId(model.getAuthorId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setTitle(model.getTitle());
-		soapModel.setIdType(model.getIdType());
-		soapModel.setRemoteId(model.getRemoteId());
+		soapModel.setSalutation(model.getSalutation());
 		soapModel.setFirstName(model.getFirstName());
 		soapModel.setLastName(model.getLastName());
 		soapModel.setMiddleName(model.getMiddleName());
@@ -49,6 +47,8 @@ public class AuthorSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCreatedBy(model.getCreatedBy());
+		soapModel.setPortraitId(model.getPortraitId());
+		soapModel.setTitle(model.getTitle());
 
 		return soapModel;
 	}
@@ -125,28 +125,12 @@ public class AuthorSoap implements Serializable {
 		_companyId = companyId;
 	}
 
-	public String getTitle() {
-		return _title;
+	public String getSalutation() {
+		return _salutation;
 	}
 
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	public int getIdType() {
-		return _idType;
-	}
-
-	public void setIdType(int idType) {
-		_idType = idType;
-	}
-
-	public String getRemoteId() {
-		return _remoteId;
-	}
-
-	public void setRemoteId(String remoteId) {
-		_remoteId = remoteId;
+	public void setSalutation(String salutation) {
+		_salutation = salutation;
 	}
 
 	public String getFirstName() {
@@ -253,12 +237,26 @@ public class AuthorSoap implements Serializable {
 		_createdBy = createdBy;
 	}
 
+	public long getPortraitId() {
+		return _portraitId;
+	}
+
+	public void setPortraitId(long portraitId) {
+		_portraitId = portraitId;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	private long _authorId;
 	private long _groupId;
 	private long _companyId;
-	private String _title;
-	private int _idType;
-	private String _remoteId;
+	private String _salutation;
 	private String _firstName;
 	private String _lastName;
 	private String _middleName;
@@ -272,4 +270,6 @@ public class AuthorSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _Uuid;
 	private long _createdBy;
+	private long _portraitId;
+	private String _title;
 }

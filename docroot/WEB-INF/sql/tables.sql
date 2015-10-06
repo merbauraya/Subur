@@ -2,9 +2,7 @@ create table Subur_Author (
 	authorId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
-	title VARCHAR(75) null,
-	idType INTEGER,
-	remoteId VARCHAR(75) null,
+	salutation VARCHAR(75) null,
 	firstName VARCHAR(75) null,
 	lastName VARCHAR(75) null,
 	middleName VARCHAR(75) null,
@@ -17,7 +15,9 @@ create table Subur_Author (
 	createDate DATE null,
 	modifiedDate DATE null,
 	Uuid VARCHAR(75) null,
-	createdBy LONG
+	createdBy LONG,
+	portraitId LONG,
+	title VARCHAR(75) null
 );
 
 create table Subur_AuthorExpertise (
@@ -44,6 +44,22 @@ create table Subur_Config (
 	key_ VARCHAR(75) null,
 	description VARCHAR(75) null,
 	config TEXT null
+);
+
+create table Subur_CopyRequest (
+	copyRequestId LONG not null primary key,
+	companyId LONG,
+	groupId LONG,
+	dateCreated DATE null,
+	status INTEGER,
+	suburItemId LONG,
+	fromEmailAddress VARCHAR(75) null,
+	requesterName VARCHAR(75) null,
+	reason STRING null,
+	organization VARCHAR(75) null,
+	dateResponsed DATE null,
+	respondText STRING null,
+	responsedByUserId LONG
 );
 
 create table Subur_DownloadSummary (
@@ -80,7 +96,9 @@ create table Subur_Item (
 	language VARCHAR(75) null,
 	status INTEGER,
 	Uuid VARCHAR(75) null,
-	metadataValue TEXT null
+	metadataValue TEXT null,
+	relatedRestricted BOOLEAN,
+	photoCoverId LONG
 );
 
 create table Subur_ItemAuthor (
@@ -179,30 +197,41 @@ create table Subur_StatDownloadTag (
 
 create table Subur_StatViewCategory (
 	id_ LONG not null primary key,
-	perMonth INTEGER,
+	companyId LONG,
+	groupId LONG,
 	perYear INTEGER,
-	categoryId LONG
+	perMonth INTEGER,
+	categoryId LONG,
+	viewCount INTEGER
 );
 
 create table Subur_StatViewItemType (
 	id_ LONG not null primary key,
-	perMonth INTEGER,
+	companyId LONG,
+	groupId LONG,
 	perYear INTEGER,
-	itemTypeId LONG
+	perMonth INTEGER,
+	itemTypeId LONG,
+	viewCount INTEGER
 );
 
 create table Subur_StatViewTag (
 	id_ LONG not null primary key,
+	companyId LONG,
+	groupId LONG,
 	perMonth INTEGER,
 	perYear INTEGER,
-	tagId LONG
+	tagId LONG,
+	viewCount INTEGER
 );
 
 create table Subur_ViewSummary (
 	id_ LONG not null primary key,
 	itemId LONG,
-	perMonth INTEGER,
+	companyId LONG,
+	groupId LONG,
 	perYear INTEGER,
+	perMonth INTEGER,
 	status INTEGER
 );
 

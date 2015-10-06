@@ -281,6 +281,17 @@ public class AuthorSiteLocalServiceUtil {
 		return getService().findByAuthorId(authorId);
 	}
 
+	public static void deleteByAuthorId(long authorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteByAuthorId(authorId);
+	}
+
+	public static com.idetronic.subur.model.AuthorSite addAuthorSite(
+		long authorId, java.lang.String siteName, java.lang.String siteURL)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().addAuthorSite(authorId, siteName, siteURL);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -45,12 +45,8 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", title=");
-		sb.append(title);
-		sb.append(", idType=");
-		sb.append(idType);
-		sb.append(", remoteId=");
-		sb.append(remoteId);
+		sb.append(", salutation=");
+		sb.append(salutation);
 		sb.append(", firstName=");
 		sb.append(firstName);
 		sb.append(", lastName=");
@@ -77,6 +73,10 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		sb.append(Uuid);
 		sb.append(", createdBy=");
 		sb.append(createdBy);
+		sb.append(", portraitId=");
+		sb.append(portraitId);
+		sb.append(", title=");
+		sb.append(title);
 		sb.append("}");
 
 		return sb.toString();
@@ -90,20 +90,11 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		authorImpl.setGroupId(groupId);
 		authorImpl.setCompanyId(companyId);
 
-		if (title == null) {
-			authorImpl.setTitle(StringPool.BLANK);
+		if (salutation == null) {
+			authorImpl.setSalutation(StringPool.BLANK);
 		}
 		else {
-			authorImpl.setTitle(title);
-		}
-
-		authorImpl.setIdType(idType);
-
-		if (remoteId == null) {
-			authorImpl.setRemoteId(StringPool.BLANK);
-		}
-		else {
-			authorImpl.setRemoteId(remoteId);
+			authorImpl.setSalutation(salutation);
 		}
 
 		if (firstName == null) {
@@ -181,6 +172,14 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		}
 
 		authorImpl.setCreatedBy(createdBy);
+		authorImpl.setPortraitId(portraitId);
+
+		if (title == null) {
+			authorImpl.setTitle(StringPool.BLANK);
+		}
+		else {
+			authorImpl.setTitle(title);
+		}
 
 		authorImpl.resetOriginalValues();
 
@@ -192,9 +191,7 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		authorId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
-		title = objectInput.readUTF();
-		idType = objectInput.readInt();
-		remoteId = objectInput.readUTF();
+		salutation = objectInput.readUTF();
 		firstName = objectInput.readUTF();
 		lastName = objectInput.readUTF();
 		middleName = objectInput.readUTF();
@@ -208,6 +205,8 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		modifiedDate = objectInput.readLong();
 		Uuid = objectInput.readUTF();
 		createdBy = objectInput.readLong();
+		portraitId = objectInput.readLong();
+		title = objectInput.readUTF();
 	}
 
 	@Override
@@ -217,20 +216,11 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 
-		if (title == null) {
+		if (salutation == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(title);
-		}
-
-		objectOutput.writeInt(idType);
-
-		if (remoteId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(remoteId);
+			objectOutput.writeUTF(salutation);
 		}
 
 		if (firstName == null) {
@@ -291,14 +281,20 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 		}
 
 		objectOutput.writeLong(createdBy);
+		objectOutput.writeLong(portraitId);
+
+		if (title == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
 	}
 
 	public long authorId;
 	public long groupId;
 	public long companyId;
-	public String title;
-	public int idType;
-	public String remoteId;
+	public String salutation;
 	public String firstName;
 	public String lastName;
 	public String middleName;
@@ -312,4 +308,6 @@ public class AuthorCacheModel implements CacheModel<Author>, Externalizable {
 	public long modifiedDate;
 	public String Uuid;
 	public long createdBy;
+	public long portraitId;
+	public String title;
 }

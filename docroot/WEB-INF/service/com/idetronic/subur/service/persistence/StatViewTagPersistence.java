@@ -38,136 +38,83 @@ public interface StatViewTagPersistence extends BasePersistence<StatViewTag> {
 	 */
 
 	/**
-	* Returns all the stat view tags where tagId = &#63;.
+	* Returns the stat view tag where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63; or throws a {@link com.idetronic.subur.NoSuchStatViewTagException} if it could not be found.
 	*
+	* @param companyId the company ID
+	* @param groupId the group ID
 	* @param tagId the tag ID
-	* @return the matching stat view tags
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.idetronic.subur.model.StatViewTag> findByTag(
-		long tagId) throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the stat view tags where tagId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.StatViewTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param tagId the tag ID
-	* @param start the lower bound of the range of stat view tags
-	* @param end the upper bound of the range of stat view tags (not inclusive)
-	* @return the range of matching stat view tags
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.idetronic.subur.model.StatViewTag> findByTag(
-		long tagId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the stat view tags where tagId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.StatViewTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param tagId the tag ID
-	* @param start the lower bound of the range of stat view tags
-	* @param end the upper bound of the range of stat view tags (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching stat view tags
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.idetronic.subur.model.StatViewTag> findByTag(
-		long tagId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first stat view tag in the ordered set where tagId = &#63;.
-	*
-	* @param tagId the tag ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching stat view tag
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the matching stat view tag
 	* @throws com.idetronic.subur.NoSuchStatViewTagException if a matching stat view tag could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.idetronic.subur.model.StatViewTag findByTag_First(long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public com.idetronic.subur.model.StatViewTag findByTagPeriod(
+		long companyId, long groupId, long tagId, int perYear, int perMonth)
 		throws com.idetronic.subur.NoSuchStatViewTagException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first stat view tag in the ordered set where tagId = &#63;.
+	* Returns the stat view tag where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
+	* @param companyId the company ID
+	* @param groupId the group ID
 	* @param tagId the tag ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching stat view tag, or <code>null</code> if a matching stat view tag could not be found
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the matching stat view tag, or <code>null</code> if a matching stat view tag could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.idetronic.subur.model.StatViewTag fetchByTag_First(long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public com.idetronic.subur.model.StatViewTag fetchByTagPeriod(
+		long companyId, long groupId, long tagId, int perYear, int perMonth)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last stat view tag in the ordered set where tagId = &#63;.
+	* Returns the stat view tag where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
+	* @param companyId the company ID
+	* @param groupId the group ID
 	* @param tagId the tag ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching stat view tag
-	* @throws com.idetronic.subur.NoSuchStatViewTagException if a matching stat view tag could not be found
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching stat view tag, or <code>null</code> if a matching stat view tag could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.idetronic.subur.model.StatViewTag findByTag_Last(long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public com.idetronic.subur.model.StatViewTag fetchByTagPeriod(
+		long companyId, long groupId, long tagId, int perYear, int perMonth,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the stat view tag where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param tagId the tag ID
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the stat view tag that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.idetronic.subur.model.StatViewTag removeByTagPeriod(
+		long companyId, long groupId, long tagId, int perYear, int perMonth)
 		throws com.idetronic.subur.NoSuchStatViewTagException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last stat view tag in the ordered set where tagId = &#63;.
+	* Returns the number of stat view tags where companyId = &#63; and groupId = &#63; and tagId = &#63; and perYear = &#63; and perMonth = &#63;.
 	*
+	* @param companyId the company ID
+	* @param groupId the group ID
 	* @param tagId the tag ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching stat view tag, or <code>null</code> if a matching stat view tag could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.idetronic.subur.model.StatViewTag fetchByTag_Last(long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the stat view tags before and after the current stat view tag in the ordered set where tagId = &#63;.
-	*
-	* @param id the primary key of the current stat view tag
-	* @param tagId the tag ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next stat view tag
-	* @throws com.idetronic.subur.NoSuchStatViewTagException if a stat view tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.idetronic.subur.model.StatViewTag[] findByTag_PrevAndNext(
-		long id, long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.idetronic.subur.NoSuchStatViewTagException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the stat view tags where tagId = &#63; from the database.
-	*
-	* @param tagId the tag ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByTag(long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of stat view tags where tagId = &#63;.
-	*
-	* @param tagId the tag ID
+	* @param perYear the per year
+	* @param perMonth the per month
 	* @return the number of matching stat view tags
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByTag(long tagId)
+	public int countByTagPeriod(long companyId, long groupId, long tagId,
+		int perYear, int perMonth)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

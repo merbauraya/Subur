@@ -63,6 +63,8 @@ public class SuburItemWrapper implements SuburItem, ModelWrapper<SuburItem> {
 		attributes.put("status", getStatus());
 		attributes.put("Uuid", getUuid());
 		attributes.put("metadataValue", getMetadataValue());
+		attributes.put("relatedRestricted", getRelatedRestricted());
+		attributes.put("photoCoverId", getPhotoCoverId());
 
 		return attributes;
 	}
@@ -151,6 +153,18 @@ public class SuburItemWrapper implements SuburItem, ModelWrapper<SuburItem> {
 
 		if (metadataValue != null) {
 			setMetadataValue(metadataValue);
+		}
+
+		Boolean relatedRestricted = (Boolean)attributes.get("relatedRestricted");
+
+		if (relatedRestricted != null) {
+			setRelatedRestricted(relatedRestricted);
+		}
+
+		Long photoCoverId = (Long)attributes.get("photoCoverId");
+
+		if (photoCoverId != null) {
+			setPhotoCoverId(photoCoverId);
 		}
 	}
 
@@ -474,6 +488,56 @@ public class SuburItemWrapper implements SuburItem, ModelWrapper<SuburItem> {
 	@Override
 	public void setMetadataValue(java.lang.String metadataValue) {
 		_suburItem.setMetadataValue(metadataValue);
+	}
+
+	/**
+	* Returns the related restricted of this subur item.
+	*
+	* @return the related restricted of this subur item
+	*/
+	@Override
+	public boolean getRelatedRestricted() {
+		return _suburItem.getRelatedRestricted();
+	}
+
+	/**
+	* Returns <code>true</code> if this subur item is related restricted.
+	*
+	* @return <code>true</code> if this subur item is related restricted; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isRelatedRestricted() {
+		return _suburItem.isRelatedRestricted();
+	}
+
+	/**
+	* Sets whether this subur item is related restricted.
+	*
+	* @param relatedRestricted the related restricted of this subur item
+	*/
+	@Override
+	public void setRelatedRestricted(boolean relatedRestricted) {
+		_suburItem.setRelatedRestricted(relatedRestricted);
+	}
+
+	/**
+	* Returns the photo cover ID of this subur item.
+	*
+	* @return the photo cover ID of this subur item
+	*/
+	@Override
+	public long getPhotoCoverId() {
+		return _suburItem.getPhotoCoverId();
+	}
+
+	/**
+	* Sets the photo cover ID of this subur item.
+	*
+	* @param photoCoverId the photo cover ID of this subur item
+	*/
+	@Override
+	public void setPhotoCoverId(long photoCoverId) {
+		_suburItem.setPhotoCoverId(photoCoverId);
 	}
 
 	@Override

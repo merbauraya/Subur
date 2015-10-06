@@ -292,6 +292,41 @@ public interface SuburItemModel extends BaseModel<SuburItem>, GroupedModel {
 	 */
 	public void setMetadataValue(String metadataValue);
 
+	/**
+	 * Returns the related restricted of this subur item.
+	 *
+	 * @return the related restricted of this subur item
+	 */
+	public boolean getRelatedRestricted();
+
+	/**
+	 * Returns <code>true</code> if this subur item is related restricted.
+	 *
+	 * @return <code>true</code> if this subur item is related restricted; <code>false</code> otherwise
+	 */
+	public boolean isRelatedRestricted();
+
+	/**
+	 * Sets whether this subur item is related restricted.
+	 *
+	 * @param relatedRestricted the related restricted of this subur item
+	 */
+	public void setRelatedRestricted(boolean relatedRestricted);
+
+	/**
+	 * Returns the photo cover ID of this subur item.
+	 *
+	 * @return the photo cover ID of this subur item
+	 */
+	public long getPhotoCoverId();
+
+	/**
+	 * Sets the photo cover ID of this subur item.
+	 *
+	 * @param photoCoverId the photo cover ID of this subur item
+	 */
+	public void setPhotoCoverId(long photoCoverId);
+
 	@Override
 	public boolean isNew();
 

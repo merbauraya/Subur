@@ -50,9 +50,12 @@ public class StatViewCategoryWrapper implements StatViewCategory,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("id", getId());
-		attributes.put("perMonth", getPerMonth());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("perYear", getPerYear());
+		attributes.put("perMonth", getPerMonth());
 		attributes.put("categoryId", getCategoryId());
+		attributes.put("viewCount", getViewCount());
 
 		return attributes;
 	}
@@ -65,10 +68,16 @@ public class StatViewCategoryWrapper implements StatViewCategory,
 			setId(id);
 		}
 
-		Integer perMonth = (Integer)attributes.get("perMonth");
+		Long companyId = (Long)attributes.get("companyId");
 
-		if (perMonth != null) {
-			setPerMonth(perMonth);
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Integer perYear = (Integer)attributes.get("perYear");
@@ -77,10 +86,22 @@ public class StatViewCategoryWrapper implements StatViewCategory,
 			setPerYear(perYear);
 		}
 
+		Integer perMonth = (Integer)attributes.get("perMonth");
+
+		if (perMonth != null) {
+			setPerMonth(perMonth);
+		}
+
 		Long categoryId = (Long)attributes.get("categoryId");
 
 		if (categoryId != null) {
 			setCategoryId(categoryId);
+		}
+
+		Integer viewCount = (Integer)attributes.get("viewCount");
+
+		if (viewCount != null) {
+			setViewCount(viewCount);
 		}
 	}
 
@@ -125,23 +146,43 @@ public class StatViewCategoryWrapper implements StatViewCategory,
 	}
 
 	/**
-	* Returns the per month of this stat view category.
+	* Returns the company ID of this stat view category.
 	*
-	* @return the per month of this stat view category
+	* @return the company ID of this stat view category
 	*/
 	@Override
-	public int getPerMonth() {
-		return _statViewCategory.getPerMonth();
+	public long getCompanyId() {
+		return _statViewCategory.getCompanyId();
 	}
 
 	/**
-	* Sets the per month of this stat view category.
+	* Sets the company ID of this stat view category.
 	*
-	* @param perMonth the per month of this stat view category
+	* @param companyId the company ID of this stat view category
 	*/
 	@Override
-	public void setPerMonth(int perMonth) {
-		_statViewCategory.setPerMonth(perMonth);
+	public void setCompanyId(long companyId) {
+		_statViewCategory.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the group ID of this stat view category.
+	*
+	* @return the group ID of this stat view category
+	*/
+	@Override
+	public long getGroupId() {
+		return _statViewCategory.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this stat view category.
+	*
+	* @param groupId the group ID of this stat view category
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_statViewCategory.setGroupId(groupId);
 	}
 
 	/**
@@ -165,6 +206,26 @@ public class StatViewCategoryWrapper implements StatViewCategory,
 	}
 
 	/**
+	* Returns the per month of this stat view category.
+	*
+	* @return the per month of this stat view category
+	*/
+	@Override
+	public int getPerMonth() {
+		return _statViewCategory.getPerMonth();
+	}
+
+	/**
+	* Sets the per month of this stat view category.
+	*
+	* @param perMonth the per month of this stat view category
+	*/
+	@Override
+	public void setPerMonth(int perMonth) {
+		_statViewCategory.setPerMonth(perMonth);
+	}
+
+	/**
 	* Returns the category ID of this stat view category.
 	*
 	* @return the category ID of this stat view category
@@ -182,6 +243,26 @@ public class StatViewCategoryWrapper implements StatViewCategory,
 	@Override
 	public void setCategoryId(long categoryId) {
 		_statViewCategory.setCategoryId(categoryId);
+	}
+
+	/**
+	* Returns the view count of this stat view category.
+	*
+	* @return the view count of this stat view category
+	*/
+	@Override
+	public int getViewCount() {
+		return _statViewCategory.getViewCount();
+	}
+
+	/**
+	* Sets the view count of this stat view category.
+	*
+	* @param viewCount the view count of this stat view category
+	*/
+	@Override
+	public void setViewCount(int viewCount) {
+		_statViewCategory.setViewCount(viewCount);
 	}
 
 	@Override

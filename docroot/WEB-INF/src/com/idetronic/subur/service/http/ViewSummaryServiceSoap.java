@@ -62,10 +62,38 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ViewSummaryServiceSoap {
+	public static java.lang.String getTestChartData() throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONObject returnValue = ViewSummaryServiceUtil.getTestChartData();
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getMonthlyAssetCategoryChart(int year,
+		int vocabularyId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONObject returnValue = ViewSummaryServiceUtil.getMonthlyAssetCategoryChart(year,
+					vocabularyId);
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static java.lang.String getMonthlyCategory(int year,
 		long vocabularyId) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue = ViewSummaryServiceUtil.getMonthlyCategory(year,
+			com.liferay.portal.kernel.json.JSONObject returnValue = ViewSummaryServiceUtil.getMonthlyCategory(year,
 					vocabularyId);
 
 			return returnValue.toString();
@@ -108,7 +136,7 @@ public class ViewSummaryServiceSoap {
 	public static java.lang.String getMonthlyTagSummary(int year)
 		throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue = ViewSummaryServiceUtil.getMonthlyTagSummary(year);
+			com.liferay.portal.kernel.json.JSONObject returnValue = ViewSummaryServiceUtil.getMonthlyTagSummary(year);
 
 			return returnValue.toString();
 		}

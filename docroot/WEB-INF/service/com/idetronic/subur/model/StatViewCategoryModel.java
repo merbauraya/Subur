@@ -71,18 +71,32 @@ public interface StatViewCategoryModel extends BaseModel<StatViewCategory> {
 	public void setId(long id);
 
 	/**
-	 * Returns the per month of this stat view category.
+	 * Returns the company ID of this stat view category.
 	 *
-	 * @return the per month of this stat view category
+	 * @return the company ID of this stat view category
 	 */
-	public int getPerMonth();
+	public long getCompanyId();
 
 	/**
-	 * Sets the per month of this stat view category.
+	 * Sets the company ID of this stat view category.
 	 *
-	 * @param perMonth the per month of this stat view category
+	 * @param companyId the company ID of this stat view category
 	 */
-	public void setPerMonth(int perMonth);
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the group ID of this stat view category.
+	 *
+	 * @return the group ID of this stat view category
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this stat view category.
+	 *
+	 * @param groupId the group ID of this stat view category
+	 */
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the per year of this stat view category.
@@ -99,6 +113,20 @@ public interface StatViewCategoryModel extends BaseModel<StatViewCategory> {
 	public void setPerYear(int perYear);
 
 	/**
+	 * Returns the per month of this stat view category.
+	 *
+	 * @return the per month of this stat view category
+	 */
+	public int getPerMonth();
+
+	/**
+	 * Sets the per month of this stat view category.
+	 *
+	 * @param perMonth the per month of this stat view category
+	 */
+	public void setPerMonth(int perMonth);
+
+	/**
 	 * Returns the category ID of this stat view category.
 	 *
 	 * @return the category ID of this stat view category
@@ -111,6 +139,20 @@ public interface StatViewCategoryModel extends BaseModel<StatViewCategory> {
 	 * @param categoryId the category ID of this stat view category
 	 */
 	public void setCategoryId(long categoryId);
+
+	/**
+	 * Returns the view count of this stat view category.
+	 *
+	 * @return the view count of this stat view category
+	 */
+	public int getViewCount();
+
+	/**
+	 * Sets the view count of this stat view category.
+	 *
+	 * @param viewCount the view count of this stat view category
+	 */
+	public void setViewCount(int viewCount);
 
 	@Override
 	public boolean isNew();

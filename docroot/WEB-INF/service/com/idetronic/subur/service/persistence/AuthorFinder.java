@@ -50,4 +50,9 @@ public interface AuthorFinder {
 
 	public java.util.List<com.idetronic.subur.model.Author> findByCompanyGroup(
 		long companyId, long groupId, int start, int end);
+
+	public java.util.List<com.idetronic.subur.model.Author> recentByGroupIds(
+		long companyId, long groupId, java.util.Date lastPublishedDate,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

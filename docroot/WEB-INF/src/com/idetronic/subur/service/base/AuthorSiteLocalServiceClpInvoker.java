@@ -106,17 +106,27 @@ public class AuthorSiteLocalServiceClpInvoker {
 				"com.idetronic.subur.model.AuthorSite"
 			};
 
-		_methodName128 = "getBeanIdentifier";
+		_methodName134 = "getBeanIdentifier";
 
-		_methodParameterTypes128 = new String[] {  };
+		_methodParameterTypes134 = new String[] {  };
 
-		_methodName129 = "setBeanIdentifier";
+		_methodName135 = "setBeanIdentifier";
 
-		_methodParameterTypes129 = new String[] { "java.lang.String" };
+		_methodParameterTypes135 = new String[] { "java.lang.String" };
 
-		_methodName134 = "findByAuthorId";
+		_methodName140 = "findByAuthorId";
 
-		_methodParameterTypes134 = new String[] { "long" };
+		_methodParameterTypes140 = new String[] { "long" };
+
+		_methodName141 = "deleteByAuthorId";
+
+		_methodParameterTypes141 = new String[] { "long" };
+
+		_methodName142 = "addAuthorSite";
+
+		_methodParameterTypes142 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -208,21 +218,34 @@ public class AuthorSiteLocalServiceClpInvoker {
 			return AuthorSiteLocalServiceUtil.updateAuthorSite((com.idetronic.subur.model.AuthorSite)arguments[0]);
 		}
 
-		if (_methodName128.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
 			return AuthorSiteLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			AuthorSiteLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName134.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+		if (_methodName140.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
 			return AuthorSiteLocalServiceUtil.findByAuthorId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName141.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+			AuthorSiteLocalServiceUtil.deleteByAuthorId(((Long)arguments[0]).longValue());
+
+			return null;
+		}
+
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+			return AuthorSiteLocalServiceUtil.addAuthorSite(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -260,10 +283,14 @@ public class AuthorSiteLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName128;
-	private String[] _methodParameterTypes128;
-	private String _methodName129;
-	private String[] _methodParameterTypes129;
 	private String _methodName134;
 	private String[] _methodParameterTypes134;
+	private String _methodName135;
+	private String[] _methodParameterTypes135;
+	private String _methodName140;
+	private String[] _methodParameterTypes140;
+	private String _methodName141;
+	private String[] _methodParameterTypes141;
+	private String _methodName142;
+	private String[] _methodParameterTypes142;
 }

@@ -102,17 +102,25 @@ public class AuthorLocalServiceClpInvoker {
 				"com.idetronic.subur.model.Author"
 			};
 
-		_methodName138 = "getBeanIdentifier";
+		_methodName150 = "getBeanIdentifier";
 
-		_methodParameterTypes138 = new String[] {  };
+		_methodParameterTypes150 = new String[] {  };
 
-		_methodName139 = "setBeanIdentifier";
+		_methodName151 = "setBeanIdentifier";
 
-		_methodParameterTypes139 = new String[] { "java.lang.String" };
+		_methodParameterTypes151 = new String[] { "java.lang.String" };
 
-		_methodName144 = "addAuthor";
+		_methodName156 = "newAuthor";
 
-		_methodParameterTypes144 = new String[] {
+		_methodParameterTypes156 = new String[] {
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName157 = "addAuthor";
+
+		_methodParameterTypes157 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.util.Map", "java.lang.String", "int", "long", "long",
@@ -120,105 +128,114 @@ public class AuthorLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName146 = "setExpertises";
+		_methodName159 = "setExpertises";
 
-		_methodParameterTypes146 = new String[] { "long", "java.util.List" };
+		_methodParameterTypes159 = new String[] { "long", "java.util.List" };
 
-		_methodName147 = "setResearchInterests";
+		_methodName160 = "setResearchInterests";
 
-		_methodParameterTypes147 = new String[] { "long", "java.util.List" };
+		_methodParameterTypes160 = new String[] { "long", "java.util.List" };
 
-		_methodName148 = "updateAuthor";
+		_methodName161 = "updateAuthor";
 
-		_methodParameterTypes148 = new String[] {
+		_methodParameterTypes161 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Map", "java.lang.String", "int",
-				"long", "long", "long", "java.lang.String[][]",
-				"java.lang.String[][]",
+				"java.lang.String", "java.util.Map", "java.lang.String", "long",
+				"long", "long", "java.lang.String[][]", "java.lang.String[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName150 = "getItemByAuthorGroup";
+		_methodName163 = "getItemByAuthorGroup";
 
-		_methodParameterTypes150 = new String[] {
+		_methodParameterTypes163 = new String[] {
 				"long", "long", "int", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName152 = "getExpertises";
+		_methodName165 = "getExpertises";
 
-		_methodParameterTypes152 = new String[] { "long" };
+		_methodParameterTypes165 = new String[] { "long" };
 
-		_methodName153 = "getResearchInterests";
+		_methodName166 = "getResearchInterests";
 
-		_methodParameterTypes153 = new String[] { "long" };
+		_methodParameterTypes166 = new String[] { "long" };
 
-		_methodName154 = "updateAuthorPosting";
+		_methodName167 = "updateAuthorPosting";
 
-		_methodParameterTypes154 = new String[] {
+		_methodParameterTypes167 = new String[] {
 				"com.idetronic.subur.model.SuburItem"
 			};
 
-		_methodName155 = "updateNewPosting";
+		_methodName168 = "updateNewPosting";
 
-		_methodParameterTypes155 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes168 = new String[] { "long", "java.util.Date" };
 
-		_methodName156 = "getAuthors";
+		_methodName169 = "getAuthors";
 
-		_methodParameterTypes156 = new String[] { "long[][]" };
+		_methodParameterTypes169 = new String[] { "long[][]" };
 
-		_methodName157 = "updateAllItemCount";
+		_methodName170 = "updateAllItemCount";
 
-		_methodParameterTypes157 = new String[] { "long", "long" };
+		_methodParameterTypes170 = new String[] { "long", "long" };
 
-		_methodName158 = "decrementItemCount";
+		_methodName171 = "decrementItemCount";
 
-		_methodParameterTypes158 = new String[] { "long" };
+		_methodParameterTypes171 = new String[] { "long" };
 
-		_methodName159 = "getSearchCount";
+		_methodName172 = "getSearchCount";
 
-		_methodParameterTypes159 = new String[] {
+		_methodParameterTypes172 = new String[] {
 				"java.lang.String", "long", "long"
 			};
 
-		_methodName160 = "getSearchCount";
+		_methodName173 = "getSearchCount";
 
-		_methodParameterTypes160 = new String[] {
+		_methodParameterTypes173 = new String[] {
 				"java.lang.String", "long", "long", "java.lang.String",
 				"java.lang.String", "boolean", "boolean", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName161 = "getSuburItems";
+		_methodName174 = "getSuburItems";
 
-		_methodParameterTypes161 = new String[] {
+		_methodParameterTypes174 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName162 = "search";
+		_methodName175 = "search";
 
-		_methodParameterTypes162 = new String[] {
+		_methodParameterTypes175 = new String[] {
 				"java.lang.String", "long", "long", "java.lang.String",
 				"java.lang.String", "boolean", "boolean", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName164 = "search";
+		_methodName177 = "search";
 
-		_methodParameterTypes164 = new String[] {
+		_methodParameterTypes177 = new String[] {
 				"java.lang.String", "long", "long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName165 = "findByGroupCompany";
+		_methodName178 = "findByGroupCompany";
 
-		_methodParameterTypes165 = new String[] { "long", "long", "int", "int" };
+		_methodParameterTypes178 = new String[] { "long", "long", "int", "int" };
 
-		_methodName166 = "deleteItem";
+		_methodName179 = "recentByGroup";
 
-		_methodParameterTypes166 = new String[] { "long" };
+		_methodParameterTypes179 = new String[] {
+				"long", "long", "java.util.Date", "int", "int"
+			};
+
+		_methodName180 = "deleteItem";
+
+		_methodParameterTypes180 = new String[] { "long" };
+
+		_methodName181 = "updatePortrait";
+
+		_methodParameterTypes181 = new String[] { "long", "byte[][]" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -310,20 +327,29 @@ public class AuthorLocalServiceClpInvoker {
 			return AuthorLocalServiceUtil.updateAuthor((com.idetronic.subur.model.Author)arguments[0]);
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return AuthorLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			AuthorLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName144.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+			return AuthorLocalServiceUtil.newAuthor((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				(java.lang.String)arguments[5],
+				(com.liferay.portal.service.ServiceContext)arguments[6]);
+		}
+
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return AuthorLocalServiceUtil.addAuthor((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
@@ -339,41 +365,40 @@ public class AuthorLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[14]);
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
 			AuthorLocalServiceUtil.setExpertises(((Long)arguments[0]).longValue(),
 				(java.util.List<com.idetronic.subur.model.Expertise>)arguments[1]);
 
 			return null;
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			AuthorLocalServiceUtil.setResearchInterests(((Long)arguments[0]).longValue(),
 				(java.util.List<com.idetronic.subur.model.ResearchInterest>)arguments[1]);
 
 			return null;
 		}
 
-		if (_methodName148.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			return AuthorLocalServiceUtil.updateAuthor(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
 				(java.lang.String)arguments[5], (java.lang.String)arguments[6],
 				(java.util.Map<java.lang.String, java.lang.String>)arguments[7],
 				(java.lang.String)arguments[8],
-				((Integer)arguments[9]).intValue(),
+				((Long)arguments[9]).longValue(),
 				((Long)arguments[10]).longValue(),
 				((Long)arguments[11]).longValue(),
-				((Long)arguments[12]).longValue(),
+				(java.lang.String[])arguments[12],
 				(java.lang.String[])arguments[13],
-				(java.lang.String[])arguments[14],
-				(com.liferay.portal.service.ServiceContext)arguments[15]);
+				(com.liferay.portal.service.ServiceContext)arguments[14]);
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
 			return AuthorLocalServiceUtil.getItemByAuthorGroup(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
@@ -382,58 +407,58 @@ public class AuthorLocalServiceClpInvoker {
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[5]);
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
 			return AuthorLocalServiceUtil.getExpertises(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
 			return AuthorLocalServiceUtil.getResearchInterests(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName154.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
 			AuthorLocalServiceUtil.updateAuthorPosting((com.idetronic.subur.model.SuburItem)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName155.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return AuthorLocalServiceUtil.updateNewPosting(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			return AuthorLocalServiceUtil.getAuthors((long[])arguments[0]);
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName170.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
 			AuthorLocalServiceUtil.updateAllItemCount(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName158.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+		if (_methodName171.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
 			AuthorLocalServiceUtil.decrementItemCount(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
-		if (_methodName159.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
 			return AuthorLocalServiceUtil.getSearchCount((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName160.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			return AuthorLocalServiceUtil.getSearchCount((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -445,16 +470,16 @@ public class AuthorLocalServiceClpInvoker {
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[9]);
 		}
 
-		if (_methodName161.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
 			return AuthorLocalServiceUtil.getSuburItems(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
 			return AuthorLocalServiceUtil.search((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -466,8 +491,8 @@ public class AuthorLocalServiceClpInvoker {
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[9]);
 		}
 
-		if (_methodName164.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+		if (_methodName177.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
 			return AuthorLocalServiceUtil.search((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -476,19 +501,33 @@ public class AuthorLocalServiceClpInvoker {
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[5]);
 		}
 
-		if (_methodName165.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
 			return AuthorLocalServiceUtil.findByGroupCompany(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName166.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+		if (_methodName179.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
+			return AuthorLocalServiceUtil.recentByGroup(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(), (java.util.Date)arguments[2],
+				((Integer)arguments[3]).intValue(),
+				((Integer)arguments[4]).intValue());
+		}
+
+		if (_methodName180.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
 			AuthorLocalServiceUtil.deleteItem(((Long)arguments[0]).longValue());
 
 			return null;
+		}
+
+		if (_methodName181.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
+			return AuthorLocalServiceUtil.updatePortrait(((Long)arguments[0]).longValue(),
+				(byte[])arguments[1]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -526,46 +565,52 @@ public class AuthorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName138;
-	private String[] _methodParameterTypes138;
-	private String _methodName139;
-	private String[] _methodParameterTypes139;
-	private String _methodName144;
-	private String[] _methodParameterTypes144;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
-	private String _methodName148;
-	private String[] _methodParameterTypes148;
 	private String _methodName150;
 	private String[] _methodParameterTypes150;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
-	private String _methodName154;
-	private String[] _methodParameterTypes154;
-	private String _methodName155;
-	private String[] _methodParameterTypes155;
+	private String _methodName151;
+	private String[] _methodParameterTypes151;
 	private String _methodName156;
 	private String[] _methodParameterTypes156;
 	private String _methodName157;
 	private String[] _methodParameterTypes157;
-	private String _methodName158;
-	private String[] _methodParameterTypes158;
 	private String _methodName159;
 	private String[] _methodParameterTypes159;
 	private String _methodName160;
 	private String[] _methodParameterTypes160;
 	private String _methodName161;
 	private String[] _methodParameterTypes161;
-	private String _methodName162;
-	private String[] _methodParameterTypes162;
-	private String _methodName164;
-	private String[] _methodParameterTypes164;
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
 	private String _methodName165;
 	private String[] _methodParameterTypes165;
 	private String _methodName166;
 	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+	private String _methodName168;
+	private String[] _methodParameterTypes168;
+	private String _methodName169;
+	private String[] _methodParameterTypes169;
+	private String _methodName170;
+	private String[] _methodParameterTypes170;
+	private String _methodName171;
+	private String[] _methodParameterTypes171;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
+	private String _methodName173;
+	private String[] _methodParameterTypes173;
+	private String _methodName174;
+	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+	private String _methodName177;
+	private String[] _methodParameterTypes177;
+	private String _methodName178;
+	private String[] _methodParameterTypes178;
+	private String _methodName179;
+	private String[] _methodParameterTypes179;
+	private String _methodName180;
+	private String[] _methodParameterTypes180;
+	private String _methodName181;
+	private String[] _methodParameterTypes181;
 }

@@ -274,6 +274,11 @@ public interface SuburItemLocalService extends BaseLocalService,
 	public java.util.List getItemTypes(long itemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.idetronic.subur.model.SuburItem> getByGroupAndStatus(
+		long companyId, long groupId, int start, int end, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.idetronic.subur.model.SuburItem> getSuburItems(
 		int start, int end, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -340,7 +345,7 @@ public interface SuburItemLocalService extends BaseLocalService,
 	* @throws PortalException
 	* @throws SystemException
 	*/
-	public void addViewStat(long itemId)
+	public void addViewStat(long itemId, long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

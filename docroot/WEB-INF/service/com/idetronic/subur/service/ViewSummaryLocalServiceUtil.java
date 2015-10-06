@@ -278,23 +278,19 @@ public class ViewSummaryLocalServiceUtil {
 		return getService().getMonthlyStatRs(year);
 	}
 
-	public static com.liferay.portal.kernel.json.JSONArray getMonthlyTag(
-		int year) throws java.sql.SQLException {
-		return getService().getMonthlyTag(year);
-	}
-
 	/**
 	* Add view stats info the the entity.
 	*/
-	public static com.idetronic.subur.model.ViewSummary addStats(long itemId)
+	public static com.idetronic.subur.model.ViewSummary addStats(long itemId,
+		long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().addStats(itemId);
+		return getService().addStats(itemId, companyId, groupId);
 	}
 
-	public static void updateStats()
+	public static void updateStats(long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateStats();
+		getService().updateStats(companyId, groupId);
 	}
 
 	public static void clearService() {

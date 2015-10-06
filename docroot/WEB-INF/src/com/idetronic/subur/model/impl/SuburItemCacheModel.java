@@ -38,7 +38,7 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{itemId=");
 		sb.append(itemId);
@@ -68,6 +68,10 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 		sb.append(Uuid);
 		sb.append(", metadataValue=");
 		sb.append(metadataValue);
+		sb.append(", relatedRestricted=");
+		sb.append(relatedRestricted);
+		sb.append(", photoCoverId=");
+		sb.append(photoCoverId);
 		sb.append("}");
 
 		return sb.toString();
@@ -147,6 +151,9 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 			suburItemImpl.setMetadataValue(metadataValue);
 		}
 
+		suburItemImpl.setRelatedRestricted(relatedRestricted);
+		suburItemImpl.setPhotoCoverId(photoCoverId);
+
 		suburItemImpl.resetOriginalValues();
 
 		return suburItemImpl;
@@ -168,6 +175,8 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 		status = objectInput.readInt();
 		Uuid = objectInput.readUTF();
 		metadataValue = objectInput.readUTF();
+		relatedRestricted = objectInput.readBoolean();
+		photoCoverId = objectInput.readLong();
 	}
 
 	@Override
@@ -225,6 +234,9 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 		else {
 			objectOutput.writeUTF(metadataValue);
 		}
+
+		objectOutput.writeBoolean(relatedRestricted);
+		objectOutput.writeLong(photoCoverId);
 	}
 
 	public long itemId;
@@ -241,4 +253,6 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 	public int status;
 	public String Uuid;
 	public String metadataValue;
+	public boolean relatedRestricted;
+	public long photoCoverId;
 }

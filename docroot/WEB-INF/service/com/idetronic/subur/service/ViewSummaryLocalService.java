@@ -254,17 +254,14 @@ public interface ViewSummaryLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.json.JSONArray getMonthlyStatRs(int year)
 		throws java.sql.SQLException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.json.JSONArray getMonthlyTag(int year)
-		throws java.sql.SQLException;
-
 	/**
 	* Add view stats info the the entity.
 	*/
-	public com.idetronic.subur.model.ViewSummary addStats(long itemId)
+	public com.idetronic.subur.model.ViewSummary addStats(long itemId,
+		long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void updateStats()
+	public void updateStats(long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

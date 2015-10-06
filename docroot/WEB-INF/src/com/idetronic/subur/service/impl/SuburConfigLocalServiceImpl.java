@@ -48,6 +48,8 @@ public class SuburConfigLocalServiceImpl extends SuburConfigLocalServiceBaseImpl
 	 * Never reference this interface directly. Always use {@link com.idetronic.subur.service.SuburConfigLocalServiceUtil} to access the subur config local service.
 	 */
 	
+	
+	
 	public SuburConfig addConfig(Map<String,String> configMap,String configKey) throws SystemException
 	{
 		
@@ -73,6 +75,31 @@ public class SuburConfigLocalServiceImpl extends SuburConfigLocalServiceBaseImpl
 	{
 		return suburConfigPersistence.findByKey(configKey);
 	}
+	public SuburConfig updateConfig(String configKey,String value) throws SystemException
+	{
+		SuburConfig suburConfig = null;
+		
+		try {
+			suburConfig = get(configKey);
+			suburConfig.setConfig(value);
+			return suburConfigPersistence.update(suburConfig);
+		} catch (NoSuchConfigException e)
+		{
+			return addConfig(configKey,value);
+		}
+	}
+	
+	public SuburConfig addConfig(String configKey,String value) throws SystemException
+	{
+		long pk = CounterLocalServiceUtil.increment(SuburConfig.class.getName());
+		SuburConfig suburConfig = suburConfigPersistence.create(pk);
+		suburConfig.setKey(configKey);
+		suburConfig.setConfig(value);
+		
+		return suburConfigPersistence.update(suburConfig);
+		
+	}
+	
 	public SuburConfig updateConfig(Map<String,String> configMap,String configKey) throws SystemException
 	{
 		

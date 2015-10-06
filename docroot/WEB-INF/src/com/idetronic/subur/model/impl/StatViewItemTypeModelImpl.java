@@ -58,11 +58,14 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 	public static final String TABLE_NAME = "Subur_StatViewItemType";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "id_", Types.BIGINT },
-			{ "perMonth", Types.INTEGER },
+			{ "companyId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
 			{ "perYear", Types.INTEGER },
-			{ "itemTypeId", Types.BIGINT }
+			{ "perMonth", Types.INTEGER },
+			{ "itemTypeId", Types.BIGINT },
+			{ "viewCount", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subur_StatViewItemType (id_ LONG not null primary key,perMonth INTEGER,perYear INTEGER,itemTypeId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Subur_StatViewItemType (id_ LONG not null primary key,companyId LONG,groupId LONG,perYear INTEGER,perMonth INTEGER,itemTypeId LONG,viewCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Subur_StatViewItemType";
 	public static final String ORDER_BY_JPQL = " ORDER BY statViewItemType.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subur_StatViewItemType.id_ ASC";
@@ -78,8 +81,12 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.idetronic.subur.model.StatViewItemType"),
 			true);
-	public static long ITEMTYPEID_COLUMN_BITMASK = 1L;
-	public static long ID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long ITEMTYPEID_COLUMN_BITMASK = 4L;
+	public static long PERMONTH_COLUMN_BITMASK = 8L;
+	public static long PERYEAR_COLUMN_BITMASK = 16L;
+	public static long ID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.idetronic.subur.model.StatViewItemType"));
 
@@ -121,9 +128,12 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("id", getId());
-		attributes.put("perMonth", getPerMonth());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("perYear", getPerYear());
+		attributes.put("perMonth", getPerMonth());
 		attributes.put("itemTypeId", getItemTypeId());
+		attributes.put("viewCount", getViewCount());
 
 		return attributes;
 	}
@@ -136,10 +146,16 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 			setId(id);
 		}
 
-		Integer perMonth = (Integer)attributes.get("perMonth");
+		Long companyId = (Long)attributes.get("companyId");
 
-		if (perMonth != null) {
-			setPerMonth(perMonth);
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Integer perYear = (Integer)attributes.get("perYear");
@@ -148,10 +164,22 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 			setPerYear(perYear);
 		}
 
+		Integer perMonth = (Integer)attributes.get("perMonth");
+
+		if (perMonth != null) {
+			setPerMonth(perMonth);
+		}
+
 		Long itemTypeId = (Long)attributes.get("itemTypeId");
 
 		if (itemTypeId != null) {
 			setItemTypeId(itemTypeId);
+		}
+
+		Integer viewCount = (Integer)attributes.get("viewCount");
+
+		if (viewCount != null) {
+			setViewCount(viewCount);
 		}
 	}
 
@@ -166,13 +194,47 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 	}
 
 	@Override
-	public int getPerMonth() {
-		return _perMonth;
+	public long getCompanyId() {
+		return _companyId;
 	}
 
 	@Override
-	public void setPerMonth(int perMonth) {
-		_perMonth = perMonth;
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@Override
@@ -182,7 +244,41 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 
 	@Override
 	public void setPerYear(int perYear) {
+		_columnBitmask |= PERYEAR_COLUMN_BITMASK;
+
+		if (!_setOriginalPerYear) {
+			_setOriginalPerYear = true;
+
+			_originalPerYear = _perYear;
+		}
+
 		_perYear = perYear;
+	}
+
+	public int getOriginalPerYear() {
+		return _originalPerYear;
+	}
+
+	@Override
+	public int getPerMonth() {
+		return _perMonth;
+	}
+
+	@Override
+	public void setPerMonth(int perMonth) {
+		_columnBitmask |= PERMONTH_COLUMN_BITMASK;
+
+		if (!_setOriginalPerMonth) {
+			_setOriginalPerMonth = true;
+
+			_originalPerMonth = _perMonth;
+		}
+
+		_perMonth = perMonth;
+	}
+
+	public int getOriginalPerMonth() {
+		return _originalPerMonth;
 	}
 
 	@Override
@@ -207,13 +303,23 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 		return _originalItemTypeId;
 	}
 
+	@Override
+	public int getViewCount() {
+		return _viewCount;
+	}
+
+	@Override
+	public void setViewCount(int viewCount) {
+		_viewCount = viewCount;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			StatViewItemType.class.getName(), getPrimaryKey());
 	}
 
@@ -239,9 +345,12 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 		StatViewItemTypeImpl statViewItemTypeImpl = new StatViewItemTypeImpl();
 
 		statViewItemTypeImpl.setId(getId());
-		statViewItemTypeImpl.setPerMonth(getPerMonth());
+		statViewItemTypeImpl.setCompanyId(getCompanyId());
+		statViewItemTypeImpl.setGroupId(getGroupId());
 		statViewItemTypeImpl.setPerYear(getPerYear());
+		statViewItemTypeImpl.setPerMonth(getPerMonth());
 		statViewItemTypeImpl.setItemTypeId(getItemTypeId());
+		statViewItemTypeImpl.setViewCount(getViewCount());
 
 		statViewItemTypeImpl.resetOriginalValues();
 
@@ -294,6 +403,22 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 	public void resetOriginalValues() {
 		StatViewItemTypeModelImpl statViewItemTypeModelImpl = this;
 
+		statViewItemTypeModelImpl._originalCompanyId = statViewItemTypeModelImpl._companyId;
+
+		statViewItemTypeModelImpl._setOriginalCompanyId = false;
+
+		statViewItemTypeModelImpl._originalGroupId = statViewItemTypeModelImpl._groupId;
+
+		statViewItemTypeModelImpl._setOriginalGroupId = false;
+
+		statViewItemTypeModelImpl._originalPerYear = statViewItemTypeModelImpl._perYear;
+
+		statViewItemTypeModelImpl._setOriginalPerYear = false;
+
+		statViewItemTypeModelImpl._originalPerMonth = statViewItemTypeModelImpl._perMonth;
+
+		statViewItemTypeModelImpl._setOriginalPerMonth = false;
+
 		statViewItemTypeModelImpl._originalItemTypeId = statViewItemTypeModelImpl._itemTypeId;
 
 		statViewItemTypeModelImpl._setOriginalItemTypeId = false;
@@ -307,27 +432,39 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 
 		statViewItemTypeCacheModel.id = getId();
 
-		statViewItemTypeCacheModel.perMonth = getPerMonth();
+		statViewItemTypeCacheModel.companyId = getCompanyId();
+
+		statViewItemTypeCacheModel.groupId = getGroupId();
 
 		statViewItemTypeCacheModel.perYear = getPerYear();
 
+		statViewItemTypeCacheModel.perMonth = getPerMonth();
+
 		statViewItemTypeCacheModel.itemTypeId = getItemTypeId();
+
+		statViewItemTypeCacheModel.viewCount = getViewCount();
 
 		return statViewItemTypeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{id=");
 		sb.append(getId());
-		sb.append(", perMonth=");
-		sb.append(getPerMonth());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", perYear=");
 		sb.append(getPerYear());
+		sb.append(", perMonth=");
+		sb.append(getPerMonth());
 		sb.append(", itemTypeId=");
 		sb.append(getItemTypeId());
+		sb.append(", viewCount=");
+		sb.append(getViewCount());
 		sb.append("}");
 
 		return sb.toString();
@@ -335,7 +472,7 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.StatViewItemType");
@@ -346,16 +483,28 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 		sb.append(getId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>perMonth</column-name><column-value><![CDATA[");
-		sb.append(getPerMonth());
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>perYear</column-name><column-value><![CDATA[");
 		sb.append(getPerYear());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>perMonth</column-name><column-value><![CDATA[");
+		sb.append(getPerMonth());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>itemTypeId</column-name><column-value><![CDATA[");
 		sb.append(getItemTypeId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>viewCount</column-name><column-value><![CDATA[");
+		sb.append(getViewCount());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -368,11 +517,22 @@ public class StatViewItemTypeModelImpl extends BaseModelImpl<StatViewItemType>
 			StatViewItemType.class
 		};
 	private long _id;
-	private int _perMonth;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private int _perYear;
+	private int _originalPerYear;
+	private boolean _setOriginalPerYear;
+	private int _perMonth;
+	private int _originalPerMonth;
+	private boolean _setOriginalPerMonth;
 	private long _itemTypeId;
 	private long _originalItemTypeId;
 	private boolean _setOriginalItemTypeId;
+	private int _viewCount;
 	private long _columnBitmask;
 	private StatViewItemType _escapedModel;
 }

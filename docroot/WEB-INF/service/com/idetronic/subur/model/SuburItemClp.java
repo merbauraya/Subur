@@ -89,6 +89,8 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 		attributes.put("status", getStatus());
 		attributes.put("Uuid", getUuid());
 		attributes.put("metadataValue", getMetadataValue());
+		attributes.put("relatedRestricted", getRelatedRestricted());
+		attributes.put("photoCoverId", getPhotoCoverId());
 
 		return attributes;
 	}
@@ -177,6 +179,18 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 
 		if (metadataValue != null) {
 			setMetadataValue(metadataValue);
+		}
+
+		Boolean relatedRestricted = (Boolean)attributes.get("relatedRestricted");
+
+		if (relatedRestricted != null) {
+			setRelatedRestricted(relatedRestricted);
+		}
+
+		Long photoCoverId = (Long)attributes.get("photoCoverId");
+
+		if (photoCoverId != null) {
+			setPhotoCoverId(photoCoverId);
 		}
 	}
 
@@ -513,6 +527,58 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 	}
 
 	@Override
+	public boolean getRelatedRestricted() {
+		return _relatedRestricted;
+	}
+
+	@Override
+	public boolean isRelatedRestricted() {
+		return _relatedRestricted;
+	}
+
+	@Override
+	public void setRelatedRestricted(boolean relatedRestricted) {
+		_relatedRestricted = relatedRestricted;
+
+		if (_suburItemRemoteModel != null) {
+			try {
+				Class<?> clazz = _suburItemRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setRelatedRestricted",
+						boolean.class);
+
+				method.invoke(_suburItemRemoteModel, relatedRestricted);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getPhotoCoverId() {
+		return _photoCoverId;
+	}
+
+	@Override
+	public void setPhotoCoverId(long photoCoverId) {
+		_photoCoverId = photoCoverId;
+
+		if (_suburItemRemoteModel != null) {
+			try {
+				Class<?> clazz = _suburItemRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setPhotoCoverId", long.class);
+
+				method.invoke(_suburItemRemoteModel, photoCoverId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public java.util.Map<java.lang.String, java.lang.String> getIdentifiers() {
 		try {
 			String methodName = "getIdentifiers";
@@ -740,6 +806,8 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 		clone.setStatus(getStatus());
 		clone.setUuid(getUuid());
 		clone.setMetadataValue(getMetadataValue());
+		clone.setRelatedRestricted(getRelatedRestricted());
+		clone.setPhotoCoverId(getPhotoCoverId());
 
 		return clone;
 	}
@@ -749,6 +817,8 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 		int value = 0;
 
 		value = DateUtil.compareTo(getCreateDate(), suburItem.getCreateDate());
+
+		value = value * -1;
 
 		if (value != 0) {
 			return value;
@@ -790,7 +860,7 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{itemId=");
 		sb.append(getItemId());
@@ -820,6 +890,10 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 		sb.append(getUuid());
 		sb.append(", metadataValue=");
 		sb.append(getMetadataValue());
+		sb.append(", relatedRestricted=");
+		sb.append(getRelatedRestricted());
+		sb.append(", photoCoverId=");
+		sb.append(getPhotoCoverId());
 		sb.append("}");
 
 		return sb.toString();
@@ -827,7 +901,7 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.SuburItem");
@@ -889,6 +963,14 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 			"<column><column-name>metadataValue</column-name><column-value><![CDATA[");
 		sb.append(getMetadataValue());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>relatedRestricted</column-name><column-value><![CDATA[");
+		sb.append(getRelatedRestricted());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>photoCoverId</column-name><column-value><![CDATA[");
+		sb.append(getPhotoCoverId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -910,6 +992,8 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 	private int _status;
 	private String _Uuid;
 	private String _metadataValue;
+	private boolean _relatedRestricted;
+	private long _photoCoverId;
 	private BaseModel<?> _suburItemRemoteModel;
 	private Class<?> _clpSerializerClass = com.idetronic.subur.service.ClpSerializer.class;
 }

@@ -20,9 +20,14 @@
 	        	</cron>
 	    	</trigger>
 		</scheduler-entry>
+		
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>publications</friendly-url-mapping>
 		<friendly-url-routes>com/idetronic/subur/subur-friendly-url-routes.xml</friendly-url-routes>	
+		<user-notification-definitions>com/idetronic/subur/subur-notification-definitions.xml</user-notification-definitions>
+    	<user-notification-handler-class>com.idetronic.subur.notification.SuburNotificationHandler</user-notification-handler-class>	
+		
+		
 		<asset-renderer-factory>com.idetronic.subur.asset.SuburItemAssetRendererFactory</asset-renderer-factory>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 
@@ -34,6 +39,8 @@
 	<portlet>
 		<portlet-name>author-navigator</portlet-name>
 		<icon>/icon.png</icon>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
+		
 		<header-portlet-css>
 			/css/authornavigator/main.css
 		</header-portlet-css>
@@ -45,6 +52,8 @@
 	<portlet>
 		<portlet-name>item-type</portlet-name>
 		<icon>/icon.png</icon>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
+		<instanceable>false</instanceable>
 		<header-portlet-css>/css/itemtypenav/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js

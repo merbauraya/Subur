@@ -80,12 +80,14 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 			{ "language", Types.VARCHAR },
 			{ "status", Types.INTEGER },
 			{ "Uuid", Types.VARCHAR },
-			{ "metadataValue", Types.CLOB }
+			{ "metadataValue", Types.CLOB },
+			{ "relatedRestricted", Types.BOOLEAN },
+			{ "photoCoverId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subur_Item (itemId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedDate DATE null,title VARCHAR(255) null,itemAbstract TEXT null,language VARCHAR(75) null,status INTEGER,Uuid VARCHAR(75) null,metadataValue TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table Subur_Item (itemId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedDate DATE null,title VARCHAR(255) null,itemAbstract TEXT null,language VARCHAR(75) null,status INTEGER,Uuid VARCHAR(75) null,metadataValue TEXT null,relatedRestricted BOOLEAN,photoCoverId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Subur_Item";
-	public static final String ORDER_BY_JPQL = " ORDER BY suburItem.createDate ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY Subur_Item.createDate ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY suburItem.createDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY Subur_Item.createDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -98,9 +100,10 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.idetronic.subur.model.SuburItem"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long STATUS_COLUMN_BITMASK = 2L;
-	public static long CREATEDATE_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long STATUS_COLUMN_BITMASK = 4L;
+	public static long CREATEDATE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -129,6 +132,8 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		model.setStatus(soapModel.getStatus());
 		model.setUuid(soapModel.getUuid());
 		model.setMetadataValue(soapModel.getMetadataValue());
+		model.setRelatedRestricted(soapModel.getRelatedRestricted());
+		model.setPhotoCoverId(soapModel.getPhotoCoverId());
 
 		return model;
 	}
@@ -207,6 +212,8 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		attributes.put("status", getStatus());
 		attributes.put("Uuid", getUuid());
 		attributes.put("metadataValue", getMetadataValue());
+		attributes.put("relatedRestricted", getRelatedRestricted());
+		attributes.put("photoCoverId", getPhotoCoverId());
 
 		return attributes;
 	}
@@ -296,6 +303,18 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		if (metadataValue != null) {
 			setMetadataValue(metadataValue);
 		}
+
+		Boolean relatedRestricted = (Boolean)attributes.get("relatedRestricted");
+
+		if (relatedRestricted != null) {
+			setRelatedRestricted(relatedRestricted);
+		}
+
+		Long photoCoverId = (Long)attributes.get("photoCoverId");
+
+		if (photoCoverId != null) {
+			setPhotoCoverId(photoCoverId);
+		}
 	}
 
 	@JSON
@@ -317,7 +336,19 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -518,6 +549,33 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		_metadataValue = metadataValue;
 	}
 
+	@JSON
+	@Override
+	public boolean getRelatedRestricted() {
+		return _relatedRestricted;
+	}
+
+	@Override
+	public boolean isRelatedRestricted() {
+		return _relatedRestricted;
+	}
+
+	@Override
+	public void setRelatedRestricted(boolean relatedRestricted) {
+		_relatedRestricted = relatedRestricted;
+	}
+
+	@JSON
+	@Override
+	public long getPhotoCoverId() {
+		return _photoCoverId;
+	}
+
+	@Override
+	public void setPhotoCoverId(long photoCoverId) {
+		_photoCoverId = photoCoverId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -563,6 +621,8 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		suburItemImpl.setStatus(getStatus());
 		suburItemImpl.setUuid(getUuid());
 		suburItemImpl.setMetadataValue(getMetadataValue());
+		suburItemImpl.setRelatedRestricted(getRelatedRestricted());
+		suburItemImpl.setPhotoCoverId(getPhotoCoverId());
 
 		suburItemImpl.resetOriginalValues();
 
@@ -574,6 +634,8 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		int value = 0;
 
 		value = DateUtil.compareTo(getCreateDate(), suburItem.getCreateDate());
+
+		value = value * -1;
 
 		if (value != 0) {
 			return value;
@@ -612,6 +674,10 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 	@Override
 	public void resetOriginalValues() {
 		SuburItemModelImpl suburItemModelImpl = this;
+
+		suburItemModelImpl._originalCompanyId = suburItemModelImpl._companyId;
+
+		suburItemModelImpl._setOriginalCompanyId = false;
 
 		suburItemModelImpl._originalGroupId = suburItemModelImpl._groupId;
 
@@ -713,12 +779,16 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 			suburItemCacheModel.metadataValue = null;
 		}
 
+		suburItemCacheModel.relatedRestricted = getRelatedRestricted();
+
+		suburItemCacheModel.photoCoverId = getPhotoCoverId();
+
 		return suburItemCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{itemId=");
 		sb.append(getItemId());
@@ -748,6 +818,10 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		sb.append(getUuid());
 		sb.append(", metadataValue=");
 		sb.append(getMetadataValue());
+		sb.append(", relatedRestricted=");
+		sb.append(getRelatedRestricted());
+		sb.append(", photoCoverId=");
+		sb.append(getPhotoCoverId());
 		sb.append("}");
 
 		return sb.toString();
@@ -755,7 +829,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.SuburItem");
@@ -817,6 +891,14 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 			"<column><column-name>metadataValue</column-name><column-value><![CDATA[");
 		sb.append(getMetadataValue());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>relatedRestricted</column-name><column-value><![CDATA[");
+		sb.append(getRelatedRestricted());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>photoCoverId</column-name><column-value><![CDATA[");
+		sb.append(getPhotoCoverId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -829,6 +911,8 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		};
 	private long _itemId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
@@ -846,6 +930,8 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 	private boolean _setOriginalStatus;
 	private String _Uuid;
 	private String _metadataValue;
+	private boolean _relatedRestricted;
+	private long _photoCoverId;
 	private long _columnBitmask;
 	private SuburItem _escapedModel;
 }

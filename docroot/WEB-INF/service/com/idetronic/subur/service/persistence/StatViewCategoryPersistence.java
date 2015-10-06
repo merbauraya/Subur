@@ -176,6 +176,86 @@ public interface StatViewCategoryPersistence extends BasePersistence<StatViewCat
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the stat view category where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63; or throws a {@link com.idetronic.subur.NoSuchStatViewCategoryException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the matching stat view category
+	* @throws com.idetronic.subur.NoSuchStatViewCategoryException if a matching stat view category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.idetronic.subur.model.StatViewCategory findByCategoryPeriod(
+		long companyId, long groupId, long categoryId, int perYear, int perMonth)
+		throws com.idetronic.subur.NoSuchStatViewCategoryException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the stat view category where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the matching stat view category, or <code>null</code> if a matching stat view category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.idetronic.subur.model.StatViewCategory fetchByCategoryPeriod(
+		long companyId, long groupId, long categoryId, int perYear, int perMonth)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the stat view category where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching stat view category, or <code>null</code> if a matching stat view category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.idetronic.subur.model.StatViewCategory fetchByCategoryPeriod(
+		long companyId, long groupId, long categoryId, int perYear,
+		int perMonth, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the stat view category where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the stat view category that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.idetronic.subur.model.StatViewCategory removeByCategoryPeriod(
+		long companyId, long groupId, long categoryId, int perYear, int perMonth)
+		throws com.idetronic.subur.NoSuchStatViewCategoryException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of stat view categories where companyId = &#63; and groupId = &#63; and categoryId = &#63; and perYear = &#63; and perMonth = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param perYear the per year
+	* @param perMonth the per month
+	* @return the number of matching stat view categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCategoryPeriod(long companyId, long groupId,
+		long categoryId, int perYear, int perMonth)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the stat view category in the entity cache if it is enabled.
 	*
 	* @param statViewCategory the stat view category

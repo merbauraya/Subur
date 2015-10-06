@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+	<sql id="com.idetronic.subur.service.persistence.AuthorFinder.recentByGroupIds">
+		<![CDATA[
+			
+			SELECT
+				Subur_Author.*
+			FROM
+				Subur_Author
+			INNER JOIN
+				Group_ ON
+					(Group_.groupId = Subur_Author.groupId)
+			WHERE
+				(Group_.companyId = ?) AND
+				(
+					(Group_.groupId = ?) OR
+					(
+						(Group_.liveGroupId = 0) AND
+						(
+							Group_.groupId NOT IN (
+								SELECT
+									liveGroupId
+								FROM
+									Group_
+								WHERE
+									groupId = ?
+							)
+						) AND
+						(
+							(Group_.classNameId != [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]) OR
+							(
+								Group_.parentGroupId NOT IN (
+									SELECT
+										groupId
+									FROM
+										Group_
+									WHERE
+										(groupId != ?) AND
+										(liveGroupId != 0)
+								)
+							)
+						)
+					)
+				) AND
+				(Subur_Author.lastPublishedDate < ?)
+			ORDER BY
+				Subur_Author.lastPublishedDate DESC
+		]]>
+		
+	</sql>
+
+</custom-sql>

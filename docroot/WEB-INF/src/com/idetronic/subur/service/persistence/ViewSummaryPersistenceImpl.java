@@ -88,7 +88,8 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 			ViewSummaryModelImpl.FINDER_CACHE_ENABLED, ViewSummaryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
 			new String[] {
-				Integer.class.getName(),
+				Integer.class.getName(), Long.class.getName(),
+				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -97,52 +98,68 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 		new FinderPath(ViewSummaryModelImpl.ENTITY_CACHE_ENABLED,
 			ViewSummaryModelImpl.FINDER_CACHE_ENABLED, ViewSummaryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
-			new String[] { Integer.class.getName() },
-			ViewSummaryModelImpl.STATUS_COLUMN_BITMASK);
+			new String[] {
+				Integer.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			},
+			ViewSummaryModelImpl.STATUS_COLUMN_BITMASK |
+			ViewSummaryModelImpl.GROUPID_COLUMN_BITMASK |
+			ViewSummaryModelImpl.COMPANYID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_STATUS = new FinderPath(ViewSummaryModelImpl.ENTITY_CACHE_ENABLED,
 			ViewSummaryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
-			new String[] { Integer.class.getName() });
+			new String[] {
+				Integer.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			});
 
 	/**
-	 * Returns all the view summaries where status = &#63;.
+	 * Returns all the view summaries where status = &#63; and groupId = &#63; and companyId = &#63;.
 	 *
 	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @return the matching view summaries
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ViewSummary> findByStatus(int status) throws SystemException {
-		return findByStatus(status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<ViewSummary> findByStatus(int status, long groupId,
+		long companyId) throws SystemException {
+		return findByStatus(status, groupId, companyId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the view summaries where status = &#63;.
+	 * Returns a range of all the view summaries where status = &#63; and groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.ViewSummaryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of view summaries
 	 * @param end the upper bound of the range of view summaries (not inclusive)
 	 * @return the range of matching view summaries
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ViewSummary> findByStatus(int status, int start, int end)
-		throws SystemException {
-		return findByStatus(status, start, end, null);
+	public List<ViewSummary> findByStatus(int status, long groupId,
+		long companyId, int start, int end) throws SystemException {
+		return findByStatus(status, groupId, companyId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the view summaries where status = &#63;.
+	 * Returns an ordered range of all the view summaries where status = &#63; and groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.ViewSummaryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of view summaries
 	 * @param end the upper bound of the range of view summaries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -150,8 +167,9 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ViewSummary> findByStatus(int status, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public List<ViewSummary> findByStatus(int status, long groupId,
+		long companyId, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -160,11 +178,15 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS;
-			finderArgs = new Object[] { status };
+			finderArgs = new Object[] { status, groupId, companyId };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUS;
-			finderArgs = new Object[] { status, start, end, orderByComparator };
+			finderArgs = new Object[] {
+					status, groupId, companyId,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<ViewSummary> list = (List<ViewSummary>)FinderCacheUtil.getResult(finderPath,
@@ -172,7 +194,9 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (ViewSummary viewSummary : list) {
-				if ((status != viewSummary.getStatus())) {
+				if ((status != viewSummary.getStatus()) ||
+						(groupId != viewSummary.getGroupId()) ||
+						(companyId != viewSummary.getCompanyId())) {
 					list = null;
 
 					break;
@@ -184,16 +208,20 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(5 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(5);
 			}
 
 			query.append(_SQL_SELECT_VIEWSUMMARY_WHERE);
 
 			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			query.append(_FINDER_COLUMN_STATUS_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_STATUS_COMPANYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -216,6 +244,10 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(status);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
 
 				if (!pagination) {
 					list = (List<ViewSummary>)QueryUtil.list(q, getDialect(),
@@ -248,30 +280,39 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 	}
 
 	/**
-	 * Returns the first view summary in the ordered set where status = &#63;.
+	 * Returns the first view summary in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
 	 *
 	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching view summary
 	 * @throws com.idetronic.subur.NoSuchViewSummaryException if a matching view summary could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ViewSummary findByStatus_First(int status,
-		OrderByComparator orderByComparator)
+	public ViewSummary findByStatus_First(int status, long groupId,
+		long companyId, OrderByComparator orderByComparator)
 		throws NoSuchViewSummaryException, SystemException {
-		ViewSummary viewSummary = fetchByStatus_First(status, orderByComparator);
+		ViewSummary viewSummary = fetchByStatus_First(status, groupId,
+				companyId, orderByComparator);
 
 		if (viewSummary != null) {
 			return viewSummary;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(8);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("status=");
 		msg.append(status);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -279,74 +320,20 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 	}
 
 	/**
-	 * Returns the first view summary in the ordered set where status = &#63;.
+	 * Returns the first view summary in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
 	 *
 	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching view summary, or <code>null</code> if a matching view summary could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ViewSummary fetchByStatus_First(int status,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<ViewSummary> list = findByStatus(status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last view summary in the ordered set where status = &#63;.
-	 *
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching view summary
-	 * @throws com.idetronic.subur.NoSuchViewSummaryException if a matching view summary could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public ViewSummary findByStatus_Last(int status,
-		OrderByComparator orderByComparator)
-		throws NoSuchViewSummaryException, SystemException {
-		ViewSummary viewSummary = fetchByStatus_Last(status, orderByComparator);
-
-		if (viewSummary != null) {
-			return viewSummary;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("status=");
-		msg.append(status);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchViewSummaryException(msg.toString());
-	}
-
-	/**
-	 * Returns the last view summary in the ordered set where status = &#63;.
-	 *
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching view summary, or <code>null</code> if a matching view summary could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public ViewSummary fetchByStatus_Last(int status,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByStatus(status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ViewSummary> list = findByStatus(status, count - 1, count,
+	public ViewSummary fetchByStatus_First(int status, long groupId,
+		long companyId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<ViewSummary> list = findByStatus(status, groupId, companyId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -357,10 +344,82 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 	}
 
 	/**
-	 * Returns the view summaries before and after the current view summary in the ordered set where status = &#63;.
+	 * Returns the last view summary in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching view summary
+	 * @throws com.idetronic.subur.NoSuchViewSummaryException if a matching view summary could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ViewSummary findByStatus_Last(int status, long groupId,
+		long companyId, OrderByComparator orderByComparator)
+		throws NoSuchViewSummaryException, SystemException {
+		ViewSummary viewSummary = fetchByStatus_Last(status, groupId,
+				companyId, orderByComparator);
+
+		if (viewSummary != null) {
+			return viewSummary;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("status=");
+		msg.append(status);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchViewSummaryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last view summary in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching view summary, or <code>null</code> if a matching view summary could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ViewSummary fetchByStatus_Last(int status, long groupId,
+		long companyId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByStatus(status, groupId, companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ViewSummary> list = findByStatus(status, groupId, companyId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the view summaries before and after the current view summary in the ordered set where status = &#63; and groupId = &#63; and companyId = &#63;.
 	 *
 	 * @param id the primary key of the current view summary
 	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next view summary
 	 * @throws com.idetronic.subur.NoSuchViewSummaryException if a view summary with the primary key could not be found
@@ -368,7 +427,7 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 	 */
 	@Override
 	public ViewSummary[] findByStatus_PrevAndNext(long id, int status,
-		OrderByComparator orderByComparator)
+		long groupId, long companyId, OrderByComparator orderByComparator)
 		throws NoSuchViewSummaryException, SystemException {
 		ViewSummary viewSummary = findByPrimaryKey(id);
 
@@ -380,12 +439,12 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 			ViewSummary[] array = new ViewSummaryImpl[3];
 
 			array[0] = getByStatus_PrevAndNext(session, viewSummary, status,
-					orderByComparator, true);
+					groupId, companyId, orderByComparator, true);
 
 			array[1] = viewSummary;
 
 			array[2] = getByStatus_PrevAndNext(session, viewSummary, status,
-					orderByComparator, false);
+					groupId, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -398,7 +457,7 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 	}
 
 	protected ViewSummary getByStatus_PrevAndNext(Session session,
-		ViewSummary viewSummary, int status,
+		ViewSummary viewSummary, int status, long groupId, long companyId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -413,6 +472,10 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 		query.append(_SQL_SELECT_VIEWSUMMARY_WHERE);
 
 		query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+		query.append(_FINDER_COLUMN_STATUS_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_STATUS_COMPANYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -484,6 +547,10 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 
 		qPos.add(status);
 
+		qPos.add(groupId);
+
+		qPos.add(companyId);
+
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(viewSummary);
 
@@ -503,41 +570,51 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 	}
 
 	/**
-	 * Removes all the view summaries where status = &#63; from the database.
+	 * Removes all the view summaries where status = &#63; and groupId = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByStatus(int status) throws SystemException {
-		for (ViewSummary viewSummary : findByStatus(status, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByStatus(int status, long groupId, long companyId)
+		throws SystemException {
+		for (ViewSummary viewSummary : findByStatus(status, groupId, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(viewSummary);
 		}
 	}
 
 	/**
-	 * Returns the number of view summaries where status = &#63;.
+	 * Returns the number of view summaries where status = &#63; and groupId = &#63; and companyId = &#63;.
 	 *
 	 * @param status the status
+	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @return the number of matching view summaries
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByStatus(int status) throws SystemException {
+	public int countByStatus(int status, long groupId, long companyId)
+		throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_STATUS;
 
-		Object[] finderArgs = new Object[] { status };
+		Object[] finderArgs = new Object[] { status, groupId, companyId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_COUNT_VIEWSUMMARY_WHERE);
 
 			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			query.append(_FINDER_COLUMN_STATUS_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_STATUS_COMPANYID_2);
 
 			String sql = query.toString();
 
@@ -551,6 +628,10 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(status);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
 
 				count = (Long)q.uniqueResult();
 
@@ -569,7 +650,9 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "viewSummary.status = ?";
+	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "viewSummary.status = ? AND ";
+	private static final String _FINDER_COLUMN_STATUS_GROUPID_2 = "viewSummary.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_STATUS_COMPANYID_2 = "viewSummary.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PERIOD = new FinderPath(ViewSummaryModelImpl.ENTITY_CACHE_ENABLED,
 			ViewSummaryModelImpl.FINDER_CACHE_ENABLED, ViewSummaryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPeriod",
@@ -1812,14 +1895,20 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 			if ((viewSummaryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						viewSummaryModelImpl.getOriginalStatus()
+						viewSummaryModelImpl.getOriginalStatus(),
+						viewSummaryModelImpl.getOriginalGroupId(),
+						viewSummaryModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
 					args);
 
-				args = new Object[] { viewSummaryModelImpl.getStatus() };
+				args = new Object[] {
+						viewSummaryModelImpl.getStatus(),
+						viewSummaryModelImpl.getGroupId(),
+						viewSummaryModelImpl.getCompanyId()
+					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
@@ -1883,8 +1972,10 @@ public class ViewSummaryPersistenceImpl extends BasePersistenceImpl<ViewSummary>
 
 		viewSummaryImpl.setId(viewSummary.getId());
 		viewSummaryImpl.setItemId(viewSummary.getItemId());
-		viewSummaryImpl.setPerMonth(viewSummary.getPerMonth());
+		viewSummaryImpl.setCompanyId(viewSummary.getCompanyId());
+		viewSummaryImpl.setGroupId(viewSummary.getGroupId());
 		viewSummaryImpl.setPerYear(viewSummary.getPerYear());
+		viewSummaryImpl.setPerMonth(viewSummary.getPerMonth());
 		viewSummaryImpl.setStatus(viewSummary.getStatus());
 
 		return viewSummaryImpl;

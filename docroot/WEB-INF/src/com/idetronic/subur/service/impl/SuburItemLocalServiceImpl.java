@@ -251,7 +251,14 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		return itemType;
 		
 	}
-	
+	public List<SuburItem> getByGroupAndStatus(long companyId,long groupId,int start,int end,int status) throws SystemException
+	{
+		
+		if (status != SuburConstant.STATUS_ANY)
+			return suburItemPersistence.findByStatusByGroup(status,groupId,companyId,start,end);
+		else
+			return suburItemPersistence.filterFindByGroupId(groupId, start, end);
+	}
 	public List<SuburItem> getSuburItems(int start,int end,int status) throws SystemException
 	{
 		if (status != SuburConstant.STATUS_ANY)
@@ -339,10 +346,11 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 	 * @throws PortalException
 	 * @throws SystemException
 	 */
-	public void addViewStat(long itemId) throws PortalException, SystemException
+	public void addViewStat(long itemId,long companyId,long groupId) throws PortalException, SystemException
 	{
 		AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(SuburItem.class.getName(), itemId);
-		ViewSummaryLocalServiceUtil.addStats(itemId);//, itemTypeIds, categoryIds, tagIds);
+		
+		ViewSummaryLocalServiceUtil.addStats(itemId,companyId,groupId);//, itemTypeIds, categoryIds, tagIds);
 		
 		
 	}

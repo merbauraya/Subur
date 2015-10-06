@@ -18,6 +18,7 @@ import com.idetronic.subur.model.AuthorClp;
 import com.idetronic.subur.model.AuthorExpertiseClp;
 import com.idetronic.subur.model.AuthorResearchInterestClp;
 import com.idetronic.subur.model.AuthorSiteClp;
+import com.idetronic.subur.model.CopyRequestClp;
 import com.idetronic.subur.model.DownloadSummaryClp;
 import com.idetronic.subur.model.ExpertiseClp;
 import com.idetronic.subur.model.ItemAuthorClp;
@@ -137,6 +138,10 @@ public class ClpSerializer {
 			return translateInputAuthorSite(oldModel);
 		}
 
+		if (oldModelClassName.equals(CopyRequestClp.class.getName())) {
+			return translateInputCopyRequest(oldModel);
+		}
+
 		if (oldModelClassName.equals(DownloadSummaryClp.class.getName())) {
 			return translateInputDownloadSummary(oldModel);
 		}
@@ -251,6 +256,16 @@ public class ClpSerializer {
 		AuthorSiteClp oldClpModel = (AuthorSiteClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getAuthorSiteRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputCopyRequest(BaseModel<?> oldModel) {
+		CopyRequestClp oldClpModel = (CopyRequestClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getCopyRequestRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -550,6 +565,43 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"com.idetronic.subur.model.impl.AuthorSiteImpl")) {
 			return translateOutputAuthorSite(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"com.idetronic.subur.model.impl.CopyRequestImpl")) {
+			return translateOutputCopyRequest(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -1274,6 +1326,10 @@ public class ClpSerializer {
 			return new com.idetronic.subur.NoSuchAuthorSiteException();
 		}
 
+		if (className.equals("com.idetronic.subur.NoSuchCopyRequestException")) {
+			return new com.idetronic.subur.NoSuchCopyRequestException();
+		}
+
 		if (className.equals(
 					"com.idetronic.subur.NoSuchDownloadSummaryException")) {
 			return new com.idetronic.subur.NoSuchDownloadSummaryException();
@@ -1386,6 +1442,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setAuthorSiteRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputCopyRequest(BaseModel<?> oldModel) {
+		CopyRequestClp newModel = new CopyRequestClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setCopyRequestRemoteModel(oldModel);
 
 		return newModel;
 	}

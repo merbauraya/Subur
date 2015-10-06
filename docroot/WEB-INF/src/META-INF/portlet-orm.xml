@@ -12,9 +12,7 @@
 			<id name="authorId" />
 			<basic name="groupId" />
 			<basic name="companyId" />
-			<basic name="title" />
-			<basic name="idType" />
-			<basic name="remoteId" />
+			<basic name="salutation" />
 			<basic name="firstName" />
 			<basic name="lastName" />
 			<basic name="middleName" />
@@ -34,6 +32,8 @@
 			</basic>
 			<basic name="Uuid" />
 			<basic name="createdBy" />
+			<basic name="portraitId" />
+			<basic name="title" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -68,6 +68,31 @@
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.idetronic.subur.model.impl.CopyRequestModelImpl">
+		<attributes>
+			<id name="copyRequestId" />
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="dateCreated">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="status" />
+			<basic name="suburItemId" />
+			<basic name="fromEmailAddress" />
+			<basic name="requesterName" />
+			<basic name="reason" />
+			<basic name="organization" />
+			<basic name="dateResponsed">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="respondText" />
+			<basic name="responsedByUserId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="responsedByUserUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.idetronic.subur.model.impl.DownloadSummaryModelImpl">
@@ -213,9 +238,12 @@
 			<id name="id">
 				<column name="ID_" />
 			</id>
-			<basic name="perMonth" />
+			<basic name="companyId" />
+			<basic name="groupId" />
 			<basic name="perYear" />
+			<basic name="perMonth" />
 			<basic name="categoryId" />
+			<basic name="viewCount" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -226,9 +254,12 @@
 			<id name="id">
 				<column name="ID_" />
 			</id>
-			<basic name="perMonth" />
+			<basic name="companyId" />
+			<basic name="groupId" />
 			<basic name="perYear" />
+			<basic name="perMonth" />
 			<basic name="itemTypeId" />
+			<basic name="viewCount" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -239,9 +270,12 @@
 			<id name="id">
 				<column name="ID_" />
 			</id>
+			<basic name="companyId" />
+			<basic name="groupId" />
 			<basic name="perMonth" />
 			<basic name="perYear" />
 			<basic name="tagId" />
+			<basic name="viewCount" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -284,6 +318,8 @@
 			<basic name="status" />
 			<basic name="Uuid" />
 			<basic name="metadataValue" />
+			<basic name="relatedRestricted" />
+			<basic name="photoCoverId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -296,8 +332,10 @@
 				<column name="ID_" />
 			</id>
 			<basic name="itemId" />
-			<basic name="perMonth" />
+			<basic name="companyId" />
+			<basic name="groupId" />
 			<basic name="perYear" />
+			<basic name="perMonth" />
 			<basic name="status" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -318,6 +356,10 @@
 	</entity>
 	<entity class="com.idetronic.subur.model.impl.AuthorSiteImpl" name="AuthorSite">
 		<table name="Subur_AuthorSite" />
+		<attributes />
+	</entity>
+	<entity class="com.idetronic.subur.model.impl.CopyRequestImpl" name="CopyRequest">
+		<table name="Subur_CopyRequest" />
 		<attributes />
 	</entity>
 	<entity class="com.idetronic.subur.model.impl.DownloadSummaryImpl" name="DownloadSummary">

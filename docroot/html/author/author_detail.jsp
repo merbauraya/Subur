@@ -1,49 +1,67 @@
-
-<div class="author-detail">
-	<div class="author-info">
-		
+<%
+	String taglibAlt = (author != null) ? HtmlUtil.escapeAttribute(author.getDisplayName()) : LanguageUtil.get(pageContext, "generic-portrait");
+	String taglibSrc = null;
+	if (author != null) {
+		taglibSrc = author.getPortraitURL(themeDisplay);
+	}
+	else {
+		taglibSrc = SuburUtil.getDefaultPortraitURL(themeDisplay.getPathImage());
+	}
+%>
+<aui:row>
+	<div class="profile-image pull-left">
+		<span class="user-profile-image">
+			<img alt="<%= taglibAlt %>" class="avatar" src="<%= HtmlUtil.escape(taglibSrc) %>" />
+		</span>
+	
 	</div>
-	
-	
-	<div class="author-summary">
-		<h2><%= author.getDisplayName()%></h2>
-		<c:if test="<%=canUpdate %>">
-			<liferay-portlet:renderURL var="editAuthorURL" portletName="Author_WAR_Suburportlet">
-					<portlet:param name="mvcPath" value="/html/admin/author/edit_author.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>"/>
-					 
-				</liferay-portlet:renderURL>
-				<liferay-ui:icon
-							image="edit"
-							label="<%= true %>"
-							url="<%= editAuthorURL %>"
-						/>
-		</c:if>
 		
-		<div class="author-bio">
-			<div class="author-title">
-				<p><span class="author-title">Title : </span>
+	
+		
+		<div class="author-summary">
+			<h3><%= author.getDisplayName()%></h3>
+			<c:if test="<%=canUpdate %>">
+				<liferay-portlet:renderURL var="editAuthorURL" portletName="Author_WAR_Suburportlet">
+						<portlet:param name="mvcPath" value="/html/admin/author/edit_author.jsp" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="backURL" value="<%= currentURL %>" />
+						<portlet:param name="authorId" value="<%= String.valueOf(author.getAuthorId()) %>"/>
+						 
+					</liferay-portlet:renderURL>
+					<liferay-ui:icon
+								image="edit"
+								label="<%= true %>"
+								url="<%= editAuthorURL %>"
+							/>
+			</c:if>
+			
+			<div class="author-bio">
+				<div class="author-title">
+					<p><span class="author-title">Salutation : </span>
+					<%=author.getSalutation() %>
+					</p>
+				</div>
 				<%=author.getTitle() %>
-				</p>
+				<div class="author-contrib">
+					<p><span class="author-title">Published Item : </span>
+					<%=author.getItemCount() %>
+					</p>
+				
+				</div>
+				
 			</div>
-			<div class="author-contrib">
-				<p><span class="author-title">Published Item : </span>
-				<%=author.getItemCount() %>
-				</p>
-			
-			</div>
-			
 		</div>
-	</div>
 	
+	
+	
+	
+</aui:row>
+
 <%
 	
 String tabs2Names = "biodata,publication,categorization";
 %>
-
-</div>
+<aui:row>
 <liferay-ui:tabs
 	names="<%= tabs2Names %>"
 	refresh="<%= false %>"
@@ -62,5 +80,5 @@ String tabs2Names = "biodata,publication,categorization";
 	
 
 </liferay-ui:tabs>	
-	
+</aui:row>	
 	

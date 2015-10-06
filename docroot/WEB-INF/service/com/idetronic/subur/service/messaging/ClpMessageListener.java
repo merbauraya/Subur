@@ -19,6 +19,8 @@ import com.idetronic.subur.service.AuthorLocalServiceUtil;
 import com.idetronic.subur.service.AuthorResearchInterestLocalServiceUtil;
 import com.idetronic.subur.service.AuthorSiteLocalServiceUtil;
 import com.idetronic.subur.service.ClpSerializer;
+import com.idetronic.subur.service.CopyRequestLocalServiceUtil;
+import com.idetronic.subur.service.CopyRequestServiceUtil;
 import com.idetronic.subur.service.DownloadSummaryLocalServiceUtil;
 import com.idetronic.subur.service.ExpertiseLocalServiceUtil;
 import com.idetronic.subur.service.ExpertiseServiceUtil;
@@ -66,6 +68,9 @@ public class ClpMessageListener extends BaseMessageListener {
 
 			AuthorSiteLocalServiceUtil.clearService();
 
+			CopyRequestLocalServiceUtil.clearService();
+
+			CopyRequestServiceUtil.clearService();
 			DownloadSummaryLocalServiceUtil.clearService();
 
 			ExpertiseLocalServiceUtil.clearService();

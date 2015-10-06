@@ -66,7 +66,14 @@ public interface ViewSummaryService extends BaseService, InvokableService {
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.json.JSONArray getMonthlyCategory(
+	public com.liferay.portal.kernel.json.JSONObject getTestChartData();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyAssetCategoryChart(
+		int year, int vocabularyId) throws java.sql.SQLException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyCategory(
 		int year, long vocabularyId) throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -78,6 +85,6 @@ public interface ViewSummaryService extends BaseService, InvokableService {
 		throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.json.JSONArray getMonthlyTagSummary(
+	public com.liferay.portal.kernel.json.JSONObject getMonthlyTagSummary(
 		int year) throws java.lang.Exception;
 }
