@@ -10,12 +10,15 @@
 	long itemId = ParamUtil.getLong(request,"itemId");
 	
 	SuburItem suburItem = (SuburItem)  request.getAttribute(WebKeys.SUBUR_ITEM);   //SuburItemServiceUtil.getSuburItem(itemId);//  SuburItemLocalServiceUtil.fetchSuburItem(itemId);
-
+	if (Validator.isNull(suburItem))
+	{
+		suburItem = SuburItemLocalServiceUtil.getSuburItem(itemId);
+	}
 %>
 
 <%	
 	suburItem = suburItem.toEscapedModel();
-	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(SuburItem.class.getName(), itemId);
+	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(SuburItem.class.getName(), suburItem.getItemId());
 	suburItem = suburItem.toEscapedModel();
 	Map<String,String> serieReportNoMap = suburItem.getSeriesReportNo();
 	Map<String,String> identifiers = suburItem.getIdentifiers();
@@ -23,22 +26,25 @@
 	
 	//view counter
 	SuburItemLocalServiceUtil.addViewStat(suburItem.getItemId(),themeDisplay.getCompanyId(),themeDisplay.getScopeGroupId());
-	
+	boolean canUpdate = SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.UPDATE);
+	boolean canDelete = SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.DELETE);
+	boolean canPermission = SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.PERMISSIONS);
 	
 %>
+
 <div class="item-detail">
 	<div class="item-header">
-		
-		
-		
-		<h1 class="item-title"><%= suburItem.getTitle() %>
+	
+		<h2 class="item-title"><%= suburItem.getTitle() %>
 			
-		</h1>
+		</h2>
 	</div>
-	<c:if test="<%= SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.DELETE) || SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.PERMISSIONS) || SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.UPDATE) %>">
+	
+	<c:if test="<%= canUpdate || canDelete || canPermission %>">
 		<div class="item-permission">
 			<ul class="edit-actions entry icons-container lfr-meta-actions">
-				<c:if test="<%= SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.UPDATE) %>">
+				<c:if test="<%= canUpdate %>">
+					
 					<li class="edit-entry">
 						<portlet:renderURL var="editEntryURL">
 							<portlet:param name="mvcPath" value="<%= SuburConstant.PAGE_UPDATE_ITEM %>" />
@@ -55,7 +61,7 @@
 					</li>
 				</c:if>
 	
-				<c:if test="<%= showEditEntryPermissions && SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.PERMISSIONS) %>">
+				<c:if test="<%= showEditEntryPermissions && canPermission %>">
 					<li class="edit-entry-permissions">
 						<liferay-security:permissionsURL
 							modelResource="<%= SuburItem.class.getName() %>"
@@ -76,15 +82,12 @@
 					</li>
 				</c:if>
 	
-				<c:if test="<%= SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.DELETE) %>">
+				<c:if test="<%= canDelete %>">
 					<li class="delete-entry">
-						<portlet:renderURL var="viewURL">
-							<portlet:param name="struts_action" value="/blogs/view" />
-						</portlet:renderURL>
-	
+						
 						<portlet:actionURL var="deleteEntryURL" name="deleteItem">
 							<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-							<portlet:param name="redirect" value="<%= viewURL %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="itemId" value="<%= String.valueOf(suburItem.getItemId()) %>" />
 						</portlet:actionURL>
 	
@@ -95,27 +98,21 @@
 						/>
 					</li>
 				</c:if>
-				<c:if test="<%= SuburItemPermission.contains(permissionChecker, suburItem, ActionKeys.UPDATE) %>">
-					<li class="withdraw-item">
-						<portlet:renderURL var="viewURL">
-							<portlet:param name="struts_action" value="/blogs/view" />
-						</portlet:renderURL>
-	
-						<portlet:actionURL var="withdrawItemURL" name="withdrawItem">
-							<portlet:param name="redirect" value="<%= viewURL %>" />
-							<portlet:param name="itemId" value="<%= String.valueOf(suburItem.getItemId()) %>" />
-						</portlet:actionURL>
-	
-						<liferay-ui:icon
-							label="<%= true %>"
-							image="withdraw"
-							url="<%= withdrawItemURL %>"
-						/>
-					</li>
-				</c:if>
+				
 			</ul>
 		</div>
 	</c:if>
+	<c:if test='<%= enableSocialBookmark && socialBookmarksDisplayPosition.equals("top") %>'>
+		<liferay-ui:social-bookmarks
+		    displayStyle="<%=socialBookmarksDisplayStyle %>"
+		    target="_blank"
+		    
+		    title="<%= suburItem.getTitle() %>"
+		    url="<%= PortalUtil.getCanonicalURL((PortalUtil.getCurrentURL(request)), themeDisplay, layout) %>" 
+		/>
+	</c:if>
+	
+	
 	<div class="item-date">
 		<%
 			
@@ -133,7 +130,7 @@
 			viewAuthorURL.setParameter("mvcPath", "/html/author/view_author.jsp");
 		%>	
 		<subur:item-author-display 
-			itemId="<%=itemId %>" 
+			itemId="<%= suburItem.getItemId()  %>" 
 			viewAuthorURL ="<%=viewAuthorURL %>"	
 		/>
 	</div>	
@@ -141,7 +138,7 @@
 		PortletURL viewItemTypeURL = renderResponse.createRenderURL();
 	%>
 	<subur:item-itemtype-display 
-			itemId="<%= Long.valueOf(itemId) %>" 
+			itemId="<%= suburItem.getItemId() %>" 
 			viewItemTypeURL ="<%=viewItemTypeURL %>"	
 			showHeader= "<%= true %>"
 		/>
@@ -271,6 +268,15 @@
 	
 </liferay-portlet:renderURL>
 
+<c:if test='<%= enableSocialBookmark && socialBookmarksDisplayPosition.equals("bottom") %>'>
+	<liferay-ui:social-bookmarks
+	    displayStyle="<%=socialBookmarksDisplayStyle %>"
+	    target="_blank"
+	    types="<%= socialBookmarksTypes %>"
+	    title="<%= suburItem.getTitle() %>"
+	    url="<%= PortalUtil.getCanonicalURL((PortalUtil.getCurrentURL(request)), themeDisplay, layout) %>" 
+	/>
+</c:if>
 
 <aui:script use="aui-toggler,liferay-util-window">
 	var A = AUI();

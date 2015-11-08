@@ -2,8 +2,8 @@
 <!DOCTYPE user-notification-definitions PUBLIC "-//Liferay//DTD User Notification Definitions 6.2.0//EN" "http://www.liferay.com/dtd/liferay-user-notification-definitions_6_2_0.dtd">
 <user-notification-definitions>
 	<definition>
-		<notification-type>${com.idetronic.subur.notification.SuburNotificationHandler.PORTLET_ID}</notification-type>
-		<description>receive-a-notification-when-example-triggered</description>
+		<notification-type>${com.idetronic.subur.notification.SuburNotificationHandler.NOTIFICATION_REQUEST_RESTRICTED_COPY}</notification-type>
+		<description>receive-a-notification-when-visitor-has-requested-access-to-restricted-content</description>
 		<delivery-type>
 			<name>email</name>
 			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_EMAIL}</type>
@@ -17,4 +17,28 @@
 			<modifiable>true</modifiable>
 		</delivery-type>
 	</definition>
+	<definition>
+		<notification-type>${com.idetronic.subur.notification.SuburNotificationHandler.NOTIFICATION_SUBUR_PUBLICATION_ADDED}</notification-type>
+		<description>receive-a-notification-when-someone-adds-a-new-subur-publication-entry</description>
+		
+		<delivery-type>
+			<name>website</name>
+			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_WEBSITE}</type>
+			<default>true</default>
+			<modifiable>true</modifiable>
+		</delivery-type>
+	</definition>
+	<definition>
+		<notification-type>${com.idetronic.subur.notification.SuburNotificationHandler.NOTIFICATION_SUBUR_PUBLICATION_UPDATED}</notification-type>
+		<description>receive-a-notification-when-someone-updates-a-new-subur-publication-entry</description>
+		
+		<delivery-type>
+			<name>website</name>
+			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_WEBSITE}</type>
+			<default>true</default>
+			<modifiable>true</modifiable>
+		</delivery-type>
+	</definition>
+	
+	
 </user-notification-definitions>

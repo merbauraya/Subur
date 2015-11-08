@@ -314,18 +314,103 @@ public interface SuburItemModel extends BaseModel<SuburItem>, GroupedModel {
 	public void setRelatedRestricted(boolean relatedRestricted);
 
 	/**
-	 * Returns the photo cover ID of this subur item.
+	 * Returns the status by user ID of this subur item.
 	 *
-	 * @return the photo cover ID of this subur item
+	 * @return the status by user ID of this subur item
 	 */
-	public long getPhotoCoverId();
+	public long getStatusByUserId();
 
 	/**
-	 * Sets the photo cover ID of this subur item.
+	 * Sets the status by user ID of this subur item.
 	 *
-	 * @param photoCoverId the photo cover ID of this subur item
+	 * @param statusByUserId the status by user ID of this subur item
 	 */
-	public void setPhotoCoverId(long photoCoverId);
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this subur item.
+	 *
+	 * @return the status by user uuid of this subur item
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getStatusByUserUuid() throws SystemException;
+
+	/**
+	 * Sets the status by user uuid of this subur item.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this subur item
+	 */
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status date of this subur item.
+	 *
+	 * @return the status date of this subur item
+	 */
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this subur item.
+	 *
+	 * @param statusDate the status date of this subur item
+	 */
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the completed of this subur item.
+	 *
+	 * @return the completed of this subur item
+	 */
+	public boolean getCompleted();
+
+	/**
+	 * Returns <code>true</code> if this subur item is completed.
+	 *
+	 * @return <code>true</code> if this subur item is completed; <code>false</code> otherwise
+	 */
+	public boolean isCompleted();
+
+	/**
+	 * Sets whether this subur item is completed.
+	 *
+	 * @param completed the completed of this subur item
+	 */
+	public void setCompleted(boolean completed);
+
+	/**
+	 * Returns the cover image ID of this subur item.
+	 *
+	 * @return the cover image ID of this subur item
+	 */
+	public long getCoverImageId();
+
+	/**
+	 * Sets the cover image ID of this subur item.
+	 *
+	 * @param coverImageId the cover image ID of this subur item
+	 */
+	public void setCoverImageId(long coverImageId);
+
+	/**
+	 * Returns the counted of this subur item.
+	 *
+	 * @return the counted of this subur item
+	 */
+	public boolean getCounted();
+
+	/**
+	 * Returns <code>true</code> if this subur item is counted.
+	 *
+	 * @return <code>true</code> if this subur item is counted; <code>false</code> otherwise
+	 */
+	public boolean isCounted();
+
+	/**
+	 * Sets whether this subur item is counted.
+	 *
+	 * @param counted the counted of this subur item
+	 */
+	public void setCounted(boolean counted);
 
 	@Override
 	public boolean isNew();

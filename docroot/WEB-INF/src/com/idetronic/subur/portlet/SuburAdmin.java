@@ -44,7 +44,8 @@ public class SuburAdmin extends MVCPortlet {
 		
 		if (cmd.equalsIgnoreCase(Constants.ADD))
 		{
-			itemType = ItemTypeLocalServiceUtil.add(typeName);
+			
+			itemType = ItemTypeLocalServiceUtil.add(typeName,themeDisplay.getCompanyId(),themeDisplay.getScopeGroupId());
 		}else
 		{
 			itemType  = ItemTypeLocalServiceUtil.getItemType(itemTypeId);

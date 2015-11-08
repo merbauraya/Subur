@@ -160,10 +160,11 @@ public class ItemItemTypeLocalServiceImpl
 	public Object[] getByItemIdArray(long itemId)
 	{
 		List itemTypes = ItemItemTypeFinderUtil.getByItem(itemId);
-
+		
+		
 		Object[] itemTypesArray = new ItemType[itemTypes.size()];
 		
-		Object xx = itemTypes.get(0);
+		
 
 		for (int i = 0; i < itemTypes.size(); i ++)
 		{
@@ -188,4 +189,6 @@ public class ItemItemTypeLocalServiceImpl
 		
 		return itemTypes;
 	}
+	private static Log LOGGER = LogFactoryUtil.getLog(ItemItemTypeLocalServiceImpl.class);
+
 }

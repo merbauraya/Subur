@@ -32,7 +32,7 @@
 	
 	
 	String assetTagNames = ParamUtil.getString(request, "assetTagNames");
-	out.print(assetTagNames);
+	
 	
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 	Map<String, String[]> parameterMap = request.getParameterMap();
@@ -78,7 +78,7 @@
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm">
-	<%@ include file="/html/admin/subur/top_nav.jsp" %>
+	<%@ include file="/html/admin/subur/toolbar.jsp" %>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
     <liferay-portlet:renderURLParams varImpl="searchURL" />
 
@@ -151,9 +151,13 @@
 	    	
 		    BooleanQuery descQuery = BooleanQueryFactoryUtil.create(searchContext);
 		    
+		    descQuery.addRequiredTerm(SuburField.STATUS, WorkflowConstants.STATUS_APPROVED);
+		    
+		    
 		    descQuery.addTerm(SuburField.TITLE, keywords);
 		    descQuery.addTerm(SuburField.DESCRIPTION, keywords);
 		    descQuery.addTerm(SuburField.AUTHOR, keywords);
+		    
 		    
 
 	    	TermQuery titleQuery = TermQueryFactoryUtil.create(searchContext, SuburField.TITLE, keywords);
@@ -171,7 +175,9 @@
 	    	//fullQuery.add(abstractQuery, BooleanClauseOccur.SHOULD);
 	    	//fullQuery.add(authorQuery, BooleanClauseOccur.SHOULD);
 	    	fullQuery.add(descQuery, BooleanClauseOccur.MUST);
-	    	fullQuery.add(searchQuery,BooleanClauseOccur.SHOULD);
+	    	fullQuery.add(searchQuery,BooleanClauseOccur.MUST);
+	    	
+	    	
 	    	//searchContext.setKeywords(keywords);
 	    	
 	    	//searchContext.setBooleanClauses(new BooleanClause[] {clause});
@@ -200,7 +206,6 @@
         
         PortletURL hitURL = renderResponse.createRenderURL();
 
-		hitURL.setParameter("struts_action", "/blogs/view_entry");
 		hitURL.setParameter("redirect", currentURL);
 		searchContainer.setTotal(hits.getLength());
 		

@@ -22,6 +22,7 @@ import com.idetronic.subur.service.base.ItemTypeLocalServiceBaseImpl;
 import com.idetronic.subur.service.persistence.SuburItemFinderUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * The implementation of the item type local service.
@@ -44,15 +45,41 @@ public class ItemTypeLocalServiceImpl extends ItemTypeLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link com.idetronic.subur.service.ItemTypeLocalServiceUtil} to access the item type local service.
 	 */
 	
-	public ItemType add(String name) throws SystemException
+	public ItemType add(String name,long companyId,long groupId) throws SystemException
 	{
 		long itemTypeId = CounterLocalServiceUtil.increment(ItemType.class.getName());
 		ItemType itemType = itemTypePersistence.create(itemTypeId);
 		itemType.setItemTypeName(name);
+		itemType.setCompanyId(companyId);
+		itemType.setGroupId(groupId);
 		itemTypePersistence.update(itemType);
 		return itemType;
 		
 	}
+	
+	/**
+	 * 
+	 */
+	public List<ItemType> findByGroup(long companyId,long groupId,int start,int end,OrderByComparator obc) throws SystemException
+	{
+		return itemTypePersistence.findByGroup(companyId, groupId,start,end,obc);
+		
+	}
+	public int countByGroup(long companyId,long groupId) throws SystemException
+	{
+		return itemTypePersistence.countByGroup(companyId, groupId);
+	}
+	public List<ItemType> findByCompany(long companyId,int start,int end) throws SystemException
+	{
+		return itemTypePersistence.findByCompany(companyId,start,end);
+	}
+	public int countByCompany(long companyId) throws SystemException
+	{
+		return itemTypePersistence.countByCompany(companyId);
+	}
+	/**
+	 * Decrement overall item type count
+	 */
 	public void decrementCounter(long itemTypeId) throws SystemException
 	{
 		ItemType itemType = itemTypePersistence.fetchByPrimaryKey(itemTypeId);
@@ -60,14 +87,41 @@ public class ItemTypeLocalServiceImpl extends ItemTypeLocalServiceBaseImpl {
 		itemType.setItemCount(newCount);
 		itemTypePersistence.update(itemType);
 	}
+	
+
 	public void incrementCounter(long itemTypeId) throws SystemException
 	{
 		ItemType itemType = itemTypePersistence.fetchByPrimaryKey(itemTypeId);
 		int newCount = itemType.getItemCount() +1 ;
 		itemType.setItemCount(newCount);
 		itemTypePersistence.update(itemType);
-		
-		
+	
+	}
+	
+	/**
+	 * Increment approved item count
+	 * @param itemTypeId
+	 * @throws SystemException
+	 */
+	public void incrementApprovedCount(long itemTypeId) throws SystemException
+	{
+		ItemType itemType = itemTypePersistence.fetchByPrimaryKey(itemTypeId);
+		int newCount = itemType.getApprovedCount() +1 ;
+		itemType.setApprovedCount(newCount);
+		itemTypePersistence.update(itemType);
+	}
+	
+	/**
+	 * Decrement approved item count
+	 * @param itemTypeId
+	 * @throws SystemException
+	 */
+	public void decrementApprovedCount(long itemTypeId) throws SystemException
+	{
+		ItemType itemType = itemTypePersistence.fetchByPrimaryKey(itemTypeId);
+		int newCount = itemType.getApprovedCount() -1 ;
+		itemType.setApprovedCount(newCount);
+		itemTypePersistence.update(itemType);
 	}
 	
 }

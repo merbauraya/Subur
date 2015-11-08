@@ -35,7 +35,7 @@ import java.io.ObjectOutput;
 public class ItemTypeCacheModel implements CacheModel<ItemType>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{itemTypeId=");
 		sb.append(itemTypeId);
@@ -43,6 +43,12 @@ public class ItemTypeCacheModel implements CacheModel<ItemType>, Externalizable 
 		sb.append(itemTypeName);
 		sb.append(", itemCount=");
 		sb.append(itemCount);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", groupId=");
+		sb.append(groupId);
+		sb.append(", approvedCount=");
+		sb.append(approvedCount);
 		sb.append("}");
 
 		return sb.toString();
@@ -62,6 +68,9 @@ public class ItemTypeCacheModel implements CacheModel<ItemType>, Externalizable 
 		}
 
 		itemTypeImpl.setItemCount(itemCount);
+		itemTypeImpl.setCompanyId(companyId);
+		itemTypeImpl.setGroupId(groupId);
+		itemTypeImpl.setApprovedCount(approvedCount);
 
 		itemTypeImpl.resetOriginalValues();
 
@@ -73,6 +82,9 @@ public class ItemTypeCacheModel implements CacheModel<ItemType>, Externalizable 
 		itemTypeId = objectInput.readLong();
 		itemTypeName = objectInput.readUTF();
 		itemCount = objectInput.readInt();
+		companyId = objectInput.readLong();
+		groupId = objectInput.readLong();
+		approvedCount = objectInput.readInt();
 	}
 
 	@Override
@@ -88,9 +100,15 @@ public class ItemTypeCacheModel implements CacheModel<ItemType>, Externalizable 
 		}
 
 		objectOutput.writeInt(itemCount);
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(groupId);
+		objectOutput.writeInt(approvedCount);
 	}
 
 	public long itemTypeId;
 	public String itemTypeName;
 	public int itemCount;
+	public long companyId;
+	public long groupId;
+	public int approvedCount;
 }

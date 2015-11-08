@@ -82,9 +82,13 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 			{ "Uuid", Types.VARCHAR },
 			{ "metadataValue", Types.CLOB },
 			{ "relatedRestricted", Types.BOOLEAN },
-			{ "photoCoverId", Types.BIGINT }
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusDate", Types.TIMESTAMP },
+			{ "completed", Types.BOOLEAN },
+			{ "coverImageId", Types.BIGINT },
+			{ "counted", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subur_Item (itemId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedDate DATE null,title VARCHAR(255) null,itemAbstract TEXT null,language VARCHAR(75) null,status INTEGER,Uuid VARCHAR(75) null,metadataValue TEXT null,relatedRestricted BOOLEAN,photoCoverId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Subur_Item (itemId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedDate DATE null,title VARCHAR(255) null,itemAbstract TEXT null,language VARCHAR(75) null,status INTEGER,Uuid VARCHAR(75) null,metadataValue TEXT null,relatedRestricted BOOLEAN,statusByUserId LONG,statusDate DATE null,completed BOOLEAN,coverImageId LONG,counted BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Subur_Item";
 	public static final String ORDER_BY_JPQL = " ORDER BY suburItem.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subur_Item.createDate DESC";
@@ -103,7 +107,8 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long GROUPID_COLUMN_BITMASK = 2L;
 	public static long STATUS_COLUMN_BITMASK = 4L;
-	public static long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -133,7 +138,11 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		model.setUuid(soapModel.getUuid());
 		model.setMetadataValue(soapModel.getMetadataValue());
 		model.setRelatedRestricted(soapModel.getRelatedRestricted());
-		model.setPhotoCoverId(soapModel.getPhotoCoverId());
+		model.setStatusByUserId(soapModel.getStatusByUserId());
+		model.setStatusDate(soapModel.getStatusDate());
+		model.setCompleted(soapModel.getCompleted());
+		model.setCoverImageId(soapModel.getCoverImageId());
+		model.setCounted(soapModel.getCounted());
 
 		return model;
 	}
@@ -213,7 +222,11 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		attributes.put("Uuid", getUuid());
 		attributes.put("metadataValue", getMetadataValue());
 		attributes.put("relatedRestricted", getRelatedRestricted());
-		attributes.put("photoCoverId", getPhotoCoverId());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusDate", getStatusDate());
+		attributes.put("completed", getCompleted());
+		attributes.put("coverImageId", getCoverImageId());
+		attributes.put("counted", getCounted());
 
 		return attributes;
 	}
@@ -310,10 +323,34 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 			setRelatedRestricted(relatedRestricted);
 		}
 
-		Long photoCoverId = (Long)attributes.get("photoCoverId");
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
 
-		if (photoCoverId != null) {
-			setPhotoCoverId(photoCoverId);
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
+		}
+
+		Boolean completed = (Boolean)attributes.get("completed");
+
+		if (completed != null) {
+			setCompleted(completed);
+		}
+
+		Long coverImageId = (Long)attributes.get("coverImageId");
+
+		if (coverImageId != null) {
+			setCoverImageId(coverImageId);
+		}
+
+		Boolean counted = (Boolean)attributes.get("counted");
+
+		if (counted != null) {
+			setCounted(counted);
 		}
 	}
 
@@ -382,6 +419,14 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -393,6 +438,10 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 	@Override
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -567,13 +616,78 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 
 	@JSON
 	@Override
-	public long getPhotoCoverId() {
-		return _photoCoverId;
+	public long getStatusByUserId() {
+		return _statusByUserId;
 	}
 
 	@Override
-	public void setPhotoCoverId(long photoCoverId) {
-		_photoCoverId = photoCoverId;
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getStatusByUserId(), "uuid",
+			_statusByUserUuid);
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		_statusByUserUuid = statusByUserUuid;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
+	@JSON
+	@Override
+	public boolean getCompleted() {
+		return _completed;
+	}
+
+	@Override
+	public boolean isCompleted() {
+		return _completed;
+	}
+
+	@Override
+	public void setCompleted(boolean completed) {
+		_completed = completed;
+	}
+
+	@JSON
+	@Override
+	public long getCoverImageId() {
+		return _coverImageId;
+	}
+
+	@Override
+	public void setCoverImageId(long coverImageId) {
+		_coverImageId = coverImageId;
+	}
+
+	@JSON
+	@Override
+	public boolean getCounted() {
+		return _counted;
+	}
+
+	@Override
+	public boolean isCounted() {
+		return _counted;
+	}
+
+	@Override
+	public void setCounted(boolean counted) {
+		_counted = counted;
 	}
 
 	public long getColumnBitmask() {
@@ -622,7 +736,11 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		suburItemImpl.setUuid(getUuid());
 		suburItemImpl.setMetadataValue(getMetadataValue());
 		suburItemImpl.setRelatedRestricted(getRelatedRestricted());
-		suburItemImpl.setPhotoCoverId(getPhotoCoverId());
+		suburItemImpl.setStatusByUserId(getStatusByUserId());
+		suburItemImpl.setStatusDate(getStatusDate());
+		suburItemImpl.setCompleted(getCompleted());
+		suburItemImpl.setCoverImageId(getCoverImageId());
+		suburItemImpl.setCounted(getCounted());
 
 		suburItemImpl.resetOriginalValues();
 
@@ -682,6 +800,10 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		suburItemModelImpl._originalGroupId = suburItemModelImpl._groupId;
 
 		suburItemModelImpl._setOriginalGroupId = false;
+
+		suburItemModelImpl._originalUserId = suburItemModelImpl._userId;
+
+		suburItemModelImpl._setOriginalUserId = false;
 
 		suburItemModelImpl._originalStatus = suburItemModelImpl._status;
 
@@ -781,14 +903,29 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 
 		suburItemCacheModel.relatedRestricted = getRelatedRestricted();
 
-		suburItemCacheModel.photoCoverId = getPhotoCoverId();
+		suburItemCacheModel.statusByUserId = getStatusByUserId();
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			suburItemCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			suburItemCacheModel.statusDate = Long.MIN_VALUE;
+		}
+
+		suburItemCacheModel.completed = getCompleted();
+
+		suburItemCacheModel.coverImageId = getCoverImageId();
+
+		suburItemCacheModel.counted = getCounted();
 
 		return suburItemCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{itemId=");
 		sb.append(getItemId());
@@ -820,8 +957,16 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		sb.append(getMetadataValue());
 		sb.append(", relatedRestricted=");
 		sb.append(getRelatedRestricted());
-		sb.append(", photoCoverId=");
-		sb.append(getPhotoCoverId());
+		sb.append(", statusByUserId=");
+		sb.append(getStatusByUserId());
+		sb.append(", statusDate=");
+		sb.append(getStatusDate());
+		sb.append(", completed=");
+		sb.append(getCompleted());
+		sb.append(", coverImageId=");
+		sb.append(getCoverImageId());
+		sb.append(", counted=");
+		sb.append(getCounted());
 		sb.append("}");
 
 		return sb.toString();
@@ -829,7 +974,7 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.SuburItem");
@@ -896,8 +1041,24 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 		sb.append(getRelatedRestricted());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>photoCoverId</column-name><column-value><![CDATA[");
-		sb.append(getPhotoCoverId());
+			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
+		sb.append(getStatusByUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
+		sb.append(getStatusDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>completed</column-name><column-value><![CDATA[");
+		sb.append(getCompleted());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>coverImageId</column-name><column-value><![CDATA[");
+		sb.append(getCoverImageId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>counted</column-name><column-value><![CDATA[");
+		sb.append(getCounted());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -918,6 +1079,8 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 	private boolean _setOriginalGroupId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -931,7 +1094,12 @@ public class SuburItemModelImpl extends BaseModelImpl<SuburItem>
 	private String _Uuid;
 	private String _metadataValue;
 	private boolean _relatedRestricted;
-	private long _photoCoverId;
+	private long _statusByUserId;
+	private String _statusByUserUuid;
+	private Date _statusDate;
+	private boolean _completed;
+	private long _coverImageId;
+	private boolean _counted;
 	private long _columnBitmask;
 	private SuburItem _escapedModel;
 }

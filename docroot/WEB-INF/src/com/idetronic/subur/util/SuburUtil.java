@@ -1,9 +1,6 @@
 package com.idetronic.subur.util;
 
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
-import com.idetronic.subur.model.MetadataValue;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -12,18 +9,23 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.util.ContentUtil;
+import com.liferay.util.portlet.PortletProps;
 import com.idetronic.subur.service.MetadataPropertyValueLocalServiceUtil;
 
 import java.io.IOException;
@@ -31,6 +33,9 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 public class SuburUtil {
 	
@@ -92,7 +97,7 @@ public class SuburUtil {
 		return relatedAsset;
 		
 	}
-	
+	/*
 	public List getAuthor(long itemId)
 	{
 		DynamicQuery authorQuery = DynamicQueryFactoryUtil.forClass(
@@ -102,6 +107,7 @@ public class SuburUtil {
 		//List<Object> authors = MetadataValueLocalServiceUtil.
 		return null;
 	}
+	*/
 	public static String getAuhorDisplayName(String firstName,String lastName)
 	{
 		if (Validator.isBlank(lastName) || Validator.isNull(lastName))
@@ -153,6 +159,135 @@ public class SuburUtil {
 		
 	}
 	
+	public static String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException 
+	{
+
+		return PortalUtil.getEmailFromAddress(
+			preferences, companyId, PortletProps.get(PropsKeys.SUBUR_EMAIL_FROM_ADDRESS));
+	}
+	
+	public static Map<Locale, String> getEmailEntryUpdatedSubjectMap(
+			PortletPreferences preferences) {
+
+			Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+				preferences, "emailEntryUpdatedSubject");
+
+			Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+			String defaultValue = map.get(defaultLocale);
+
+			if (Validator.isNotNull(defaultValue)) {
+				return map;
+			}
+
+			map.put(
+				defaultLocale,
+				ContentUtil.get(
+						PortletProps.get(PropsKeys.SUBUR_EMAIL_ENTRY_UPDATED_SUBJECT)));
+
+			return map;
+	}
+	public static Map<Locale, String> getEmailEntryUpdatedBodyMap(PortletPreferences preferences) 
+	{
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryUpdatedBody");
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+					PortletProps.get(PropsKeys.SUBUR_EMAIL_ENTRY_UPDATED_BODY)));
+
+		return map;
+	}
+	
+	public static Map<Locale, String> getEmailEntryAddedSubjectMap(PortletPreferences preferences) 
+	{
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryAddedSubject");
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+					PortletProps.get(PropsKeys.SUBUR_EMAIL_ENTRY_ADDED_SUBJECT)));
+
+		return map;
+	}
+	public static Map<Locale, String> getEmailEntryAddedBodyMap(PortletPreferences preferences) 
+	{
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryAddedBody");
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+					PortletProps.get(PropsKeys.SUBUR_EMAIL_ENTRY_ADDED_BODY)));
+
+		return map;
+	}
+	public static boolean getEmailEntryAddedEnabled(PortletPreferences preferences) 
+	{
+
+			String emailEntryAddedEnabled = preferences.getValue(
+				"emailEntryAddedEnabled", StringPool.BLANK);
+
+			if (Validator.isNotNull(emailEntryAddedEnabled)) {
+				return GetterUtil.getBoolean(emailEntryAddedEnabled);
+			}
+			else {
+				return GetterUtil.getBoolean(
+						PortletProps.get(PropsKeys.SUBUR_EMAIL_ENTRY_ADDED_ENABLED));
+			}
+	}
+	public static boolean getEmailEntryUpdatedEnabled(PortletPreferences preferences) 
+	{
+
+			String emailEntryUpdatedEnabled = preferences.getValue(
+				"emailEntryUpdatedEnabled", StringPool.BLANK);
+
+			if (Validator.isNotNull(emailEntryUpdatedEnabled)) {
+				return GetterUtil.getBoolean(emailEntryUpdatedEnabled);
+			}
+			else {
+				return GetterUtil.getBoolean(
+						PortletProps.get(PropsKeys.SUBUR_EMAIL_ENTRY_UPDATED_ENABLED));
+			}
+		}
+	public static String getEmailFromName(PortletPreferences preferences, long companyId)
+		throws SystemException 
+	{
+
+		return PortalUtil.getEmailFromName(
+			preferences, companyId, PortletProps.get(PropsKeys.SUBUR_EMAIL_FROM_NAME));
+	}
 	
 	
 	

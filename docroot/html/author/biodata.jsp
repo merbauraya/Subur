@@ -12,7 +12,12 @@
 	for (AuthorSite authorSite : authorSites)
 	{
 %>
-		<li><a href="<%=authorSite.getSiteURL() %>"><%=authorSite.getSiteName() %></a></li>
+		<li>
+			<i class="icon icon-external-link"></i>
+			<a href="<%=authorSite.getSiteURL() %>" target="_blank">
+				<%=authorSite.getSiteName() %>
+		
+		</a></li>
 
 <%	
 	}
@@ -38,7 +43,13 @@
 					<%	for (Expertise expertise : expertises) 
 						{	
 					%>
-							<li class="asset-entry"><%=expertise.getName() %>
+							
+							<li class="asset-entry">
+								<i class="icon icon-list"></i>
+							<%=expertise.getName() %>
+							
+							
+							</li>
 					<%
 					
 						}
@@ -65,7 +76,11 @@
 					<%	for (ResearchInterest ri : researchInterests) 
 						{	
 					%>
-							<li class="asset-entry"><%=ri.getName() %>
+							<li class="asset-entry">
+							<i class="icon icon-list"></i>
+							<%=ri.getName() %>
+								
+							</li>
 					<%
 					
 						}

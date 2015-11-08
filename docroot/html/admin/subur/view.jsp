@@ -1,132 +1,44 @@
-<%@ include file="/html/init.jsp" %>
+<%@ include file="/html/subur/init.jsp" %>
 <%
-	//List<Item> suburItems = ItemLocalServiceUtil.getDraftItems();	
+
+
+	String viewTab = ParamUtil.getString(request, "tabs1", "draft");
 	PortletURL portletURL = renderResponse.createRenderURL();
+	portletURL.setParameter("tabs1", viewTab);
 	portletURL.setParameter("mvcPath", "/html/admin/subur/view.jsp");
-	portletURL.setWindowState(WindowState.NORMAL);
-
-/*
-	PortletURL addItemURL = renderResponse.createRenderURL();
-	addItemURL.setParameter("mvcPath", "/html/deposit/new.jsp");
-	addItemURL.setParameter(Constants.CMD, Constants.ADD);
-*/
-	String catMsg="";
-
 	
-
+%>	
 	
-	
-	PortletURL editEntryURL = renderResponse.createActionURL();
-	editEntryURL.setParameter("mvcPath", SuburConstant.PAGE_UPDATE_ITEM);
-	editEntryURL.setParameter(Constants.CMD, Constants.EDIT);
-	editEntryURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-	int status = SuburConstant.STATUS_ANY;
-
-%>
-
-<liferay-portlet:renderURL varImpl="searchURL">
-        <portlet:param name="mvcPath" value="/html/search/subur_search.jsp" />
-</liferay-portlet:renderURL>
-
-<aui:form action="<%=searchURL%>" name="fm" inlineLabel="<%= true %>">
+	<aui:form action="<%=searchURL%>" name="fm" inlineLabel="<%= true %>">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<%@ include file="/html/admin/subur/top_nav.jsp" %>
-</aui:form>
-
-
-<liferay-ui:search-container
-	emptyResultsMessage="no-item-were-found"
-	iteratorURL="<%=portletURL %>"
-	total="<%= SuburItemLocalServiceUtil.getItemCount(status) %>"
->
-	<liferay-ui:search-container-results
-		results="<%= SuburItemLocalServiceUtil.getSuburItems(searchContainer.getStart(), searchContainer.getEnd(), status)  %>"
+	<%@ include file="/html/admin/subur/toolbar.jsp" %>
+	</aui:form>
+	
+	<liferay-ui:tabs
+	names="draft,pending,approved,denied,all "
+	portletURL="<%= portletURL %>"
 	/>
-	<liferay-ui:search-container-row
-		className="com.idetronic.subur.model.SuburItem"
-		escapedModel="<%= true %>"
-		keyProperty="itemId"
-		modelVar="item"
-	>
 	<%
-		String statusText="status-"+ item.getStatus();
+		int status = WorkflowConstants.STATUS_ANY;
+		if (viewTab.equalsIgnoreCase("draft"))
+			status = WorkflowConstants.STATUS_DRAFT;
+		else if (viewTab.equalsIgnoreCase("pending"))
+			status = WorkflowConstants.STATUS_PENDING;
+		else if (viewTab.equalsIgnoreCase("approved"))
+			status = WorkflowConstants.STATUS_APPROVED;
+		else if (viewTab.equalsIgnoreCase("denied"))
+			status = WorkflowConstants.STATUS_DENIED;
+		
+	
+		
+	
 	%>
-	<liferay-ui:search-container-column-text
-				name="title"
-				title="<%= item.getTitle() %>"
-	/>
 	
-	<liferay-ui:search-container-column-text
-				name="createDate"
-				buffer="buffer"
-	>
-		<%
-			buffer.append(dateFormatDate.format(item.getCreateDate()));
-		%>
-	</liferay-ui:search-container-column-text>	
-	<liferay-ui:search-container-column-text
-		name="Last Modified"
-		buffer="buffer"
-	>
-		<%
-			buffer.append(timeFormatDate.format(item.getModifiedDate()));
-		%>
-	</liferay-ui:search-container-column-text>
-	<liferay-ui:search-container-column-text
-		name="status">
-		<liferay-ui:message key="<%=statusText%>" />
-		
-		
-		
-		
-	</liferay-ui:search-container-column-text>
+	<liferay-util:include page="/html/admin/subur/view_publication.jsp" servletContext="<%= application %>" >
+		<liferay-util:param name="status" value="<%= String.valueOf(status) %>" />
 	
-	<liferay-ui:search-container-column-text name="Action">		
-		<liferay-ui:icon-menu>
-			
-			<portlet:renderURL var="editURL" windowState="<%=LiferayWindowState.MAXIMIZED.toString() %>">
-				<portlet:param name="mvcPath" value="<%=SuburConstant.PAGE_UPDATE_ITEM %>"/>
-				<portlet:param name="itemId" value="<%=String.valueOf(item.getItemId()) %>" />
-				<portlet:param name="redirect" value="<%=portletURL.toString() %>"/>
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
-			</portlet:renderURL>
-			
-			<portlet:actionURL var="deleteItemURL" name="deleteItem">
-				<portlet:param name="itemId" value="<%=String.valueOf(item.getItemId()) %>" />
-				<portlet:param name="redirect" value="<%=portletURL.toString() %>"/>
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-			</portlet:actionURL>
-			
-			<portlet:actionURL var="publishItemURL" name="publishItem">
-				<portlet:param name="itemId" value="<%=String.valueOf(item.getItemId()) %>" />
-				<portlet:param name="redirect" value="<%=portletURL.toString() %>"/>
-			</portlet:actionURL>
-			
-			<portlet:actionURL var="withdrawItemURL" name="withdrawItem">
-				<portlet:param name="itemId" value="<%=String.valueOf(item.getItemId()) %>" />
-				<portlet:param name="redirect" value="<%=portletURL.toString() %>"/>
-			</portlet:actionURL>
-			
-			
-				<%
-				
-				
-				
-				
-				
-				%>
-				<liferay-ui:icon image="edit" url="<%=editURL.toString()  %>" />
-				<liferay-ui:icon-delete url="<%=deleteItemURL.toString()  %>" />
-				<c:if test="<%= (item.getStatus() == SuburConstant.STATUS_DRAFT_ITEM) %>">
-					<liferay-ui:icon image="publish" url="<%=publishItemURL.toString()  %>" />	
-				</c:if>
-				
-				<c:if test="<%= (item.getStatus() == SuburConstant.STATUS_PUBLISHED_ITEM) %>">
-					<liferay-ui:icon image="withdraw" url="<%=withdrawItemURL.toString()  %>" />	
-				</c:if>
-		
-		</liferay-ui:icon-menu>
-		</liferay-ui:search-container-column-text>
-	</liferay-ui:search-container-row>
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+	</liferay-util:include>
+	
+	
+	
+	

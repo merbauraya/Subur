@@ -10,7 +10,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 public class AuthorPermission {
-	private static String CLASS_NAME="com.idetronic.subur.Author";
+	private static String CLASS_NAME="com.idetronic.subur.model.Author";
 	
 	public static void check(PermissionChecker permissionChecker,
 			long authorId, String actionId) throws PortalException,

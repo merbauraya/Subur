@@ -60,9 +60,12 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "itemTypeId", Types.BIGINT },
 			{ "itemTypeName", Types.VARCHAR },
-			{ "itemCount", Types.INTEGER }
+			{ "itemCount", Types.INTEGER },
+			{ "companyId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "approvedCount", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subur_ItemType (itemTypeId LONG not null primary key,itemTypeName VARCHAR(75) null,itemCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Subur_ItemType (itemTypeId LONG not null primary key,itemTypeName VARCHAR(75) null,itemCount INTEGER,companyId LONG,groupId LONG,approvedCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Subur_ItemType";
 	public static final String ORDER_BY_JPQL = " ORDER BY itemType.itemTypeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subur_ItemType.itemTypeId ASC";
@@ -75,7 +78,12 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.idetronic.subur.model.ItemType"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.idetronic.subur.model.ItemType"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long ITEMTYPEID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.idetronic.subur.model.ItemType"));
 
@@ -119,6 +127,9 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 		attributes.put("itemTypeId", getItemTypeId());
 		attributes.put("itemTypeName", getItemTypeName());
 		attributes.put("itemCount", getItemCount());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("approvedCount", getApprovedCount());
 
 		return attributes;
 	}
@@ -141,6 +152,24 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 
 		if (itemCount != null) {
 			setItemCount(itemCount);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Integer approvedCount = (Integer)attributes.get("approvedCount");
+
+		if (approvedCount != null) {
+			setApprovedCount(approvedCount);
 		}
 	}
 
@@ -180,8 +209,66 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	@Override
+	public int getApprovedCount() {
+		return _approvedCount;
+	}
+
+	@Override
+	public void setApprovedCount(int approvedCount) {
+		_approvedCount = approvedCount;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			ItemType.class.getName(), getPrimaryKey());
 	}
 
@@ -209,6 +296,9 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 		itemTypeImpl.setItemTypeId(getItemTypeId());
 		itemTypeImpl.setItemTypeName(getItemTypeName());
 		itemTypeImpl.setItemCount(getItemCount());
+		itemTypeImpl.setCompanyId(getCompanyId());
+		itemTypeImpl.setGroupId(getGroupId());
+		itemTypeImpl.setApprovedCount(getApprovedCount());
 
 		itemTypeImpl.resetOriginalValues();
 
@@ -259,6 +349,17 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 
 	@Override
 	public void resetOriginalValues() {
+		ItemTypeModelImpl itemTypeModelImpl = this;
+
+		itemTypeModelImpl._originalCompanyId = itemTypeModelImpl._companyId;
+
+		itemTypeModelImpl._setOriginalCompanyId = false;
+
+		itemTypeModelImpl._originalGroupId = itemTypeModelImpl._groupId;
+
+		itemTypeModelImpl._setOriginalGroupId = false;
+
+		itemTypeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -277,12 +378,18 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 
 		itemTypeCacheModel.itemCount = getItemCount();
 
+		itemTypeCacheModel.companyId = getCompanyId();
+
+		itemTypeCacheModel.groupId = getGroupId();
+
+		itemTypeCacheModel.approvedCount = getApprovedCount();
+
 		return itemTypeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{itemTypeId=");
 		sb.append(getItemTypeId());
@@ -290,6 +397,12 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 		sb.append(getItemTypeName());
 		sb.append(", itemCount=");
 		sb.append(getItemCount());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+		sb.append(", approvedCount=");
+		sb.append(getApprovedCount());
 		sb.append("}");
 
 		return sb.toString();
@@ -297,7 +410,7 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.ItemType");
@@ -315,6 +428,18 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 			"<column><column-name>itemCount</column-name><column-value><![CDATA[");
 		sb.append(getItemCount());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>approvedCount</column-name><column-value><![CDATA[");
+		sb.append(getApprovedCount());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -328,5 +453,13 @@ public class ItemTypeModelImpl extends BaseModelImpl<ItemType>
 	private long _itemTypeId;
 	private String _itemTypeName;
 	private int _itemCount;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
+	private int _approvedCount;
+	private long _columnBitmask;
 	private ItemType _escapedModel;
 }

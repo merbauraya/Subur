@@ -14,14 +14,25 @@
 
 package com.idetronic.subur.service.impl;
 
+import java.io.IOException;
 import java.util.Date;
 
+import com.idetronic.subur.NoSuchConfigException;
 import com.idetronic.subur.NoSuchCopyRequestException;
 import com.idetronic.subur.model.CopyRequest;
 import com.idetronic.subur.model.impl.CopyRequestImpl;
+import com.idetronic.subur.notification.SuburNotificationHandler;
 import com.idetronic.subur.service.base.CopyRequestLocalServiceBaseImpl;
+import com.idetronic.subur.util.SuburConfiguration;
+import com.idetronic.subur.util.SuburUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 
 /**
  * The implementation of the copy request local service.
@@ -45,7 +56,8 @@ public class CopyRequestLocalServiceImpl extends CopyRequestLocalServiceBaseImpl
 	 */
 	
 	public CopyRequest addCopyRequest(long suburItemId,String requesterName,String fromEmailAddress,
-			String organization,String reason,long companyId,long groupId) throws SystemException
+			String organization,String reason,long companyId,long groupId,
+			long userId,ServiceContext serviceContext) throws SystemException, IOException, PortalException
 	{
 		long copyRequestId = CounterLocalServiceUtil.increment(CopyRequest.class.getName());
 		
@@ -60,6 +72,38 @@ public class CopyRequestLocalServiceImpl extends CopyRequestLocalServiceBaseImpl
 		copyRequest.setDateCreated(new Date());
 		copyRequest.setCompanyId(companyId);
 		copyRequest.setGroupId(groupId);
+		
+		//
+		
+		JSONObject payloadJSON = JSONFactoryUtil.createJSONObject();
+	    payloadJSON.put("userId", userId);
+	    payloadJSON.put("copyRequestId", copyRequest.getCopyRequestId());
+	    payloadJSON.put("itemId", suburItemId);
+	    
+	    payloadJSON.put("additionalData", "Your notification was added!");
+		
+		//who will receive the notification
+	    String notificationRoleString = SuburConfiguration.getConfig(SuburConfiguration.NOTIFICATION_ROLES);
+	    long[] notificationRoles = StringUtil.split(notificationRoleString, 0L);
+	    
+	    long[] notificationUsers = SuburUtil.getUserByRole(companyId, notificationRoles);
+	   
+	    
+	    for (long recepientUserId : notificationUsers)
+	    {
+		    UserNotificationEventLocalServiceUtil.addUserNotificationEvent(recepientUserId, 
+		    		SuburNotificationHandler.NOTIFICATION_REQUEST_RESTRICTED_COPY, 
+		    		(new Date()).getTime(),
+		    		userId,
+		    		payloadJSON.toString(),
+		    		false, serviceContext);	
+		    
+		    
+		    
+		    
+	    }
+		
+		
 		return copyRequestPersistence.update(copyRequest);
 	}
 	

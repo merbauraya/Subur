@@ -46,7 +46,11 @@ public class SuburItemSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setMetadataValue(model.getMetadataValue());
 		soapModel.setRelatedRestricted(model.getRelatedRestricted());
-		soapModel.setPhotoCoverId(model.getPhotoCoverId());
+		soapModel.setStatusByUserId(model.getStatusByUserId());
+		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setCompleted(model.getCompleted());
+		soapModel.setCoverImageId(model.getCoverImageId());
+		soapModel.setCounted(model.getCounted());
 
 		return soapModel;
 	}
@@ -223,12 +227,52 @@ public class SuburItemSoap implements Serializable {
 		_relatedRestricted = relatedRestricted;
 	}
 
-	public long getPhotoCoverId() {
-		return _photoCoverId;
+	public long getStatusByUserId() {
+		return _statusByUserId;
 	}
 
-	public void setPhotoCoverId(long photoCoverId) {
-		_photoCoverId = photoCoverId;
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
+	public boolean getCompleted() {
+		return _completed;
+	}
+
+	public boolean isCompleted() {
+		return _completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		_completed = completed;
+	}
+
+	public long getCoverImageId() {
+		return _coverImageId;
+	}
+
+	public void setCoverImageId(long coverImageId) {
+		_coverImageId = coverImageId;
+	}
+
+	public boolean getCounted() {
+		return _counted;
+	}
+
+	public boolean isCounted() {
+		return _counted;
+	}
+
+	public void setCounted(boolean counted) {
+		_counted = counted;
 	}
 
 	private long _itemId;
@@ -246,5 +290,9 @@ public class SuburItemSoap implements Serializable {
 	private String _Uuid;
 	private String _metadataValue;
 	private boolean _relatedRestricted;
-	private long _photoCoverId;
+	private long _statusByUserId;
+	private Date _statusDate;
+	private boolean _completed;
+	private long _coverImageId;
+	private boolean _counted;
 }

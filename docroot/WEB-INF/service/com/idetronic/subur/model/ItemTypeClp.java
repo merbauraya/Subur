@@ -75,6 +75,9 @@ public class ItemTypeClp extends BaseModelImpl<ItemType> implements ItemType {
 		attributes.put("itemTypeId", getItemTypeId());
 		attributes.put("itemTypeName", getItemTypeName());
 		attributes.put("itemCount", getItemCount());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("approvedCount", getApprovedCount());
 
 		return attributes;
 	}
@@ -97,6 +100,24 @@ public class ItemTypeClp extends BaseModelImpl<ItemType> implements ItemType {
 
 		if (itemCount != null) {
 			setItemCount(itemCount);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Integer approvedCount = (Integer)attributes.get("approvedCount");
+
+		if (approvedCount != null) {
+			setApprovedCount(approvedCount);
 		}
 	}
 
@@ -162,6 +183,75 @@ public class ItemTypeClp extends BaseModelImpl<ItemType> implements ItemType {
 				Method method = clazz.getMethod("setItemCount", int.class);
 
 				method.invoke(_itemTypeRemoteModel, itemCount);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+
+		if (_itemTypeRemoteModel != null) {
+			try {
+				Class<?> clazz = _itemTypeRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_itemTypeRemoteModel, companyId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+
+		if (_itemTypeRemoteModel != null) {
+			try {
+				Class<?> clazz = _itemTypeRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGroupId", long.class);
+
+				method.invoke(_itemTypeRemoteModel, groupId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getApprovedCount() {
+		return _approvedCount;
+	}
+
+	@Override
+	public void setApprovedCount(int approvedCount) {
+		_approvedCount = approvedCount;
+
+		if (_itemTypeRemoteModel != null) {
+			try {
+				Class<?> clazz = _itemTypeRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setApprovedCount", int.class);
+
+				method.invoke(_itemTypeRemoteModel, approvedCount);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -241,6 +331,9 @@ public class ItemTypeClp extends BaseModelImpl<ItemType> implements ItemType {
 		clone.setItemTypeId(getItemTypeId());
 		clone.setItemTypeName(getItemTypeName());
 		clone.setItemCount(getItemCount());
+		clone.setCompanyId(getCompanyId());
+		clone.setGroupId(getGroupId());
+		clone.setApprovedCount(getApprovedCount());
 
 		return clone;
 	}
@@ -293,7 +386,7 @@ public class ItemTypeClp extends BaseModelImpl<ItemType> implements ItemType {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{itemTypeId=");
 		sb.append(getItemTypeId());
@@ -301,6 +394,12 @@ public class ItemTypeClp extends BaseModelImpl<ItemType> implements ItemType {
 		sb.append(getItemTypeName());
 		sb.append(", itemCount=");
 		sb.append(getItemCount());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+		sb.append(", approvedCount=");
+		sb.append(getApprovedCount());
 		sb.append("}");
 
 		return sb.toString();
@@ -308,7 +407,7 @@ public class ItemTypeClp extends BaseModelImpl<ItemType> implements ItemType {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.ItemType");
@@ -326,6 +425,18 @@ public class ItemTypeClp extends BaseModelImpl<ItemType> implements ItemType {
 			"<column><column-name>itemCount</column-name><column-value><![CDATA[");
 		sb.append(getItemCount());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>approvedCount</column-name><column-value><![CDATA[");
+		sb.append(getApprovedCount());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -335,6 +446,9 @@ public class ItemTypeClp extends BaseModelImpl<ItemType> implements ItemType {
 	private long _itemTypeId;
 	private String _itemTypeName;
 	private int _itemCount;
+	private long _companyId;
+	private long _groupId;
+	private int _approvedCount;
 	private BaseModel<?> _itemTypeRemoteModel;
 	private Class<?> _clpSerializerClass = com.idetronic.subur.service.ClpSerializer.class;
 }

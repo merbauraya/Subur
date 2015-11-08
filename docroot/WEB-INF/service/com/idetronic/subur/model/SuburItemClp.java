@@ -90,7 +90,11 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 		attributes.put("Uuid", getUuid());
 		attributes.put("metadataValue", getMetadataValue());
 		attributes.put("relatedRestricted", getRelatedRestricted());
-		attributes.put("photoCoverId", getPhotoCoverId());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusDate", getStatusDate());
+		attributes.put("completed", getCompleted());
+		attributes.put("coverImageId", getCoverImageId());
+		attributes.put("counted", getCounted());
 
 		return attributes;
 	}
@@ -187,10 +191,34 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 			setRelatedRestricted(relatedRestricted);
 		}
 
-		Long photoCoverId = (Long)attributes.get("photoCoverId");
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
 
-		if (photoCoverId != null) {
-			setPhotoCoverId(photoCoverId);
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
+		}
+
+		Boolean completed = (Boolean)attributes.get("completed");
+
+		if (completed != null) {
+			setCompleted(completed);
+		}
+
+		Long coverImageId = (Long)attributes.get("coverImageId");
+
+		if (coverImageId != null) {
+			setCoverImageId(coverImageId);
+		}
+
+		Boolean counted = (Boolean)attributes.get("counted");
+
+		if (counted != null) {
+			setCounted(counted);
 		}
 	}
 
@@ -556,25 +584,176 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 	}
 
 	@Override
-	public long getPhotoCoverId() {
-		return _photoCoverId;
+	public long getStatusByUserId() {
+		return _statusByUserId;
 	}
 
 	@Override
-	public void setPhotoCoverId(long photoCoverId) {
-		_photoCoverId = photoCoverId;
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
 
 		if (_suburItemRemoteModel != null) {
 			try {
 				Class<?> clazz = _suburItemRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setPhotoCoverId", long.class);
+				Method method = clazz.getMethod("setStatusByUserId", long.class);
 
-				method.invoke(_suburItemRemoteModel, photoCoverId);
+				method.invoke(_suburItemRemoteModel, statusByUserId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
 			}
+		}
+	}
+
+	@Override
+	public String getStatusByUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getStatusByUserId(), "uuid",
+			_statusByUserUuid);
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		_statusByUserUuid = statusByUserUuid;
+	}
+
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+
+		if (_suburItemRemoteModel != null) {
+			try {
+				Class<?> clazz = _suburItemRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setStatusDate", Date.class);
+
+				method.invoke(_suburItemRemoteModel, statusDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public boolean getCompleted() {
+		return _completed;
+	}
+
+	@Override
+	public boolean isCompleted() {
+		return _completed;
+	}
+
+	@Override
+	public void setCompleted(boolean completed) {
+		_completed = completed;
+
+		if (_suburItemRemoteModel != null) {
+			try {
+				Class<?> clazz = _suburItemRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompleted", boolean.class);
+
+				method.invoke(_suburItemRemoteModel, completed);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getCoverImageId() {
+		return _coverImageId;
+	}
+
+	@Override
+	public void setCoverImageId(long coverImageId) {
+		_coverImageId = coverImageId;
+
+		if (_suburItemRemoteModel != null) {
+			try {
+				Class<?> clazz = _suburItemRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCoverImageId", long.class);
+
+				method.invoke(_suburItemRemoteModel, coverImageId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public boolean getCounted() {
+		return _counted;
+	}
+
+	@Override
+	public boolean isCounted() {
+		return _counted;
+	}
+
+	@Override
+	public void setCounted(boolean counted) {
+		_counted = counted;
+
+		if (_suburItemRemoteModel != null) {
+			try {
+				Class<?> clazz = _suburItemRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCounted", boolean.class);
+
+				method.invoke(_suburItemRemoteModel, counted);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public boolean isApproved() {
+		try {
+			String methodName = "isApproved";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		try {
+			String methodName = "isDraft";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
 		}
 	}
 
@@ -588,6 +767,25 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 			Object[] parameterValues = new Object[] {  };
 
 			java.util.Map<java.lang.String, java.lang.String> returnObj = (java.util.Map<java.lang.String, java.lang.String>)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		try {
+			String methodName = "isPending";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
@@ -807,7 +1005,11 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 		clone.setUuid(getUuid());
 		clone.setMetadataValue(getMetadataValue());
 		clone.setRelatedRestricted(getRelatedRestricted());
-		clone.setPhotoCoverId(getPhotoCoverId());
+		clone.setStatusByUserId(getStatusByUserId());
+		clone.setStatusDate(getStatusDate());
+		clone.setCompleted(getCompleted());
+		clone.setCoverImageId(getCoverImageId());
+		clone.setCounted(getCounted());
 
 		return clone;
 	}
@@ -860,7 +1062,7 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{itemId=");
 		sb.append(getItemId());
@@ -892,8 +1094,16 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 		sb.append(getMetadataValue());
 		sb.append(", relatedRestricted=");
 		sb.append(getRelatedRestricted());
-		sb.append(", photoCoverId=");
-		sb.append(getPhotoCoverId());
+		sb.append(", statusByUserId=");
+		sb.append(getStatusByUserId());
+		sb.append(", statusDate=");
+		sb.append(getStatusDate());
+		sb.append(", completed=");
+		sb.append(getCompleted());
+		sb.append(", coverImageId=");
+		sb.append(getCoverImageId());
+		sb.append(", counted=");
+		sb.append(getCounted());
 		sb.append("}");
 
 		return sb.toString();
@@ -901,7 +1111,7 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.subur.model.SuburItem");
@@ -968,8 +1178,24 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 		sb.append(getRelatedRestricted());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>photoCoverId</column-name><column-value><![CDATA[");
-		sb.append(getPhotoCoverId());
+			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
+		sb.append(getStatusByUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
+		sb.append(getStatusDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>completed</column-name><column-value><![CDATA[");
+		sb.append(getCompleted());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>coverImageId</column-name><column-value><![CDATA[");
+		sb.append(getCoverImageId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>counted</column-name><column-value><![CDATA[");
+		sb.append(getCounted());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -993,7 +1219,12 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 	private String _Uuid;
 	private String _metadataValue;
 	private boolean _relatedRestricted;
-	private long _photoCoverId;
+	private long _statusByUserId;
+	private String _statusByUserUuid;
+	private Date _statusDate;
+	private boolean _completed;
+	private long _coverImageId;
+	private boolean _counted;
 	private BaseModel<?> _suburItemRemoteModel;
 	private Class<?> _clpSerializerClass = com.idetronic.subur.service.ClpSerializer.class;
 }

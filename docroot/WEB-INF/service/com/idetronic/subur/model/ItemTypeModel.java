@@ -100,6 +100,48 @@ public interface ItemTypeModel extends BaseModel<ItemType> {
 	 */
 	public void setItemCount(int itemCount);
 
+	/**
+	 * Returns the company ID of this item type.
+	 *
+	 * @return the company ID of this item type
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this item type.
+	 *
+	 * @param companyId the company ID of this item type
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the group ID of this item type.
+	 *
+	 * @return the group ID of this item type
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this item type.
+	 *
+	 * @param groupId the group ID of this item type
+	 */
+	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the approved count of this item type.
+	 *
+	 * @return the approved count of this item type
+	 */
+	public int getApprovedCount();
+
+	/**
+	 * Sets the approved count of this item type.
+	 *
+	 * @param approvedCount the approved count of this item type
+	 */
+	public void setApprovedCount(int approvedCount);
+
 	@Override
 	public boolean isNew();
 

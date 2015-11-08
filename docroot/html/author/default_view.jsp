@@ -17,7 +17,7 @@
 	<aui:layout>
 		<div class="span4">
 		<h4>By Expertise</h4>	
-		
+		<div class="list-group">
 		<ul class="author no-margin style-none">
 		<%
 			List<Expertise> top10Expertises = ExpertiseLocalServiceUtil.getTop10(themeDisplay.getScopeGroupId());
@@ -31,19 +31,25 @@
 			</portlet:actionURL>
 		
 		
-			<li><a href="<%=byExpertiseURL %>">
+			<li>
+			
+			<a class="list-group-item" href="<%=byExpertiseURL %>">
+				<i class="icon-circle-arrow-right" style="color:#2dcc70"></i>
 				<%=expertise.getName() %>
+				<span class="badge"><%=expertise.getAuthorCount() %></span>
 			</a>
 			
 			
-			<span class="badge"><%=expertise.getAuthorCount() %></span>
+			
 			</li>
 		
 		<%} %>
 		</ul>
+		</div>
 	</div>
 	<div class="span4">
 		<h4>By Research Interest</h4>	
+		<div class="list-group">
 		<ul class="author no-margin style-none">
 		
 		<%
@@ -57,14 +63,19 @@
 				<portlet:param name="filterKey" value="<%=String.valueOf(researchInterest.getResearchInterestId()) %>" />
 			</portlet:actionURL>
 		
-			<li><a href="<%=byRIURL %>">
-			<%=researchInterest.getName()  %>
+			<li>
+				<a class="list-group-item" href="<%=byRIURL%>">
+					<i class="icon-circle-arrow-right" style="color:#2dcc70"></i>
+			
+					<%=researchInterest.getName()  %>
+					<span class="badge"><%= researchInterest.getAuthorCount() %></span>
 				</a>
-				<span class="badge"><%= researchInterest.getAuthorCount() %></span>
+				
 			</li>
 		
 		<%} %>
 		</ul>
+		</div>
 	</div>
 	
 	
@@ -81,6 +92,7 @@
 	%>
 		<div class="span4">
 			<h4>By <%=vocab.getName() %></h4>
+			<div class="list-group">
 				<ul class="author no-margin style-none">
 				<%
 					vocabCol++;
@@ -103,10 +115,13 @@
 			</portlet:actionURL>
 				
 					<li>
-						<a href="<%=byCategory %>">
+						<a href="<%=byCategory %>" class="list-group-item">
+						<i class="icon-circle-arrow-right" style="color:#2dcc70"></i>
+						
 							<%=category.getName() %>
+							<span class="badge"><%= count %></span>
 						</a>
-						<span class="badge"><%= count %></span>
+						
 					</li>
 				
 				<%
@@ -115,7 +130,7 @@
 				
 				</ul>
 		
-		
+			</div>
 		</div>
 		<c:if test="<%=vocabCol>3 %>">
 			<% vocabCol = 1; %>

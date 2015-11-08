@@ -32,13 +32,15 @@ public class SuburNotificationHandler extends BaseUserNotificationHandler
 
 {
 	public static final String PORTLET_ID = "Subur_WAR_Suburportlet";
-
+	public static final String NOTIFICATION_REQUEST_RESTRICTED_COPY = "REQUEST_SUBUR_RESTRICTED_COPY";
+	public static final String NOTIFICATION_SUBUR_PUBLICATION_ADDED = "SUBUR_PUBLICATION_ADDED";
+	public static final String NOTIFICATION_SUBUR_PUBLICATION_UPDATED = "SUBUR_PUBLICATION_UPDATED";
 	
 	public SuburNotificationHandler() 
 	{
 		 
 		setPortletId(PORTLET_ID);
- 
+		
 	}
 	
 	@Override

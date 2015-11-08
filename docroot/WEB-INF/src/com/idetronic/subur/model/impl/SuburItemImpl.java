@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 
 /**
@@ -92,6 +93,19 @@ public class SuburItemImpl extends SuburItemBaseImpl {
 	{
 		this._otherTitles = otherTitle;
 		buildMetadataValue();
+	}
+	public boolean isApproved()
+	{
+		return (super.getStatus() == WorkflowConstants.STATUS_APPROVED);
+	}
+	public boolean isPending()
+	{
+		return (super.getStatus() == WorkflowConstants.STATUS_PENDING);
+
+	}
+	public boolean isDraft()
+	{
+		return (super.getStatus() == WorkflowConstants.STATUS_DRAFT);
 	}
 	public String getMetadataValue()
 	{

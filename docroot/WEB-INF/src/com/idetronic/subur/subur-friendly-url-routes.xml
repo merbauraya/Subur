@@ -27,21 +27,27 @@
         <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
         <implicit-parameter name="mvcPath">/html/search/subur_search.jsp</implicit-parameter>
     </route>
+     <route>
+    	<pattern>/my-submission</pattern>
+    	<ignored-parameter name="redirect"/>
+    	<ignored-parameter name="backURL"/>
+    	<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+    	
+    	<implicit-parameter name="mvcPath">/html/admin/subur/my_submission.jsp</implicit-parameter>
+    </route>
     <route>
         <pattern>/{itemId}</pattern>
         <ignored-parameter name="redirect"/>
         <implicit-parameter name="mvcPath">/html/renderer/item_full.jsp</implicit-parameter>
-        
-        
+    
     </route>
     <route>
-        <pattern>/{entryId}/view_entry</pattern>
-        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-        <implicit-parameter name="mvcPath">/html/guestbook/view_entry.jsp</implicit-parameter>
+        <pattern>/edit/{itemId}</pattern>
+        <ignored-parameter name="redirect"/>
+        <implicit-parameter name="mvcPath">/html/deposit.jsp</implicit-parameter>
+    
     </route>
-    <route>
-        <pattern>/{guestbookId}/view</pattern>
-        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-        <implicit-parameter name="mvcPath">/html/guestbook/view.jsp</implicit-parameter>
-    </route>
+   
+    
+    
 </routes>

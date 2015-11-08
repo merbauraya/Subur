@@ -35,9 +35,6 @@ import com.idetronic.subur.notification.SuburNotificationHandler;
 import com.idetronic.subur.service.CopyRequestLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemServiceUtil;
-import com.idetronic.subur.service.permission.AuthorPermission;
-import com.idetronic.subur.service.permission.SuburItemPermission;
-import com.idetronic.subur.service.permission.SuburModelPermission;
 import com.idetronic.subur.service.permission.SuburPermission;
 import com.idetronic.subur.util.SuburConfiguration;
 import com.idetronic.subur.util.SuburConstant;
@@ -45,7 +42,10 @@ import com.idetronic.subur.util.SuburFileUtil;
 import com.idetronic.subur.util.SuburFolderUtil;
 import com.idetronic.subur.util.SuburUtil;
 import com.idetronic.subur.util.WebKeys;
+import com.idetronic.subur.util.ActionKeys;
+
 import com.liferay.portal.NoSuchResourceException;
+import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -65,20 +65,18 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.User;
+import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
+
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -90,7 +88,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
-import com.liferay.util.portlet.PortletProps;
 
 public class Subur extends MVCPortlet {
 	private static Log logger = LogFactoryUtil.getLog(Subur.class);
@@ -105,7 +102,7 @@ public class Subur extends MVCPortlet {
 		
 		Event event = request.getEvent();
         String value = (String) event.getValue();
-        logger.info("event");
+        
 		
        // if (event.getName().equalsIgnoreCase("categoryNav"))
         //{
@@ -139,6 +136,8 @@ public class Subur extends MVCPortlet {
 		}
 		
 		ServiceContext serviceContext;
+		WorkflowDefinitionLink workflowDefinitionLink=null;
+
 		try {
 			serviceContext = ServiceContextFactory.getInstance(
 			         SuburItem.class.getName(), request);
@@ -146,6 +145,8 @@ public class Subur extends MVCPortlet {
 			SuburItem item = SuburItemLocalServiceUtil.addItem(themeDisplay.getUserId(), 
 					themeDisplay.getScopeGroupId(),title, itemAbstract, itemTypeIds, serviceContext);
 			
+			workflowDefinitionLink=WorkflowDefinitionLinkLocalServiceUtil.getDefaultWorkflowDefinitionLink(themeDisplay.getCompanyId(), SuburItem.class.getName(), 0, 0);
+
 			
 			request.setAttribute("itemId", String.valueOf(item.getItemId()));
 			
@@ -155,10 +156,12 @@ public class Subur extends MVCPortlet {
 		} catch (PortalException e) {
 			logger.error(e);
 			throw new PortalException(e);
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
+		}  catch (Exception e)
+		{
+			if(e instanceof NoSuchWorkflowDefinitionLinkException){
+				SessionMessages.add(request.getPortletSession(),"workflow-not-enabled");
+			}
 			logger.error(e);
-			throw new SystemException(e);
 		}
 		
 		
@@ -212,7 +215,7 @@ public class Subur extends MVCPortlet {
 	{
 		
 		String cmd = ParamUtil.getString(request, Constants.CMD);
-		logger.info(cmd);
+		
 		String redirect = ParamUtil.getString(request, "redirect");
 		long itemId = ParamUtil.getLong(request, "itemId");
 		if (cmd.equals(Constants.DELETE)){
@@ -250,6 +253,9 @@ public class Subur extends MVCPortlet {
 		
 		
 		
+		int status = ParamUtil.getInteger(uploadRequest, "status");
+		int workflowAction = ParamUtil.getInteger(uploadRequest, "workflowAction");
+		serviceContext.setWorkflowAction(workflowAction);
 		
 		long itemId = ParamUtil.getLong(uploadRequest, "itemId");
 		
@@ -379,25 +385,26 @@ public class Subur extends MVCPortlet {
 		
 		}
 		
-		//author profile photo
-		
-		
+			
 		try {
 			SuburItem suburItem = SuburItemLocalServiceUtil.getSuburItem(itemId);
 						
 			suburItem.setTitle(title);
 			suburItem.setLanguage(language);
 			suburItem.setItemAbstract(itemAbstract);
-			suburItem.setStatus(itemStatus);
+			//suburItem.setStatus(itemStatus);
 			suburItem.setOtherTitle(otherTitles);
 			suburItem.setSeriesReportNo(serieReportNoMap);
 			suburItem.setIdentifier(itemIdentifierMap);
 			suburItem.setRelatedRestricted(relatedRestricted);
+			//suburItem.setStatus(status);
 			serviceContext.setAssetTagNames(tagNamesArr);
 			serviceContext.setAssetCategoryIds(catIds);
 			
+			logger.info("newstatus="+status + ":wation="+workflowAction);
+			SuburItemLocalServiceUtil.updateSuburItem(suburItem, userId, status,itemTypeIds, authorIds, serviceContext);
+			//SuburItemLocalServiceUtil.updateStatus(userId, suburItem.getItemId(), status, serviceContext);
 			
-			SuburItemLocalServiceUtil.updateSuburItem(suburItem, userId, itemTypeIds, authorIds, serviceContext);
 			
 			if (Validator.isNotNull(redirect))
 				actionResponse.sendRedirect(redirect);
@@ -530,7 +537,7 @@ public class Subur extends MVCPortlet {
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(resourceRequest);
 			HttpServletResponse response = PortalUtil.getHttpServletResponse(resourceResponse);
 			GetFileActionHelper fileAction = new GetFileActionHelper();
-			logger.info("inside");
+			
 			try 
 			{
 				
@@ -783,6 +790,20 @@ public class Subur extends MVCPortlet {
 	    }
 	    writeJSON(actionRequest, actionResponse, jsonObject);
 	}
+	public void subscribe(ActionRequest actionRequest,ActionResponse actionResponse) throws PortalException, SystemException
+	{
+	    ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		if (cmd.equalsIgnoreCase(Constants.SUBSCRIBE))
+		{
+			SuburItemLocalServiceUtil.subscribe(themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+		}else
+		{
+			SuburItemLocalServiceUtil.unsubscribe(themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+		}
+	}
+	
 	/**
 	 * Guest request for restricted access to related item. We create a RequestCopy entry and
 	 * create notification event to portal admin.
@@ -792,7 +813,7 @@ public class Subur extends MVCPortlet {
 	 * @throws PortalException
 	 * @throws IOException 
 	 */
-	public void saveRequestCopy(ActionRequest actionRequest, ActionResponse actionResponse) throws SystemException, PortalException, IOException
+	public void saveRequestCopy(ActionRequest actionRequest, ActionResponse actionResponse)  
 	{
 	    ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 	    long companyId = themeDisplay.getCompanyId();
@@ -804,42 +825,23 @@ public class Subur extends MVCPortlet {
 		long suburItemId = ParamUtil.getLong(actionRequest, "suburItemId");
 		String requesterName = ParamUtil.getString(actionRequest, "requesterName");
 		
-		CopyRequest copyRequest = CopyRequestLocalServiceUtil.addCopyRequest(suburItemId, requesterName,fromEmailAddress, 
-				organization, reason,companyId,groupId);
 		
-		//add notification to admin
-		//UserNotificationEventLocalServiceUtil//
-		JSONObject payloadJSON = JSONFactoryUtil.createJSONObject();
-	    payloadJSON.put("userId", themeDisplay.getUserId());
-	    payloadJSON.put("copyRequestId", copyRequest.getCopyRequestId());
-	    payloadJSON.put("itemId", suburItemId);
-	    
-	    payloadJSON.put("additionalData", "Your notification was added!");
 		
-	    ServiceContext serviceContext = ServiceContextFactory.getInstance(actionRequest);
-	    
-	    //who will receive the notification
-	    String notificationRoleString = SuburConfiguration.getConfig(SuburConfiguration.NOTIFICATION_ROLES);
-	    long[] notificationRoles = StringUtil.split(notificationRoleString, 0L);
-	    
-	    long[] notificationUsers = SuburUtil.getUserByRole(themeDisplay.getCompanyId(), notificationRoles);
-	   
-	    
-	    for (long userId : notificationUsers)
-	    {
-		    UserNotificationEventLocalServiceUtil.addUserNotificationEvent(userId, 
-		    		SuburNotificationHandler.PORTLET_ID, 
-		    		(new Date()).getTime(),
-		    		themeDisplay.getUserId(),
-		    		payloadJSON.toString(),
-		    		false, serviceContext);	
-		    
-		    
-		    
-	    }
 		
-		actionResponse.setRenderParameter("jspPage","/html/subur/request_copy_success.jsp");
-		actionRequest.setAttribute(WebKeys.SUBUR_COPY_REQUEST, copyRequest);
+		CopyRequest copyRequest = null;
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(actionRequest);
+			copyRequest = CopyRequestLocalServiceUtil.addCopyRequest(suburItemId, requesterName,fromEmailAddress, 
+					organization, reason,companyId,groupId,
+					themeDisplay.getUserId(),serviceContext);
+			
+			actionRequest.setAttribute(WebKeys.SUBUR_COPY_REQUEST, copyRequest);
+		} catch (PortalException | SystemException | IOException e) {
+			
+			logger.error(e);
+		
+		}
+		actionResponse.setRenderParameter("jspPage","/html/subur/request_copy_status.jsp");
 		
 	}
 	
@@ -885,7 +887,7 @@ public class Subur extends MVCPortlet {
 	}
 	protected long[] getLongArray(UploadRequest request, String name) {
 		String value = request.getParameter(name);
-		logger.info(value);
+		
 		if (value == null) {
 			return null;
 		}
@@ -895,15 +897,18 @@ public class Subur extends MVCPortlet {
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
-
+		
+		
+	
+		
+	
+		
 		if (SessionErrors.contains(
 				renderRequest, NoSuchResourceException.class.getName()) ||
 				SessionErrors.contains(renderRequest, NoSuchItemException.class.getName()) ||
 				SessionErrors.contains(	renderRequest, PrincipalException.class.getName())) 
 		{
-			
-			
-			
+	
 			include("/html/error.jsp", renderRequest, renderResponse);
 		}
 		else {
@@ -911,17 +916,12 @@ public class Subur extends MVCPortlet {
 		}
 	}
 	
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException,IOException
+	public void render(	RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException,IOException
 		
 	{
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
 		
-		//PortletProps.set("mykey", "myvalue");
-	
-		
-	
 		SessionErrors.clear(renderRequest);
 		try 
 		{
@@ -946,7 +946,7 @@ public class Subur extends MVCPortlet {
 				
 			}
 		}
-
+		logger.info("render");
 		super.render(renderRequest, renderResponse);
 	}
 	protected void getSuburItem(PortletRequest portletRequest) throws PrincipalException, 
@@ -978,7 +978,7 @@ public class Subur extends MVCPortlet {
 				(StringUtil.count(mvcPath, "deposit.jsp") > 0))
 		{
 			
-			if (!SuburModelPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY))
+			if (!SuburPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.ADD_SUBUR_PUBLICATION))
 			{
 				
 				throw new PrincipalException();

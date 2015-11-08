@@ -11,7 +11,7 @@
 		</init-param>
 		<init-param>
 			<name>config-template</name>
-			<value>/html/config/subur_config.jsp</value>
+			<value>/html/subur/config/configuration.jsp</value>
 		</init-param>
 		   
 		<expiration-cache>0</expiration-cache>
@@ -53,7 +53,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>author-navigator</portlet-name>
-		<display-name>Subur Author Navigator</display-name>
+		<display-name>Recent Researcher</display-name>
 		<portlet-class>
 			com.idetronic.subur.portlet.AuthorNavigatorPortlet
 		</portlet-class>
@@ -88,6 +88,7 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+		
 		 <supported-publishing-event xmlns:x='http://liferay.com'>
 			<qname>x:authorNav</qname>
 		</supported-publishing-event>
@@ -96,7 +97,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>item-type</portlet-name>
-		<display-name>Subur Item Type Navigation</display-name>
+		<display-name>Item Type Navigation</display-name>
 		<portlet-class>com.idetronic.subur.portlet.ItemTypeNavigationPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>

@@ -9,6 +9,7 @@
 				<action-key>ADD_TO_PAGE</action-key>
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				
 				
 			</supports>
@@ -20,6 +21,8 @@
 			</guest-defaults>
 			<guest-unsupported>
 				<action-key>CONFIGURATION</action-key>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>ADD_TO_PAGE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
@@ -52,48 +55,23 @@
 		<root>true</root>
 		<permissions>
 			<supports>
-				<action-key>ADD_ENTRY</action-key>
-				<action-key>PERMISSIONS</action-key>
+				<action-key>ADD_SUBUR_PUBLICATION</action-key>
+				<action-key>ADD_AUTHOR</action-key>
 				<action-key>SUBSCRIBE</action-key>
-				<action-key>MANAGE_AUTHOR</action-key>
-				<action-key>UPDATE</action-key>
-			</supports>
-			<site-member-defaults/>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-				
-			<guest-unsupported>
-				<action-key>ADD_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>SUBSCRIBE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.idetronic.subur.Author</model-name>
-		<portlet-ref>
-			<portlet-name>Author</portlet-name>
-		</portlet-ref>
-		<root>true</root>
-		<permissions>
-			<supports>
-				<action-key>ADD_ENTRY</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>SUBSCRIBE</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-				<action-key>MANAGE_AUTHOR</action-key>
+				<action-key>MANAGE_PUBLICATION</action-key>
 			</supports>
 			<site-member-defaults/>
 			<guest-defaults/>
 				
 			<guest-unsupported>
-				<action-key>CONFIGURATION</action-key>
-		
+				<action-key>ADD_SUBUR_PUBLICATION</action-key>
+				<action-key>ADD_AUTHOR</action-key>
+				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
+	
 	<model-resource>
 		<model-name>com.idetronic.subur.model.SuburItem</model-name>
 		<portlet-ref>
@@ -116,7 +94,7 @@
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
 				<action-key>UPDATE</action-key>
-		
+				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
@@ -131,7 +109,7 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
-				
+				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<site-member-defaults>
 				<action-key>VIEW</action-key>
@@ -140,8 +118,9 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
-				<action-key>CONFIGURATION</action-key>
-			
+				
+				<action-key>UPDATE</action-key>
+				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

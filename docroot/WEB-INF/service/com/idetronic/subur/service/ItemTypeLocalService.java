@@ -250,12 +250,49 @@ public interface ItemTypeLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public com.idetronic.subur.model.ItemType add(java.lang.String name)
+	public com.idetronic.subur.model.ItemType add(java.lang.String name,
+		long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.idetronic.subur.model.ItemType> findByGroup(
+		long companyId, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int countByGroup(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.idetronic.subur.model.ItemType> findByCompany(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int countByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Decrement overall item type count
+	*/
 	public void decrementCounter(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void incrementCounter(long itemTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Increment approved item count
+	*
+	* @param itemTypeId
+	* @throws SystemException
+	*/
+	public void incrementApprovedCount(long itemTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Decrement approved item count
+	*
+	* @param itemTypeId
+	* @throws SystemException
+	*/
+	public void decrementApprovedCount(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

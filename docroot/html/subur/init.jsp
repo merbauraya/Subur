@@ -16,14 +16,22 @@
 	
 	boolean useOrOperatorCategorySearch = GetterUtil.getBoolean(portletPreferences.getValue("useOrOperatorCategorySearch", Boolean.FALSE.toString()));
 	boolean useOrOperatorTagSearch = GetterUtil.getBoolean(portletPreferences.getValue("useOrOperatorTagSearch", Boolean.FALSE.toString()));
+	boolean enableSocialBookmark = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmark", Boolean.FALSE.toString()));
 	
 	boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null));
 	int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
 	String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
 	String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 	String rssName = portletPreferences.getValue("rssName", portletDisplay.getTitle());
+	boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
 
+	String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", "horizontal");
+	String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
+	String socialBookmarksTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
 
 	String authorTitleString = GetterUtil.getString(portletPreferences.getValue("authorTitle",StringPool.BLANK), StringPool.BLANK);
 	String authorSiteNameString = GetterUtil.getString(portletPreferences.getValue("authorSiteName", StringPool.BLANK))	;		
 %>
+<liferay-portlet:renderURL varImpl="searchURL">
+        <portlet:param name="mvcPath" value="/html/search/subur_search.jsp" />
+</liferay-portlet:renderURL>

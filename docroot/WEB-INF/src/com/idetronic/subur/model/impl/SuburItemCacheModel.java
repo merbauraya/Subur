@@ -38,7 +38,7 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{itemId=");
 		sb.append(itemId);
@@ -70,8 +70,16 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 		sb.append(metadataValue);
 		sb.append(", relatedRestricted=");
 		sb.append(relatedRestricted);
-		sb.append(", photoCoverId=");
-		sb.append(photoCoverId);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
+		sb.append(", completed=");
+		sb.append(completed);
+		sb.append(", coverImageId=");
+		sb.append(coverImageId);
+		sb.append(", counted=");
+		sb.append(counted);
 		sb.append("}");
 
 		return sb.toString();
@@ -152,7 +160,18 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 		}
 
 		suburItemImpl.setRelatedRestricted(relatedRestricted);
-		suburItemImpl.setPhotoCoverId(photoCoverId);
+		suburItemImpl.setStatusByUserId(statusByUserId);
+
+		if (statusDate == Long.MIN_VALUE) {
+			suburItemImpl.setStatusDate(null);
+		}
+		else {
+			suburItemImpl.setStatusDate(new Date(statusDate));
+		}
+
+		suburItemImpl.setCompleted(completed);
+		suburItemImpl.setCoverImageId(coverImageId);
+		suburItemImpl.setCounted(counted);
 
 		suburItemImpl.resetOriginalValues();
 
@@ -176,7 +195,11 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 		Uuid = objectInput.readUTF();
 		metadataValue = objectInput.readUTF();
 		relatedRestricted = objectInput.readBoolean();
-		photoCoverId = objectInput.readLong();
+		statusByUserId = objectInput.readLong();
+		statusDate = objectInput.readLong();
+		completed = objectInput.readBoolean();
+		coverImageId = objectInput.readLong();
+		counted = objectInput.readBoolean();
 	}
 
 	@Override
@@ -236,7 +259,11 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 		}
 
 		objectOutput.writeBoolean(relatedRestricted);
-		objectOutput.writeLong(photoCoverId);
+		objectOutput.writeLong(statusByUserId);
+		objectOutput.writeLong(statusDate);
+		objectOutput.writeBoolean(completed);
+		objectOutput.writeLong(coverImageId);
+		objectOutput.writeBoolean(counted);
 	}
 
 	public long itemId;
@@ -254,5 +281,9 @@ public class SuburItemCacheModel implements CacheModel<SuburItem>,
 	public String Uuid;
 	public String metadataValue;
 	public boolean relatedRestricted;
-	public long photoCoverId;
+	public long statusByUserId;
+	public long statusDate;
+	public boolean completed;
+	public long coverImageId;
+	public boolean counted;
 }

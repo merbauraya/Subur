@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 public class SuburSearchUtil {
 	
@@ -188,8 +189,13 @@ public class SuburSearchUtil {
 		//classname Query
 		BooleanQuery classNameQuery = BooleanQueryFactoryUtil.create(searchContext);
 		classNameQuery.addRequiredTerm(SuburField.ENTRY_CLASS_NAME, SuburItem.class.getName()); 
+		BooleanQuery statusQuery = BooleanQueryFactoryUtil.create(searchContext);
+		
+		classNameQuery.addRequiredTerm(SuburField.STATUS, WorkflowConstants.STATUS_APPROVED);
+		
 		try {
 			fullQuery.add(classNameQuery, BooleanClauseOccur.MUST);
+			fullQuery.add(statusQuery, BooleanClauseOccur.MUST);
 			if (matchAllField)
 			{
 				for (Map.Entry<String, Object> entry : QueryValue.entrySet())

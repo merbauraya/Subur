@@ -98,7 +98,11 @@ create table Subur_Item (
 	Uuid VARCHAR(75) null,
 	metadataValue TEXT null,
 	relatedRestricted BOOLEAN,
-	photoCoverId LONG
+	statusByUserId LONG,
+	statusDate DATE null,
+	completed BOOLEAN,
+	coverImageId LONG,
+	counted BOOLEAN
 );
 
 create table Subur_ItemAuthor (
@@ -123,7 +127,10 @@ create table Subur_ItemItemType (
 create table Subur_ItemType (
 	itemTypeId LONG not null primary key,
 	itemTypeName VARCHAR(75) null,
-	itemCount INTEGER
+	itemCount INTEGER,
+	companyId LONG,
+	groupId LONG,
+	approvedCount INTEGER
 );
 
 create table Subur_ItemTypeTemplate (

@@ -51,6 +51,9 @@ public class ItemTypeWrapper implements ItemType, ModelWrapper<ItemType> {
 		attributes.put("itemTypeId", getItemTypeId());
 		attributes.put("itemTypeName", getItemTypeName());
 		attributes.put("itemCount", getItemCount());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("approvedCount", getApprovedCount());
 
 		return attributes;
 	}
@@ -73,6 +76,24 @@ public class ItemTypeWrapper implements ItemType, ModelWrapper<ItemType> {
 
 		if (itemCount != null) {
 			setItemCount(itemCount);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Integer approvedCount = (Integer)attributes.get("approvedCount");
+
+		if (approvedCount != null) {
+			setApprovedCount(approvedCount);
 		}
 	}
 
@@ -154,6 +175,66 @@ public class ItemTypeWrapper implements ItemType, ModelWrapper<ItemType> {
 	@Override
 	public void setItemCount(int itemCount) {
 		_itemType.setItemCount(itemCount);
+	}
+
+	/**
+	* Returns the company ID of this item type.
+	*
+	* @return the company ID of this item type
+	*/
+	@Override
+	public long getCompanyId() {
+		return _itemType.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this item type.
+	*
+	* @param companyId the company ID of this item type
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_itemType.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the group ID of this item type.
+	*
+	* @return the group ID of this item type
+	*/
+	@Override
+	public long getGroupId() {
+		return _itemType.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this item type.
+	*
+	* @param groupId the group ID of this item type
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_itemType.setGroupId(groupId);
+	}
+
+	/**
+	* Returns the approved count of this item type.
+	*
+	* @return the approved count of this item type
+	*/
+	@Override
+	public int getApprovedCount() {
+		return _itemType.getApprovedCount();
+	}
+
+	/**
+	* Sets the approved count of this item type.
+	*
+	* @param approvedCount the approved count of this item type
+	*/
+	@Override
+	public void setApprovedCount(int approvedCount) {
+		_itemType.setApprovedCount(approvedCount);
 	}
 
 	@Override

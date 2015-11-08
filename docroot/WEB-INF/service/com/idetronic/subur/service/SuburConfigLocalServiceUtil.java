@@ -282,8 +282,7 @@ public class SuburConfigLocalServiceUtil {
 
 	public static com.idetronic.subur.model.SuburConfig get(
 		java.lang.String configKey)
-		throws com.idetronic.subur.NoSuchConfigException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().get(configKey);
 	}
 

@@ -257,9 +257,24 @@ public interface SuburItemLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.idetronic.subur.model.SuburItem> findByGroupAndUserAndStatus(
+		long companyId, long groupId, long userId, int status, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int countByGroupAndUserAndStatus(long companyId, long groupId,
+		long userId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.idetronic.subur.model.SuburItem> findByGroupAndStatus(
+		long companyId, long groupId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int countByGroupStatus(long companyId, long groupId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public com.idetronic.subur.model.SuburItem updateSuburItem(
 		com.idetronic.subur.model.SuburItem suburItem, long userId,
-		long[] itemTypeIds, long[] authorIds,
+		int newStatus, long[] itemTypeIds, long[] authorIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -275,7 +290,7 @@ public interface SuburItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.idetronic.subur.model.SuburItem> getByGroupAndStatus(
-		long companyId, long groupId, int start, int end, int status)
+		long companyId, long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -292,6 +307,12 @@ public interface SuburItemLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	public com.idetronic.subur.model.SuburItem publishItem(long itemId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.idetronic.subur.model.SuburItem updateStatus(long userId,
+		long itemId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -346,6 +367,14 @@ public interface SuburItemLocalService extends BaseLocalService,
 	* @throws SystemException
 	*/
 	public void addViewStat(long itemId, long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void subscribe(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void unsubscribe(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

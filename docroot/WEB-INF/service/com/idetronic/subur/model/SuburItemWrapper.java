@@ -64,7 +64,11 @@ public class SuburItemWrapper implements SuburItem, ModelWrapper<SuburItem> {
 		attributes.put("Uuid", getUuid());
 		attributes.put("metadataValue", getMetadataValue());
 		attributes.put("relatedRestricted", getRelatedRestricted());
-		attributes.put("photoCoverId", getPhotoCoverId());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusDate", getStatusDate());
+		attributes.put("completed", getCompleted());
+		attributes.put("coverImageId", getCoverImageId());
+		attributes.put("counted", getCounted());
 
 		return attributes;
 	}
@@ -161,10 +165,34 @@ public class SuburItemWrapper implements SuburItem, ModelWrapper<SuburItem> {
 			setRelatedRestricted(relatedRestricted);
 		}
 
-		Long photoCoverId = (Long)attributes.get("photoCoverId");
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
 
-		if (photoCoverId != null) {
-			setPhotoCoverId(photoCoverId);
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
+		}
+
+		Boolean completed = (Boolean)attributes.get("completed");
+
+		if (completed != null) {
+			setCompleted(completed);
+		}
+
+		Long coverImageId = (Long)attributes.get("coverImageId");
+
+		if (coverImageId != null) {
+			setCoverImageId(coverImageId);
+		}
+
+		Boolean counted = (Boolean)attributes.get("counted");
+
+		if (counted != null) {
+			setCounted(counted);
 		}
 	}
 
@@ -521,23 +549,145 @@ public class SuburItemWrapper implements SuburItem, ModelWrapper<SuburItem> {
 	}
 
 	/**
-	* Returns the photo cover ID of this subur item.
+	* Returns the status by user ID of this subur item.
 	*
-	* @return the photo cover ID of this subur item
+	* @return the status by user ID of this subur item
 	*/
 	@Override
-	public long getPhotoCoverId() {
-		return _suburItem.getPhotoCoverId();
+	public long getStatusByUserId() {
+		return _suburItem.getStatusByUserId();
 	}
 
 	/**
-	* Sets the photo cover ID of this subur item.
+	* Sets the status by user ID of this subur item.
 	*
-	* @param photoCoverId the photo cover ID of this subur item
+	* @param statusByUserId the status by user ID of this subur item
 	*/
 	@Override
-	public void setPhotoCoverId(long photoCoverId) {
-		_suburItem.setPhotoCoverId(photoCoverId);
+	public void setStatusByUserId(long statusByUserId) {
+		_suburItem.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Returns the status by user uuid of this subur item.
+	*
+	* @return the status by user uuid of this subur item
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _suburItem.getStatusByUserUuid();
+	}
+
+	/**
+	* Sets the status by user uuid of this subur item.
+	*
+	* @param statusByUserUuid the status by user uuid of this subur item
+	*/
+	@Override
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_suburItem.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Returns the status date of this subur item.
+	*
+	* @return the status date of this subur item
+	*/
+	@Override
+	public java.util.Date getStatusDate() {
+		return _suburItem.getStatusDate();
+	}
+
+	/**
+	* Sets the status date of this subur item.
+	*
+	* @param statusDate the status date of this subur item
+	*/
+	@Override
+	public void setStatusDate(java.util.Date statusDate) {
+		_suburItem.setStatusDate(statusDate);
+	}
+
+	/**
+	* Returns the completed of this subur item.
+	*
+	* @return the completed of this subur item
+	*/
+	@Override
+	public boolean getCompleted() {
+		return _suburItem.getCompleted();
+	}
+
+	/**
+	* Returns <code>true</code> if this subur item is completed.
+	*
+	* @return <code>true</code> if this subur item is completed; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isCompleted() {
+		return _suburItem.isCompleted();
+	}
+
+	/**
+	* Sets whether this subur item is completed.
+	*
+	* @param completed the completed of this subur item
+	*/
+	@Override
+	public void setCompleted(boolean completed) {
+		_suburItem.setCompleted(completed);
+	}
+
+	/**
+	* Returns the cover image ID of this subur item.
+	*
+	* @return the cover image ID of this subur item
+	*/
+	@Override
+	public long getCoverImageId() {
+		return _suburItem.getCoverImageId();
+	}
+
+	/**
+	* Sets the cover image ID of this subur item.
+	*
+	* @param coverImageId the cover image ID of this subur item
+	*/
+	@Override
+	public void setCoverImageId(long coverImageId) {
+		_suburItem.setCoverImageId(coverImageId);
+	}
+
+	/**
+	* Returns the counted of this subur item.
+	*
+	* @return the counted of this subur item
+	*/
+	@Override
+	public boolean getCounted() {
+		return _suburItem.getCounted();
+	}
+
+	/**
+	* Returns <code>true</code> if this subur item is counted.
+	*
+	* @return <code>true</code> if this subur item is counted; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isCounted() {
+		return _suburItem.isCounted();
+	}
+
+	/**
+	* Sets whether this subur item is counted.
+	*
+	* @param counted the counted of this subur item
+	*/
+	@Override
+	public void setCounted(boolean counted) {
+		_suburItem.setCounted(counted);
 	}
 
 	@Override
@@ -659,6 +809,21 @@ public class SuburItemWrapper implements SuburItem, ModelWrapper<SuburItem> {
 	@Override
 	public void setOtherTitle(java.lang.String[] otherTitle) {
 		_suburItem.setOtherTitle(otherTitle);
+	}
+
+	@Override
+	public boolean isApproved() {
+		return _suburItem.isApproved();
+	}
+
+	@Override
+	public boolean isPending() {
+		return _suburItem.isPending();
+	}
+
+	@Override
+	public boolean isDraft() {
+		return _suburItem.isDraft();
 	}
 
 	@Override

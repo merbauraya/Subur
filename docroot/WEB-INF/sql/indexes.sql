@@ -27,6 +27,10 @@ create index IX_2A706808 on Subur_DownloadSummary (status);
 create index IX_E625355 on Subur_Expertise (groupId);
 create unique index IX_5FEE7F17 on Subur_Expertise (groupId, indexedName);
 
+create index IX_F51F15FD on Subur_Item (companyId, groupId);
+create index IX_131A07E3 on Subur_Item (companyId, groupId, status);
+create index IX_B4992137 on Subur_Item (companyId, groupId, userId);
+create index IX_40DA391D on Subur_Item (companyId, groupId, userId, status);
 create index IX_ED467B0F on Subur_Item (groupId);
 create index IX_EDC057E1 on Subur_Item (status);
 create index IX_1C5A7E9F on Subur_Item (status, groupId, companyId);
@@ -38,6 +42,9 @@ create index IX_578F7669 on Subur_ItemFileEntry (itemId);
 
 create index IX_F6430C4A on Subur_ItemItemType (itemId);
 create index IX_131A3C24 on Subur_ItemItemType (itemTypeId);
+
+create index IX_F5CC76B3 on Subur_ItemType (companyId);
+create index IX_1BB7D757 on Subur_ItemType (companyId, groupId);
 
 create index IX_BE8FEB13 on Subur_MetadataPropertyValue (itemId);
 

@@ -118,7 +118,8 @@ public class CopyRequestLocalServiceClpInvoker {
 
 		_methodParameterTypes140 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "long", "long"
+				"java.lang.String", "java.lang.String", "long", "long", "long",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName141 = "updateCopyRequest";
@@ -243,7 +244,9 @@ public class CopyRequestLocalServiceClpInvoker {
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
 				((Long)arguments[5]).longValue(),
-				((Long)arguments[6]).longValue());
+				((Long)arguments[6]).longValue(),
+				((Long)arguments[7]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
 		if (_methodName141.equals(name) &&

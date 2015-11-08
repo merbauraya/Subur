@@ -15,7 +15,7 @@
 	<liferay-ui:search-container-results
 		results = "<%=AuthorLocalServiceUtil.getItemByAuthorGroup(themeDisplay.getScopeGroupId(),
 			authorId,searchContainer.getStart() ,
-			searchContainer.getEnd(),SuburConstant.STATUS_PUBLISHED_ITEM,searchContainer.getOrderByComparator())
+			searchContainer.getEnd(),WorkflowConstants.STATUS_APPROVED,searchContainer.getOrderByComparator())
 			%>"
 	
 	/>

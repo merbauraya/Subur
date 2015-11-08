@@ -10,8 +10,6 @@
 			com.idetronic.subur.SuburConfigImpl
 		</configuration-action-class>
 		<indexer-class>com.idetronic.subur.search.SuburIndexer</indexer-class>
-		
-		
 		<scheduler-entry>
 	    	<scheduler-event-listener-class>com.idetronic.subur.Scheduler.StatsListener</scheduler-event-listener-class>
 	    	<trigger>
@@ -24,11 +22,13 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>publications</friendly-url-mapping>
 		<friendly-url-routes>com/idetronic/subur/subur-friendly-url-routes.xml</friendly-url-routes>	
+		<social-activity-interpreter-class>com.idetronic.subur.social.SuburActivityInterpreter</social-activity-interpreter-class>
+		
 		<user-notification-definitions>com/idetronic/subur/subur-notification-definitions.xml</user-notification-definitions>
     	<user-notification-handler-class>com.idetronic.subur.notification.SuburNotificationHandler</user-notification-handler-class>	
-		
-		
 		<asset-renderer-factory>com.idetronic.subur.asset.SuburItemAssetRendererFactory</asset-renderer-factory>
+		<workflow-handler>com.idetronic.subur.workflow.SuburItemWorkflowHandler</workflow-handler>
+		
 		<header-portlet-css>/css/main.css</header-portlet-css>
 
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>

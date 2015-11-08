@@ -42,7 +42,7 @@
 	
 	<c:if test="<%= addToList %>">
 		<aui:option value="<%=role.getRoleId() %>" selected="<%= selected %>">
-			<%= role.getName() + "::"+ role.getType() %>
+			<%= role.getName() %>
 		</aui:option>
 	</c:if>
 <%

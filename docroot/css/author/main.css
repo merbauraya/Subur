@@ -35,4 +35,12 @@ content:'\A';}
 	{
 		margin-left:0 !important;
 	}
+	.author-categorization .taglib-asset-categories-summary
+	{
+		font-weight:bold;
+	}
+	.author-categorization .taglib-asset-categories-summary > a
+	{
+		font-weight:normal;
+	}
 }

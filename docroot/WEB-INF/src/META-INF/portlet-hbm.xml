@@ -133,6 +133,9 @@
 		</id>
 		<property name="itemTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="itemCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="approvedCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.idetronic.subur.model.impl.ResearchInterestImpl" table="Subur_ResearchInterest">
 		<cache usage="read-write" />
@@ -248,7 +251,11 @@
 		<property name="Uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="metadataValue" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="relatedRestricted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="photoCoverId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property name="completed" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="coverImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="counted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.idetronic.subur.model.impl.ViewSummaryImpl" table="Subur_ViewSummary">
 		<cache usage="read-write" />

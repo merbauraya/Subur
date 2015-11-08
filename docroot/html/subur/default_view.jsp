@@ -59,7 +59,24 @@
 	</div>
 	
 	<div class="span6">
+		<h4>Publication Types</h4>
+		<ul>
+		<%
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create ("ItemType","approvedCount", false);
+			List<ItemType> itemTypes = ItemTypeLocalServiceUtil.findByGroup(themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId(),0,5,obc);//long companyId,long groupId,int start,int end,OrderByComparator obc
 		
+		
+		for (ItemType itemType : itemTypes)
+		{
+		%>
+			
+			<li><%=itemType.getItemTypeName() %></li>
+		
+		<%
+		}
+		%>
+		</ul>
 	</div>
 
 </aui:row>

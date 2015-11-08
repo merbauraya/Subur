@@ -120,7 +120,7 @@ public class SuburActionHelper {
 				
 				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetLinkEntry.getClassPK());
 				
-				//we only interested in File
+				//we only interested in DL File
 				if (assetRenderer.getClassName().equalsIgnoreCase(DLFileEntry.class.getName()))
 				{
 					long fileEntryId = assetLinkEntry.getClassPK();

@@ -100,6 +100,9 @@
 		<field name="itemTypeId" type="long" />
 		<field name="itemTypeName" type="String" />
 		<field name="itemCount" type="int" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="approvedCount" type="int" />
 	</model>
 	<model name="com.idetronic.subur.model.ResearchInterest">
 		<field name="researchInterestId" type="long" />
@@ -195,7 +198,11 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="relatedRestricted" type="boolean" />
-		<field name="photoCoverId" type="long" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusDate" type="Date" />
+		<field name="completed" type="boolean" />
+		<field name="coverImageId" type="long" />
+		<field name="counted" type="boolean" />
 	</model>
 	<model name="com.idetronic.subur.model.ViewSummary">
 		<field name="id" type="long" />

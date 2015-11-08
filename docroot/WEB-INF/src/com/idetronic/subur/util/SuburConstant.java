@@ -65,7 +65,7 @@ public class SuburConstant {
 	/* Subur page */
 	public static String PAGE_UPDATE_ITEM = "/html/deposit.jsp";
 	public static String PAGE_NEW_ITEM = "/html/deposit/new.jsp";
-	public static String PAGE_ADMIN_ITEM = "/html/admin/subur/view.jsp";
+	public static String PAGE_ADMIN_ITEM = "/html/subur/admin/view.jsp";
 	public static String PAGE_ADMIN_AUTHOR = "/html/admin/author/view.jsp";
 	public static String PAGE_SUBUR_SEARCH = "/html/search/subur_search.jsp";
 	public static String PAGE_AUTHOR_VIEW_DETAILS = "/html/author/view/jsp";

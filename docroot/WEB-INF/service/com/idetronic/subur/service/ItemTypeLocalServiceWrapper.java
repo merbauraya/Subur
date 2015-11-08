@@ -283,11 +283,43 @@ public class ItemTypeLocalServiceWrapper implements ItemTypeLocalService,
 	}
 
 	@Override
-	public com.idetronic.subur.model.ItemType add(java.lang.String name)
+	public com.idetronic.subur.model.ItemType add(java.lang.String name,
+		long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _itemTypeLocalService.add(name);
+		return _itemTypeLocalService.add(name, companyId, groupId);
 	}
 
+	@Override
+	public java.util.List<com.idetronic.subur.model.ItemType> findByGroup(
+		long companyId, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _itemTypeLocalService.findByGroup(companyId, groupId, start,
+			end, obc);
+	}
+
+	@Override
+	public int countByGroup(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _itemTypeLocalService.countByGroup(companyId, groupId);
+	}
+
+	@Override
+	public java.util.List<com.idetronic.subur.model.ItemType> findByCompany(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _itemTypeLocalService.findByCompany(companyId, start, end);
+	}
+
+	@Override
+	public int countByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _itemTypeLocalService.countByCompany(companyId);
+	}
+
+	/**
+	* Decrement overall item type count
+	*/
 	@Override
 	public void decrementCounter(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -298,6 +330,30 @@ public class ItemTypeLocalServiceWrapper implements ItemTypeLocalService,
 	public void incrementCounter(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_itemTypeLocalService.incrementCounter(itemTypeId);
+	}
+
+	/**
+	* Increment approved item count
+	*
+	* @param itemTypeId
+	* @throws SystemException
+	*/
+	@Override
+	public void incrementApprovedCount(long itemTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_itemTypeLocalService.incrementApprovedCount(itemTypeId);
+	}
+
+	/**
+	* Decrement approved item count
+	*
+	* @param itemTypeId
+	* @throws SystemException
+	*/
+	@Override
+	public void decrementApprovedCount(long itemTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_itemTypeLocalService.decrementApprovedCount(itemTypeId);
 	}
 
 	/**

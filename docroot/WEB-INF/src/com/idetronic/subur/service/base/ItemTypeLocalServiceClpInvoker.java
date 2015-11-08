@@ -116,15 +116,44 @@ public class ItemTypeLocalServiceClpInvoker {
 
 		_methodName140 = "add";
 
-		_methodParameterTypes140 = new String[] { "java.lang.String" };
+		_methodParameterTypes140 = new String[] {
+				"java.lang.String", "long", "long"
+			};
 
-		_methodName141 = "decrementCounter";
+		_methodName141 = "findByGroup";
 
-		_methodParameterTypes141 = new String[] { "long" };
+		_methodParameterTypes141 = new String[] {
+				"long", "long", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			};
 
-		_methodName142 = "incrementCounter";
+		_methodName142 = "countByGroup";
 
-		_methodParameterTypes142 = new String[] { "long" };
+		_methodParameterTypes142 = new String[] { "long", "long" };
+
+		_methodName143 = "findByCompany";
+
+		_methodParameterTypes143 = new String[] { "long", "int", "int" };
+
+		_methodName144 = "countByCompany";
+
+		_methodParameterTypes144 = new String[] { "long" };
+
+		_methodName145 = "decrementCounter";
+
+		_methodParameterTypes145 = new String[] { "long" };
+
+		_methodName146 = "incrementCounter";
+
+		_methodParameterTypes146 = new String[] { "long" };
+
+		_methodName147 = "incrementApprovedCount";
+
+		_methodParameterTypes147 = new String[] { "long" };
+
+		_methodName148 = "decrementApprovedCount";
+
+		_methodParameterTypes148 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -230,19 +259,62 @@ public class ItemTypeLocalServiceClpInvoker {
 
 		if (_methodName140.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
-			return ItemTypeLocalServiceUtil.add((java.lang.String)arguments[0]);
+			return ItemTypeLocalServiceUtil.add((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue());
 		}
 
 		if (_methodName141.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+			return ItemTypeLocalServiceUtil.findByGroup(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue(),
+				((Integer)arguments[3]).intValue(),
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[4]);
+		}
+
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+			return ItemTypeLocalServiceUtil.countByGroup(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+			return ItemTypeLocalServiceUtil.findByCompany(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+			return ItemTypeLocalServiceUtil.countByCompany(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			ItemTypeLocalServiceUtil.decrementCounter(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
-		if (_methodName142.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+		if (_methodName146.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
 			ItemTypeLocalServiceUtil.incrementCounter(((Long)arguments[0]).longValue());
+
+			return null;
+		}
+
+		if (_methodName147.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+			ItemTypeLocalServiceUtil.incrementApprovedCount(((Long)arguments[0]).longValue());
+
+			return null;
+		}
+
+		if (_methodName148.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+			ItemTypeLocalServiceUtil.decrementApprovedCount(((Long)arguments[0]).longValue());
 
 			return null;
 		}
@@ -292,4 +364,16 @@ public class ItemTypeLocalServiceClpInvoker {
 	private String[] _methodParameterTypes141;
 	private String _methodName142;
 	private String[] _methodParameterTypes142;
+	private String _methodName143;
+	private String[] _methodParameterTypes143;
+	private String _methodName144;
+	private String[] _methodParameterTypes144;
+	private String _methodName145;
+	private String[] _methodParameterTypes145;
+	private String _methodName146;
+	private String[] _methodParameterTypes146;
+	private String _methodName147;
+	private String[] _methodParameterTypes147;
+	private String _methodName148;
+	private String[] _methodParameterTypes148;
 }

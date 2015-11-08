@@ -14,11 +14,9 @@
  */
 %>
 
-<%@ include file="/html/subur/init.jsp" %>
+<%@ include file="/html/subur/init.jsp" %> 
 
-<liferay-portlet:renderURL varImpl="searchURL">
-        <portlet:param name="mvcPath" value="/html/search/subur_search.jsp" />
-</liferay-portlet:renderURL>
+
 
 
 
@@ -30,9 +28,7 @@
         <portlet:param name="mvcPath" value="/html/admin/author/view.jsp" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:renderURL varImpl="testPageURL">
-        <portlet:param name="mvcPath" value="/html/test/1.jsp" />
-</liferay-portlet:renderURL>
+
 
 
 <%
@@ -61,7 +57,7 @@
 
 <aui:form action="<%=searchURL%>" name="fm" inlineLabel="<%= true %>">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<%@ include file="/html/admin/subur/top_nav.jsp" %>
+	<%@ include file="/html/admin/subur/toolbar.jsp" %>
 </aui:form>
 <div class="subscribe-action">
 	<c:if test="<%= enableRSS %>">

@@ -727,8 +727,7 @@ public class SuburConfigLocalServiceClp implements SuburConfigLocalService {
 
 	@Override
 	public com.idetronic.subur.model.SuburConfig get(java.lang.String configKey)
-		throws com.idetronic.subur.NoSuchConfigException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
@@ -738,10 +737,6 @@ public class SuburConfigLocalServiceClp implements SuburConfigLocalService {
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.idetronic.subur.NoSuchConfigException) {
-				throw (com.idetronic.subur.NoSuchConfigException)t;
-			}
 
 			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
 				throw (com.liferay.portal.kernel.exception.SystemException)t;

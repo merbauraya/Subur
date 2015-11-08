@@ -25,6 +25,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * The implementation of the subur config local service.
@@ -71,22 +72,31 @@ public class SuburConfigLocalServiceImpl extends SuburConfigLocalServiceBaseImpl
 		return suburConfig;
 		
 	}
-	public SuburConfig get(String configKey) throws NoSuchConfigException, SystemException
+	public SuburConfig get(String configKey) throws SystemException
 	{
-		return suburConfigPersistence.findByKey(configKey);
+		SuburConfig suburConfig = null;
+		try
+		{
+			return suburConfigPersistence.findByKey(configKey);
+			
+		}catch (NoSuchConfigException e)
+		{
+			return null;
+		}
 	}
 	public SuburConfig updateConfig(String configKey,String value) throws SystemException
 	{
 		SuburConfig suburConfig = null;
 		
-		try {
-			suburConfig = get(configKey);
-			suburConfig.setConfig(value);
-			return suburConfigPersistence.update(suburConfig);
-		} catch (NoSuchConfigException e)
-		{
+		
+		suburConfig = get(configKey);
+		if (Validator.isNull(suburConfig))
 			return addConfig(configKey,value);
-		}
+		
+		suburConfig.setConfig(value);
+		return suburConfigPersistence.update(suburConfig);
+			
+		
 	}
 	
 	public SuburConfig addConfig(String configKey,String value) throws SystemException
@@ -107,14 +117,13 @@ public class SuburConfigLocalServiceImpl extends SuburConfigLocalServiceBaseImpl
 		SuburConfig suburConfig = null;
 		try {
 			suburConfig = get(configKey);
+			if (Validator.isNull(suburConfig))
+				addConfig(configMap,configKey);
 			String propString = PropertyConfig.setPropertiesAsString(configMap);
 			suburConfig.setConfig(propString);
 			
 			suburConfigPersistence.update(suburConfig);
-		} catch (NoSuchConfigException e) {
-			addConfig(configMap,configKey);
-			
-		} catch(IOException e)
+		}  catch(IOException e)
 		{
 			_log.error(e);
 		}

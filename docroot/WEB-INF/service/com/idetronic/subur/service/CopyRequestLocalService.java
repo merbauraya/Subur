@@ -257,8 +257,11 @@ public interface CopyRequestLocalService extends BaseLocalService,
 	public com.idetronic.subur.model.CopyRequest addCopyRequest(
 		long suburItemId, java.lang.String requesterName,
 		java.lang.String fromEmailAddress, java.lang.String organization,
-		java.lang.String reason, long companyId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String reason, long companyId, long groupId, long userId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException;
 
 	public com.idetronic.subur.model.CopyRequest updateCopyRequest(
 		long copyRequestId, int newStatus, int updatedBy,

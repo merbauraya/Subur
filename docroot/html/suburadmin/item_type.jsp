@@ -7,18 +7,25 @@
 <%@ include file="/html/suburadmin/nav.jsp" %>
 
 <%
-	List<ItemType> itemTypes = ItemTypeLocalServiceUtil.getItemTypes(-1, -1);
+	//List<ItemType> itemTypes = ItemTypeLocalServiceUtil.findByGroup(themeDisplay.getCompanyId(), 
+	//		themeDisplay.getSiteGroupId());// .getItemTypes(-1, -1);
 	
 
 
 %>
 
-<liferay-ui:search-container  
+<liferay-ui:search-container   
 	emptyResultsMessage="no-item-type-were-found"
 	deltaConfigurable="false">
+		<%
+		List<ItemType> itemTypes = ItemTypeLocalServiceUtil.findByGroup(themeDisplay.getCompanyId(), 
+			themeDisplay.getScopeGroupId(),searchContainer.getStart(),searchContainer.getEnd(),null);
+		total = ItemTypeLocalServiceUtil.countByGroup(themeDisplay.getCompanyId(),themeDisplay.getScopeGroupId());
+		%>
+	
         <liferay-ui:search-container-results
                 results="<%= itemTypes %>"
-                total="<%= itemTypes.size() %>"
+                
         />
 
         <liferay-ui:search-container-row
@@ -41,7 +48,15 @@
 				value="<%= String.valueOf(itemType.getItemCount()) %>"
 				orderable="<%= false %>"
 				orderableProperty="lastPublishedDate"
-		/>
+				/>
+				
+				<liferay-ui:search-container-column-text
+				name="approved-item-count"
+				value="<%= String.valueOf(itemType.getApprovedCount()) %>"
+				orderable="<%= false %>"
+				
+				/>
+		
         <liferay-portlet:renderURL varImpl="editItemTypeURL">
 				<portlet:param name="mvcPath" value="/html/suburadmin/edit_itemtype.jsp" />
 				<portlet:param name="redirect" value="<%=currentURL %>" />

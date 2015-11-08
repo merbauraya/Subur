@@ -80,6 +80,7 @@ public class SuburIndexer extends BaseIndexer {
          document.addKeyword(Field.SCOPE_GROUP_ID, item.getGroupId());
          document.addKeyword(SuburConstant.FIELD_YEAR, year);
          document.addKeyword(SuburConstant.FIELD_MONTH, month);
+         document.addKeyword(Field.STATUS, item.getStatus());
          
          //other title
          String[] otherTitles = item.getOtherTitles();

@@ -44,7 +44,7 @@
 		</portlet:renderURL>
 			
 			<aui:nav-item href="<%= newItemTypeURL %>" label="add-item-type" />
-			<aui:nav-item href="#" label="add-item-type" id="addItemTypeButton"/>
+			
 		</aui:nav>
 	
 	</c:if>

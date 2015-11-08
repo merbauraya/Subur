@@ -32,6 +32,9 @@ public class ItemTypeSoap implements Serializable {
 		soapModel.setItemTypeId(model.getItemTypeId());
 		soapModel.setItemTypeName(model.getItemTypeName());
 		soapModel.setItemCount(model.getItemCount());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setGroupId(model.getGroupId());
+		soapModel.setApprovedCount(model.getApprovedCount());
 
 		return soapModel;
 	}
@@ -108,7 +111,34 @@ public class ItemTypeSoap implements Serializable {
 		_itemCount = itemCount;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public int getApprovedCount() {
+		return _approvedCount;
+	}
+
+	public void setApprovedCount(int approvedCount) {
+		_approvedCount = approvedCount;
+	}
+
 	private long _itemTypeId;
 	private String _itemTypeName;
 	private int _itemCount;
+	private long _companyId;
+	private long _groupId;
+	private int _approvedCount;
 }

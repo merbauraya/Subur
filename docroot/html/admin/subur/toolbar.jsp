@@ -1,6 +1,6 @@
 <%
-	boolean showAddEntry = SuburModelPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY);
-	boolean showAdminItem = SuburModelPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY);
+	boolean showAddEntry = SuburPermission.contains(permissionChecker,scopeGroupId,ActionKeys.ADD_SUBUR_PUBLICATION);
+	boolean showAdminItem = SuburPermission.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_PUBLICATION);
 	boolean showPermission = SuburPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 	boolean showSubscribe = SuburPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
 	
@@ -20,7 +20,7 @@
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						 
 					</portlet:renderURL>
-					<aui:nav-item href="<%= addItemURL %>" label="add-subur-item" name="addItemButton" />
+					<aui:nav-item iconCssClass="icon-plus" href="<%= addItemURL %>" label="add" name="addItemButton" />
 				</c:if>
 				<c:if test="<%= showAdminItem %>">
 					<portlet:renderURL var="adminItemURL">
@@ -29,27 +29,59 @@
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						
 					</portlet:renderURL>
-					<aui:nav-item href="<%= adminItemURL %>" label="manage-item" name="manageItemButton" />
+					<aui:nav-item iconCssClass="icon-wrench" href="<%= adminItemURL %>" label="manage" name="manageItemButton" />
 					
 				</c:if>
 				
 				<c:if test="<%= showPermission %>">
 					<liferay-security:permissionsURL
-						modelResource="com.idetronic.subur"
+						modelResource="com.idetronic.subur.model"
 						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
 						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 						var="permissionsURL"
 						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 					/>
-					<aui:nav-item href="<%= permissionsURL %>" label="permissions" title="edit-permissions" useDialog="<%= true %>" />
+					<aui:nav-item iconCssClass="icon-key" href="<%= permissionsURL %>" label="permissions" title="edit-permissions" useDialog="<%= true %>" />
 					
 				</c:if>
-				<portlet:renderURL var="testURL">
-						<portlet:param name="mvcPath" value="/html/test/view.jsp"/>
+				<c:if test="<%=showAddEntry %>">
+					<portlet:renderURL var="mySubmissionURL">
+						<portlet:param name="mvcPath" value="/html/admin/subur/my_submission.jsp"/>
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						
 					</portlet:renderURL>
+					<aui:nav-item iconCssClass="icon-tasks" href="<%= mySubmissionURL %>" label="my-submission" name="mySubmissionBtn" />
+					
+				
+				</c:if>
+				<c:if test="<%= showSubscribe %>">
+					<c:choose>
+						<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(),themeDisplay.getUserId(),SuburItem.class.getName(),themeDisplay.getScopeGroupId()) %>">
+							<portlet:actionURL var="unsubscribeURL" name="subscribe">
+								
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+							</portlet:actionURL>
+
+							
+							<aui:nav-item href="<%= unsubscribeURL %>" label="unsubscribe" name="unsubscribeBtn" />
+							
+						</c:when>
+						<c:otherwise>
+							<portlet:actionURL var="subscribeURL" name="subscribe">
+								
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+							</portlet:actionURL>
+							<aui:nav-item href="<%= subscribeURL %>" label="subscribe" name="subscribeBtn" />
+							
+							
+						</c:otherwise>
+					</c:choose>
+				
+				</c:if>
+				
 				
 				
 			</aui:nav>

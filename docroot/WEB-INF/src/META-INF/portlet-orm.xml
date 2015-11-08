@@ -155,6 +155,9 @@
 			<id name="itemTypeId" />
 			<basic name="itemTypeName" />
 			<basic name="itemCount" />
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="approvedCount" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -319,10 +322,17 @@
 			<basic name="Uuid" />
 			<basic name="metadataValue" />
 			<basic name="relatedRestricted" />
-			<basic name="photoCoverId" />
+			<basic name="statusByUserId" />
+			<basic name="statusDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="completed" />
+			<basic name="coverImageId" />
+			<basic name="counted" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="statusByUserUuid" />
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>

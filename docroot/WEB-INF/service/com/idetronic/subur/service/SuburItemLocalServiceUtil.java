@@ -284,15 +284,43 @@ public class SuburItemLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupAndUserAndStatus(
+		long companyId, long groupId, long userId, int status, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByGroupAndUserAndStatus(companyId, groupId, userId,
+			status, start, end);
+	}
+
+	public static int countByGroupAndUserAndStatus(long companyId,
+		long groupId, long userId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .countByGroupAndUserAndStatus(companyId, groupId, userId,
+			status);
+	}
+
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupAndStatus(
+		long companyId, long groupId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByGroupAndStatus(companyId, groupId, status, start, end);
+	}
+
+	public static int countByGroupStatus(long companyId, long groupId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().countByGroupStatus(companyId, groupId, status);
+	}
+
 	public static com.idetronic.subur.model.SuburItem updateSuburItem(
 		com.idetronic.subur.model.SuburItem suburItem, long userId,
-		long[] itemTypeIds, long[] authorIds,
+		int newStatus, long[] itemTypeIds, long[] authorIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateSuburItem(suburItem, userId, itemTypeIds, authorIds,
-			serviceContext);
+				   .updateSuburItem(suburItem, userId, newStatus, itemTypeIds,
+			authorIds, serviceContext);
 	}
 
 	public static void deleteItem(long itemId) {
@@ -310,10 +338,10 @@ public class SuburItemLocalServiceUtil {
 	}
 
 	public static java.util.List<com.idetronic.subur.model.SuburItem> getByGroupAndStatus(
-		long companyId, long groupId, int start, int end, int status)
+		long companyId, long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getByGroupAndStatus(companyId, groupId, start, end, status);
+				   .getByGroupAndStatus(companyId, groupId, status, start, end);
 	}
 
 	public static java.util.List<com.idetronic.subur.model.SuburItem> getSuburItems(
@@ -334,6 +362,14 @@ public class SuburItemLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().publishItem(itemId);
+	}
+
+	public static com.idetronic.subur.model.SuburItem updateStatus(
+		long userId, long itemId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateStatus(userId, itemId, status, serviceContext);
 	}
 
 	/**
@@ -402,6 +438,18 @@ public class SuburItemLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().addViewStat(itemId, companyId, groupId);
+	}
+
+	public static void subscribe(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribe(userId, groupId);
+	}
+
+	public static void unsubscribe(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribe(userId, groupId);
 	}
 
 	public static void clearService() {

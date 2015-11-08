@@ -293,8 +293,7 @@ public class SuburConfigLocalServiceWrapper implements SuburConfigLocalService,
 
 	@Override
 	public com.idetronic.subur.model.SuburConfig get(java.lang.String configKey)
-		throws com.idetronic.subur.NoSuchConfigException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _suburConfigLocalService.get(configKey);
 	}
 

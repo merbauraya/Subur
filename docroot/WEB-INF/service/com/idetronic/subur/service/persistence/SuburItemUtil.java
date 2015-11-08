@@ -357,6 +357,566 @@ public class SuburItemUtil {
 	}
 
 	/**
+	* Returns all the subur items where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @return the matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupStatus(
+		long companyId, long groupId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroupStatus(companyId, groupId, status);
+	}
+
+	/**
+	* Returns a range of all the subur items where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @return the range of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupStatus(
+		long companyId, long groupId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupStatus(companyId, groupId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the subur items where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupStatus(
+		long companyId, long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupStatus(companyId, groupId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first subur item in the ordered set where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem findByGroupStatus_First(
+		long companyId, long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupStatus_First(companyId, groupId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first subur item in the ordered set where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subur item, or <code>null</code> if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem fetchByGroupStatus_First(
+		long companyId, long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroupStatus_First(companyId, groupId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last subur item in the ordered set where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem findByGroupStatus_Last(
+		long companyId, long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupStatus_Last(companyId, groupId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last subur item in the ordered set where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subur item, or <code>null</code> if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem fetchByGroupStatus_Last(
+		long companyId, long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroupStatus_Last(companyId, groupId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the subur items before and after the current subur item in the ordered set where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param itemId the primary key of the current subur item
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem[] findByGroupStatus_PrevAndNext(
+		long itemId, long companyId, long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupStatus_PrevAndNext(itemId, companyId, groupId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns all the subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @return the matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroupStatus(
+		long companyId, long groupId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupStatus(companyId, groupId, status);
+	}
+
+	/**
+	* Returns a range of all the subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @return the range of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroupStatus(
+		long companyId, long groupId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupStatus(companyId, groupId, status, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the subur items that the user has permissions to view where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroupStatus(
+		long companyId, long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupStatus(companyId, groupId, status, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the subur items before and after the current subur item in the ordered set of subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param itemId the primary key of the current subur item
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem[] filterFindByGroupStatus_PrevAndNext(
+		long itemId, long companyId, long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupStatus_PrevAndNext(itemId, companyId,
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	* Removes all the subur items where companyId = &#63; and groupId = &#63; and status = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupStatus(long companyId, long groupId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupStatus(companyId, groupId, status);
+	}
+
+	/**
+	* Returns the number of subur items where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @return the number of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupStatus(long companyId, long groupId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupStatus(companyId, groupId, status);
+	}
+
+	/**
+	* Returns the number of subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param status the status
+	* @return the number of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByGroupStatus(long companyId, long groupId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterCountByGroupStatus(companyId, groupId, status);
+	}
+
+	/**
+	* Returns all the subur items where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @return the matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroup(
+		long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroup(companyId, groupId);
+	}
+
+	/**
+	* Returns a range of all the subur items where companyId = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @return the range of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroup(
+		long companyId, long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroup(companyId, groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the subur items where companyId = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroup(
+		long companyId, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroup(companyId, groupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first subur item in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem findByGroup_First(
+		long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroup_First(companyId, groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the first subur item in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subur item, or <code>null</code> if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem fetchByGroup_First(
+		long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroup_First(companyId, groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last subur item in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem findByGroup_Last(
+		long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroup_Last(companyId, groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last subur item in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subur item, or <code>null</code> if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem fetchByGroup_Last(
+		long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroup_Last(companyId, groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the subur items before and after the current subur item in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param itemId the primary key of the current subur item
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem[] findByGroup_PrevAndNext(
+		long itemId, long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroup_PrevAndNext(itemId, companyId, groupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the subur items that the user has permission to view where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @return the matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroup(
+		long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByGroup(companyId, groupId);
+	}
+
+	/**
+	* Returns a range of all the subur items that the user has permission to view where companyId = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @return the range of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroup(
+		long companyId, long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByGroup(companyId, groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the subur items that the user has permissions to view where companyId = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroup(
+		long companyId, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroup(companyId, groupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the subur items before and after the current subur item in the ordered set of subur items that the user has permission to view where companyId = &#63; and groupId = &#63;.
+	*
+	* @param itemId the primary key of the current subur item
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem[] filterFindByGroup_PrevAndNext(
+		long itemId, long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroup_PrevAndNext(itemId, companyId, groupId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the subur items where companyId = &#63; and groupId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroup(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroup(companyId, groupId);
+	}
+
+	/**
+	* Returns the number of subur items where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @return the number of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroup(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroup(companyId, groupId);
+	}
+
+	/**
+	* Returns the number of subur items that the user has permission to view where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @return the number of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByGroup(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByGroup(companyId, groupId);
+	}
+
+	/**
 	* Returns all the subur items where status = &#63;.
 	*
 	* @param status the status
@@ -513,6 +1073,616 @@ public class SuburItemUtil {
 	public static int countByStatus(int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByStatus(status);
+	}
+
+	/**
+	* Returns all the subur items where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupCreatorStatus(
+		long companyId, long groupId, long userId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreatorStatus(companyId, groupId, userId, status);
+	}
+
+	/**
+	* Returns a range of all the subur items where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @return the range of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupCreatorStatus(
+		long companyId, long groupId, long userId, int status, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreatorStatus(companyId, groupId, userId,
+			status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the subur items where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupCreatorStatus(
+		long companyId, long groupId, long userId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreatorStatus(companyId, groupId, userId,
+			status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem findByGroupCreatorStatus_First(
+		long companyId, long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreatorStatus_First(companyId, groupId, userId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the first subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subur item, or <code>null</code> if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem fetchByGroupCreatorStatus_First(
+		long companyId, long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroupCreatorStatus_First(companyId, groupId, userId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the last subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem findByGroupCreatorStatus_Last(
+		long companyId, long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreatorStatus_Last(companyId, groupId, userId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the last subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subur item, or <code>null</code> if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem fetchByGroupCreatorStatus_Last(
+		long companyId, long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroupCreatorStatus_Last(companyId, groupId, userId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the subur items before and after the current subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param itemId the primary key of the current subur item
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem[] findByGroupCreatorStatus_PrevAndNext(
+		long itemId, long companyId, long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreatorStatus_PrevAndNext(itemId, companyId,
+			groupId, userId, status, orderByComparator);
+	}
+
+	/**
+	* Returns all the subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroupCreatorStatus(
+		long companyId, long groupId, long userId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupCreatorStatus(companyId, groupId, userId,
+			status);
+	}
+
+	/**
+	* Returns a range of all the subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @return the range of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroupCreatorStatus(
+		long companyId, long groupId, long userId, int status, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupCreatorStatus(companyId, groupId, userId,
+			status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the subur items that the user has permissions to view where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroupCreatorStatus(
+		long companyId, long groupId, long userId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupCreatorStatus(companyId, groupId, userId,
+			status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the subur items before and after the current subur item in the ordered set of subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param itemId the primary key of the current subur item
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem[] filterFindByGroupCreatorStatus_PrevAndNext(
+		long itemId, long companyId, long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupCreatorStatus_PrevAndNext(itemId,
+			companyId, groupId, userId, status, orderByComparator);
+	}
+
+	/**
+	* Removes all the subur items where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupCreatorStatus(long companyId, long groupId,
+		long userId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByGroupCreatorStatus(companyId, groupId, userId, status);
+	}
+
+	/**
+	* Returns the number of subur items where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the number of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupCreatorStatus(long companyId, long groupId,
+		long userId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByGroupCreatorStatus(companyId, groupId, userId, status);
+	}
+
+	/**
+	* Returns the number of subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the number of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByGroupCreatorStatus(long companyId,
+		long groupId, long userId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterCountByGroupCreatorStatus(companyId, groupId, userId,
+			status);
+	}
+
+	/**
+	* Returns all the subur items where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupCreator(
+		long companyId, long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroupCreator(companyId, groupId, userId);
+	}
+
+	/**
+	* Returns a range of all the subur items where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @return the range of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupCreator(
+		long companyId, long groupId, long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreator(companyId, groupId, userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the subur items where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> findByGroupCreator(
+		long companyId, long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreator(companyId, groupId, userId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem findByGroupCreator_First(
+		long companyId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreator_First(companyId, groupId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subur item, or <code>null</code> if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem fetchByGroupCreator_First(
+		long companyId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroupCreator_First(companyId, groupId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem findByGroupCreator_Last(
+		long companyId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreator_Last(companyId, groupId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subur item, or <code>null</code> if a matching subur item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem fetchByGroupCreator_Last(
+		long companyId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroupCreator_Last(companyId, groupId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the subur items before and after the current subur item in the ordered set where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param itemId the primary key of the current subur item
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem[] findByGroupCreator_PrevAndNext(
+		long itemId, long companyId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupCreator_PrevAndNext(itemId, companyId, groupId,
+			userId, orderByComparator);
+	}
+
+	/**
+	* Returns all the subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroupCreator(
+		long companyId, long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupCreator(companyId, groupId, userId);
+	}
+
+	/**
+	* Returns a range of all the subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @return the range of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroupCreator(
+		long companyId, long groupId, long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupCreator(companyId, groupId, userId, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the subur items that the user has permissions to view where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.idetronic.subur.model.impl.SuburItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of subur items
+	* @param end the upper bound of the range of subur items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.idetronic.subur.model.SuburItem> filterFindByGroupCreator(
+		long companyId, long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupCreator(companyId, groupId, userId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the subur items before and after the current subur item in the ordered set of subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param itemId the primary key of the current subur item
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subur item
+	* @throws com.idetronic.subur.NoSuchItemException if a subur item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.idetronic.subur.model.SuburItem[] filterFindByGroupCreator_PrevAndNext(
+		long itemId, long companyId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.idetronic.subur.NoSuchItemException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupCreator_PrevAndNext(itemId, companyId,
+			groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Removes all the subur items where companyId = &#63; and groupId = &#63; and userId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupCreator(long companyId, long groupId,
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupCreator(companyId, groupId, userId);
+	}
+
+	/**
+	* Returns the number of subur items where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the number of matching subur items
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupCreator(long companyId, long groupId,
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupCreator(companyId, groupId, userId);
+	}
+
+	/**
+	* Returns the number of subur items that the user has permission to view where companyId = &#63; and groupId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the number of matching subur items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByGroupCreator(long companyId, long groupId,
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterCountByGroupCreator(companyId, groupId, userId);
 	}
 
 	/**

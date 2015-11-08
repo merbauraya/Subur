@@ -7,22 +7,26 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import com.idetronic.subur.model.SuburItem;
 import com.idetronic.subur.service.permission.SuburItemPermission;
+import com.idetronic.subur.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 
 public class SuburItemAssetRenderer extends BaseAssetRenderer {
@@ -44,9 +48,9 @@ public class SuburItemAssetRenderer extends BaseAssetRenderer {
                     contains = SuburItemPermission.contains(permissionChecker,
                                     itemId, ActionKeys.UPDATE);
             } catch (PortalException pe) {
-                    _log.error(pe.getLocalizedMessage());
+                    LOGGER.error(pe.getLocalizedMessage());
             } catch (SystemException se) {
-                    _log.error(se.getLocalizedMessage());
+                    LOGGER.error(se.getLocalizedMessage());
             }
 
             return contains;
@@ -64,9 +68,9 @@ public class SuburItemAssetRenderer extends BaseAssetRenderer {
             	contains = SuburItemPermission.contains(permissionChecker,
                     		itemId, ActionKeys.VIEW);
             } catch (PortalException pe) {
-                    _log.error(pe.getLocalizedMessage());
+                    LOGGER.error(pe.getLocalizedMessage());
             } catch (SystemException se) {
-                    _log.error(se.getLocalizedMessage());
+                    LOGGER.error(se.getLocalizedMessage());
             }
 
             return contains;
@@ -89,9 +93,14 @@ public class SuburItemAssetRenderer extends BaseAssetRenderer {
 
     @Override
     public String getSummary(Locale locale) {
-            return "Name: " + _suburItem.getTitle();
+    	String summary = StringUtil.shorten(
+				HtmlUtil.stripHtml(_suburItem.getItemAbstract()), 200);
+    	return summary;
     }
-
+    public String getType() {
+		return SuburItemAssetRendererFactory.TYPE;
+	}
+    
     @Override
     public String getTitle(Locale locale) {
             return _suburItem.getTitle();
@@ -112,6 +121,12 @@ public class SuburItemAssetRenderer extends BaseAssetRenderer {
     public String getUuid() {
             return _suburItem.getUuid();
     }
+    
+	public int getStatus() {
+		return _suburItem.getStatus();
+	}
+	
+	
 
     @Override
     public String render(RenderRequest renderRequest,
@@ -122,15 +137,43 @@ public class SuburItemAssetRenderer extends BaseAssetRenderer {
 			page = "/html/renderer/item_full.jsp";
 		}
     	
-		renderRequest.setAttribute("suburItem", _suburItem);
+		renderRequest.setAttribute(WebKeys.SUBUR_ITEM, _suburItem);
         return page;
     }
+    @Override
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception {
+
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		
+		//long plid = PortalUtil.getPlidFromPortletId(themeDisplay.getScopeGroupId(), portletName);
+		
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		/*
+		PortletURL portletURL = PortletURLFactoryUtil.create(liferayPortletRequest, portletName, plid,PortletRequest.RENDER_PHASE);
+		portletURL.setParameter("mvcPath", "/html/renderer/item_full.jsp");
+		portletURL.setParameter("itemId", String.valueOf(_suburItem.getItemId()));
+		/
+		
+		PortletURL portletURL = assetRendererFactory.getURLView(
+			liferayPortletResponse, windowState);
+		*/
+		
+		portletURL.setParameter("mvcPath", "/html/renderer/item_full.jsp");
+		portletURL.setParameter("itemId", String.valueOf(_suburItem.getItemId()));
+		portletURL.setWindowState(windowState);
+		
+		
+		return portletURL;
+	}
     public String getURLViewInContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			String noSuchEntryRedirect) throws Exception {
 		
-		PortletConfig portletConfig = (PortletConfig) liferayPortletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_CONFIG);
+		//PortletConfig portletConfig = (PortletConfig) liferayPortletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_CONFIG);
 		ThemeDisplay themeDisplay= (ThemeDisplay)liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		//String portletName = portletConfig.getPortletName();
 		String portletName = "Subur_WAR_Suburportlet";
@@ -149,8 +192,10 @@ public class SuburItemAssetRenderer extends BaseAssetRenderer {
             return themeDisplay.getURLPortal()
                             + "/Subur-portlet/subur.png";
 
+            
     }
     
-    private static final Log _log = LogFactoryUtil.getLog(SuburItemAssetRenderer.class);
-
+    
+    private static final Log LOGGER = LogFactoryUtil.getLog(SuburItemAssetRenderer.class);
+    private static final String PORTLET_NAME = "Subur_WAR_Suburportlet";
 }

@@ -20,6 +20,7 @@ public class SuburField extends Field{
 	public static final String RESEARCH_INTEREST_NAMES = "researchInterestNames";
 	
 	
+	
 	public SuburField(String name, Map<Locale, String> localizedValues) {
 		super(name, localizedValues);
 		// TODO Auto-generated constructor stub

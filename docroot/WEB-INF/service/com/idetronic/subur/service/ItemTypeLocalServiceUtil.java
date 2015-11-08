@@ -275,11 +275,38 @@ public class ItemTypeLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static com.idetronic.subur.model.ItemType add(java.lang.String name)
+	public static com.idetronic.subur.model.ItemType add(
+		java.lang.String name, long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().add(name);
+		return getService().add(name, companyId, groupId);
 	}
 
+	public static java.util.List<com.idetronic.subur.model.ItemType> findByGroup(
+		long companyId, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByGroup(companyId, groupId, start, end, obc);
+	}
+
+	public static int countByGroup(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().countByGroup(companyId, groupId);
+	}
+
+	public static java.util.List<com.idetronic.subur.model.ItemType> findByCompany(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByCompany(companyId, start, end);
+	}
+
+	public static int countByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().countByCompany(companyId);
+	}
+
+	/**
+	* Decrement overall item type count
+	*/
 	public static void decrementCounter(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().decrementCounter(itemTypeId);
@@ -288,6 +315,28 @@ public class ItemTypeLocalServiceUtil {
 	public static void incrementCounter(long itemTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().incrementCounter(itemTypeId);
+	}
+
+	/**
+	* Increment approved item count
+	*
+	* @param itemTypeId
+	* @throws SystemException
+	*/
+	public static void incrementApprovedCount(long itemTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().incrementApprovedCount(itemTypeId);
+	}
+
+	/**
+	* Decrement approved item count
+	*
+	* @param itemTypeId
+	* @throws SystemException
+	*/
+	public static void decrementApprovedCount(long itemTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().decrementApprovedCount(itemTypeId);
 	}
 
 	public static void clearService() {

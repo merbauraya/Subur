@@ -10,6 +10,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 public class SuburConfiguration {
 	
@@ -22,6 +24,9 @@ public class SuburConfiguration {
 	public static String getConfig(String configKey) throws NoSuchConfigException, SystemException, IOException
 	{
 		SuburConfig suburConfig = SuburConfigLocalServiceUtil.get(configKey);
+		
+		if (Validator.isNull(suburConfig))
+			return StringPool.BLANK;
 		
 		return suburConfig.getConfig();
 		

@@ -39,6 +39,12 @@ public interface SuburItem extends SuburItemModel, PersistedModel {
 
 	public void setOtherTitle(java.lang.String[] otherTitle);
 
+	public boolean isApproved();
+
+	public boolean isPending();
+
+	public boolean isDraft();
+
 	public java.util.Map<java.lang.String, java.lang.String> getIdentifiers()
 		throws java.io.IOException,
 			javax.xml.parsers.ParserConfigurationException,

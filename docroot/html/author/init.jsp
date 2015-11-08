@@ -17,6 +17,6 @@
 	int delta = GetterUtil.getInteger(portletPreferences.getValue("delta", null), SearchContainer.DEFAULT_DELTA);
 	String paginationType = GetterUtil.getString(portletPreferences.getValue("paginationType", "none"));
 
-	boolean showAdminAuthor = AuthorPermission.contains(permissionChecker, scopeGroupId, ActionKeys.UPDATE);
+	boolean showAdminAuthor = SuburPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_AUTHOR);
 	boolean showSearch = true;
 %>

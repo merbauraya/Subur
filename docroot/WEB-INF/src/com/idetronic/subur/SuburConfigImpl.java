@@ -19,13 +19,18 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 public class SuburConfigImpl extends DefaultConfigurationAction  {
 	static Log log = LogFactoryUtil.getLog(SuburConfigImpl.class);
+	
 	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
-		throws Exception {
+		throws Exception 
+	{
 		
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
+		
+		/*
 		String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
 		
@@ -44,6 +49,7 @@ public class SuburConfigImpl extends DefaultConfigurationAction  {
 		String orderByType2 = getParameter(actionRequest,"orderByType2");
 		String useOrOperatorCategorySearch = getParameter(actionRequest,"useOrOperatorCategorySearch");
 		String useOrOperatorTagSearch = getParameter(actionRequest,"useOrOperatorTagSearch");
+		String enableSocialBookmark = getParameter(actionRequest,"enableSocialBookmark");
 		String authorTitle = getParameter(actionRequest,"authorTitle");
 		String authorSiteName = getParameter(actionRequest,"authorSiteName");
 		String itemIdentifier = getParameter(actionRequest,"itemIdentifier");
@@ -54,6 +60,9 @@ public class SuburConfigImpl extends DefaultConfigurationAction  {
 		String rssDelta = getParameter(actionRequest,"rssDelta");
 		String rssDisplayStyle = getParameter(actionRequest,"rssDisplayStyle");
 		String rssFeedType = getParameter(actionRequest,"rssFeedType");
+		
+		String socialBookmarksDisplayStyle = getParameter(actionRequest,"socialBookmarksDisplayStyle");
+		String socialBookmarksDisplayPosition = getParameter(actionRequest,"socialBookmarksDisplayPosition");
 		
 		preferences.setValue("itemToShow", itemToShow);
 		preferences.setValue("displayStyle", displayStyle);
@@ -74,8 +83,12 @@ public class SuburConfigImpl extends DefaultConfigurationAction  {
 		preferences.setValue("rssDelta", rssDelta);
 		preferences.setValue("rssDisplayStyle", rssDisplayStyle);
 		preferences.setValue("rssFeedType", rssFeedType);
+		preferences.setValue("enableSocialBookmark", enableSocialBookmark);
 		
 		preferences.store();
+		
+		*/
+		
 		super.processAction(
 				portletConfig, actionRequest, actionResponse);
 		
