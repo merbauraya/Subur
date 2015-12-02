@@ -1,6 +1,8 @@
 package com.idetronic.subur.util;
 
+import com.idetronic.subur.model.SuburItem;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
+import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -17,8 +19,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -39,7 +44,33 @@ import javax.portlet.PortletPreferences;
 
 public class SuburUtil {
 	
-	private static Log logger = LogFactoryUtil.getLog(SuburUtil.class);
+	private static Log LOGGER = LogFactoryUtil.getLog(SuburUtil.class);
+	
+	public static boolean isWorkflowEnabled(ServiceContext serviceContext)
+	{
+		return isWorkflowEnabled(serviceContext.getCompanyId());
+		
+	}
+	public static boolean isWorkflowEnabled(long companyId)
+	{
+		WorkflowDefinitionLink workflowDefinitionLink=null;
+		
+		try
+		{
+			workflowDefinitionLink=WorkflowDefinitionLinkLocalServiceUtil.getDefaultWorkflowDefinitionLink(companyId, SuburItem.class.getName(), 0, 0);
+		} catch (Exception e)
+		{
+			if (e instanceof NoSuchWorkflowDefinitionLinkException)
+			{
+				LOGGER.warn("workflow-not-enabled");
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
 	
 	public static long[] getUserByRole(long companyId,long[] roleIds) throws SystemException {
         //final long companyId = PortalUtil.getDefaultCompanyId();
@@ -61,7 +92,7 @@ public class SuburUtil {
 	        try {
 	            return RoleLocalServiceUtil.getRole(companyId, roleStrId);
 	        } catch (final Exception e) {
-	            logger.error("Utils::getRoleById Exception", e);
+	            LOGGER.error("Utils::getRoleById Exception", e);
 	        }
 	        return null;
 	    }
@@ -308,7 +339,7 @@ public class SuburUtil {
 		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 		
 		for (Locale locale: availableLocales)
-			logger.info(locale.getDisplayName());
+			LOGGER.info(locale.getDisplayName());
 		
 	}
 	public static String getDefaultPortraitURL(String imagePath)

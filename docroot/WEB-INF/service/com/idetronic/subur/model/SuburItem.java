@@ -64,4 +64,10 @@ public interface SuburItem extends SuburItemModel, PersistedModel {
 
 	public java.util.List<com.idetronic.subur.model.ItemType> getItemTypes()
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.String getCitation()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.String getPublishYear();
 }

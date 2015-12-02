@@ -75,10 +75,18 @@
 			viewAuthorURL ="<%=viewAuthorURL %>"	
 		/>
 	</td>
-
+	
+	<%
+	
+		String publishedDate = StringPool.BLANK;
+		if (Validator.isNotNull(assetEntry.getPublishDate()))
+		{
+			publishedDate = dateFormatDate.format(assetEntry.getPublishDate());
+		}
+	%>
 		
 	<td class="table-cell">
-		<%=dateFormatDate.format(assetEntry.getPublishDate()) %>
+		<%= publishedDate %>
 	</td>
 	<td>
 	<%= assetEntry.getViewCount() %>

@@ -141,7 +141,7 @@ public class ItemAuthorLocalServiceClp implements ItemAuthorLocalService {
 
 		_methodName23 = "setItemAuthor";
 
-		_methodParameterTypes23 = new String[] { "long", "long[][]" };
+		_methodParameterTypes23 = new String[] { "long", "long[][]", "int" };
 	}
 
 	@Override
@@ -818,12 +818,18 @@ public class ItemAuthorLocalServiceClp implements ItemAuthorLocalService {
 	}
 
 	@Override
-	public void setItemAuthor(long itemId, long[] authorIds)
+	public void setItemAuthor(long itemId, long[] authorIds, int itemStatus)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName23,
 				_methodParameterTypes23,
-				new Object[] { itemId, ClpSerializer.translateInput(authorIds) });
+				new Object[] {
+					itemId,
+					
+				ClpSerializer.translateInput(authorIds),
+					
+				itemStatus
+				});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

@@ -418,9 +418,10 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 	*/
 	@Override
 	public void updateAuthorPosting(
-		com.idetronic.subur.model.SuburItem suburItem)
+		com.idetronic.subur.model.SuburItem suburItem, int oldStatus,
+		int newStatus)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_authorLocalService.updateAuthorPosting(suburItem);
+		_authorLocalService.updateAuthorPosting(suburItem, oldStatus, newStatus);
 	}
 
 	/**
@@ -546,6 +547,14 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _authorLocalService.updatePortrait(authorId, bytes);
+	}
+
+	@Override
+	public long[] createAuthor(
+		com.liferay.portal.kernel.json.JSONArray authors,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _authorLocalService.createAuthor(authors, serviceContext);
 	}
 
 	/**

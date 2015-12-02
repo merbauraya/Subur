@@ -24,6 +24,7 @@ import javax.portlet.PortletPreferences;
 
 import com.idetronic.subur.NoSuchItemException;
 import com.idetronic.subur.NoSuchSuburItemException;
+import com.idetronic.subur.model.Author;
 import com.idetronic.subur.model.ItemItemType;
 import com.idetronic.subur.model.ItemType;
 import com.idetronic.subur.model.SuburItem;
@@ -42,6 +43,7 @@ import com.idetronic.subur.util.SuburConstant;
 import com.idetronic.subur.util.SuburURLUtil;
 import com.idetronic.subur.util.SuburUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -118,6 +120,7 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		suburItem.setUuid(PortalUUIDUtil.generate());
 		suburItem.setStatus(WorkflowConstants.STATUS_DRAFT);
 		suburItem.setCompleted(false);
+		suburItem.setStatusDate(now);
 		suburItemPersistence.update(suburItem);
 		ItemItemTypeLocalServiceUtil.addItemItemType(itemId, itemTypeId);
 		
@@ -201,7 +204,7 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 	{
 		
 		long groupId = serviceContext.getScopeGroupId();
-		
+		suburItem.setStatusDate(new Date());
 		if (Validator.isNull(suburItem.getPublishedDate()) && suburItem.getStatus() == SuburConstant.STATUS_PUBLISHED_ITEM)
 			suburItem.setPublishedDate(new Date());
 		
@@ -246,8 +249,9 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
                 serviceContext.getAssetLinkEntryIds(),
                 AssetLinkConstants.TYPE_RELATED);
 		
-		ItemAuthorLocalServiceUtil.setItemAuthor(suburItem.getItemId(), authorIds);
-		AuthorLocalServiceUtil.updateAuthorPosting(suburItem);
+		ItemAuthorLocalServiceUtil.setItemAuthor(suburItem.getItemId(), authorIds,suburItem.getStatus());
+		//AuthorLocalServiceUtil.updateAuthorPosting(suburItem);
+		
 		
 		resourceLocalService.addResources(serviceContext.getCompanyId(), groupId, userId,
 			       SuburItem.class.getName(), suburItem.getItemId(), false, true, true);
@@ -258,19 +262,20 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		
 		
 		//workflow
-		WorkflowDefinitionLink workflowDefinitionLink=null;
-		workflowDefinitionLink=WorkflowDefinitionLinkLocalServiceUtil.getDefaultWorkflowDefinitionLink(suburItem.getCompanyId(), SuburItem.class.getName(), 0, 0);
+		
+		boolean workFlowEnable = SuburUtil.isWorkflowEnabled(serviceContext);
 		
 		serviceContext.setAttribute("trackbacks", null);
 		
 		
+		if (workFlowEnable)
+		{
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+							suburItem.getCompanyId(), suburItem.getGroupId(), userId,
+							SuburItem.class.getName(), suburItem.getItemId(), suburItem,
+							serviceContext);
 		
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-						suburItem.getCompanyId(), suburItem.getGroupId(), userId,
-						SuburItem.class.getName(), suburItem.getItemId(), suburItem,
-						serviceContext);
-		
-		
+		}
 		
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
                 SuburItem.class);
@@ -402,6 +407,10 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 				true);
 		return suburItemPersistence.update(suburItem);
 	}
+	
+	/**
+	 * 
+	 */
 	public SuburItem updateStatus(long userId,long itemId,int status,ServiceContext serviceContext) throws SystemException, PortalException
 	{
 		Date now = new Date();
@@ -428,7 +437,7 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_APPROVED)
 		{
 			// Asset
-			
+			item.setPublishedDate(now);
 			assetEntryLocalService.updateEntry(
 				SuburItem.class.getName(), itemId, now,
 				true);
@@ -479,8 +488,14 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 			assetEntryLocalService.updateVisible(
 					SuburItem.class.getName(), itemId, false);
 			
+			item.setPublishedDate(null);
+			
 			
 		}
+		
+		//update author posting
+		AuthorLocalServiceUtil.updateAuthorPosting(item,oldStatus, status);
+		
 		suburItemPersistence.update(item);
 		return item;
 		
@@ -663,4 +678,5 @@ public class SuburItemLocalServiceImpl extends SuburItemLocalServiceBaseImpl {
 		SubscriptionLocalServiceUtil.deleteSubscription(
 				userId, SuburItem.class.getName(), groupId);
 		}
+	
 }

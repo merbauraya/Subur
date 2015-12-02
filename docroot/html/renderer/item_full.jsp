@@ -181,6 +181,11 @@
 		<%=suburItem.getItemAbstract() %>
 	</div>
 	<div>
+		<h4>Citation</h4>
+		<%= suburItem.getCitation()%> 
+	</div>
+	
+	<div>
 		<%if (serieReportNoMap != null && serieReportNoMap.size() > 0) 
 		{
 		%>

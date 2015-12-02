@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -81,6 +82,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.User;
@@ -135,7 +137,7 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	public Author newAuthor(String firstName,String middleName,String lastName,
 			String salutation,String email,String officeNo,ServiceContext serviceContext) throws SystemException
 	{
-		Date now = new Date();
+		Date now = new Date(); 
 		long authorId = CounterLocalServiceUtil.increment(Author.class.getName());
 		Author author = authorPersistence.create(authorId);
 		author.setFirstName(firstName);
@@ -236,7 +238,7 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 		AssetEntry assetEntry = updateAssetEntry(createdByUserId,groupId,
 				author, serviceContext);
 		
-		logger.info("asset upd");
+		
 		
 		resourceLocalService.addResources(author.getCompanyId(), author.getGroupId(),
 				createdByUserId,Author.class.getName(),author.getAuthorId(),
@@ -584,17 +586,34 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	 * @param suburItem
 	 * @throws SystemException
 	 */
-	public void updateAuthorPosting(SuburItem suburItem) throws SystemException
+	public void updateAuthorPosting(SuburItem suburItem,int oldStatus,int newStatus) throws SystemException
 	{
 		
-		if (suburItem.getStatus() != SuburConstant.STATUS_PUBLISHED_ITEM)
+		if (oldStatus == newStatus)
+		{
 			return;
+		}
+		
 		long[] authors = ItemAuthorLocalServiceUtil.getAuthorId(suburItem.getItemId());
 		
-		for (long authorId : authors)
+		if (newStatus == WorkflowConstants.STATUS_APPROVED)
 		{
-			updateNewPosting(authorId,suburItem.getPublishedDate());
+			for (long authorId : authors)
+			{
+				updateNewPosting(authorId,suburItem.getPublishedDate());
+			}
 		}
+		
+		//from approved to other, we decrement author count
+		if (oldStatus == WorkflowConstants.STATUS_APPROVED)
+		{
+			for (long authorId : authors)
+			{
+				decrementItemCount(authorId);
+			}
+		}
+		
+		
 	}
 	
 	/**
@@ -774,6 +793,8 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	/**
 	 * 
 	 */
+	
+	
 	public List<Author> search(String keyword,long companyId,long groupId,
 			int start, int end, OrderByComparator obc) throws SystemException
 	{
@@ -861,6 +882,22 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 
 			return author;
 		}
+	public long[] createAuthor(JSONArray authors,ServiceContext serviceContext) throws SystemException
+	{
+		long[] authorIds = new long[authors.length()];
+		for (int i = 0; i < authors.length(); i ++)
+		{
+			JSONObject jsonObj = authors.getJSONObject(i);
+			String firstName = jsonObj.getString("firstName");
+			String lastName = jsonObj.getString("lastName");
+			Author author = newAuthor(firstName,null,lastName,
+					null,null,null, serviceContext);
+			
+			authorIds[i] = author.getAuthorId();
+			
+		}
+		return authorIds;
+	}
 	private static Log LOGGER = LogFactoryUtil.getLog(AuthorLocalServiceImpl.class);
 	
 }

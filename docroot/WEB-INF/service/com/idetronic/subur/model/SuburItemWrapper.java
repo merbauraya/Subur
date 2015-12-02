@@ -862,6 +862,18 @@ public class SuburItemWrapper implements SuburItem, ModelWrapper<SuburItem> {
 	}
 
 	@Override
+	public java.lang.String getCitation()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _suburItem.getCitation();
+	}
+
+	@Override
+	public java.lang.String getPublishYear() {
+		return _suburItem.getPublishYear();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

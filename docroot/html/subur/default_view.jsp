@@ -1,5 +1,5 @@
 <%
-	int maxItem = 5;
+	int maxItem = 10;
 	assetEntryQuery.setStart(0);
 	assetEntryQuery.setEnd(maxItem);
 	List<AssetEntry> assetEntries = SuburItemLocalServiceUtil.getAssetEntries(assetEntryQuery,anyItemTypeIds,allItemTypeIds);
@@ -8,7 +8,7 @@
 %>
 
 <aui:row>
-	<div class="span6">
+	
 		<h4>Latest publication</h4>
 	<%
 	
@@ -56,27 +56,6 @@
 	
 	
 	
-	</div>
-	
-	<div class="span6">
-		<h4>Publication Types</h4>
-		<ul>
-		<%
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create ("ItemType","approvedCount", false);
-			List<ItemType> itemTypes = ItemTypeLocalServiceUtil.findByGroup(themeDisplay.getCompanyId(),
-					themeDisplay.getScopeGroupId(),0,5,obc);//long companyId,long groupId,int start,int end,OrderByComparator obc
-		
-		
-		for (ItemType itemType : itemTypes)
-		{
-		%>
-			
-			<li><%=itemType.getItemTypeName() %></li>
-		
-		<%
-		}
-		%>
-		</ul>
-	</div>
+
 
 </aui:row>

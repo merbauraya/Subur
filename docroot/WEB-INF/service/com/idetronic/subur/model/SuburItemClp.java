@@ -758,25 +758,6 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 	}
 
 	@Override
-	public java.util.Map<java.lang.String, java.lang.String> getIdentifiers() {
-		try {
-			String methodName = "getIdentifiers";
-
-			Class<?>[] parameterTypes = new Class<?>[] {  };
-
-			Object[] parameterValues = new Object[] {  };
-
-			java.util.Map<java.lang.String, java.lang.String> returnObj = (java.util.Map<java.lang.String, java.lang.String>)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public boolean isPending() {
 		try {
 			String methodName = "isPending";
@@ -848,15 +829,15 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 	}
 
 	@Override
-	public java.util.List<com.idetronic.subur.model.ItemType> getItemTypes() {
+	public java.lang.String getCitation() {
 		try {
-			String methodName = "getItemTypes";
+			String methodName = "getCitation";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
 			Object[] parameterValues = new Object[] {  };
 
-			java.util.List<com.idetronic.subur.model.ItemType> returnObj = (java.util.List<com.idetronic.subur.model.ItemType>)invokeOnRemoteModel(methodName,
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
@@ -886,6 +867,80 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 	}
 
 	@Override
+	public void setSeriesReportNo(
+		java.util.Map<java.lang.String, java.lang.String> entryMap) {
+		try {
+			String methodName = "setSeriesReportNo";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.util.Map.class };
+
+			Object[] parameterValues = new Object[] { entryMap };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getIdentifiers() {
+		try {
+			String methodName = "getIdentifiers";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.util.Map<java.lang.String, java.lang.String> returnObj = (java.util.Map<java.lang.String, java.lang.String>)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getPublishYear() {
+		try {
+			String methodName = "getPublishYear";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.util.List<com.idetronic.subur.model.ItemType> getItemTypes() {
+		try {
+			String methodName = "getItemTypes";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.util.List<com.idetronic.subur.model.ItemType> returnObj = (java.util.List<com.idetronic.subur.model.ItemType>)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public java.util.Map getSeriesReportNo() {
 		try {
 			String methodName = "getSeriesReportNo";
@@ -898,23 +953,6 @@ public class SuburItemClp extends BaseModelImpl<SuburItem> implements SuburItem 
 					parameterTypes, parameterValues);
 
 			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public void setSeriesReportNo(
-		java.util.Map<java.lang.String, java.lang.String> entryMap) {
-		try {
-			String methodName = "setSeriesReportNo";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.util.Map.class };
-
-			Object[] parameterValues = new Object[] { entryMap };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);

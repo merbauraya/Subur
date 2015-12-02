@@ -16,6 +16,7 @@ package com.idetronic.subur.model.impl;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.Format;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,12 +41,15 @@ import com.idetronic.subur.search.SuburSearchUtil;
 import com.idetronic.subur.service.AuthorLocalServiceUtil;
 import com.idetronic.subur.service.ItemAuthorLocalServiceUtil;
 import com.idetronic.subur.service.ItemItemTypeLocalServiceUtil;
+
 import com.idetronic.subur.util.SuburUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -404,5 +408,47 @@ public class SuburItemImpl extends SuburItemBaseImpl {
 		return ItemItemTypeLocalServiceUtil.getByItemId(getItemId());
 		
 	}
+	public String getCitation() throws PortalException, SystemException
+	{
+		StringBuilder sb = new StringBuilder();
 	
+		List<Author> authors = ItemAuthorLocalServiceUtil.getAuthors(getItemId());
+		
+		boolean moreThanOne = authors.size() > 1;
+		for (int i = 0; i < authors.size(); i++)
+		{
+			sb.append(authors.get(i).getDisplayName());
+			if (moreThanOne)
+			{
+				if (i+1 < authors.size())
+				{
+					sb.append("; ");
+				}
+				if (i+2 == authors.size())
+				{
+					sb.append(" and ");
+				}
+			}
+		}
+		//title
+		sb.append(" \"");
+		sb.append(getTitle());
+		sb.append("\" ");
+		sb.append("(");
+		sb.append(getPublishYear());
+		sb.append(")");
+		
+		
+		return sb.toString();		
+	}
+	public String getPublishYear()
+	{
+		Format yearFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy",getLocale(null));//, timeZone);
+
+		if (Validator.isNotNull(getPublishedDate()))
+		{
+			return yearFormatDate.format(getPublishedDate());
+		}
+		return StringPool.BLANK;
+	}
 }

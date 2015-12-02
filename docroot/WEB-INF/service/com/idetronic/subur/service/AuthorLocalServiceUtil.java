@@ -404,9 +404,10 @@ public class AuthorLocalServiceUtil {
 	* @throws SystemException
 	*/
 	public static void updateAuthorPosting(
-		com.idetronic.subur.model.SuburItem suburItem)
+		com.idetronic.subur.model.SuburItem suburItem, int oldStatus,
+		int newStatus)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().updateAuthorPosting(suburItem);
+		getService().updateAuthorPosting(suburItem, oldStatus, newStatus);
 	}
 
 	/**
@@ -518,6 +519,13 @@ public class AuthorLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().updatePortrait(authorId, bytes);
+	}
+
+	public static long[] createAuthor(
+		com.liferay.portal.kernel.json.JSONArray authors,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().createAuthor(authors, serviceContext);
 	}
 
 	public static void clearService() {

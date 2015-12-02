@@ -49,4 +49,14 @@
 	
 	</c:if>
 	
+	<aui:nav>
+		<portlet:renderURL var="importSubjectURL">
+			<portlet:param name="mvcPath" value="/html/suburadmin/import_subject.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+				 
+		</portlet:renderURL>
+		<aui:nav-item href="<%= importSubjectURL %>" label="import-subject" />
+	</aui:nav>
+	
 </aui:nav-bar>

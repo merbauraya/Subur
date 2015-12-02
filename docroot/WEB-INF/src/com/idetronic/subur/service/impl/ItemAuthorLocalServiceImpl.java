@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.idetronic.subur.NoSuchAuthorException;
 import com.idetronic.subur.model.Author;
 import com.idetronic.subur.model.ItemAuthor;
@@ -121,13 +122,12 @@ public class ItemAuthorLocalServiceImpl extends ItemAuthorLocalServiceBaseImpl {
 		
 	}
 	
-	/**
-	 * Set Item author based on given itemid and array of author ids
-	 * @param itemId to be updated
-	 * @param authorIds array of Author Id
-	 * @throws SystemException
+		
+	/*
+	 * 
 	 */
-	public void setItemAuthor(long itemId,long[] authorIds) throws SystemException 
+	
+	public void setItemAuthor(long itemId,long[] authorIds,int itemStatus) throws SystemException 
 	{
 
 		Set<Long> newAuthorIds = new HashSet<Long>();
@@ -139,21 +139,26 @@ public class ItemAuthorLocalServiceImpl extends ItemAuthorLocalServiceBaseImpl {
 		//ensure author item count is reflected
 		List<ItemAuthor> itemAuthors = itemAuthorPersistence.findByitemId(itemId);
 		for (ItemAuthor itemAuthor: itemAuthors)
-			AuthorLocalServiceUtil.decrementItemCount(itemAuthor.getAuthorId());
-		
+		{
+			if (itemStatus == WorkflowConstants.STATUS_APPROVED)
+				AuthorLocalServiceUtil.decrementItemCount(itemAuthor.getAuthorId());
+		}
 		itemAuthorPersistence.removeByitemId(itemId);
 		
 		Iterator<Long> authorIterator = newAuthorIds.iterator();
 		while (authorIterator.hasNext())
 		{
 			long authorId = authorIterator.next();
-			ItemAuthorPK itemAuthorPK = new ItemAuthorPK();
-			itemAuthorPK.setAuthorId(authorId);
-			itemAuthorPK.setItemId(itemId);
-			
-			ItemAuthor itemAuthor = ItemAuthorLocalServiceUtil.createItemAuthor(itemAuthorPK);
-			
-			itemAuthorPersistence.update(itemAuthor);
+			if (authorId > 0)
+			{
+				ItemAuthorPK itemAuthorPK = new ItemAuthorPK();
+				itemAuthorPK.setAuthorId(authorId);
+				itemAuthorPK.setItemId(itemId);
+				
+				ItemAuthor itemAuthor = ItemAuthorLocalServiceUtil.createItemAuthor(itemAuthorPK);
+				
+				itemAuthorPersistence.update(itemAuthor);
+			}
 		}
 		
 		

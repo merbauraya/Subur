@@ -32,10 +32,12 @@ import com.idetronic.subur.helper.GetFileActionHelper;
 import com.idetronic.subur.model.CopyRequest;
 import com.idetronic.subur.model.SuburItem;
 import com.idetronic.subur.notification.SuburNotificationHandler;
+import com.idetronic.subur.service.AuthorLocalServiceUtil;
 import com.idetronic.subur.service.CopyRequestLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemLocalServiceUtil;
 import com.idetronic.subur.service.SuburItemServiceUtil;
 import com.idetronic.subur.service.permission.SuburPermission;
+import com.idetronic.subur.util.AuthorUtil;
 import com.idetronic.subur.util.SuburConfiguration;
 import com.idetronic.subur.util.SuburConstant;
 import com.idetronic.subur.util.SuburFileUtil;
@@ -43,11 +45,11 @@ import com.idetronic.subur.util.SuburFolderUtil;
 import com.idetronic.subur.util.SuburUtil;
 import com.idetronic.subur.util.WebKeys;
 import com.idetronic.subur.util.ActionKeys;
-
 import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -72,7 +74,6 @@ import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.auth.PrincipalException;
-
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
@@ -90,7 +91,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 public class Subur extends MVCPortlet {
-	private static Log logger = LogFactoryUtil.getLog(Subur.class);
+	private static Log LOGGER = LogFactoryUtil.getLog(Subur.class);
 	private static final String _TEMP_FOLDER_NAME_ATTACHMENT = Subur.class.getName();
 
 	PortletRequest _request = null;
@@ -154,14 +155,14 @@ public class Subur extends MVCPortlet {
 			response.setRenderParameter("jspPage","/html/deposit.jsp");
 			
 		} catch (PortalException e) {
-			logger.error(e);
+			LOGGER.error(e);
 			throw new PortalException(e);
 		}  catch (Exception e)
 		{
 			if(e instanceof NoSuchWorkflowDefinitionLinkException){
 				SessionMessages.add(request.getPortletSession(),"workflow-not-enabled");
 			}
-			logger.error(e);
+			LOGGER.error(e);
 		}
 		
 		
@@ -266,7 +267,7 @@ public class Subur extends MVCPortlet {
 	
 		boolean relatedRestricted = ParamUtil.getBoolean(uploadRequest, "relatedRestricted");
 		String title = ParamUtil.getString(uploadRequest, "title");
-		String language = ParamUtil.getString(uploadRequest, "language");
+		String language = ParamUtil.getString(uploadRequest, "language"); 
 		int itemStatus = ParamUtil.getInteger(uploadRequest, "itemStatus");
 		
 		String itemAbstract = ParamUtil.getString(uploadRequest, "itemAbstract");
@@ -279,6 +280,29 @@ public class Subur extends MVCPortlet {
 		String assetLinkEntryIdsString = ParamUtil.getString(uploadRequest,
 				"assetLinksSearchContainerPrimaryKeys");
 		
+		
+		Map<String, String[]> parameterMap = uploadRequest.getParameterMap();
+		
+		JSONArray authorsJSON = JSONFactoryUtil.createJSONArray();
+		
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) 
+		{
+			String name = entry.getKey();
+			
+			if (name.startsWith("authorNameF")) 
+			{
+				
+				JSONObject authorJSON = JSONFactoryUtil.createJSONObject();
+				String idx = name.replaceAll("[^0-9]", "");
+				String firstName = ParamUtil.getString(uploadRequest, "authorNameF"+idx);
+				String lastName = ParamUtil.getString(uploadRequest, "authorNameL"+idx);
+				LOGGER.info("fName="+firstName + "::"+ idx);
+				authorJSON.put("firstName",firstName);
+				authorJSON.put("lastName",lastName);
+				authorsJSON.put(authorJSON);
+			}
+			
+		}
 		
 		
 		
@@ -386,7 +410,7 @@ public class Subur extends MVCPortlet {
 		}
 		
 			
-		try {
+	//	try {
 			SuburItem suburItem = SuburItemLocalServiceUtil.getSuburItem(itemId);
 						
 			suburItem.setTitle(title);
@@ -401,14 +425,16 @@ public class Subur extends MVCPortlet {
 			serviceContext.setAssetTagNames(tagNamesArr);
 			serviceContext.setAssetCategoryIds(catIds);
 			
-			logger.info("newstatus="+status + ":wation="+workflowAction);
+			//LOGGER.info("newstatus="+status + ":wation="+workflowAction);
+			long[] newAuthorIds = AuthorLocalServiceUtil.createAuthor(authorsJSON, serviceContext);
+			authorIds = ArrayUtil.append(authorIds,newAuthorIds);
 			SuburItemLocalServiceUtil.updateSuburItem(suburItem, userId, status,itemTypeIds, authorIds, serviceContext);
 			//SuburItemLocalServiceUtil.updateStatus(userId, suburItem.getItemId(), status, serviceContext);
 			
 			
 			if (Validator.isNotNull(redirect))
 				actionResponse.sendRedirect(redirect);
-			
+	/*		
 		} catch (PortalException e) {
 			//SessionErrors.add(request, e.getClass().getName());
 			e.printStackTrace();
@@ -417,7 +443,7 @@ public class Subur extends MVCPortlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		
 	}
@@ -490,7 +516,7 @@ public class Subur extends MVCPortlet {
 			try {
 				ServletResponseUtil.write(response, "Error serving file");
 			} catch (IOException e1) {
-				logger.error(e1);
+				LOGGER.error(e1);
 				
 			}
 		}
@@ -510,7 +536,7 @@ public class Subur extends MVCPortlet {
 			try {
 			serviceContext = ServiceContextFactory.getInstance(request);
 			} catch (Exception e) {
-			logger.error("Exception in fileUpload method");
+			LOGGER.error("Exception in fileUpload method");
 			} 
 
 	
@@ -529,7 +555,21 @@ public class Subur extends MVCPortlet {
 		
 		//logger.info(resource);
 		String resourceId = resourceRequest.getResourceID();
-		
+		if (Validator.equals(resourceId,SuburConstant.RESOURCE_AUTHOR_LOOKUP))
+		{
+			String keyword = ParamUtil.getString(resourceRequest, "keywords");
+			LOGGER.info("key="+keyword); 
+			JSONArray results;
+			try {
+				results = AuthorUtil.authorSearchJson(resourceRequest, resourceResponse);
+				writeJSON(resourceRequest, resourceResponse, results);
+			} catch (SystemException e) {
+				LOGGER.error(e);
+			}
+			
+			
+		     
+		}
 		
 		
 		if (Validator.equals(resourceId,SuburConstant.RESOURCE_SERVE_FILE))
@@ -751,7 +791,7 @@ public class Subur extends MVCPortlet {
 	        }
 	        else 
 	        {
-	            logger.error(e);
+	            LOGGER.error(e);
 	        	throw e;
 	        }
 	    }
@@ -838,7 +878,7 @@ public class Subur extends MVCPortlet {
 			actionRequest.setAttribute(WebKeys.SUBUR_COPY_REQUEST, copyRequest);
 		} catch (PortalException | SystemException | IOException e) {
 			
-			logger.error(e);
+			LOGGER.error(e);
 		
 		}
 		actionResponse.setRenderParameter("jspPage","/html/subur/request_copy_status.jsp");
@@ -946,7 +986,7 @@ public class Subur extends MVCPortlet {
 				
 			}
 		}
-		logger.info("render");
+		
 		super.render(renderRequest, renderResponse);
 	}
 	protected void getSuburItem(PortletRequest portletRequest) throws PrincipalException, 

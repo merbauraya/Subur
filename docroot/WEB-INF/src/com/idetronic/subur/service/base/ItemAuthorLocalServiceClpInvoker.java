@@ -140,7 +140,7 @@ public class ItemAuthorLocalServiceClpInvoker {
 
 		_methodName144 = "setItemAuthor";
 
-		_methodParameterTypes144 = new String[] { "long", "long[][]" };
+		_methodParameterTypes144 = new String[] { "long", "long[][]", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -270,7 +270,7 @@ public class ItemAuthorLocalServiceClpInvoker {
 		if (_methodName144.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			ItemAuthorLocalServiceUtil.setItemAuthor(((Long)arguments[0]).longValue(),
-				(long[])arguments[1]);
+				(long[])arguments[1], ((Integer)arguments[2]).intValue());
 
 			return null;
 		}

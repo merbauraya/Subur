@@ -337,17 +337,10 @@ public class ItemAuthorLocalServiceWrapper implements ItemAuthorLocalService,
 		return _itemAuthorLocalService.getAuthorArray(itemId);
 	}
 
-	/**
-	* Set Item author based on given itemid and array of author ids
-	*
-	* @param itemId to be updated
-	* @param authorIds array of Author Id
-	* @throws SystemException
-	*/
 	@Override
-	public void setItemAuthor(long itemId, long[] authorIds)
+	public void setItemAuthor(long itemId, long[] authorIds, int itemStatus)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_itemAuthorLocalService.setItemAuthor(itemId, authorIds);
+		_itemAuthorLocalService.setItemAuthor(itemId, authorIds, itemStatus);
 	}
 
 	/**

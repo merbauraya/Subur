@@ -53,6 +53,17 @@
 			buffer.append(dateFormatDate.format(suburItem.getCreateDate()));
 		%>
 	</liferay-ui:search-container-column-text>	
+	<liferay-ui:search-container-column-text
+				name="publishDate"
+				buffer="buffer"
+	>
+		<%
+			if (Validator.isNotNull(suburItem.getPublishedDate()))
+			{
+				buffer.append(dateFormatDate.format(suburItem.getPublishedDate()));
+			}
+		%>
+	</liferay-ui:search-container-column-text>	
 </liferay-ui:search-container-row>
 <liferay-ui:search-iterator searchContainer="<%=searchContainer %>"/>
 </liferay-ui:search-container>

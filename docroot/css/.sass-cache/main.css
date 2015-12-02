@@ -37,4 +37,8 @@
     display: none; }
   .Subur-portlet .taglib-search-toggle button[title="Add Tags"] {
     display: none; }
+  .Subur-portlet table .asset-links-list {
+    margin-left: 0px !important; }
+  .Subur-portlet h1, .Subur-portlet h2, .Subur-portlet h3, .Subur-portlet h4, .Subur-portlet h5 {
+    font-weight: normal !important; }
 

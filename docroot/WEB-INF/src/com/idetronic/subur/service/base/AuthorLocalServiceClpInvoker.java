@@ -164,7 +164,7 @@ public class AuthorLocalServiceClpInvoker {
 		_methodName167 = "updateAuthorPosting";
 
 		_methodParameterTypes167 = new String[] {
-				"com.idetronic.subur.model.SuburItem"
+				"com.idetronic.subur.model.SuburItem", "int", "int"
 			};
 
 		_methodName168 = "updateNewPosting";
@@ -236,6 +236,13 @@ public class AuthorLocalServiceClpInvoker {
 		_methodName181 = "updatePortrait";
 
 		_methodParameterTypes181 = new String[] { "long", "byte[][]" };
+
+		_methodName182 = "createAuthor";
+
+		_methodParameterTypes182 = new String[] {
+				"com.liferay.portal.kernel.json.JSONArray",
+				"com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -419,7 +426,9 @@ public class AuthorLocalServiceClpInvoker {
 
 		if (_methodName167.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
-			AuthorLocalServiceUtil.updateAuthorPosting((com.idetronic.subur.model.SuburItem)arguments[0]);
+			AuthorLocalServiceUtil.updateAuthorPosting((com.idetronic.subur.model.SuburItem)arguments[0],
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue());
 
 			return null;
 		}
@@ -530,6 +539,12 @@ public class AuthorLocalServiceClpInvoker {
 				(byte[])arguments[1]);
 		}
 
+		if (_methodName182.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
+			return AuthorLocalServiceUtil.createAuthor((com.liferay.portal.kernel.json.JSONArray)arguments[0],
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -613,4 +628,6 @@ public class AuthorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes180;
 	private String _methodName181;
 	private String[] _methodParameterTypes181;
+	private String _methodName182;
+	private String[] _methodParameterTypes182;
 }

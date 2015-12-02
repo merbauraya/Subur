@@ -13,4 +13,14 @@
     display: none; }
   .author-portlet .taglib-search-toggle button[title="Add Tags"] {
     display: none; }
+  .author-portlet .profile-image {
+    padding: 10px; }
+  .author-portlet .list-style-none {
+    list-style: none; }
+  .author-portlet .no-left-margin {
+    margin-left: 0 !important; }
+  .author-portlet .author-categorization .taglib-asset-categories-summary {
+    font-weight: bold; }
+  .author-portlet .author-categorization .taglib-asset-categories-summary > a {
+    font-weight: normal; }
 

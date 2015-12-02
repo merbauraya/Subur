@@ -57,9 +57,17 @@
 				
 			</liferay-ui:search-container-column-text>
 			
+			<%
+			String yearPublished= StringPool.BLANK;	
+			if (Validator.isNotNull(item.getPublishedDate()))
+				{
+					yearPublished = yearFormatDate.format(item.getPublishedDate());
+				}
+			%>
+			
 			<liferay-ui:search-container-column-text
 					name="published"
-					value="<%= yearFormatDate.format(item.getPublishedDate()) %>"	
+					value="<%= yearPublished %>"	
 			/>
 			<%
 				AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(SuburItem.class.getName(), item.getItemId());

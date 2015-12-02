@@ -20,6 +20,8 @@ public class SuburConfiguration {
 	public static final String ITEM_IDENTIFIERS="ItemIdentifiers";
 	public static final String NOTIFICATION_ROLES="notificationRoles";
 	
+	public static final String PUBLICATION_LICENSE="publicationLicense";
+	
 	
 	public static String getConfig(String configKey) throws NoSuchConfigException, SystemException, IOException
 	{

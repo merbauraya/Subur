@@ -1,1 +1,23 @@
+.author-nav-entry {
+  overflow: hidden; }
+
+.author-nav-entry .date > span {
+  color: #fff;
+  display: block;
+  font-family: "Fjalla One";
+  text-align: center; }
+
+.researcher-display {
+  display: block; }
+
+.researcher-display .researcher-profile-image {
+  float: left;
+  margin-right: 1.5em; }
+
+/*
+ul.author li
+{
+	line-height:30px !important;
+}
+*/
 

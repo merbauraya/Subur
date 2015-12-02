@@ -358,7 +358,8 @@ public interface AuthorLocalService extends BaseLocalService,
 	* @throws SystemException
 	*/
 	public void updateAuthorPosting(
-		com.idetronic.subur.model.SuburItem suburItem)
+		com.idetronic.subur.model.SuburItem suburItem, int oldStatus,
+		int newStatus)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -445,4 +446,9 @@ public interface AuthorLocalService extends BaseLocalService,
 		byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public long[] createAuthor(
+		com.liferay.portal.kernel.json.JSONArray authors,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

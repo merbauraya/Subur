@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -25,17 +27,23 @@ import org.xml.sax.SAXException;
 
 import com.idetronic.subur.model.Author;
 import com.idetronic.subur.model.impl.SuburItemImpl;
+import com.idetronic.subur.service.AuthorLocalServiceUtil;
 import com.idetronic.subur.service.persistence.AuthorQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -214,6 +222,32 @@ public class AuthorUtil {
 		return top10Vocabularies;
 	}
 	
+	public static JSONArray authorSearchJson(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws SystemException
+	{
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+		String keyword = ParamUtil.getString(resourceRequest, "keywords");
+		
+		List<Author> authors = AuthorLocalServiceUtil.search(keyword, 
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), 0, 20, null);
+		
+		
+		JSONArray jsonResults = JSONFactoryUtil.createJSONArray();
+		for (Author author :authors)
+		{
+			JSONObject jsonCells = JSONFactoryUtil.createJSONObject();
+			jsonCells.put("id", author.getAuthorId());
+			jsonCells.put("firstName", author.getFirstName());
+			jsonCells.put("lastName", author.getLastName());
+			jsonCells.put("displayName", author.getDisplayName());
+			jsonResults.put(jsonCells);
+		}
+		
+		
+		
+	
+		return jsonResults;
+	}
 	
 	
 

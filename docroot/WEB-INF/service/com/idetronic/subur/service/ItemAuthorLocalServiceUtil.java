@@ -321,16 +321,10 @@ public class ItemAuthorLocalServiceUtil {
 		return getService().getAuthorArray(itemId);
 	}
 
-	/**
-	* Set Item author based on given itemid and array of author ids
-	*
-	* @param itemId to be updated
-	* @param authorIds array of Author Id
-	* @throws SystemException
-	*/
-	public static void setItemAuthor(long itemId, long[] authorIds)
+	public static void setItemAuthor(long itemId, long[] authorIds,
+		int itemStatus)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().setItemAuthor(itemId, authorIds);
+		getService().setItemAuthor(itemId, authorIds, itemStatus);
 	}
 
 	public static void clearService() {

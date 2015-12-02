@@ -39,8 +39,16 @@
 %>
 </liferay-ui:search-container-results>
 <liferay-ui:search-container-row className="SuburItem" keyProperty="itemId" modelVar="suburItem">
-	<liferay-ui:search-container-column-text
-		name="title" property="title" />
+	
+	<liferay-portlet:renderURL varImpl="viewURL">
+        <portlet:param name="mvcPath" value="/html/renderer/item_full.jsp" />
+        <portlet:param name="itemId" value="<%= String.valueOf(suburItem.getItemId()) %>"/>
+	</liferay-portlet:renderURL>
+	<liferay-ui:search-container-column-text name="title">
+		<aui:a href="<%=viewURL.toString() %>"><%=suburItem.getTitle() %></aui:a>
+	
+	</liferay-ui:search-container-column-text>
+		
 	
 	<liferay-ui:search-container-column-text name="status">
 		
@@ -54,7 +62,18 @@
 		<%
 			buffer.append(dateFormatDate.format(suburItem.getCreateDate()));
 		%>
-	</liferay-ui:search-container-column-text>	
+	</liferay-ui:search-container-column-text>
+	<portlet:renderURL var="editEntryURL">
+		<portlet:param name="mvcPath" value="<%= SuburConstant.PAGE_UPDATE_ITEM %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="itemId" value="<%= String.valueOf(suburItem.getItemId()) %>" />
+	</portlet:renderURL>
+	<liferay-ui:search-container-column-text>
+				
+		<liferay-ui:icon image="edit" message="Edit" label="edit" url="<%= editEntryURL.toString() %>" />
+	</liferay-ui:search-container-column-text>
+		
 </liferay-ui:search-container-row>
 <liferay-ui:search-iterator searchContainer="<%=searchContainer %>"/>
 </liferay-ui:search-container>

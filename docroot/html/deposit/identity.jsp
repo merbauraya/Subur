@@ -55,38 +55,7 @@
 	<aui:input type="text" cssClass="fullwidth" name="publisher"></aui:input>
 </div>
 
-<div class="control-group">
-	<%
-		Locale[] avilableLocales = LanguageUtil.getAvailableLocales();
-		String itemLanguage = item.getLanguage();
-		
-	%>
-	<aui:select label="language" name="language" >
-		<%
-			boolean NASelected = (itemLanguage.equalsIgnoreCase("NA"));
-			boolean otherSelected = (itemLanguage.equalsIgnoreCase("Other"));
-		%>
-		
-		<aui:option value="NA" selected="<%=NASelected%>">N/A</aui:option>
-		
-		
-	<%
-		for (Locale avaiableLocale : avilableLocales)	
-		{
-			
-		    String localeId = LocaleUtil.toLanguageId(avaiableLocale);
-		    boolean selected  = (itemLanguage.equalsIgnoreCase(localeId));
-	%>
-		<aui:option selected="<%= selected %>"  value="<%= localeId %>"><%=avaiableLocale.getDisplayName() %></aui:option>
-		
-		
-	<%
-		}
-	%>
-		<aui:option value="Other" selected="<%=otherSelected%>">Other</aui:option>
-	</aui:select>
 
-</div>
 <%
 	String[] itemIdentifierTypeList = StringUtil.split(itemIdentifier,",");
 	int[] itemIdentifierIndexes = null;
